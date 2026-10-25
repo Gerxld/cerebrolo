@@ -1,0 +1,368 @@
+{
+ "tipo": "CUESTIONARIO",
+ "lab": 3,
+ "titulo": "Capítulo III – Desarrollo de Sistemas de Información",
+ "fecha": "2026.10.27",
+ "salida": "Cuest03_SIG_Rios_Gerald",
+ "contenido": [
+  {
+   "h2": "1. ¿Para la gestión del cambio qué son las competencias individuales?"
+  },
+  {
+   "p": "Son las habilidades de las personas y el despliegue de esas habilidades cuando la organización atraviesa un cambio. La gestión del cambio se mira desde dos lados: como competencia individual, que es lo que sabe hacer cada persona y cómo lo pone en práctica, y como capacidad organizacional, que define lo que la organización hace bien y, al final, lo que es."
+  },
+  {
+   "h2": "2. ¿Qué es el cambio?"
+  },
+  {
+   "p": "Es convertir algo en otra cosa, modificarlo, sustituirlo o reemplazarlo; en pocas palabras, hacer algo de forma diferente. En una organización puede ser de tipo estructural, operativo (incluidas las estrategias), técnico, cultural o personal."
+  },
+  {
+   "h2": "3. ¿Qué es transición?"
+  },
+  {
+   "p": "Es el paso de un estado, etapa, asunto o lugar a otro diferente. También se entiende como un movimiento, desarrollo o evolución de una forma, etapa o estilo a otro."
+  },
+  {
+   "h2": "4. Diferencia de cambio vs. transición."
+  },
+  {
+   "tabla": {
+    "cols": [
+     "Cambio",
+     "Transición"
+    ],
+    "filas": [
+     [
+      "Es situacional: es lo que ocurre afuera, como una nueva estructura, un sistema distinto o un proceso rediseñado.",
+      "Es psicológica: es lo que pasa por dentro de las personas mientras asimilan lo que cambió."
+     ],
+     [
+      "Se puede decretar y tiene una fecha.",
+      "Se vive poco a poco y cada persona lleva su propio ritmo."
+     ]
+    ]
+   }
+  },
+  {
+   "p": "William Bridges lo resume así: sin una transición, un cambio es solo un reacomodo de muebles."
+  },
+  {
+   "h2": "5. ¿Cuáles son las etapas del ciclo de duelo aplicado al cambio?"
+  },
+  {
+   "p": "El ciclo del duelo aplicado al cambio (Myers Briggs) va de la crisis a la oportunidad y pasa por estas etapas, en este orden:"
+  },
+  {
+   "pasos": [
+    "Alivio: después de tantos rumores, por fin se sabe que sí está pasando.",
+    "Shock: la persona queda congelada, sin saber qué hacer ni cómo avanzar.",
+    "Negación: se piensa que no será tan grave o que es solo la moda del momento.",
+    "Enojo: aparecen los reclamos por la lealtad y el compromiso dados a la empresa.",
+    "Negociación: la persona busca opciones del tipo «si hago esto, entonces tal vez…».",
+    "Culpa: se cree que la situación es culpa propia o del equipo.",
+    "Pánico: surge el temor por lo que viene, por ejemplo cómo sostener a la familia.",
+    "Depresión: falta de energía y sensación de que no terminará bien.",
+    "Resignación: ya no hay nada que hacer salvo seguir adelante.",
+    "Aceptación: se reconoce que los cambios son necesarios y posiblemente beneficiosos.",
+    "Construcción: la persona ve maneras de contribuir con sus ideas y habilidades."
+   ]
+  },
+  {
+   "p": "El ciclo cierra en la oportunidad, cuando la persona se entusiasma con lo que aprende y con las posibilidades que ve."
+  },
+  {
+   "h2": "6. ¿Qué es la metodología para el desarrollo de un Sistema de Información?"
+  },
+  {
+   "p": "Es un conjunto de actividades que se llevan a cabo para desarrollar y poner en marcha un sistema de información. Las metodologías son sistemas completos de técnicas que incluyen procedimientos paso a paso, productos resultantes, funciones, herramientas y normas de calidad para cubrir el ciclo de vida completo del desarrollo. Sus objetivos son definir las actividades de un proyecto de SI, unificar criterios en la organización y dar puntos de control y revisión."
+  },
+  {
+   "h2": "7. ¿Cuáles son los tipos de metodologías para el desarrollo de un Sistema de Información?"
+  },
+  {
+   "bullets": [
+    "Estructurada.",
+    "Evolutiva-incremental.",
+    "Prototipos.",
+    "Orientada a objetos."
+   ]
+  },
+  {
+   "p": "En el material de estrategias de construcción también aparecen la cascada, el desarrollo rápido de aplicaciones (DRA) y la programación extrema (XP)."
+  },
+  {
+   "h2": "8. ¿Qué es la planificación de proyecto?"
+  },
+  {
+   "p": "Es la etapa que permite saber qué se deberá hacer, quién lo va a hacer y el tiempo estimado de terminación del proyecto, aunque sea de forma aproximada. También deja ver los obstáculos relevantes para tomar precauciones, da un marco de referencia para trabajar sin desperdiciar recursos y sirve para definir la metodología a seguir. Se apoya en herramientas como el cronograma de actividades y software de planificación como Project."
+  },
+  {
+   "h2": "9. ¿Cuáles son las razones para iniciar un proyecto?"
+  },
+  {
+   "bullets": [
+    "Mayor capacidad (velocidad, memoria, recursos).",
+    "Control.",
+    "Reducción de costos.",
+    "Alcanzar ventajas competitivas."
+   ]
+  },
+  {
+   "p": "Al proponer un proyecto, las razones de fondo son resolver un problema o una necesidad, aprovechar una oportunidad y brindar soluciones a los directivos."
+  },
+  {
+   "h2": "10. ¿Qué es el estudio de factibilidad?"
+  },
+  {
+   "p": "Es el primer paso del ciclo de desarrollo y determina si es posible o no dar una solución automatizada a los problemas o situaciones actuales. También reúne información amplia sobre la unidad para la que se va a desarrollar el sistema. Abarca tres factibilidades: la técnica (si existe la tecnología para hacer el sistema), la operativa (si habrá resistencia al cambio) y la económica (la relación costo/beneficio)."
+  },
+  {
+   "h2": "11. ¿Para qué sirve el análisis del proyecto?"
+  },
+  {
+   "p": "Amplía los resultados del estudio de factibilidad y define qué va a hacer el nuevo sistema. Para eso se definen los objetivos específicos, se identifican los usuarios y los procedimientos propuestos, se modelan el sistema actual y el propuesto (lógico y físico), se muestran los beneficios potenciales, se refinan el plan de trabajo y los costos y se elabora el diccionario de datos. Sus herramientas son las entrevistas y cuestionarios, las descripciones de procesos, los diagramas de flujo de datos y de procesos y el diccionario de datos."
+  },
+  {
+   "h2": "12. ¿Para qué sirve el diseño del proyecto?"
+  },
+  {
+   "p": "Genera las soluciones a los requerimientos planteados y define cómo lo va a hacer el nuevo sistema. Usa herramientas como UML, diagramas entidad-relación, diagramas estructurados, normalización y diccionario de datos, y define la base de datos. Aquí también se diseñan las salidas, que deben cumplir los objetivos, adaptarse al usuario, traer la cantidad adecuada de información y llegar a tiempo."
+  },
+  {
+   "h2": "13. ¿Para qué sirve la fase de programación?"
+  },
+  {
+   "p": "Sirve para traducir el diseño en instrucciones que la computadora pueda interpretar, es decir, generar el código fuente y el código objeto de la aplicación según los resultados del diseño. Sus actividades son la codificación, la compilación (corregir la sintaxis) y la depuración (corregir los errores de los programas)."
+  },
+  {
+   "h2": "14. ¿Qué significa poner un sistema en producción?"
+  },
+  {
+   "p": "Significa entregarlo al usuario para que lo use en su trabajo diario. La implantación abarca todas las actividades necesarias para llegar ahí: prueba, conversión, instalación de hardware y software, adiestramiento, documentación y entrega al usuario."
+  },
+  {
+   "h2": "15. ¿Por qué es importante la fase de mantenimiento?"
+  },
+  {
+   "p": "Porque sin apoyo continuo el sistema puede dejar de funcionar. El soporte permite que los usuarios lo usen de forma adecuada y que se hagan los ajustes necesarios para seguir aprovechando los recursos del sistema aunque el ambiente cambie. El mantenimiento consiste en modificar, corregir o mejorar los sistemas existentes y puede ser correctivo (elimina errores), perfectivo (añade nuevas funciones), adaptivo (modifica acciones) o preventivo (previene errores); las modificaciones menores se conocen como parches."
+  },
+  {
+   "h2": "16. ¿Qué dificultades se pueden encontrar en la fase de mantenimiento?"
+  },
+  {
+   "bullets": [
+    "Documentación inadecuada, obsoleta o inexistente.",
+    "Componentes complejos.",
+    "Componentes mal estructurados.",
+    "Poca familiaridad con las aplicaciones.",
+    "Presión del tiempo.",
+    "Falta de comunicación y participación de los usuarios.",
+    "Gran cantidad de requerimientos.",
+    "Gran cantidad de parches."
+   ]
+  },
+  {
+   "h2": "17. ¿Cuáles son las estrategias de construcción del software?"
+  },
+  {
+   "p": "Una estrategia es el conjunto de técnicas que incluye acciones planificadas para lograr un objetivo. Las estrategias de construcción pueden ser tradicionales, modernas e híbridas, y cada una se desarrolla bajo una metodología de desarrollo. Las metodologías que el material desarrolla son la cascada, la incremental, los prototipos, el desarrollo rápido de aplicaciones (DRA) y XP (Extreme Programming)."
+  },
+  {
+   "h2": "18. ¿Cuál es la característica de las estrategias de desarrollo tradicional (cascada)?"
+  },
+  {
+   "p": "Las actividades se llevan a cabo de manera secuencial: análisis, diseño, desarrollo, pruebas, implementación y mantenimiento, una después de la otra."
+  },
+  {
+   "h2": "19. ¿Cuál es la característica de las estrategias de desarrollo incremental (ágiles)?"
+  },
+  {
+   "p": "El desarrollo parte de los requisitos identificados y avanza con incrementos o versiones según los requerimientos. Cada incremento se desarrolla bajo un ciclo de vida, debe agregar funcionalidades o mejoras, se valida al terminar y se integra al todo. Se necesitan etapas validadas por el usuario para no cambiar los resultados anteriores."
+  },
+  {
+   "p": "En XP, una metodología ágil, el desarrollo es iterativo e incremental con entregas a corto plazo, el software se adapta a medida que aparecen nuevos requerimientos, el cliente forma parte del equipo y la retroalimentación es constante."
+  },
+  {
+   "h2": "20. ¿Qué son los prototipos?"
+  },
+  {
+   "p": "Consisten en elaborar un modelo del sistema para evaluar los requisitos obtenidos. Si solo muestran una vista general y estática de la interfaz, son prototipos de baja fidelidad; si son modelos dinámicos con el conjunto de pantallas y algunas funciones principales, son de alta fidelidad. Sus etapas son recolección y refinamiento de requisitos, diseño rápido, construcción del prototipo, evaluación por el cliente, refinamiento del prototipo y producción del software o sistema."
+  },
+  {
+   "h2": "21. ¿Qué son las entrevistas?"
+  },
+  {
+   "p": "Son una técnica de exploración en la que el analista de sistemas recolecta información de las personas mediante la interacción cara a cara. Es una conversación dirigida con un propósito específico, en formato de preguntas y respuestas, para conocer las opiniones del entrevistado sobre el estado actual del sistema y los objetivos de la organización. Pueden ser no estructuradas, con un tema general y preguntas abiertas, o estructuradas, con un conjunto específico de preguntas que tienden a ser cerradas."
+  },
+  {
+   "h2": "22. Mencione ventajas y desventajas de las entrevistas."
+  },
+  {
+   "tabla": {
+    "cols": [
+     "Ventajas",
+     "Desventajas"
+    ],
+    "filas": [
+     [
+      "Motivan al entrevistado a responder libre y abiertamente y le dan la percepción de que contribuye al proyecto.",
+      "Consumen mucho tiempo y por eso resultan muy costosas."
+     ],
+     [
+      "Permiten obtener más retroalimentación del entrevistado.",
+      "El éxito depende mucho de las habilidades de relaciones humanas del analista."
+     ],
+     [
+      "El analista puede adaptar o parafrasear las preguntas para cada persona.",
+      "Pueden ser impracticables por la ubicación del entrevistado."
+     ],
+     [
+      "Permiten observar la comunicación no oral: movimientos corporales y expresiones faciales.",
+      ""
+     ]
+    ]
+   }
+  },
+  {
+   "h2": "23. ¿Qué son las preguntas abiertas?"
+  },
+  {
+   "p": "Son las que permiten al entrevistado responder de cualquier manera que le parezca apropiada. Ayudan a que baje la guardia, aportan muchos detalles y abren vías de cuestionamiento nuevas; pero pueden generar detalles irrelevantes, hacer perder el control de la entrevista y dar la impresión de que el entrevistador anda de pesca. Un ejemplo: «¿Cuáles son los objetivos críticos de su departamento?»."
+  },
+  {
+   "h2": "24. ¿Qué son las preguntas cerradas?"
+  },
+  {
+   "p": "Son las que restringen las respuestas a selecciones específicas o a respuestas cortas y directas. Ahorran tiempo, van al grano, mantienen el control y facilitan comparar entrevistas; en cambio resultan aburridas para el entrevistado y no dan detalles adicionales. Un ejemplo: «¿Cuántas veces por semana se actualiza el repositorio del proyecto?»."
+  },
+  {
+   "h2": "25. ¿Qué son los cuestionarios?"
+  },
+  {
+   "p": "Son documentos que permiten al analista recabar información y opiniones de los encuestados. Se pueden producir en gran cantidad y distribuir para que cada persona los llene cuando tenga tiempo. Las respuestas a preguntas cerradas se pueden cuantificar, mientras que las de preguntas abiertas se analizan e interpretan de otras formas. Según su formato, pueden ser de formato libre (el encuestado responde en el espacio provisto) o de formato fijo (se escoge entre respuestas predefinidas, lo que facilita la tabulación)."
+  },
+  {
+   "h2": "26. Mencione ventajas y desventajas de los cuestionarios."
+  },
+  {
+   "tabla": {
+    "cols": [
+     "Ventajas",
+     "Desventajas"
+    ],
+    "filas": [
+     [
+      "La mayoría se responde rápidamente y se devuelve con comodidad.",
+      "Con frecuencia el número de encuestados que responde es bajo."
+     ],
+     [
+      "Son un medio relativamente barato de recopilar datos de muchas personas.",
+      "No hay garantía de que la persona responda todas las preguntas."
+     ],
+     [
+      "Permiten el anonimato, por lo que es más probable que den los hechos reales.",
+      "Son inflexibles: no se pueden parafrasear preguntas mal interpretadas ni obtener información voluntaria."
+     ],
+     [
+      "Las respuestas se tabulan y analizan rápidamente.",
+      "El analista no puede observar el lenguaje corporal ni aclarar de inmediato una respuesta vaga o incompleta."
+     ],
+     [
+      "",
+      "Los buenos cuestionarios son difíciles de preparar."
+     ]
+    ]
+   }
+  },
+  {
+   "h2": "27. ¿Qué es la observación?"
+  },
+  {
+   "p": "Es una técnica de recolección de datos en la que el analista se convierte en observador de las personas y sus actividades para aprender cómo funciona el sistema. Se usa sobre todo cuando se duda de la validez de los datos recolectados con otros métodos o cuando la complejidad del sistema impide que los usuarios finales lo expliquen con claridad."
+  },
+  {
+   "h2": "28. Mencione ventajas y desventajas de la observación."
+  },
+  {
+   "tabla": {
+    "cols": [
+     "Ventajas",
+     "Desventajas"
+    ],
+    "filas": [
+     [
+      "Los datos pueden ser muy confiables y sirven para verificar los obtenidos de las personas.",
+      "La gente se siente incómoda al ser vigilada y puede comportarse distinto."
+     ],
+     [
+      "El analista ve exactamente lo que se hace y detecta tareas omitidas o descritas con inexactitud, además del ambiente físico.",
+      "El trabajo observado puede no tener la dificultad o el volumen normales."
+     ],
+     [
+      "Es relativamente barata frente a otras técnicas.",
+      "Algunas actividades ocurren a horas inconvenientes para el analista."
+     ],
+     [
+      "Permite hacer mediciones de trabajo.",
+      "Las tareas están sujetas a interrupciones y pueden no hacerse siempre igual."
+     ],
+     [
+      "",
+      "Quien viola los procedimientos estándar puede hacerlo bien temporalmente mientras lo observan."
+     ]
+    ]
+   }
+  },
+  {
+   "h2": "29. ¿Cuáles son los elementos del modelo Entidad-Relación?"
+  },
+  {
+   "bullets": [
+    "**Entidad:** objeto, real o abstracto, distinguible de otros objetos, como un libro concreto o un escritor. El grupo de entidades con cualidades similares forma un tipo o conjunto de entidades.",
+    "**Atributo:** propiedad asociada a un conjunto de entidades, como el título o el ISBN de un libro. Cada atributo tiene un conjunto de valores permitidos llamado dominio.",
+    "**Clave:** conjunto de atributos que identifica unívocamente a una entidad dentro de su conjunto, por ejemplo el ISBN del libro.",
+    "**Relación:** conexión o asociación semántica entre dos conjuntos de entidades, como la que une a los escritores con los libros que han escrito."
+   ]
+  },
+  {
+   "salto": true
+  },
+  {
+   "h2": "30. ¿De qué forma se pueden encontrar las claves de las relaciones entre entidades?"
+  },
+  {
+   "p": "Las claves de las relaciones se definen a partir de las claves de las entidades relacionadas, según la cardinalidad:"
+  },
+  {
+   "tabla": {
+    "cols": [
+     "Tipo de relación",
+     "Clave de la relación"
+    ],
+    "filas": [
+     [
+      "Muchos a muchos (N:M)",
+      "La clave primaria es la unión de las claves primarias de las entidades que participan."
+     ],
+     [
+      "Uno a muchos (1:N)",
+      "La clave primaria de la entidad que interviene con el lado N."
+     ],
+     [
+      "Uno a uno (1:1)",
+      "Las claves primarias de las entidades participantes son claves candidatas de la relación."
+     ]
+    ]
+   }
+  }
+ ],
+ "conclusion": [],
+ "referencias": [
+  "Clarence, I. (2026). 3.1 El cambio organizacional [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP.",
+  "Clarence, I. (2026). 3.2 Aspectos lógicos y técnicos para la aplicación de metodologías de desarrollo y evaluación de sistemas [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP.",
+  "Clarence, I. (2026). 3.2.1 Metodologías para el desarrollo de sistemas [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP.",
+  "Clarence, I. (2026). 3.3 Técnicas de recolección de datos: Entrevistas, Cuestionarios [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP.",
+  "Clarence, I. (2026). 3.4 Modelado de datos [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP."
+ ]
+}

@@ -89,6 +89,7 @@ Para cualquier otra fuente, skill `investigacion-apa`: se busca, se verifica y r
 - Fecha de portada en formato `AAAA.MM.DD`, como en la plantilla.
 - Los enunciados y el material de cada lab están en la carpeta «Documentos / Laboratorios» del Moodle y adjuntos en cada tarea.
 - Moodle cierra la tarea en la fecha de cierre: después ya no aparece «Agregar entrega».
+- **Oracle APEX:** en cada captura tiene que verse el pie inferior izquierdo de APEX con el usuario (`gerald.rios@utp.ac.pa`), el workspace (`shzzzz`) y el idioma. Es la constancia de que el trabajo es de su workspace (Gerald, 25/10/2026).
 
 ## Formato específico
 

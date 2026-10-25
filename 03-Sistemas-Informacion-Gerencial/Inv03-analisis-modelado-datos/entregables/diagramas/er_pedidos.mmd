@@ -1,0 +1,26 @@
+%%{init: {'theme':'default'}}%%
+erDiagram
+    CLIENTE ||--o{ PEDIDO : realiza
+    PEDIDO ||--|{ DETALLE_PEDIDO : contiene
+    PRODUCTO ||--o{ DETALLE_PEDIDO : aparece_en
+    CLIENTE {
+        int id_cliente PK
+        string nombre
+        string telefono
+        string ciudad
+    }
+    PEDIDO {
+        int id_pedido PK
+        date fecha
+        int id_cliente FK
+    }
+    DETALLE_PEDIDO {
+        int id_pedido PK,FK
+        int id_producto PK,FK
+        int cantidad
+    }
+    PRODUCTO {
+        int id_producto PK
+        string descripcion
+        decimal precio
+    }

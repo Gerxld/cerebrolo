@@ -1,0 +1,270 @@
+{
+ "tipo": "CUESTIONARIO",
+ "lab": 2,
+ "titulo": "Capítulo II – Tecnologías de la Información",
+ "fecha": "2026.10.27",
+ "salida": "Cuest02_SIG_Rios_Gerald",
+ "contenido": [
+  {
+   "h2": "1. ¿Qué es el software?"
+  },
+  {
+   "p": "Es la parte intangible del computador, es decir, lo que no se puede ver ni tocar. Está formado por los programas y aplicaciones que permiten interactuar con una computadora, una tablet o un celular y realizar tareas en ellos. Son las instrucciones que le indican al hardware, la parte física, lo que debe hacer."
+  },
+  {
+   "h2": "2. ¿Qué es el software libre?"
+  },
+  {
+   "p": "Es el conjunto de aplicaciones que se pueden instalar y utilizar de forma libre y gratuita (freeware) en el computador, sin que el usuario tenga que pagar por ellas. Ejemplos: Linux, MySQL, Inkscape, Scribus, GIMP, OpenOffice, Visual Studio Code y Blender. Se contrapone al software de pago, que exige comprar la licencia para usar la versión completa y sin restricciones, como Windows, Microsoft Office o Photoshop."
+  },
+  {
+   "p": "Conviene aclarar que «libre» se refiere a la libertad del usuario y no al precio. Según la definición de Richard Stallman, el software libre permite ejecutar el programa con cualquier propósito, estudiar cómo funciona y modificarlo (para eso se necesita el código fuente), redistribuir copias y distribuir versiones modificadas. Por eso el software libre no es necesariamente gratuito, y un programa gratuito (freeware) no siempre es libre si no entrega su código ni permite modificarlo (Software libre, s.f.)."
+  },
+  {
+   "h2": "3. ¿Qué es el sistema operativo?"
+  },
+  {
+   "p": "Es el programa básico que gestiona todos los recursos del computador y facilita su uso eficiente. Es el software principal de un dispositivo y sirve de plataforma para instalar otros programas. Actúa como intermediario entre el hardware y los programas del usuario. Ejemplos: Windows, Linux, Android e iOS."
+  },
+  {
+   "p": "Sus funciones principales son:"
+  },
+  {
+   "bullets": [
+    "Coordinar y administrar el hardware: procesador, memoria, impresoras, discos, teclado y mouse.",
+    "Ejecutar programas cargándolos en memoria.",
+    "Manejar las operaciones de entrada y salida.",
+    "Organizar los archivos y carpetas en los dispositivos de almacenamiento.",
+    "Informar de los errores de los dispositivos y proteger los datos y programas."
+   ]
+  },
+  {
+   "h2": "4. ¿Qué es el software de aplicación?"
+  },
+  {
+   "p": "Son los programas diseñados para facilitar al usuario la realización de un tipo de trabajo concreto, como llevar la contabilidad o la gestión de un almacén. Se diferencia del sistema operativo, que hace funcionar el computador, y de los lenguajes, con los que se crean los programas. Puede ser estándar o hecho a medida. Algunos ejemplos son:"
+  },
+  {
+   "bullets": [
+    "Procesadores de texto: Microsoft Word y Google Docs.",
+    "Hojas de cálculo: Excel y Google Sheets.",
+    "Bases de datos: Access, MySQL y MongoDB.",
+    "Presentaciones: PowerPoint y Google Slides.",
+    "Diseño: Photoshop, GIMP y Canva.",
+    "Aplicaciones web: Gmail e Instagram."
+   ]
+  },
+  {
+   "h2": "5. ¿Qué es un virus?"
+  },
+  {
+   "p": "Es un programa que se oculta dentro de otros programas y se copia a sí mismo, es decir, se reproduce. Suele pegarse a archivos ejecutables (COM o EXE), aunque también a archivos de datos como DOC o XLS, o al sector de arranque del disco. Se transmite por disquetes, redes y correo electrónico. Existen variantes como los gusanos y los caballos de Troya, y pueden ser benignos o malignos."
+  },
+  {
+   "p": "Para protegerse conviene evitar programas y dispositivos de procedencia dudosa, mantener copias de seguridad, abrir los anexos del correo solo si se confía en ellos y usar un antivirus actualizado, que detecta y elimina los virus."
+  },
+  {
+   "h2": "6. ¿Qué factores influyen en la conexión?"
+  },
+  {
+   "bullets": [
+    "El medio de conexión: cable, inalámbrico o radioondas.",
+    "Los adaptadores de señal, por ejemplo el que convierte la señal de radio en eléctrica.",
+    "Los protocolos, que son los «idiomas» entre los ordenadores.",
+    "La compatibilidad entre los equipos y los sistemas operativos.",
+    "La seguridad y la privacidad de los datos.",
+    "Las colisiones de comunicaciones simultáneas.",
+    "La búsqueda de rutas entre los ordenadores."
+   ]
+  },
+  {
+   "h2": "7. ¿Qué es una red?"
+  },
+  {
+   "p": "Es un conjunto de dos o más ordenadores que pueden intercambiar información. Su alcance puede ser una habitación, un edificio, una ciudad o un país. No hace falta una conexión directa entre los equipos, porque pueden usarse intermediarios, como el WiFi. Varias subredes independientes se pueden combinar en una red mayor."
+  },
+  {
+   "h2": "8. ¿Cuáles son los medios de transmisión físicos?"
+  },
+  {
+   "bullets": [
+    "**Par trenzado:** el cable telefónico, con parejas de cables torsionados para reducir las interferencias. Alcanza de 10 a 100 Mbps. Es económico y muy usado.",
+    "**Cable coaxial:** el cable de antena de TV. Resiste mejor las interferencias y es más caro. Puede ser fino o grueso.",
+    "**Fibra óptica:** un hilo de cristal o plástico que transmite luz (láser). Llega a 2 Gbps, es inmune a las interferencias y muy seguro, pero es muy costosa.",
+    "**Radioenlaces:** ondas electromagnéticas con repetidores (cada 50 km) y satélites geoestacionarios. Ofrecen un gran ancho de banda."
+   ]
+  },
+  {
+   "h2": "9. ¿Cuáles son los medios de transmisión inalámbricos?"
+  },
+  {
+   "p": "En el material del curso se presentan tres tecnologías:"
+  },
+  {
+   "bullets": [
+    "**Wi-Fi:** conecta equipos como laptops, tablets y celulares a un enrutador sin cables.",
+    "**Bluetooth:** enlace de corto alcance entre dispositivos, por ejemplo entre dos celulares.",
+    "**WiMAX:** conexión inalámbrica de mayor alcance, mediante torres de telefonía y satélites."
+   ]
+  },
+  {
+   "h2": "10. ¿Qué es un módem?"
+  },
+  {
+   "p": "Es un adaptador de señal. Su nombre viene de MOdulador-DEModulador y convierte las señales analógicas en digitales y viceversa, lo que permite que un ordenador se comunique por una línea que transporta señales analógicas. Puede ser interno o externo."
+  },
+  {
+   "h2": "11. ¿Qué es un protocolo?"
+  },
+  {
+   "p": "Es un conjunto de normas que definen cómo se «conversa» en una red: cómo se inicia y termina la comunicación, cómo se confirma la recepción y cómo se notifican los errores. Dos ordenadores necesitan usar el mismo protocolo para poder comunicarse. Existen muchos, según el fabricante y el tipo de servicio; el más conocido es TCP/IP, que usa Internet. Otro ejemplo es IPX."
+  },
+  {
+   "h2": "12. ¿Según su topología, cuáles son los tipos de redes?"
+  },
+  {
+   "bullets": [
+    "**Estrella:** todo pasa por un nodo central, que centraliza las operaciones y las comunicaciones. Si el nodo central falla, falla toda la red.",
+    "**Anillo:** los nodos forman un camino unidireccional cerrado. Si falla un nodo, falla la red, y es difícil de extender porque hay que interrumpirla.",
+    "**Bus:** un camino bidireccional al que se conectan todos los equipos. Todos reciben el mensaje y cada uno decide si lo lee según el destinatario.",
+    "**Hub (concentrador):** funciona como un enchufe al que se conectan los equipos. Es una variante del bus, muy extensible y muy utilizada."
+   ]
+  },
+  {
+   "h2": "13. ¿A qué se refiere el término de velocidad de internet?"
+  },
+  {
+   "p": "Es la capacidad de rendimiento de una conexión para intercambiar datos entre Internet y el dispositivo de una persona. Está determinada por el ancho de banda, es decir, por la cantidad de datos que se transfiere en un tiempo determinado. Se mide en megabits por segundo (Mbps) y en kilobits por segundo (Kbps): una conexión de 1 Mbps es unas 1.000 veces más rápida que una de 1 Kbps."
+  },
+  {
+   "h2": "14. ¿Qué es el ancho de banda?"
+  },
+  {
+   "p": "Es la cantidad máxima de datos que se pueden transmitir a través de una conexión, y es clave para su calidad y su velocidad. Antes se medía en bits por segundo (bps), pero al crecer las redes pasó a medirse en megabits (Mbps), gigabits (Gbps) o terabits por segundo (Tbps)."
+  },
+  {
+   "h2": "15. Diga ejemplos de la parte oscura de las comunicaciones."
+  },
+  {
+   "bullets": [
+    "Las noticias falsas (fake news), porque cualquiera puede publicar cualquier información.",
+    "La publicación de contenido ilegal: pornografía infantil, propaganda terrorista y racista, software comercial pirata, música pirateada y cracks de programas.",
+    "La interceptación de comunicaciones de terceros y el descifrado de información confidencial, como datos bancarios y números de tarjetas en el comercio electrónico, con la encriptación y la privacidad vulneradas.",
+    "El acceso a información personal, como el correo electrónico, y el bombardeo publicitario.",
+    "El acceso a ordenadores privados para destruir o modificar información.",
+    "La distribución de virus.",
+    "La dependencia psicológica de Internet.",
+    "Los perjuicios económicos, domésticos o para la empresa.",
+    "Una brecha mayor entre países pobres y ricos."
+   ]
+  },
+  {
+   "h2": "16. ¿Qué es una base de datos?"
+  },
+  {
+   "p": "Es un conjunto de datos relacionados entre sí; una colección de archivos interrelacionados creados con un DBMS (sistema manejador de base de datos). Reúne la información de una organización de manera que esté disponible para los usuarios, y una de sus finalidades es eliminar la redundancia o al menos minimizarla. Sus componentes principales son el hardware, el software DBMS, los datos y el personal que maneja el sistema."
+  },
+  {
+   "h2": "17. ¿Cuáles son las sentencias de Data Manipulation Language?"
+  },
+  {
+   "p": "El DML (lenguaje de manipulación de datos) permite introducir datos y luego consultarlos o modificarlos. Sus sentencias son SELECT, INSERT, UPDATE y DELETE."
+  },
+  {
+   "code": "SELECT nombre, edad FROM estudiantes WHERE edad > 20;\nINSERT INTO estudiantes (id, nombre, edad) VALUES (1, 'Ana', 22);\nUPDATE estudiantes SET edad = 23 WHERE id = 1;\nDELETE FROM estudiantes WHERE id = 1;"
+  },
+  {
+   "h2": "18. ¿Cuáles son las sentencias de Data Definition Language?"
+  },
+  {
+   "p": "El DDL (lenguaje de definición de datos) sirve para especificar el esquema, es decir, la estructura de la base de datos. Sus sentencias son CREATE, ALTER, DROP y TRUNCATE."
+  },
+  {
+   "code": "CREATE TABLE estudiantes (id INT PRIMARY KEY, nombre VARCHAR(50));\nALTER TABLE estudiantes ADD edad INT;\nTRUNCATE TABLE estudiantes;\nDROP TABLE estudiantes;"
+  },
+  {
+   "h2": "19. ¿Cuáles son las sentencias de Data Control Language?"
+  },
+  {
+   "p": "El DCL (lenguaje de control de datos) permite al administrador controlar el acceso a los objetos, es decir, otorgar o denegar permisos a uno o más roles. En el material del curso sus sentencias son GRANT, REVOKE, ROLLBACK y COMMIT. En muchos textos COMMIT y ROLLBACK se separan en un grupo aparte, el TCL (control de transacciones), porque confirman o deshacen cambios en lugar de manejar permisos."
+  },
+  {
+   "code": "GRANT SELECT, INSERT ON estudiantes TO usuario1;\nREVOKE INSERT ON estudiantes FROM usuario1;\nCOMMIT;\nROLLBACK;"
+  },
+  {
+   "h2": "20. ¿Cuáles son los objetivos principales de una base de datos?"
+  },
+  {
+   "p": "Los objetivos principales de un sistema de base de datos son disminuir los siguientes problemas:"
+  },
+  {
+   "bullets": [
+    "**Redundancia e inconsistencia de datos:** que la misma información se guarde más de una vez y las copias no coincidan entre sí.",
+    "**Dificultad para tener acceso a los datos:** que no exista una consulta para una solicitud que no se previó en el diseño.",
+    "**Aislamiento de los datos:** que estén repartidos en varios archivos con formatos distintos, lo que complica escribir nuevos programas.",
+    "**Anomalías del acceso concurrente:** que varios usuarios actualicen los datos a la vez y los dejen inconsistentes.",
+    "**Problemas de seguridad:** que usuarios no autorizados vean información que no les corresponde.",
+    "**Problemas de integridad:** que los datos no cumplan las restricciones de consistencia definidas."
+   ]
+  },
+  {
+   "h2": "21. ¿Qué es una transacción?"
+  },
+  {
+   "p": "Es un intercambio entre un usuario que opera una terminal y un sistema de procesamiento de datos. En una base de datos es un proceso atómico que puede involucrar operaciones de inserción, modificación y borrado de datos. La transacción queda confirmada con un commit; si falla antes, se deshace (rollback) y la base de datos vuelve a un estado consistente."
+  },
+  {
+   "h2": "22. ¿Qué es la normalización?"
+  },
+  {
+   "p": "Es el proceso mediante el cual se transforman datos complejos en un conjunto de estructuras más pequeñas, más simples y más estables, que son más fáciles de mantener. Consiste en aplicar una serie de reglas a las relaciones que resultan de pasar del modelo entidad-relación al modelo relacional. Se hace para evitar la redundancia de los datos, evitar problemas de actualización y proteger la integridad de los datos."
+  },
+  {
+   "p": "Los grados de normalización son tres:"
+  },
+  {
+   "bullets": [
+    "**Primera forma normal (1FN):** elimina los grupos repetidos.",
+    "**Segunda forma normal (2FN):** todas las columnas que no son llave dependen por completo de la llave primaria.",
+    "**Tercera forma normal (3FN):** elimina las dependencias transitivas, es decir, las columnas no llave que dependen de otras columnas no llave."
+   ]
+  },
+  {
+   "h2": "23. ¿Qué es la minería de datos o Data Mining?"
+  },
+  {
+   "p": "Es un proceso de descubrimiento de nuevas y significativas relaciones, patrones y tendencias al examinar grandes cantidades de datos. Surge porque las empresas manejan cada vez más datos y existen herramientas informáticas para extraer de ellos el conocimiento adecuado. Se aplica sobre el Data Warehouse, junto con otras técnicas como OLAP, para explotar la información."
+  },
+  {
+   "h2": "24. ¿Qué es un almacén de datos (Data Warehouse)?"
+  },
+  {
+   "p": "Es un conjunto de datos orientados a temas, integrado, variante en el tiempo y no volátil, que da soporte al proceso de toma de decisiones. Reúne información histórica, interna o externa, de una o más fuentes, depurada y organizada para resumirla, describirla y analizarla. Para Ralph Kimball, es «una copia de las transacciones de datos específicamente estructurada para la consulta y el análisis»."
+  },
+  {
+   "p": "Sus cuatro características son:"
+  },
+  {
+   "bullets": [
+    "**Orientado a temas:** la información se organiza por los temas principales de la organización, como clientes, productos o ventas.",
+    "**Integrado:** los datos de distintas fuentes se unifican en codificación, nombres y unidades de medida.",
+    "**Variante en el tiempo:** conserva un histórico de los datos y permite detectar tendencias.",
+    "**No volátil:** la información se lee, pero no se modifica; los datos anteriores se mantienen."
+   ]
+  },
+  {
+   "p": "Su ventaja fundamental es que separa el análisis de los datos de las bases de datos transaccionales (OLTP), de modo que no se perturba el trabajo operativo."
+  }
+ ],
+ "conclusion": [],
+ "referencias": [
+  "Clarence, I. (2026). 2.2 El Software [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP.",
+  "Clarence, I. (2026). 2.2.1 Software Tools [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP.",
+  "Clarence, I. (2026). 2.3 Telecomunicaciones e Internet [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP.",
+  "Clarence, I. (2026). 2.4.1 Definición de términos en el entorno de una base de datos [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP.",
+  "Clarence, I. (2026). 2.4.3 Generalidades sobre la organización del gestor de bases de datos [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP.",
+  "Clarence, I. (2026). 2.4.5 Normalización de la base de datos [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP.",
+  "Clarence, I. (2026). 2.4.9 Almacenes de Datos [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP.",
+  "Software libre. (s.f.). En Wikipedia, la enciclopedia libre. Recuperado el 25 de octubre de 2026, de https://es.wikipedia.org/wiki/Software_libre"
+ ]
+}

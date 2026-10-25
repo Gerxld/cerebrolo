@@ -1,0 +1,79 @@
+{
+ "tipo": "CUESTIONARIO",
+ "lab": 1,
+ "titulo": "Capítulo I – Sistemas de Información",
+ "fecha": "2026.10.27",
+ "salida": "Cuest01_SIG_Rios_Gerald",
+ "contenido": [
+  {"h2": "1. ¿Cuándo se origina la teoría general de sistemas (TGS)?"},
+  {"p": "La TGS se origina entre 1950 y 1968 con los trabajos del biólogo alemán Ludwig von Bertalanffy. Desde entonces sirvió de base para integrar el conocimiento de distintas ciencias y para formular teorías que se pueden aplicar a la realidad."},
+
+  {"h2": "2. ¿Qué es el enfoque de sistemas?"},
+  {"p": "Es un método de investigación y una forma de pensar que pone el énfasis en el sistema total y no en los sistemas componentes. Busca optimizar la eficacia del sistema completo, en lugar de mejorar la de sistemas cerrados por separado. Parte de una visión no reduccionista del análisis y se considera un medio fundamental para resolver problemas de cualquier tipo."},
+
+  {"h2": "3. ¿Cuáles son las premisas de la TGS?"},
+  {"p": "La TGS se fundamenta en tres premisas básicas:"},
+  {"bullets": ["Los sistemas existen dentro de sistemas.", "Los sistemas son abiertos.", "Las funciones de un sistema dependen de su estructura."]},
+
+  {"h2": "4. ¿Qué es un sistema?"},
+  {"p": "Es el conjunto organizado de cosas o partes interactuantes e interdependientes que se relacionan formando un todo. Para que un grupo de partes se considere un sistema, la conducta de una parte debe afectar a las demás y la conducta de las partes debe afectar al todo, y viceversa."},
+
+  {"h2": "5. ¿Qué son sistemas rígidos?"},
+  {"p": "Son sistemas no vivientes en los que importa la causa. Son sistemas cerrados, de simplicidad organizada, y pueden tener retroalimentación o no. Un ejemplo son los sistemas mecánicos y físicos."},
+
+  {"h2": "6. ¿Qué son sistemas flexibles?"},
+  {"p": "Son sistemas vivientes en los que interesan las consecuencias y que tienen complejidad organizada. Son sistemas abiertos, porque intercambian información, energía y materia con su ambiente, y se adaptan para sobrevivir. Los sistemas sociales y los biológicos son ejemplos."},
+
+  {"h2": "7. ¿Cuáles son los elementos de un sistema de información?"},
+  {"p": "Un sistema de información (SI) es un conjunto organizado de:"},
+  {"bullets": ["Personas, para operar.", "Hardware, para procesar.", "Software, para analizar, planear, controlar y decidir.", "Bases de datos, para almacenar.", "Procedimientos, para captar datos.", "Actividades o técnicas de trabajo.", "Recursos informáticos y de comunicación."]},
+  {"p": "Cuando el material describe lo que incluye un SI, lo resume en seis componentes: equipo computacional, recurso humano, datos o información fuente (la entrada), programas (software), telecomunicaciones y procedimientos (políticas y reglas de operación)."},
+
+  {"h2": "8. ¿Qué son los datos?"},
+  {"p": "Son la materia prima de la información. Por sí mismos no tienen capacidad de comunicar un significado. Por ejemplo, «García», «943725057», «Patricia», «16.5» e «Ingeniería» son datos sueltos que no dicen nada hasta que se procesan."},
+
+  {"h2": "9. ¿Qué es información?"},
+  {"p": "Son datos que han sido procesados y analizados, lo que les da significado, propósito y utilidad para usuarios finales específicos. Siguiendo el ejemplo anterior, al procesar los datos se obtiene que Patricia García es egresada de la Facultad de Ingeniería, tiene un promedio ponderado de 16.5 y se le puede contactar por teléfono."},
+
+  {"h2": "10. ¿Qué es conocimiento?"},
+  {"p": "Es la capacidad para convertir la información en acciones efectivas y resolver un problema. Es una mezcla de reglas, interpretaciones, valores, información y conexiones puestas dentro de un contexto y de una experiencia dentro de la organización, además del «saber hacer», y resulta útil para la toma de decisiones. En el ejemplo, la empresa usa la información de Patricia y su política de contratar perfiles con buenos calificativos para decidir invitarla como asistente de gerencia."},
+
+  {"h2": "11. ¿Cuáles son los principios de la administración?"},
+  {"p": "Según el material del curso, son cinco:"},
+  {"bullets": ["Planeamiento.", "Organización.", "Dirección.", "Coordinación.", "Control."]},
+
+  {"h2": "12. ¿Cuáles son las dimensiones en la calidad de información en una organización?"},
+  {"p": "Son tres dimensiones:"},
+  {"bullets": ["**Tiempo:** la información debe estar disponible cuando se necesita, en el momento oportuno.", "**Contenido:** debe darse sin errores, ser relevante para lo que se analiza, y completa, no parcial.", "**Forma:** debe presentarse de manera sencilla de entender, detallada o resumida, y ordenada con criterio."]},
+
+  {"h2": "13. ¿Cuáles son las actividades básicas de un Sistema de Información?"},
+  {"p": "Son cuatro:"},
+  {"bullets": ["**Entrada de información:** puede ser manual o automática, mediante interfaces.", "**Almacenamiento de información:** permite guardar y recuperar la información en archivos y bases de datos.", "**Procesamiento de la información:** efectúa cálculos según una secuencia de operaciones preestablecidas.", "**Salida de información:** saca al exterior la información procesada o los datos de entrada, por ejemplo con impresoras o plotters."]},
+  {"p": "Además, el material presenta el ciclo de actividades que producen información (entrada, procesamiento, salida y retroalimentación), donde la retroalimentación vuelve a alimentar el sistema dentro de su organización y su entorno."},
+
+  {"h2": "14. ¿Cuáles son los tipos de sistemas de información?"},
+  {"p": "El material los clasifica en tres tipos:"},
+  {"bullets": ["**Sistemas transaccionales:** son el primer tipo que se implanta en las organizaciones. Apoyan las tareas del nivel operativo, tienen mucha entrada y salida de información, con cálculos simples, y funcionan como recolectores de datos. Ejemplos: facturación, nóminas y cuentas por cobrar.", "**Sistemas de apoyo a las decisiones:** se instalan después de los transaccionales. Su información sirve a los mandos intermedios y a la alta gerencia para la toma de decisiones. Hacen muchos cálculos y tienen pocas entradas y salidas. Ejemplo: un sistema de simulación de negocios para evaluar el lanzamiento de un producto.", "**Sistemas estratégicos:** su función no es apoyar los procesos operativos ni las decisiones, aunque pueden hacerlo. Buscan crear barreras de entrada al negocio, lograr ventajas que los competidores no tienen (costos, diferenciación, clientes y proveedores) y apoyar la innovación de productos y procesos. Ejemplos: CRM, SCM y comercio electrónico."]},
+
+  {"h2": "15. ¿Qué es automatizar?"},
+  {"p": "Es realizar algo en forma automática, es decir, con la mínima intervención humana. La cantidad de intervención humana que necesita una tarea determina su grado de automatización, y solo si la tarea se efectúa sin intervención humana alguna se dice que está totalmente automatizada. Ejemplos del material son una tienda de alquiler de videos con etiquetas y una tienda de abarrotes con códigos de barra y tarjetas."},
+
+  {"h2": "16. ¿Razones para automatizar?"},
+  {"p": "La razón principal es aumentar la productividad, y esta debe poder medirse para saber si realmente hubo un incremento. Además, el material da cinco razones, conocidas como las cinco C:"},
+  {"bullets": ["**Capacidad:** producir, por ejemplo, estados de cuenta más rápido y entregarlos a tiempo al cliente.", "**Control:** mayor exactitud y consistencia en la información y en los cálculos.", "**Comunicación:** mejor comunicación e integración entre las áreas de la organización.", "**Costo:** supervisión y reducción de costos.", "**Competitividad:** atraer clientes, mejorar los servicios y ofrecer productos nuevos y originales."]},
+
+  {"h2": "17. ¿Cuándo automatizar?"},
+  {"p": "Cuando es necesario actualizar el equipo y los procedimientos existentes en la oficina. Reconocer ese momento es una característica fundamental de la persona visionaria que automatiza con éxito. Para hacerlo se requiere tener conocimientos mínimos de los equipos existentes, sistematizar, saber cómo organizar un proceso de automatización (análisis de sistemas, auditoría de sistemas, metodología de la investigación) y considerar el costo y el presupuesto de la empresa."},
+
+  {"h2": "18. ¿Qué no es automatizar?"},
+  {"p": "Según el material, no es automatizar:"},
+  {"bullets": ["Poner a funcionar equipo de cómputo.", "Comprar equipo de comunicaciones.", "Hacer cambios en los procedimientos.", "Utilizar MS Office para tareas.", "Cambiar procedimientos sin estudiar el equipo que se requiere."]},
+  {"p": "Todas estas acciones, hechas de forma aislada, pueden echar a la borda un proceso de automatización."}
+ ],
+ "conclusion": [],
+ "referencias": [
+  "Clarence, I. (2026). 1.1 Teoría General de Sistemas [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP.",
+  "Clarence, I. (2026). 1.2 El sistema de información [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP.",
+  "Clarence, I. (2026). 1.3 Tipos de Sistemas de Información [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP."
+ ]
+}

@@ -1,0 +1,198 @@
+{
+ "tipo": "INVESTIGACIÓN",
+ "lab": 3,
+ "titulo": "Técnicas de análisis y modelado de datos",
+ "fecha": "2026.10.27",
+ "salida": "Inv03_SIG_Rios_Gerald",
+ "contenido": [
+  {
+   "p": "Antes de construir un sistema de información hay que saber qué necesita la organización y cómo se van a representar los datos que ese sistema va a guardar. Lo primero es el análisis, que consiste en recolectar requerimientos con las personas que usarán el sistema. Lo segundo es el modelado de datos, que traduce lo recolectado a un esquema que luego se implementa en una base de datos. En el material del curso estas dos tareas pertenecen a las primeras etapas del ciclo de vida clásico (Clarence, 2026d), y de ellas salen insumos como los diagramas de flujo de datos, el diccionario de datos y el modelo entidad-relación (Clarence, 2026b)."
+  },
+  {
+   "h2": "Técnicas de análisis: recolección de requerimientos"
+  },
+  {
+   "p": "Las técnicas de recolección son procedimientos para obtener la información que el analista necesita para entender el sistema actual y lo que se espera del nuevo (Clarence, 2026c). Ninguna sirve para todo, y por eso se suelen combinar. Rueda et al. (2020) lo muestran en un experimento con 167 estudiantes: los equipos que usaron entrevistas no estructuradas fueron los más rápidos, pero repitieron más requisitos, el diseño de aplicaciones conjuntas tardó más pero evitó mejor la repetición de requisitos, y el prototipado en papel sacó más requisitos funcionales."
+  },
+  {
+   "h3": "Entrevistas"
+  },
+  {
+   "p": "Es una conversación dirigida cara a cara con un fin específico, y el material del curso la considera la técnica más importante y de uso más frecuente (Clarence, 2026c). Permite adaptar las preguntas a cada persona y observar su lenguaje corporal, pero consume mucho tiempo y su éxito depende de las habilidades del analista. Pueden ser estructuradas, con preguntas fijas y de respuesta cerrada, o no estructuradas, con un tema general y preguntas abiertas. Se recomienda preparar antecedentes, definir objetivos, elegir a personas de todos los niveles afectados y limitar la sesión a una hora como máximo."
+  },
+  {
+   "h3": "Cuestionarios"
+  },
+  {
+   "p": "Son documentos que se reparten a muchas personas para que respondan cuando puedan (Clarence, 2026c). Salen baratos, permiten el anonimato y las respuestas cerradas se tabulan rápido. A cambio, suele responder poca gente, no se pueden aclarar respuestas vagas y hacer uno bueno es difícil. Pueden ser de formato libre o de formato fijo, y sus preguntas, igual que en las entrevistas, pueden ser abiertas o cerradas."
+  },
+  {
+   "h3": "Observación"
+  },
+  {
+   "p": "El analista mira cómo se hace el trabajo en el lugar donde ocurre. Da datos de primera mano y sirve para comprobar lo que dijeron las personas en entrevistas, sobre todo cuando una tarea es tan compleja que cuesta explicarla con palabras. Su límite es que la gente se comporta distinto cuando sabe que la están observando (Clarence, 2026c)."
+  },
+  {
+   "h3": "Revisión de documentos"
+  },
+  {
+   "p": "Consiste en estudiar formularios, manuales, reportes, descripciones de procesos y procedimientos que ya existen en la organización. El material del curso incluye entre la documentación del sistema los diagramas de flujo de datos, los de procesos y el diccionario de datos, cuando existen (Clarence, 2026b). El riesgo es que los documentos estén desactualizados, así que conviene contrastarlos con lo que se ve y se escucha en las otras técnicas."
+  },
+  {
+   "h3": "JAD y prototipos"
+  },
+  {
+   "p": "El diseño de aplicaciones conjuntas (JAD, por sus siglas en inglés) reúne en una sesión de trabajo a usuarios, analistas y otros participantes, cada uno con un rol definido, para acordar los requerimientos en grupo (Clarence, 2026c; Rueda et al., 2020). Los prototipos son maquetas o versiones simples del sistema, incluso en papel, que se le muestran al usuario para que corrija lo que no era lo que esperaba (Rueda et al., 2020)."
+  },
+  {
+   "tabla": {
+    "titulo": "Tabla 1. Comparación de las técnicas de recolección de requerimientos",
+    "cols": [
+     "Técnica",
+     "Cuándo conviene",
+     "Ventaja principal",
+     "Limitación principal"
+    ],
+    "filas": [
+     [
+      "Entrevista",
+      "Entender opiniones y procesos de personas clave",
+      "Se pueden hacer preguntas de seguimiento",
+      "Consume tiempo y depende del analista"
+     ],
+     [
+      "Cuestionario",
+      "Consultar a muchas personas dispersas",
+      "Bajo costo y fácil de tabular",
+      "Baja tasa de respuesta, sin aclaraciones"
+     ],
+     [
+      "Observación",
+      "Verificar lo dicho o entender tareas complejas",
+      "Datos de primera mano",
+      "La gente cambia su conducta al ser observada"
+     ],
+     [
+      "Revisión de documentos",
+      "Conocer el sistema y las reglas actuales",
+      "No interrumpe el trabajo",
+      "Pueden estar desactualizados"
+     ],
+     [
+      "JAD",
+      "Acordar requerimientos entre varios grupos",
+      "Evita repetición y malentendidos",
+      "Requiere coordinar a muchas personas a la vez"
+     ],
+     [
+      "Prototipo",
+      "Validar lo que el usuario espera ver",
+      "Obtiene requisitos funcionales rápido",
+      "Puede dar una idea falsa de que ya está terminado"
+     ]
+    ]
+   }
+  },
+  {
+   "h2": "Modelado de datos"
+  },
+  {
+   "p": "Un modelo de datos es un mecanismo formal para representar y manipular la información, con una descripción de los datos, las operaciones permitidas y las reglas de integridad (Clarence, 2026d). Antes de elegir el modelo concreto se hace un modelado semántico, que estudia los datos que se quieren guardar y separa el análisis (qué se necesita) del diseño (cómo se implementa). Del análisis sale un esquema conceptual, como el modelo E-R, luego un modelo lógico específico para un tipo de gestor de bases de datos y al final la implementación (Clarence, 2026d)."
+  },
+  {
+   "h3": "Modelo entidad-relación"
+  },
+  {
+   "p": "El modelo E-R es una técnica de análisis que identifica las entidades y las relaciones entre ellas en la parte de la realidad que se quiere modelar (Clarence, 2026d). Sus elementos son los siguientes."
+  },
+  {
+   "bullets": [
+    "**Entidad:** objeto real o abstracto, distinguible de otros, sobre el que se guarda información. Un conjunto de entidades parecidas forma un tipo de entidad, como cliente o producto. IBM (s. f.-b) distingue entidades fuertes, que se identifican por sí mismas, y débiles, que dependen de otra.",
+    "**Atributo:** propiedad de una entidad, con un conjunto de valores permitidos llamado dominio (Clarence, 2026d). IBM (s. f.-b) los clasifica en simples, compuestos, derivados y multivaluados.",
+    "**Clave:** atributo o conjunto de atributos que identifica de forma única a cada entidad. Hay superclave, clave candidata (superclave mínima), clave primaria (la que elige el diseñador) y clave alternativa (las candidatas no elegidas) (Clarence, 2026d). La clave foránea es la que enlaza una entidad con otra (IBM, s. f.-b).",
+    "**Relación:** conexión semántica entre dos o más tipos de entidad. Su grado es el número de tipos de entidad que participan, y puede tener atributos propios, como la cantidad en la relación entre proveedor y pieza (Clarence, 2026d)."
+   ]
+  },
+  {
+   "p": "La cardinalidad indica cuántas ocurrencias de una entidad se conectan con una de la otra. En las relaciones binarias puede ser uno a uno (1:1), uno a muchos (1:N) o muchos a muchos (N:M) (Clarence, 2026d; IBM, s. f.-b). La clave de una relación depende de su cardinalidad: en las N:M es la unión de las claves primarias de las entidades participantes (Clarence, 2026d). Por eso las relaciones muchos a muchos se resuelven con una tabla intermedia, como se hace en la Figura 1."
+  },
+  {
+   "p": "La Figura 1 muestra un ejemplo pequeño de una tienda. Un cliente realiza cero o muchos pedidos, un pedido pertenece a un solo cliente y contiene uno o más renglones de detalle, y un producto puede aparecer en cero o muchos pedidos. La relación entre pedido y producto es de muchos a muchos, y por eso se separó en la tabla DETALLE_PEDIDO, cuya clave primaria combina las dos claves foráneas."
+  },
+  {
+   "img": "diagramas/er_pedidos.png",
+   "ancho": 9.5,
+   "cap": "Figura 1. Diagrama entidad-relación de una tienda (notación de pata de gallo). Elaboración propia."
+  },
+  {
+   "h3": "Modelo relacional"
+  },
+  {
+   "p": "En el modelo relacional las entidades y las relaciones se representan como tablas llamadas relaciones: las filas (tuplas) tienen los datos de cada entidad y las columnas son los atributos. Sus operaciones son la unión, la intersección, la diferencia, el producto cartesiano, la selección, la proyección y la reunión, y sus restricciones de integridad son la de entidad y la referencial, que se logran con las claves (Clarence, 2026d). El paso del modelo E-R al relacional es directo: cada tipo de entidad pasa a ser una tabla y cada relación N:M, otra tabla con las claves de ambas. El esquema de la Figura 1 equivale a cuatro tablas: CLIENTE, PEDIDO, PRODUCTO y DETALLE_PEDIDO."
+  },
+  {
+   "h3": "Normalización"
+  },
+  {
+   "p": "Es el proceso de aplicar reglas a las relaciones obtenidas del modelo E-R para evitar la redundancia, los problemas de actualización y proteger la integridad de los datos (Clarence, 2026a). Microsoft (2025) agrega que si un dato está repetido en varios sitios hay que cambiarlo igual en todos, y que la dependencia inconsistente hace difícil encontrar los datos. Las tres primeras formas normales bastan para la mayoría de las aplicaciones."
+  },
+  {
+   "tabla": {
+    "titulo": "Tabla 2. Primeras tres formas normales",
+    "cols": [
+     "Forma normal",
+     "Regla",
+     "Ejemplo en el esquema de la tienda"
+    ],
+    "filas": [
+     [
+      "Primera (1FN)",
+      "Eliminar los grupos repetidos y dar una clave primaria a cada tabla",
+      "En vez de columnas Producto1, Producto2 y Producto3 en PEDIDO, cada producto va en una fila de DETALLE_PEDIDO"
+     ],
+     [
+      "Segunda (2FN)",
+      "Que todo atributo que no es clave dependa de la clave completa",
+      "El precio depende solo del producto, así que va en PRODUCTO y no en DETALLE_PEDIDO"
+     ],
+     [
+      "Tercera (3FN)",
+      "Eliminar las dependencias transitivas entre atributos que no son clave",
+      "Si CLIENTE guardara ciudad y provincia, la provincia depende de la ciudad y se pasaría a otra tabla"
+     ]
+    ]
+   }
+  },
+  {
+   "p": "Tanto el curso como Microsoft advierten que llegar a la forma más alta no siempre conviene, porque llevarlo al máximo puede complicar el diseño (Clarence, 2026a) y muchas tablas pequeñas pueden degradar el rendimiento (Microsoft, 2025)."
+  },
+  {
+   "h3": "Diccionario de datos"
+  },
+  {
+   "p": "El material del curso lo define como los datos de los datos del sistema, un catálogo de sus elementos, y lo ubica entre los documentos del análisis y entre las herramientas de análisis de requisitos junto al E-R, UML y la normalización (Clarence, 2026b). En la práctica describe, para cada atributo, su nombre, tipo, longitud, si es obligatorio, su dominio y la tabla a la que pertenece. Por ejemplo, para id_cliente: entero, obligatorio, clave primaria de CLIENTE."
+  },
+  {
+   "h3": "Diagrama de flujo de datos y UML de clases"
+  },
+  {
+   "p": "El diagrama de flujo de datos (DFD) no modela la estructura de los datos sino su movimiento por el sistema. IBM (s. f.-a) explica que usa entidades externas, procesos, almacenes de datos y flujos, y que se organiza en niveles: el nivel 0 o diagrama de contexto muestra todo el sistema como un solo proceso, y el nivel 1 lo divide en sus subprocesos principales. Se usa en el análisis para entender el sistema actual y complementa al modelo E-R, porque los almacenes de datos del DFD suelen corresponder a entidades del modelo de datos."
+  },
+  {
+   "p": "Como alternativa al diagrama E-R tradicional, el curso muestra que el mismo diseño puede dibujarse con notación UML, en la que cada tipo de entidad se representa como una clase con sus atributos y las relaciones se anotan con multiplicidades (Clarence, 2026d). Las dos notaciones representan el mismo diseño; en este informe se usó la del E-R clásico con símbolos de pata de gallo."
+  }
+ ],
+ "conclusion": [
+  "El análisis y el modelado de datos se complementan: primero se recogen los requerimientos con entrevistas, cuestionarios, observación, revisión de documentos, JAD o prototipos, y después se representan los datos con el modelo E-R, el modelo relacional y la normalización, apoyados por el diccionario de datos y el DFD. Según el estudio de Rueda et al. (2020), ninguna técnica de recolección gana en todo, así que conviene mezclarlas según el proyecto. En el modelado, resolver las relaciones muchos a muchos con una tabla intermedia y llegar hasta la tercera forma normal es lo que más ayuda a que la base de datos quede ordenada."
+ ],
+ "referencias": [
+  "Clarence, I. (2026a). 2.4.5 Normalización de la base de datos [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP.",
+  "Clarence, I. (2026b). 3.2 Aspectos lógicos y técnicos para la aplicación de metodologías de desarrollo y evaluación de sistemas [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP.",
+  "Clarence, I. (2026c). 3.3 Técnicas de recolección de datos: Entrevistas, cuestionarios [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP.",
+  "Clarence, I. (2026d). 3.4 Modelado de datos [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP.",
+  "IBM. (s. f.-b). What is an entity relationship diagram? IBM Think. Recuperado el 25 de octubre de 2026, de https://www.ibm.com/think/topics/entity-relationship-diagram",
+  "IBM. (s. f.-a). What is a data flow diagram (DFD)? IBM Think. Recuperado el 25 de octubre de 2026, de https://www.ibm.com/think/topics/data-flow-diagram",
+  "Microsoft. (2025, 26 de mayo). Database normalization description. Microsoft Learn. Recuperado el 25 de octubre de 2026, de https://learn.microsoft.com/en-us/office/troubleshoot/access/database-normalization-description",
+  "Rueda, S., Panach, J. I. y Distante, D. (2020). Requirements elicitation methods based on interviews in comparison: A family of experiments. Information and Software Technology, 126, Artículo 106361. https://doi.org/10.1016/j.infsof.2020.106361"
+ ]
+}

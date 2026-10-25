@@ -20,7 +20,9 @@ Bloques de "contenido" (uno por elemento de la lista):
     {"tabla": {"titulo": "...", "cols": [...], "filas": [[...], ...]}}
     {"salto": true}                   salto de página
 
-Opcional en la raíz del spec: "integrantes": ["Apellido Nombre, cédula", ...]
+Opcional en la raíz del spec: "tipo" (portada: "LABORATORIO" por defecto, o
+"INVESTIGACIÓN", "CUESTIONARIO"...; "lab" es su número); "conclusion" puede
+faltar o ir vacía (cuestionarios) y la sección no se crea; "integrantes": ["Apellido Nombre, cédula", ...]
 (si falta, se usa INTEGRANTE).
 """
 import copy
@@ -119,7 +121,7 @@ def portada(d, spec):
         elif t.startswith("SISTEMAS DE INFORMACION"):
             set_text(p, ASIGNATURA)
         elif "Nombre de la Investigación" in t:
-            set_text(p, f"LABORATORIO #{lab}", bold=True)
+            set_text(p, f"{spec.get('tipo', 'LABORATORIO')} #{lab}", bold=True)
             nuevo = copy.deepcopy(p._element)
             p._element.addnext(nuevo)
             q = docx.text.paragraph.Paragraph(nuevo, p._parent)
@@ -342,9 +344,10 @@ def construir(spec_path):
         else:
             raise ValueError(f"Bloque desconocido: {b}")
 
-    w.h1("CONCLUSION")
-    for par in spec["conclusion"]:
-        w.parrafo(par)
+    if spec.get("conclusion"):
+        w.h1("CONCLUSION")
+        for par in spec["conclusion"]:
+            w.parrafo(par)
 
     if spec.get("referencias"):
         w.h1("REFERENCIA")
@@ -359,11 +362,12 @@ def construir(spec_path):
     salida.parent.mkdir(parents=True, exist_ok=True)
     docx_path = salida.with_suffix(".docx")
     d.save(str(docx_path))
-    exportar(docx_path, salida.with_suffix(".pdf"))
+    entradas = sum(1 for b in spec["contenido"] if "h2" in b or "h3" in b)
+    exportar(docx_path, salida.with_suffix(".pdf"), compacto=entradas > 26)
     print(f"OK {docx_path}\nOK {salida.with_suffix('.pdf')}")
 
 
-def exportar(docx_path, pdf_path):
+def exportar(docx_path, pdf_path, compacto=False):
     import pythoncom
     import win32com.client
 
@@ -373,6 +377,11 @@ def exportar(docx_path, pdf_path):
     word.DisplayAlerts = 0
     try:
         doc = word.Documents.Open(str(docx_path))
+        if compacto:  # índice largo (cuestionarios): que quepa en una página
+            for nivel in (-20, -21, -22):  # wdStyleTOC1..3
+                pf = doc.Styles(nivel).ParagraphFormat
+                pf.SpaceAfter = 0
+                pf.LineSpacingRule = 0  # wdLineSpaceSingle
         for toc in doc.TablesOfContents:
             toc.Update()
         doc.Fields.Update()

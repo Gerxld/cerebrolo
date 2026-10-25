@@ -1,0 +1,48 @@
+{
+  "tipo": "INVESTIGACIÓN",
+  "lab": 1,
+  "titulo": "Datos, información y conocimiento",
+  "fecha": "2026.10.27",
+  "salida": "Inv01_SIG_Rios_Gerald",
+  "contenido": [
+    {"p": "Los tres términos se usan casi como sinónimos en el día a día de una empresa, pero en sistemas de información cada uno nombra algo distinto. La diferencia se nota en lo que cada uno le permite hacer a quien lo recibe: un dato se almacena, una información se consulta para entender una situación y un conocimiento se aplica para resolver un problema. Entre los tres hay una relación de dependencia, que la literatura conoce como la jerarquía DIKW (datos, información, conocimiento y sabiduría), y que el material del curso presenta como un embudo (Clarence, 2026)."},
+    {"h2": "Los datos"},
+    {"p": "Un dato es un símbolo o un hecho registrado sobre un objeto, un evento o su entorno. Por sí solo no comunica nada. Clarence (2026) lo describe como la materia prima de la información, sin capacidad de transmitir un significado por sí mismo, y Bernstein (2009), al resumir a Ackoff, habla de datos como producto de la observación que no tienen valor mientras no se procesen en una forma utilizable."},
+    {"p": "En el ejemplo de la clase aparecen cuatro valores sueltos: «García», «Patricia», «16.5» y «943725057». Se sabe que existen y que están guardados, pero no se sabe qué son entre sí ni para qué sirven. Lo mismo pasa con una columna de cifras en una hoja de cálculo sin encabezados: hay datos, pero nadie puede actuar con ellos."},
+    {"h2": "La información"},
+    {"p": "La información son datos que ya fueron procesados y puestos en contexto, de modo que tienen un significado, un propósito y una utilidad para un usuario concreto (Clarence, 2026). Frické (2018) lo resume diciendo que la información es dato relevante para una pregunta: lo que cambia respecto al dato es la función que cumple, no su forma."},
+    {"p": "Siguiendo el ejemplo del curso, al ordenar y relacionar los cuatro valores se obtiene la frase «Patricia García es una egresada de la Facultad de Ingeniería con un promedio ponderado de 16.5 y se la puede contactar al teléfono 943725057». Ahora el lector sabe quién es, qué estudió y cómo ubicarla. Un caso más cercano es el de una tienda: los registros de cada venta del día son datos, y el informe de ventas por producto del mes, que le dice al gerente qué se mueve y qué no, es información. Ese es el trabajo típico de los sistemas de procesamiento de transacciones y de los sistemas de información gerencial."},
+    {"h2": "El conocimiento"},
+    {"p": "El conocimiento es la capacidad de convertir la información en acciones efectivas para resolver un problema. Según el material del curso, mezcla reglas, interpretaciones, valores, información y conexiones dentro de un contexto y de una experiencia vivida en la organización, y es el «saber hacer» que sirve para tomar decisiones (Clarence, 2026). Frické (2018) coincide en lo central: el conocimiento es sobre todo saber cómo funciona algo, y es lo que permite transformar la información en instrucciones y controlar un sistema."},
+    {"p": "Con el mismo ejemplo, la empresa tiene un puesto de asistente de gerencia y una política de contratar solo a profesionales con altas calificaciones. Quien decide combina la información sobre la candidata con esa política y con su experiencia, y concluye que conviene invitarla a la entrevista. Nadie le entregó esa conclusión en un reporte, la construyó esa persona. En la tienda sería el gerente que, al ver que cierto producto baja cada febrero, decide adelantar la compra de otro que lo reemplaza. Esa decisión depende de lo que sabe del negocio, y por eso no es posible sacarla solo de la tabla."},
+    {"h2": "Qué los une"},
+    {"p": "Los tres forman una cadena en la que cada nivel se construye sobre el anterior. Ackoff, citado por Bernstein (2009), planteó que cada categoría incluye las que están por debajo, y que se avanza de una a otra por filtrado, reducción y transformación. De ahí la forma de pirámide o de embudo: hay muchos más datos que información útil, y mucha más información que conocimiento. Según Bernstein (2009), el esquema es además jerárquico y causal, es decir, el nivel de arriba no existe sin el de abajo."},
+    {"p": "Lo que mueve a la persona o al sistema de un nivel al siguiente es el procesamiento. El material del curso lo muestra en dos pasos: el procesamiento de la información convierte datos en información, y el procesamiento del conocimiento convierte información en conocimiento (Clarence, 2026). El primer paso es casi mecánico y un sistema lo puede hacer: ordenar, clasificar, calcular, resumir. El segundo requiere interpretación y experiencia de una persona o de un equipo."},
+    {"p": "El otro elemento que los une es el contexto. Según De Clerck (2014), es el contexto lo que hace pasar de dato a información, y el conocimiento es información que se puede accionar, o sea, que sirve para actuar y decidir. El mismo dato puede ser información para una persona y ruido para otra: un promedio de 16.5 le dice mucho a un reclutador y nada a quien no sabe en qué escala se mide. Por eso, además de procesarse, la información tiene que llegar a quien la necesita, en el momento en que decide."},
+    {"p": "También conviene decir que este modelo tiene críticos. Frické (2018) sostiene que los datos no son realmente «crudos», porque ya dependen de la teoría con la que alguien decidió medirlos, y que el conocimiento práctico no siempre se reduce a información. De Clerck (2014) añade que los sistemas actuales de aprendizaje automático a veces se saltan pasos. Para fines de este tema, la jerarquía sigue siendo útil porque ordena el vocabulario, pero no hay que tomarla como una ley."},
+    {"h2": "Cuadro comparativo"},
+    {"p": "La tabla resume las diferencias con base en el material del curso y en las fuentes consultadas."},
+    {"tabla": {
+      "titulo": "Tabla 1. Diferencias entre datos, información y conocimiento",
+      "cols": ["Criterio", "Datos", "Información", "Conocimiento"],
+      "filas": [
+        ["Qué es", "Hechos o símbolos registrados, sin interpretar", "Datos procesados y puestos en contexto", "Información interpretada y aplicada con experiencia"],
+        ["Significado", "No tienen por sí mismos", "Tiene, para un usuario determinado", "Tiene, y orienta una acción"],
+        ["Cómo se obtiene", "Observando, midiendo o registrando transacciones", "Procesando los datos: ordenar, clasificar, resumir", "Interpretando la información y comparándola con la experiencia y las reglas de la organización"],
+        ["Quién lo produce", "Personas, sensores y sistemas transaccionales", "Sistemas de información y analistas", "Personas con experiencia, apoyadas por sistemas"],
+        ["Para qué sirve", "Es la materia prima de la información", "Entender qué pasó o cómo está la situación", "Decidir y resolver problemas"],
+        ["Ejemplo", "«García», «Patricia», «16.5», «943725057»", "Patricia García es egresada de Ingeniería, promedio 16.5, teléfono 943725057", "Se necesita un asistente con formación en ingeniería y calificaciones altas, así que se invita a la señorita García"]
+      ]
+    }},
+    {"p": "En la práctica un mismo registro puede estar en varios niveles según quién lo mire y para qué. Lo que la tabla marca es la función que cumple en cada caso, no un cambio de formato."}
+  ],
+  "conclusion": [
+    "Los datos son los hechos sin interpretar, la información son esos datos procesados y puestos en contexto para un usuario, y el conocimiento es la información aplicada con experiencia para decidir y actuar. Los tres están unidos por la jerarquía DIKW: cada nivel descansa en el anterior, se pasa de uno a otro mediante procesamiento y el contexto es lo que le da sentido a lo que se procesa (Bernstein, 2009; Clarence, 2026; De Clerck, 2014; Frické, 2018). Para quien trabaja con sistemas de información, la diferencia sirve de brújula: los sistemas transaccionales producen datos, los de información gerencial los convierten en información y las decisiones de la gerencia dependen del conocimiento que las personas le agregan. Queda por decir que las fuentes consultadas no definen estos términos exactamente igual y que algunas critican el modelo, así que las definiciones de este informe siguen principalmente al material del curso."
+  ],
+  "referencias": [
+    "Bernstein, J. H. (2009). The data-information-knowledge-wisdom hierarchy and its antithesis. North American Symposium on Knowledge Organization, 2(1), 68–75. https://doi.org/10.7152/nasko.v2i1.12806",
+    "Clarence, I. (2026). 1.2 El sistema de información [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP.",
+    "De Clerck, J.-P. (2014, 10 de agosto). The DIKW model for knowledge management and data value extraction. i-SCOOP. Recuperado el 25 de octubre de 2026, de https://www.i-scoop.eu/information-management/dikw-model/",
+    "Frické, M. (2018). Knowledge pyramid: The DIKW hierarchy. En ISKO Encyclopedia of Knowledge Organization. Recuperado el 25 de octubre de 2026, de https://isko.org/cyclo/dikw"
+  ]
+}
