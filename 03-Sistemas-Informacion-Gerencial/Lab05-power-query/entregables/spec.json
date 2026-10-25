@@ -1,0 +1,461 @@
+{
+ "lab": 5,
+ "titulo": "Power Query",
+ "fecha": "2026.10.27",
+ "salida": "Lab05_SIG_Rios_Gerald",
+ "objetivo": "importar con Power Query las hojas Orders, Customers y Employees del libro Northwind.xlsx, transformarlas en el Editor de Power Query (combinar columnas, combinar consultas, expandir y renombrar columnas), cargar el resultado a Excel y construir una tabla dinámica con segmentación de datos, escala de tiempo y gráfico.",
+ "contenido": [
+  {
+   "h2": "Paso 1: Preparar el archivo Northwind.xlsx y abrir un libro nuevo"
+  },
+  {
+   "p": "Se descargó del aula virtual el archivo Northwind.xlsx y se guardó, sin abrirlo, en la carpeta de evidencias del laboratorio. Luego se abrió Excel (Microsoft 365, versión 16.0, interfaz en español) y se creó un libro en blanco, que se guardó de inmediato como Lab05_PowerQuery_Gerald_Rios.xlsx para que las consultas quedaran dentro del mismo archivo. En esta instalación Excel usa el tema oscuro, por lo que todas las capturas se ven con fondo negro."
+  },
+  {
+   "img": "evidencias/01_excel_libro_en_blanco.png",
+   "ancho": 15,
+   "cap": "Figura 1. Excel abierto con un libro en blanco (Pasos 1 y 2 de la guía)."
+  },
+  {
+   "h2": "Paso 2: Ubicar Power Query en la cinta de opciones"
+  },
+  {
+   "p": "En esta versión de Excel, Power Query no tiene pestaña propia. Se encuentra en la pestaña Datos, en el grupo «Obtener y transformar datos», con el botón «Obtener datos». La cinta de opciones se fijó para que se mantuviera visible durante las capturas."
+  },
+  {
+   "img": "evidencias/02_excel_datos.png",
+   "ancho": 15,
+   "cap": "Figura 2. Pestaña Datos con el grupo «Obtener y transformar datos» a la izquierda."
+  },
+  {
+   "h2": "Paso 3: Obtener datos desde un archivo de Excel"
+  },
+  {
+   "p": "Se hizo clic en Datos > Obtener datos > De un archivo > Desde un libro de Excel. El menú de esta versión muestra primero la opción «Obtener datos (versión preliminar)», que no se usó."
+  },
+  {
+   "img": "evidencias/03_obtener_datos_menu.png",
+   "ancho": 13,
+   "cap": "Figura 3. Menú «Obtener datos» desplegado."
+  },
+  {
+   "img": "evidencias/04_desde_libro_excel.png",
+   "ancho": 13,
+   "cap": "Figura 4. Submenú «De un archivo» con la opción «Desde un libro de Excel»."
+  },
+  {
+   "h2": "Paso 4: Seleccionar el archivo Northwind.xlsx"
+  },
+  {
+   "p": "Se abrió la ventana «Importar datos». En la caja «Nombre de archivo» se escribió la ruta de la carpeta de evidencias y se confirmó con Enter, con lo que la ventana mostró los archivos de esa carpeta. Después se escribió Northwind.xlsx. En esta versión el botón de confirmación se llama «Abrir» y no «Importar» como dice la guía; la función es la misma."
+  },
+  {
+   "img": "evidencias/05_importar_datos_dialogo.png",
+   "ancho": 13,
+   "cap": "Figura 5. Ventana «Importar datos» con Northwind.xlsx escrito en «Nombre de archivo»."
+  },
+  {
+   "h2": "Paso 5: Elegir la hoja Orders y transformar los datos"
+  },
+  {
+   "p": "Se abrió el Navegador, que lista las ocho hojas del libro (Categories, Customers, Employees, Orders, Orders Details, Product, Shippers y Suppliers). Se seleccionó «Orders» y la vista previa mostró sus columnas. Se presionó «Transformar datos»."
+  },
+  {
+   "img": "evidencias/06_navegador_orders.png",
+   "ancho": 11,
+   "cap": "Figura 6. Navegador con la hoja Orders seleccionada y su vista previa."
+  },
+  {
+   "h2": "Paso 6: Revisar los datos de Orders en el Editor de Power Query"
+  },
+  {
+   "p": "Se abrió la ventana «Orders - Editor de Power Query». En el panel «Pasos aplicados» aparecen Origen, Navegación, Encabezados promovidos y Tipo cambiado. Los dos últimos los generó el editor por su cuenta: usó la primera fila como encabezado y asignó un tipo a cada columna. La barra de estado indica 14 columnas y 830 filas."
+  },
+  {
+   "img": "evidencias/07_editor_orders.png",
+   "ancho": 15,
+   "cap": "Figura 7. Editor de Power Query con la consulta Orders (14 columnas, 830 filas) y sus pasos aplicados."
+  },
+  {
+   "h2": "Paso 7: Importar la hoja Customers (Pasos 7 a 11 de la guía)"
+  },
+  {
+   "p": "Dentro del editor se abrió Inicio > Nuevo origen > Archivo > Libro de Excel, se eligió nuevamente Northwind.xlsx y en el Navegador se marcó «Customers». Aquí hubo una diferencia con Orders: la vista previa mostró «Column1», «Column2», etc., y los nombres reales (CustomerID, CompanyName…) quedaron como primera fila de datos. Es el caso que la guía prevé en su Paso 11."
+  },
+  {
+   "img": "evidencias/08_nuevo_origen_archivo.png",
+   "ancho": 13,
+   "cap": "Figura 8. Inicio > Nuevo origen > Archivo > Libro de Excel."
+  },
+  {
+   "img": "evidencias/09_importar_customers.png",
+   "ancho": 13,
+   "cap": "Figura 9. Ventana «Importar datos» al agregar un segundo origen desde el editor."
+  },
+  {
+   "img": "evidencias/10_navegador_customers.png",
+   "ancho": 11,
+   "cap": "Figura 10. Navegador con la hoja Customers; la primera fila de datos contiene los nombres de columna."
+  },
+  {
+   "img": "evidencias/11_editor_customers.png",
+   "ancho": 15,
+   "cap": "Figura 11. Consulta Customers recién cargada, con columnas llamadas Column1, Column2…"
+  },
+  {
+   "p": "Para corregirlo se hizo clic en el icono de tabla de la esquina superior izquierda de la vista previa y se eligió «Usar la primera fila como encabezado». El editor agregó los pasos «Encabezados promovidos» y «Tipo cambiado1». La consulta quedó con 11 columnas y 91 filas."
+  },
+  {
+   "img": "evidencias/12_usar_primera_fila.png",
+   "ancho": 15,
+   "cap": "Figura 12. Menú del icono de tabla con la opción «Usar la primera fila como encabezado»."
+  },
+  {
+   "img": "evidencias/13_customers_encabezados.png",
+   "ancho": 15,
+   "cap": "Figura 13. Consulta Customers con los encabezados correctos (11 columnas, 91 filas)."
+  },
+  {
+   "h2": "Paso 8: Importar la hoja Employees (Pasos 12 a 15 de la guía)"
+  },
+  {
+   "p": "Se repitió el procedimiento con la hoja «Employees». En este caso el Navegador ya mostró los encabezados correctos y, al aceptar, la consulta quedó con 17 columnas y 9 filas."
+  },
+  {
+   "img": "evidencias/14_navegador_employees.png",
+   "ancho": 11,
+   "cap": "Figura 14. Navegador con la hoja Employees seleccionada."
+  },
+  {
+   "img": "evidencias/15_editor_employees.png",
+   "ancho": 15,
+   "cap": "Figura 15. Consulta Employees en el editor (17 columnas, 9 filas)."
+  },
+  {
+   "h2": "Paso 9: Combinar FirstName y LastName en la columna Empleado (Pasos 16 a 18 de la guía)"
+  },
+  {
+   "p": "En la consulta Employees se hizo clic en el encabezado de FirstName y, con Ctrl presionado, en el de LastName; se respetó ese orden de selección para que el nombre quedara antes que el apellido. Con las dos columnas marcadas se abrió la pestaña Agregar columna y quedó habilitado el botón «Combinar columnas»."
+  },
+  {
+   "img": "evidencias/16_employees_seleccion.png",
+   "ancho": 15,
+   "cap": "Figura 16. Columnas LastName y FirstName seleccionadas y botón «Combinar columnas» habilitado."
+  },
+  {
+   "p": "En la ventana «Combinar columnas» se eligió «Espacio» como separador y se escribió «Empleado» como nuevo nombre de columna. Al presionar «Aceptar» apareció, como última columna, «Empleado» con valores como «Nancy Davolio» y «Andrew Fuller». La tabla pasó a 18 columnas. El paso generado se llama «Columna combinada insertada»."
+  },
+  {
+   "img": "evidencias/17_combinar_columnas_dialogo.png",
+   "ancho": 15,
+   "cap": "Figura 17. Ventana «Combinar columnas» con separador «Espacio» y nombre «Empleado»."
+  },
+  {
+   "img": "evidencias/18_employees_empleado.png",
+   "ancho": 15,
+   "cap": "Figura 18. Columna Empleado al final de la consulta Employees; la barra de fórmulas muestra el paso Table.AddColumn."
+  },
+  {
+   "h2": "Paso 10: Combinar Orders con Customers (Pasos 19 a 23 de la guía)"
+  },
+  {
+   "p": "Se regresó a la consulta Orders desde el panel «Consultas», se marcó la columna EmployeeID, como pide la guía, y se presionó «Combinar consultas» en la pestaña Inicio. La ventana «Combinar» permite elegir la columna de cada tabla, así que en ella se hizo clic en CustomerID de Orders, se escogió «Customers» en la lista desplegable y se marcó CustomerID de esa tabla. El tipo de combinación quedó en «Externa izquierda» y la ventana confirmó: «La selección coincide con 830 de 830 filas de la primera tabla». Mientras la ventana estaba abierta, la consulta Orders mostró un triángulo de advertencia en el panel izquierdo. Fue transitorio: el editor recalcula la vista previa al abrir el cuadro y la marca desapareció al terminar. La consulta final carga sin errores, como se ve en el Paso 13."
+  },
+  {
+   "img": "evidencias/19_orders_employeeid.png",
+   "ancho": 15,
+   "cap": "Figura 19. Consulta Orders con la columna EmployeeID seleccionada y el botón «Combinar consultas» en Inicio."
+  },
+  {
+   "img": "evidencias/20_combinar_orders_customers.png",
+   "ancho": 15,
+   "cap": "Figura 20. Ventana «Combinar»: Orders.CustomerID contra Customers.CustomerID, con 830 de 830 coincidencias."
+  },
+  {
+   "p": "Al aceptar apareció la columna «Customers» con el valor «Table» en cada fila y el paso «Consultas combinadas». Se presionó el icono de dos flechas del encabezado, se desmarcó «(Seleccionar todas las columnas)» y se marcaron solo CompanyName y City. La opción «Usar el nombre de la columna original como prefijo» se dejó activa, así que las columnas nuevas se llamaron Customers.CompanyName y Customers.City."
+  },
+  {
+   "img": "evidencias/21_orders_columna_customers.png",
+   "ancho": 15,
+   "cap": "Figura 21. Columna «Customers» con valores Table; el panel inferior muestra el contenido de una fila."
+  },
+  {
+   "img": "evidencias/22_expandir_customers.png",
+   "ancho": 15,
+   "cap": "Figura 22. Selector de columnas a expandir con CompanyName y City marcadas."
+  },
+  {
+   "img": "evidencias/23_customers_expandido.png",
+   "ancho": 15,
+   "cap": "Figura 23. Columnas Customers.CompanyName y Customers.City; el paso se llama «Se expandió Customers»."
+  },
+  {
+   "h2": "Paso 11: Renombrar las columnas a Cliente y PaisVenta (Pasos 24 y 25 de la guía)"
+  },
+  {
+   "p": "Se hizo doble clic en el encabezado «Customers.CompanyName», se escribió «Cliente» y se presionó Enter. Se hizo lo mismo con «Customers.City», que pasó a llamarse «PaisVenta». Los dos cambios quedaron en un solo paso, «Columnas con nombre cambiado». El nombre PaisVenta es el que pide la guía, aunque el dato que contiene es la ciudad del cliente y no su país."
+  },
+  {
+   "img": "evidencias/24_renombrar_cliente.png",
+   "ancho": 15,
+   "cap": "Figura 24. Encabezado en modo de edición mientras se escribe «Cliente»."
+  },
+  {
+   "img": "evidencias/25_renombrar_paisventa.png",
+   "ancho": 15,
+   "cap": "Figura 25. Columnas Cliente y PaisVenta ya renombradas."
+  },
+  {
+   "h2": "Paso 12: Combinar Orders con Employees (Pasos 26 a 31 de la guía)"
+  },
+  {
+   "p": "Se abrió otra vez «Combinar consultas». Se eligió EmployeeID en Orders, la consulta «Employees» en la lista y EmployeeID en esa tabla. La ventana volvió a confirmar 830 de 830 filas coincidentes."
+  },
+  {
+   "img": "evidencias/26_combinar_consultas_employees_inicio.png",
+   "ancho": 15,
+   "cap": "Figura 26. Ventana «Combinar» abierta por segunda vez."
+  },
+  {
+   "img": "evidencias/27_combinar_orders_employees.png",
+   "ancho": 15,
+   "cap": "Figura 27. Orders.EmployeeID contra Employees.EmployeeID (830 de 830 filas)."
+  },
+  {
+   "p": "Aparecieron la columna «Employees» y el paso «Consultas combinadas1». Al expandirla se marcaron solo «City» y «Empleado» y se desmarcó «Usar el nombre de la columna original como prefijo», por lo que las columnas conservaron sus nombres. Por último se renombró «City» como «Sucursal» (la ciudad donde trabaja el empleado). La tabla quedó con 18 columnas y 830 filas."
+  },
+  {
+   "img": "evidencias/28_orders_columna_employees.png",
+   "ancho": 15,
+   "cap": "Figura 28. Columna «Employees» con valores Table y paso «Consultas combinadas1»."
+  },
+  {
+   "img": "evidencias/29_expandir_employees.png",
+   "ancho": 15,
+   "cap": "Figura 29. Selector de columnas con City y Empleado marcadas y el prefijo desactivado."
+  },
+  {
+   "img": "evidencias/30_employees_expandido.png",
+   "ancho": 15,
+   "cap": "Figura 30. Columnas City y Empleado agregadas a Orders."
+  },
+  {
+   "img": "evidencias/31_renombrar_sucursal.png",
+   "ancho": 15,
+   "cap": "Figura 31. Orders con la columna Sucursal, que antes se llamaba City (18 columnas, 830 filas)."
+  },
+  {
+   "h2": "Paso 13: Cerrar y cargar (Pasos 32 y 33 de la guía)"
+  },
+  {
+   "p": "En la pestaña Inicio se desplegó «Cerrar y cargar» y se eligió «Cerrar y cargar en…». Excel abrió la ventana «Importar datos» con las opciones Tabla, Informe de tabla dinámica, Gráfico dinámico y «Crear únicamente la conexión». Se dejó «Tabla» en «Hoja de cálculo nueva» y se presionó «Aceptar»."
+  },
+  {
+   "img": "evidencias/32_cerrar_y_cargar_menu.png",
+   "ancho": 15,
+   "cap": "Figura 32. Opciones «Cerrar y cargar» y «Cerrar y cargar en…»."
+  },
+  {
+   "img": "evidencias/33_dialogo_cargar_en.png",
+   "ancho": 13,
+   "cap": "Figura 33. Ventana «Importar datos» de Excel para elegir cómo cargar la consulta."
+  },
+  {
+   "p": "Diferencia con la guía: en esta versión, al cerrar el editor Excel cargó las tres consultas en hojas propias (Orders con 830 filas, Customers con 91 y Employees con 9) y no solo la elegida. Como la guía quiere trabajar únicamente con Orders, se eliminaron las hojas Employees y Customers; las consultas se conservaron como «Solo conexión», que es lo que muestra el panel «Consultas y conexiones». La hoja Orders quedó cargada como tabla, sin advertencias."
+  },
+  {
+   "img": "evidencias/33b_tres_consultas_cargadas.png",
+   "ancho": 15,
+   "cap": "Figura 34. Las tres consultas cargadas inmediatamente después de cerrar el editor."
+  },
+  {
+   "img": "evidencias/33c_orders_cargada_sin_advertencia.png",
+   "ancho": 15,
+   "cap": "Figura 35. Hoja Orders con la tabla de 830 filas; Customers y Employees quedan como «Solo conexión»."
+  },
+  {
+   "h2": "Paso 14: Crear la tabla dinámica (Pasos 34 y 35 de la guía)"
+  },
+  {
+   "p": "Se creó una tabla dinámica con la tabla Orders como origen (todas las filas y columnas) y se colocó en una hoja nueva, que se renombró «Gerald Rios». La guía menciona la hoja existente «Hoja1»; aquí se usó una hoja nueva para dejar el informe separado de los datos. Este paso se ejecutó desde Excel con automatización por COM (PivotCaches.Create y CreatePivotTable), que equivale a Insertar > Tabla dinámica, y la captura muestra el resultado en pantalla."
+  },
+  {
+   "img": "evidencias/34_tabla_dinamica_nueva.png",
+   "ancho": 15,
+   "cap": "Figura 36. Hoja «Gerald Rios» con el área vacía de la tabla dinámica."
+  },
+  {
+   "h2": "Paso 15: Armar el informe con Empleado, PaisVenta y Freight (Paso 36 de la guía)"
+  },
+  {
+   "p": "Se colocó Empleado en Columnas, PaisVenta en Filas y Freight en Valores; Excel creó el campo «Suma de Freight»."
+  },
+  {
+   "img": "evidencias/36_campos_tabla_dinamica.png",
+   "ancho": 15,
+   "cap": "Figura 37. Tabla dinámica con Empleado en columnas, PaisVenta en filas y Suma de Freight en valores."
+  },
+  {
+   "h2": "Paso 16: Nombre «Venta» y formato numérico (Pasos 37 a 40 de la guía)"
+  },
+  {
+   "p": "Se cambió el nombre personalizado del campo a «Venta» y su formato a Número con separador de miles, dos decimales y negativos con signo menos (#,##0.00;-#,##0.00). Se hizo por COM (DataField.Caption y NumberFormat) y no con las ventanas «Configuración del campo de valor» y «Formato de celdas»; el resultado es el mismo y se ve en el encabezado «Venta» y en las cifras con coma de miles."
+  },
+  {
+   "img": "evidencias/37_campo_venta_formato.png",
+   "ancho": 15,
+   "cap": "Figura 38. Campo renombrado a «Venta» con formato de número."
+  },
+  {
+   "h2": "Paso 17: Quitar los valores en blanco (Pasos 41 y 42 de la guía)"
+  },
+  {
+   "p": "Se revisaron los elementos de los campos Empleado y PaisVenta: Empleado tiene 9 elementos y PaisVenta 69, y ninguno está en blanco, porque las combinaciones externas izquierdas encontraron pareja para las 830 filas. Por eso no hubo nada que desmarcar y este paso no generó cambios ni captura propia."
+  },
+  {
+   "h2": "Paso 18: Ordenar de mayor a menor (Pasos 43 y 44 de la guía)"
+  },
+  {
+   "p": "Se ordenaron las filas por «Venta» de mayor a menor: la ciudad con mayor total de flete quedó primera (Boise, con 6,683.70). Después se ordenaron igual las columnas, de modo que el empleado con mayor total quedó a la izquierda. Se usó AutoSort por COM, equivalente a clic derecho > Ordenar > Ordenar de mayor a menor sobre «Total general»."
+  },
+  {
+   "img": "evidencias/43_orden_filas.png",
+   "ancho": 15,
+   "cap": "Figura 39. Filas ordenadas por Venta de mayor a menor."
+  },
+  {
+   "img": "evidencias/44_orden_columnas.png",
+   "ancho": 15,
+   "cap": "Figura 40. Columnas y filas ordenadas por Venta (el icono de orden aparece en ambos campos)."
+  },
+  {
+   "h2": "Paso 19: Segmentación de datos por Sucursal (Pasos 45 a 47 de la guía)"
+  },
+  {
+   "p": "Se insertó una segmentación de datos con el campo «Sucursal», que muestra Kirkland, London, Redmond, Seattle y Tacoma. Se creó por COM. Para probarla se hizo clic con el mouse en «London», y la tabla se redujo a los empleados de esa sucursal (ver la última figura de este paso y del siguiente)."
+  },
+  {
+   "img": "evidencias/46_segmentacion_sucursal.png",
+   "ancho": 15,
+   "cap": "Figura 41. Segmentación «Sucursal» a la derecha de la tabla dinámica."
+  },
+  {
+   "h2": "Paso 20: Escala de tiempo por OrderDate (Pasos 48 a 51 de la guía)"
+  },
+  {
+   "p": "Se insertó una escala de tiempo sobre «OrderDate». Por defecto aparece en MESES. Se desplegó el selector de periodo con el mouse y se eligió «AÑOS», con lo que la escala mostró 1996, 1997 y 1998. Después se hizo clic en 1997 para filtrar."
+  },
+  {
+   "img": "evidencias/50_escala_tiempo_anios.png",
+   "ancho": 15,
+   "cap": "Figura 42. Selector de periodo de la escala de tiempo con las opciones AÑOS, TRIMESTRES, MESES y DÍAS."
+  },
+  {
+   "img": "evidencias/51_escala_tiempo_1997.png",
+   "ancho": 15,
+   "cap": "Figura 43. Escala de tiempo en años con 1997 seleccionado."
+  },
+  {
+   "img": "evidencias/47_segmentacion_london_1997.png",
+   "ancho": 15,
+   "cap": "Figura 44. Prueba de ambos filtros: Sucursal London y año 1997. La tabla queda con 4 empleados."
+  },
+  {
+   "p": "Al terminar las pruebas se quitaron los filtros para guardar el libro con todos los datos visibles."
+  },
+  {
+   "h2": "Paso 21: Gráfico de columnas 3D (Pasos 52 y 53 de la guía)"
+  },
+  {
+   "p": "Con una celda de la tabla dinámica seleccionada se insertó un gráfico de columnas 3D agrupadas, que quedó como gráfico dinámico vinculado a la misma tabla. La segmentación, la escala de tiempo y el gráfico se acomodaron a la derecha del informe. El gráfico tiene 69 ciudades por 9 empleados, por lo que es denso; se dejó así por seguir la guía."
+  },
+  {
+   "img": "evidencias/52_grafico_3d.png",
+   "ancho": 15,
+   "cap": "Figura 45. Gráfico de columnas 3D junto a la segmentación y la escala de tiempo."
+  },
+  {
+   "h2": "Paso 22: Campos de la tabla dinámica y reporte final (Paso 54 de la guía)"
+  },
+  {
+   "p": "Con una celda del informe seleccionada se muestra el panel «Campos de tabla dinámica», con Empleado en Columnas, PaisVenta en Filas y Venta en Valores. El libro se guardó como Lab05_PowerQuery_Gerald_Rios.xlsx con las tres consultas dentro."
+  },
+  {
+   "img": "evidencias/54_campos_y_reporte_final.png",
+   "ancho": 15,
+   "cap": "Figura 46. Informe final con panel de campos, segmentación, escala de tiempo y gráfico."
+  },
+  {
+   "h2": "Código M de las consultas"
+  },
+  {
+   "p": "El Editor de Power Query escribió el siguiente código M para cada consulta mientras se hacían los pasos. Se copió desde el libro (propiedad Formula de cada consulta). La ruta del origen es la de la carpeta de evidencias de esta máquina."
+  },
+  {
+   "p": "**Consulta Employees**"
+  },
+  {
+   "code": "let\n\n    Origen = Excel.Workbook(File.Contents(\"C:\\Cerebrolo\\03-Sistemas-Informacion-Gerencial\\Lab05-power-query\\entregables\\evidencias\\Northwind.xlsx\"), null, true),\n\n    Employees_Sheet = Origen{[Item=\"Employees\",Kind=\"Sheet\"]}[Data],\n\n    #\"Encabezados promovidos\" = Table.PromoteHeaders(Employees_Sheet, [PromoteAllScalars=true]),\n\n    #\"Tipo cambiado\" = Table.TransformColumnTypes(#\"Encabezados promovidos\",{{\"EmployeeID\", Int64.Type}, {\"LastName\", type text}, {\"FirstName\", type text}, {\"Title\", type text}, {\"TitleOfCourtesy\", type text}, {\"BirthDate\", type date}, {\"HireDate\", type date}, {\"Address\", type text}, {\"City\", type text}, {\"Region\", type text}, {\"PostalCode\", type text}, {\"Country\", type text}, {\"HomePhone\", type text}, {\"Extension\", Int64.Type}, {\"Photo\", type text}, {\"Notes\", type text}, {\"ReportsTo\", Int64.Type}}),\n\n    #\"Columna combinada insertada\" = Table.AddColumn(#\"Tipo cambiado\", \"Empleado\", each Text.Combine({[FirstName], [LastName]}, \" \"), type text)\n\nin\n\n    #\"Columna combinada insertada\""
+  },
+  {
+   "p": "**Consulta Customers**"
+  },
+  {
+   "code": "let\n\n    Origen = Excel.Workbook(File.Contents(\"C:\\Cerebrolo\\03-Sistemas-Informacion-Gerencial\\Lab05-power-query\\entregables\\evidencias\\Northwind.xlsx\"), null, true),\n\n    Customers_Sheet = Origen{[Item=\"Customers\",Kind=\"Sheet\"]}[Data],\n\n    #\"Tipo cambiado\" = Table.TransformColumnTypes(Customers_Sheet,{{\"Column1\", type text}, {\"Column2\", type text}, {\"Column3\", type text}, {\"Column4\", type text}, {\"Column5\", type text}, {\"Column6\", type text}, {\"Column7\", type text}, {\"Column8\", type text}, {\"Column9\", type text}, {\"Column10\", type text}, {\"Column11\", type text}}),\n\n    #\"Encabezados promovidos\" = Table.PromoteHeaders(#\"Tipo cambiado\", [PromoteAllScalars=true]),\n\n    #\"Tipo cambiado1\" = Table.TransformColumnTypes(#\"Encabezados promovidos\",{{\"CustomerID\", type text}, {\"CompanyName\", type text}, {\"ContactName\", type text}, {\"ContactTitle\", type text}, {\"Address\", type text}, {\"City\", type text}, {\"Region\", type text}, {\"PostalCode\", type text}, {\"Country\", type text}, {\"Phone\", type text}, {\"Fax\", type text}})\n\nin\n\n    #\"Tipo cambiado1\""
+  },
+  {
+   "p": "**Consulta Orders**"
+  },
+  {
+   "code": "let\n\n    Origen = Excel.Workbook(File.Contents(\"C:\\Cerebrolo\\03-Sistemas-Informacion-Gerencial\\Lab05-power-query\\entregables\\evidencias\\Northwind.xlsx\"), null, true),\n\n    Orders_Sheet = Origen{[Item=\"Orders\",Kind=\"Sheet\"]}[Data],\n\n    #\"Encabezados promovidos\" = Table.PromoteHeaders(Orders_Sheet, [PromoteAllScalars=true]),\n\n    #\"Tipo cambiado\" = Table.TransformColumnTypes(#\"Encabezados promovidos\",{{\"OrderID\", Int64.Type}, {\"CustomerID\", type text}, {\"EmployeeID\", Int64.Type}, {\"OrderDate\", type date}, {\"RequiredDate\", type date}, {\"ShippedDate\", type date}, {\"ShipVia\", Int64.Type}, {\"Freight\", type number}, {\"ShipName\", type text}, {\"ShipAddress\", type text}, {\"ShipCity\", type text}, {\"ShipRegion\", type text}, {\"ShipPostalCode\", type text}, {\"ShipCountry\", type text}}),\n\n    #\"Consultas combinadas\" = Table.NestedJoin(#\"Tipo cambiado\", {\"CustomerID\"}, Customers, {\"CustomerID\"}, \"Customers\", JoinKind.LeftOuter),\n\n    #\"Se expandió Customers\" = Table.ExpandTableColumn(#\"Consultas combinadas\", \"Customers\", {\"CompanyName\", \"City\"}, {\"Customers.CompanyName\", \"Customers.City\"}),\n\n    #\"Columnas con nombre cambiado\" = Table.RenameColumns(#\"Se expandió Customers\",{{\"Customers.CompanyName\", \"Cliente\"}, {\"Customers.City\", \"PaisVenta\"}}),\n\n    #\"Consultas combinadas1\" = Table.NestedJoin(#\"Columnas con nombre cambiado\", {\"EmployeeID\"}, Employees, {\"EmployeeID\"}, \"Employees\", JoinKind.LeftOuter),\n\n    #\"Se expandió Employees\" = Table.ExpandTableColumn(#\"Consultas combinadas1\", \"Employees\", {\"City\", \"Empleado\"}, {\"City\", \"Empleado\"}),\n\n    #\"Columnas con nombre cambiado1\" = Table.RenameColumns(#\"Se expandió Employees\",{{\"City\", \"Sucursal\"}})\n\nin\n\n    #\"Columnas con nombre cambiado1\""
+  },
+  {
+   "h2": "Resumen de las consultas"
+  },
+  {
+   "tabla": {
+    "titulo": "Tabla 1. Resumen de las consultas",
+    "cols": [
+     "Consulta",
+     "Origen",
+     "Transformaciones",
+     "Filas resultantes",
+     "Carga"
+    ],
+    "filas": [
+     [
+      "Orders",
+      "Northwind.xlsx, hoja Orders",
+      "Encabezados promovidos, tipos de datos, combinación con Customers (CustomerID), expansión de CompanyName y City, renombrar a Cliente y PaisVenta, combinación con Employees (EmployeeID), expansión de City y Empleado, renombrar a Sucursal",
+      "830 (18 columnas)",
+      "Tabla en la hoja Orders"
+     ],
+     [
+      "Customers",
+      "Northwind.xlsx, hoja Customers",
+      "Encabezados promovidos y tipos de datos",
+      "91 (11 columnas)",
+      "Solo conexión"
+     ],
+     [
+      "Employees",
+      "Northwind.xlsx, hoja Employees",
+      "Encabezados promovidos, tipos de datos y columna Empleado (FirstName + espacio + LastName)",
+      "9 (18 columnas)",
+      "Solo conexión"
+     ]
+    ]
+   }
+  },
+  {
+   "p": "La tabla dinámica de la hoja «Gerald Rios» suma el campo Freight de Orders (la suma directa de la columna da 64,942.69) y reparte el resultado en 69 filas (ciudades) y 9 columnas (empleados). La hoja «Hoja1» del libro quedó vacía, tal como la creó Excel."
+  }
+ ],
+ "conclusion": [
+  "Power Query permitió armar en un solo lugar un conjunto de datos listo para analizar a partir de tres hojas separadas. Cada acción (promover encabezados, combinar columnas, unir consultas por CustomerID y EmployeeID, expandir y renombrar) quedó como un paso visible en «Pasos aplicados» y como una línea de código M, de modo que el procedimiento se puede revisar, corregir o repetir sin rehacer el trabajo. Eso es lo que se espera de las fases de extracción y transformación de un proceso ETL.",
+  "Para un sistema de información gerencial la ventaja está en que los datos de origen no se modifican y el informe se alimenta de una consulta que se refresca cuando cambia el archivo. En este laboratorio la tabla Orders pasó a incluir el nombre del cliente, la ciudad, el empleado y su sucursal, y con ella se obtuvo un cuadro por ciudad y empleado con filtros por sucursal y por año. También se vieron límites: la guía llama PaisVenta a un campo que contiene ciudades, y la combinación depende de que las claves coincidan, algo que aquí la propia herramienta comprobó (830 de 830 filas)."
+ ],
+ "referencias": [
+  "Clarence, I. (2026). Laboratorio PowerBI (Power Query y Tablas Pivotes). Lab 5 PowerQuery Paso a Paso [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP."
+ ]
+}

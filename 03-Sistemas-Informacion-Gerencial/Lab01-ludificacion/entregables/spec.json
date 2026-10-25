@@ -1,0 +1,332 @@
+{
+  "lab": 1,
+  "titulo": "Ludificación o Gamificación",
+  "fecha": "2026.10.27",
+  "salida": "Lab01_SIG_Rios_Gerald",
+  "objetivo": "jugar los dos juegos de memoria de PurposeGames indicados por el profesor para reconocer las partes de la tarjeta madre y los dispositivos de un computador, y documentar el resultado obtenido en cada uno.",
+  "contenido": [
+    {
+      "p": "La ludificación (o gamificación) consiste en usar elementos de los juegos, como puntos, tiempo, tablas de posiciones y retroalimentación inmediata, en actividades que no son juegos, en este caso el repaso de hardware. Los dos juegos son de tipo «Image Quiz»: el sitio muestra el nombre de una pieza y hay que hacer clic en el punto azul que la señala en la imagen. Se jugaron sin iniciar sesión, como invitado."
+    },
+    {
+      "h2": "Paso 1: Entrar al juego «Motherboard Quiz»"
+    },
+    {
+      "p": "Se abrió el enlace https://www.purposegames.com/game/motherboard-quiz-quiz. Antes de cargar el juego, el sitio pidió una verificación «I'm not a robot», que se marcó a mano. La página indica que el juego es de la categoría Miscellaneous, lo creó el usuario «becool», tiene 13 preguntas en inglés y se ha jugado 173,776 veces. Arriba de la imagen está la barra del juego: contadores Remaining, Correct y Wrong, el botón «Press play!», el porcentaje de aciertos y el cronómetro."
+    },
+    {
+      "img": "evidencias/01_motherboard_pagina.png",
+      "ancho": 16,
+      "cap": "Figura 1. Página del juego Motherboard Quiz antes de empezar."
+    },
+    {
+      "h2": "Paso 2: Revisar el tablero antes de jugar"
+    },
+    {
+      "p": "Se bajó la página hasta ver la imagen completa. Es una tarjeta madre ABIT BX133-RAID (el modelo está impreso en la placa, abajo a la derecha) con 13 puntos azules, cada uno unido por una línea roja a una pieza. Antes de presionar play se ubicaron las piezas que se reconocían a simple vista: el zócalo blanco del procesador, las ranuras de memoria, las ranuras PCI blancas y la pila de botón."
+    },
+    {
+      "img": "evidencias/02_motherboard_antes_de_jugar.png",
+      "ancho": 12,
+      "cap": "Figura 2. Tarjeta madre con los 13 puntos que hay que identificar."
+    },
+    {
+      "h2": "Paso 3: Jugar"
+    },
+    {
+      "p": "Se presionó el botón de play y arrancó el cronómetro. La primera pieza que pidió el juego fue «Power Supply Plugin»; se hizo clic en el punto de arriba al centro, que señala el conector de la fuente de poder, y el punto se puso verde. En la Figura 3 ya va 1 correcta, quedan 12 y el juego pide «Mouse & Keyboard». Cuando se acierta al primer intento el punto queda verde; si se falla primero, queda amarillo."
+    },
+    {
+      "img": "evidencias/03_motherboard_en_curso.png",
+      "ancho": 12,
+      "cap": "Figura 3. Juego en curso: primera respuesta correcta (punto verde)."
+    },
+    {
+      "salto": true
+    },
+    {
+      "tabla": {
+        "titulo": "Partes de la tarjeta madre, en el orden en que salieron",
+        "cols": [
+          "Nombre en el juego",
+          "Parte",
+          "Para qué sirve"
+        ],
+        "filas": [
+          [
+            "1. Power Supply Plugin",
+            "Conector de alimentación ATX",
+            "Recibe el cable principal de la fuente de poder y reparte la energía a la placa."
+          ],
+          [
+            "2. Mouse & Keyboard",
+            "Puertos PS/2",
+            "Conectan el teclado y el mouse de tipo PS/2, anteriores al USB."
+          ],
+          [
+            "3. Parallel Port",
+            "Puerto paralelo (LPT)",
+            "Conector de 25 pines que se usaba sobre todo para impresoras y escáneres viejos."
+          ],
+          [
+            "4. USB",
+            "Puertos USB",
+            "Conectan periféricos como memorias, teclados, mouse o impresoras."
+          ],
+          [
+            "5. CPU Socket",
+            "Zócalo del procesador",
+            "Base donde se instala el procesador (CPU)."
+          ],
+          [
+            "6. CPU Fan Plugin",
+            "Conector del ventilador del CPU",
+            "Alimenta el ventilador del disipador y permite a la placa leer sus revoluciones."
+          ],
+          [
+            "7. Memory Slot",
+            "Ranuras de memoria (DIMM)",
+            "Alojan los módulos de memoria RAM. Aquí fue el único error."
+          ],
+          [
+            "8. ISA Slot",
+            "Ranura ISA",
+            "Ranura de expansión antigua para tarjetas como módems o tarjetas de sonido de la época."
+          ],
+          [
+            "9. CMOS Battery",
+            "Pila CMOS",
+            "Pila de botón que mantiene la hora y la configuración del BIOS con el equipo apagado."
+          ],
+          [
+            "10. PCI Slot",
+            "Ranuras PCI",
+            "Ranuras de expansión para tarjetas de red, sonido, captura, etc."
+          ],
+          [
+            "11. IDE Controller",
+            "Conectores IDE",
+            "Conectan por cable plano los discos duros y las unidades de CD o DVD."
+          ],
+          [
+            "12. AGP Slot",
+            "Ranura AGP",
+            "Ranura dedicada a la tarjeta de video; luego fue reemplazada por PCI Express."
+          ],
+          [
+            "13. Floppy Controller",
+            "Conector de disquetera",
+            "Conecta la unidad de disquetes de 3½\"."
+          ]
+        ]
+      }
+    },
+    {
+      "p": "El error fue en «Memory Slot». Se hizo clic primero en el punto de arriba a la derecha, que apunta a un conector negro pegado a las ranuras de memoria, y el juego lo marcó como incorrecto. El segundo intento, en el punto que señala las ranuras con seguros blancos, fue el correcto, por eso ese punto quedó amarillo. Al final se supo que el primer punto era el conector de la disquetera («Floppy Controller»), que fue la última pregunta."
+    },
+    {
+      "h2": "Paso 4: Resultado del primer juego"
+    },
+    {
+      "p": "Al responder la última pieza apareció la tarjeta de puntaje («Your Scorecard»): **93 %** de puntaje en **01:53.0**, con 13 correctas y 1 incorrecta, en el puesto #279 de la tabla del juego. El juego da puntos de ranking solo con 100 % («100% needed»), así que esta partida no sumó puntos."
+    },
+    {
+      "img": "evidencias/04_motherboard_puntaje.png",
+      "ancho": 12,
+      "cap": "Figura 4. Tarjeta de puntaje del Motherboard Quiz: 93 % en 01:53.0."
+    },
+    {
+      "p": "Al cerrar la tarjeta queda el tablero con todas las respuestas: 12 puntos verdes y el amarillo de las ranuras de memoria."
+    },
+    {
+      "img": "evidencias/05_motherboard_tablero_final.png",
+      "ancho": 12,
+      "cap": "Figura 5. Tablero final: 13 correctas y 1 incorrecta."
+    },
+    {
+      "h2": "Paso 5: Entrar al juego «Dispositivos Entrada, Saída e Entrada/Saída»"
+    },
+    {
+      "p": "Se abrió el segundo enlace, https://www.purposegames.com/game/dispositivos-entradasaida-e-entradasaida-quiz. Este juego está en portugués, es de la categoría Science, lo creó el usuario «bisa» y tiene 15 preguntas. La barra del juego es igual a la del anterior."
+    },
+    {
+      "img": "evidencias/06_dispositivos_pagina.png",
+      "ancho": 16,
+      "cap": "Figura 6. Página del juego de dispositivos antes de empezar."
+    },
+    {
+      "h2": "Paso 6: Revisar el tablero antes de jugar"
+    },
+    {
+      "p": "Esta vez la imagen reúne 15 fotos de dispositivos sueltos, cada uno con su punto azul: disco duro, tarjeta madre, procesador, memoria, teclado, mouse, tarjeta de red, impresora, monitor, tarjeta de video, switch, tarjeta de sonido, escáner, router y cable de red. Como los nombres están en portugués, antes de empezar se tuvieron en cuenta algunas equivalencias: «rato» es mouse, «disco rígido» es disco duro y «placa» es tarjeta."
+    },
+    {
+      "img": "evidencias/07_dispositivos_antes_de_jugar.png",
+      "ancho": 12,
+      "cap": "Figura 7. Los 15 dispositivos del segundo juego."
+    },
+    {
+      "h2": "Paso 7: Jugar"
+    },
+    {
+      "p": "Se presionó play. La primera pregunta fue «Router» y se hizo clic en el punto del router inalámbrico, abajo a la izquierda. En la Figura 8 ya va 1 correcta y el juego pide «Cabo de Rede»."
+    },
+    {
+      "img": "evidencias/08_dispositivos_en_curso.png",
+      "ancho": 12,
+      "cap": "Figura 8. Segundo juego en curso: el router ya está marcado en verde."
+    },
+    {
+      "p": "Los dispositivos salieron en el orden de la tabla. Como el tema del juego es la clasificación en entrada, salida y entrada/salida, se agregó esa columna. El procesador, la memoria y la tarjeta madre no son periféricos sino componentes internos, y se marcan así."
+    },
+    {
+      "salto": true
+    },
+    {
+      "tabla": {
+        "titulo": "Dispositivos del segundo juego",
+        "cols": [
+          "Nombre en el juego (dispositivo)",
+          "Tipo",
+          "Para qué sirve"
+        ],
+        "filas": [
+          [
+            "1. Router",
+            "Entrada/salida (red)",
+            "Conecta la red local con Internet y reparte las direcciones a los equipos."
+          ],
+          [
+            "2. Cabo de Rede (cable de red UTP)",
+            "Medio de transmisión",
+            "Lleva los datos entre la computadora, el switch o el router."
+          ],
+          [
+            "3. Switch",
+            "Entrada/salida (red)",
+            "Une varios equipos de la misma red local por cable."
+          ],
+          [
+            "4. Teclado",
+            "Entrada",
+            "Permite escribir texto y dar órdenes."
+          ],
+          [
+            "5. Processador (procesador o CPU)",
+            "Componente interno",
+            "Ejecuta las instrucciones de los programas."
+          ],
+          [
+            "6. Monitor",
+            "Salida",
+            "Muestra la imagen que genera la computadora."
+          ],
+          [
+            "7. Placa Gráfica (tarjeta de video)",
+            "Salida",
+            "Procesa los gráficos y envía la señal al monitor."
+          ],
+          [
+            "8. Placa de Rede (tarjeta de red)",
+            "Entrada/salida",
+            "Conecta la computadora a la red por cable."
+          ],
+          [
+            "9. Placa Mãe / Motherboard (tarjeta madre)",
+            "Componente interno",
+            "Une y comunica todos los componentes del equipo."
+          ],
+          [
+            "10. Disco Rígido (disco duro)",
+            "Entrada/salida (almacenamiento)",
+            "Guarda los datos y programas de forma permanente."
+          ],
+          [
+            "11. Rato (mouse)",
+            "Entrada",
+            "Mueve el puntero y permite seleccionar en pantalla."
+          ],
+          [
+            "12. Impressora (impresora)",
+            "Salida",
+            "Pasa documentos e imágenes a papel."
+          ],
+          [
+            "13. Placa de Som (tarjeta de sonido)",
+            "Entrada/salida",
+            "Recibe audio del micrófono y lo envía a parlantes o audífonos."
+          ],
+          [
+            "14. Memória RAM (memoria RAM)",
+            "Componente interno",
+            "Guarda temporalmente los datos de los programas abiertos."
+          ],
+          [
+            "15. Scanner (escáner)",
+            "Entrada",
+            "Digitaliza documentos o fotos en papel."
+          ]
+        ]
+      }
+    },
+    {
+      "h2": "Paso 8: Resultado del segundo juego"
+    },
+    {
+      "p": "En este juego no hubo errores. La tarjeta de puntaje mostró **100 %** en **01:43.5**, con 15 correctas y 0 incorrectas, el puesto #14 y la etiqueta «Perfect Score». Esta vez sí se sumaron 15 puntos del día, porque el puntaje fue perfecto."
+    },
+    {
+      "img": "evidencias/09_dispositivos_puntaje.png",
+      "ancho": 12,
+      "cap": "Figura 9. Tarjeta de puntaje del segundo juego: 100 % en 01:43.5."
+    },
+    {
+      "img": "evidencias/10_dispositivos_tablero_final.png",
+      "ancho": 12,
+      "cap": "Figura 10. Tablero final con los 15 dispositivos en verde."
+    },
+    {
+      "tabla": {
+        "titulo": "Tabla resumen",
+        "cols": [
+          "Juego",
+          "Preguntas",
+          "Correctas",
+          "Incorrectas",
+          "Puntaje",
+          "Tiempo",
+          "Puesto"
+        ],
+        "filas": [
+          [
+            "Motherboard Quiz",
+            "13",
+            "13",
+            "1",
+            "93 %",
+            "01:53.0",
+            "#279"
+          ],
+          [
+            "Dispositivos Entrada, Saída e Entrada/Saída",
+            "15",
+            "15",
+            "0",
+            "100 %",
+            "01:43.5",
+            "#14"
+          ]
+        ]
+      }
+    }
+  ],
+  "conclusion": [
+    "Se jugaron los dos juegos de PurposeGames y se completaron todas las piezas. En el de la tarjeta madre el resultado fue 93 % en 01:53.0, con un solo error: se confundió el conector de la disquetera con las ranuras de memoria, porque están uno al lado del otro y los dos son negros. En el de dispositivos el resultado fue 100 % en 01:43.5. Las piezas que se reconocen por su forma o color, como el zócalo del procesador, las ranuras PCI o la pila, se ubicaron de inmediato. Las ranuras ISA y AGP y el conector de la disquetera hubo que sacarlos por posición, porque ya no se ven en equipos actuales.",
+    "Como herramienta de estudio, el formato de juego funciona. El cronómetro y el porcentaje obligan a decidir rápido, y el juego avisa del error en el momento (el punto no se marca hasta acertar y luego queda amarillo), así que se aprende la ubicación correcta enseguida en lugar de esperar una corrección. El segundo juego, además de pedir el nombre, sirvió para repasar qué dispositivos son de entrada, de salida o de ambos. Lo que limita al primero es que muestra una placa de hace más de veinte años; es útil para aprender la estructura general, pero hay que complementarlo con una tarjeta madre moderna."
+  ],
+  "referencias": [
+    "becool. (s. f.). Motherboard quiz [Juego en línea]. PurposeGames. https://www.purposegames.com/game/motherboard-quiz-quiz",
+    "bisa. (s. f.). Dispositivos entrada, saída e entrada/saída [Juego en línea]. PurposeGames. https://www.purposegames.com/game/dispositivos-entradasaida-e-entradasaida-quiz",
+    "Clarence, I. (2026). Lab 1 Ludificación o Gamificación [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP."
+  ]
+}

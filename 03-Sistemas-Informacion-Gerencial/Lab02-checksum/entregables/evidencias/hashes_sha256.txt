@@ -1,0 +1,6 @@
+Lab 2 - Checksum SHA-256 (valores copiados de https://defuse.ca/checksums.htm)
+Archivo de trabajo: GeraldRios.txt
+
+Estado 1 - original    "Gerald Rios"  6691e04f20521d4c223478eaac111345e47064a74195c00c00705b086e5b8903
+Estado 2 - modificado  "Gerald rios"  9ae8da246170a502d15ac7729d953f844c6aa31bdbcd8dd20fd92063f6a0ff38
+Estado 3 - restaurado  "Gerald Rios"  6691e04f20521d4c223478eaac111345e47064a74195c00c00705b086e5b8903

@@ -1,0 +1,13 @@
+# Material del profesor: no se publica
+**/tmp/
+**/_curso/**/*.pdf
+**/_curso/**/*.pptx
+**/_curso/plantilla/*.docx
+Northwind.xlsx
+
+# Temporales
+~$*
+*.dia~
+__pycache__/
+.escritorio.lock
+graphify-out/

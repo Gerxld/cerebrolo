@@ -1,0 +1,478 @@
+{
+ "lab": 7,
+ "titulo": "Modelaje de Datos",
+ "fecha": "2026.10.27",
+ "salida": "Lab07_SIG_Rios_Gerald",
+ "objetivo": "construir en DIA el diagrama Entidad/Relación de la base de datos Northwind, con una tabla por cada entidad (proveedores, productos, categorías, empleados, clientes, transportistas, regiones, pedidos y detalle de pedidos), sus campos con tipo, las claves primarias (PK) y foráneas (FK), los índices (I) y los valores únicos (U), y las referencias entre tablas con su cardinalidad.",
+ "contenido": [
+  {
+   "h2": "Paso 1: Abrir DIA"
+  },
+  {
+   "p": "Se abrió el programa DIA (versión 0.97.2, con la interfaz en español) desde el menú Inicio. Al arrancar quedan dos ventanas: la caja de herramientas, a la izquierda, con las herramientas básicas de dibujo y, debajo, la lista de hojas de formas; y la ventana del diagrama, a la derecha, que empieza como un diagrama sin nombre («Diagrama1.dia») con el lienzo en blanco y la cuadrícula."
+  },
+  {
+   "p": "La lista de hojas aparece en «Diagrama de flujo», que es la que DIA trae por defecto. Para este laboratorio hace falta otra, así que se hizo clic en la flecha de la lista para desplegarla."
+  },
+  {
+   "img": "evidencias/02_lista_hojas.png",
+   "ancho": 16,
+   "cap": "Figura 1. DIA abierto: caja de herramientas (izquierda), diagrama vacío (derecha) y la lista de hojas desplegada con la opción «Otras hojas»."
+  },
+  {
+   "h2": "Paso 2: Elegir la hoja de formas «Base de datos»"
+  },
+  {
+   "p": "En la lista desplegada solo salen las hojas usadas más recientemente (Surtido, Diagrama de flujo y UML). Se eligió **Otras hojas**, que abre un submenú con todas las hojas instaladas, y en él **Base de datos**, la primera de la lista."
+  },
+  {
+   "img": "evidencias/03_submenu_otras_hojas.png",
+   "ancho": 16,
+   "cap": "Figura 2. Submenú «Otras hojas» con «Base de datos» resaltada."
+  },
+  {
+   "p": "La caja de herramientas pasó a mostrar tres formas: **Tabla**, para cada entidad; **Referencia**, para la línea que une una clave foránea con la clave primaria de la tabla padre; y **Atributo compuesto**, que no se usó."
+  },
+  {
+   "img": "evidencias/04_hoja_base_datos.png",
+   "ancho": 16,
+   "cap": "Figura 3. Hoja «Base de datos» seleccionada, con sus tres herramientas."
+  },
+  {
+   "h2": "Paso 3: Crear la primera tabla"
+  },
+  {
+   "p": "Se escogió la herramienta **Tabla** (el primer icono de la hoja) y se hizo clic en un punto del lienzo. DIA dibuja una tabla vacía con el nombre «Tabla» y sin atributos, y la deja seleccionada. Se empezó por Categories porque es la entidad más pequeña (4 campos) y no depende de ninguna otra."
+  },
+  {
+   "img": "evidencias/05_primera_tabla.png",
+   "ancho": 16,
+   "cap": "Figura 4. Tabla recién colocada en el lienzo, todavía con el nombre por defecto."
+  },
+  {
+   "h2": "Paso 4: Abrir las propiedades y poner el nombre de la tabla"
+  },
+  {
+   "p": "Con la herramienta de selección (la flecha) se hizo doble clic sobre la tabla. Se abre el diálogo **Propiedades: Database - Table**, con tres pestañas: Tabla, Atributos y Estilo. En la pestaña **Tabla** están el nombre, un comentario y varias casillas; se dejó marcada «Subrayar claves primarias» para que las PK se distingan en el diagrama."
+  },
+  {
+   "img": "evidencias/06_dialogo_tabla.png",
+   "ancho": 16,
+   "cap": "Figura 5. Diálogo de propiedades de la tabla, pestaña «Tabla», con el nombre por defecto."
+  },
+  {
+   "p": "En «Nombre de la tabla» se borró «Tabla» y se escribió **Categories**."
+  },
+  {
+   "img": "evidencias/07_nombre_tabla.png",
+   "ancho": 16,
+   "cap": "Figura 6. Nombre de la tabla cambiado a «Categories»."
+  },
+  {
+   "h2": "Paso 5: Editar los atributos"
+  },
+  {
+   "p": "Se pasó a la pestaña **Atributos**. A la izquierda hay una lista con los atributos de la tabla y los botones Nuevo, Borrar, Mover arriba y Mover abajo; debajo, el recuadro «Datos de atributo» con **Nombre**, **Tipo**, **Comentario** y tres casillas: **Clave primaria**, **Que puede ser Null** y **Única**. Mientras no haya un atributo seleccionado, todo ese recuadro está deshabilitado."
+  },
+  {
+   "img": "evidencias/08_pestana_atributos.png",
+   "ancho": 16,
+   "cap": "Figura 7. Pestaña «Atributos» de la tabla, todavía sin atributos."
+  },
+  {
+   "p": "Por cada campo de la tabla se hizo clic en **Nuevo** y se llenó el recuadro. Primero CategoryID: nombre «CategoryID», tipo «int  PK» y se marcó «Clave primaria». Al marcar la clave primaria, la casilla «Que puede ser Null» queda desmarcada y la lista muestra el atributo como «no nula, única»."
+  },
+  {
+   "img": "evidencias/09_atributo_categoryid.png",
+   "ancho": 16,
+   "cap": "Figura 8. Primer atributo (CategoryID) creado: tipo int, clave primaria."
+  },
+  {
+   "p": "Se repitió con los otros tres campos, con los tipos del script de Microsoft: **CategoryName** (nvarchar(15), obligatorio, única), **Description** (ntext) y **Picture** (image), estos dos últimos opcionales. Al escribir el tipo de CategoryName, los paréntesis no entraron y la lista mostró «nvarchar15». Se seleccionó el atributo en la lista, se reescribió el tipo como «nvarchar(15)  I1 U1» y quedó bien."
+  },
+  {
+   "img": "evidencias/10_atributos_categories.png",
+   "ancho": 16,
+   "cap": "Figura 9. Los cuatro atributos de Categories en la lista; el recuadro inferior muestra el último (Picture, que puede ser Null)."
+  },
+  {
+   "p": "Se pulsó **Aceptar** y DIA redibujó la tabla con los cuatro campos."
+  },
+  {
+   "h2": "Paso 6: Marcar PK, FK, índices y únicos"
+  },
+  {
+   "p": "DIA solo trae casillas para clave primaria, nulo y único. Las claves foráneas y los índices no tienen casilla propia, así que, siguiendo la nomenclatura del enunciado, se escribieron como marcas al final del campo **Tipo**: «PK» para la clave primaria, «FK» para la foránea, «I1, I2…» para los índices y «U1» para un valor único. Con eso la marca queda visible en el diagrama sin abrir ningún diálogo."
+  },
+  {
+   "p": "En Categories, CategoryID lleva «PK» y aparece subrayado y con un rombo relleno. CategoryName lleva «I1 U1»: es el índice del nombre y, según el enunciado, un valor que no se puede repetir, por lo que además se marcó la casilla «Única». Los círculos rellenos indican campos obligatorios y los vacíos, campos que aceptan Null."
+  },
+  {
+   "img": "evidencias/11_tabla_categories.png",
+   "ancho": 16,
+   "cap": "Figura 10. Tabla Categories terminada en DIA, con PK, índice I1 y único U1 visibles."
+  },
+  {
+   "p": "Esta es la nomenclatura usada en todo el diagrama."
+  },
+  {
+   "tabla": {
+    "titulo": "Tabla 1. Marcas usadas en el diagrama",
+    "cols": [
+     "Marca",
+     "Significado",
+     "Dónde se escribió"
+    ],
+    "filas": [
+     [
+      "PK",
+      "Clave primaria (identifica de forma única cada fila)",
+      "Tipo, más la casilla «Clave primaria» (subrayado y rombo)"
+     ],
+     [
+      "FK",
+      "Clave foránea (guarda la PK de otra tabla)",
+      "Tipo"
+     ],
+     [
+      "I1, I2…",
+      "Índice; dos campos con el mismo número forman un índice compuesto",
+      "Tipo"
+     ],
+     [
+      "U1",
+      "Valor que no puede repetirse",
+      "Tipo, más la casilla «Única»"
+     ],
+     [
+      "● / ○",
+      "Campo obligatorio / campo que acepta Null",
+      "Casilla «Que puede ser Null»"
+     ]
+    ]
+   }
+  },
+  {
+   "h2": "Paso 7: Crear las demás tablas"
+  },
+  {
+   "p": "Cada una de las 12 tablas restantes se hace igual que Categories: herramienta Tabla, clic en el lienzo, doble clic, nombre y un atributo por campo con su tipo, sus marcas y sus casillas. En total son 13 tablas y 88 campos, y las columnas salen del script oficial instnwnd.sql de Microsoft, no de memoria. Para no teclear a mano esos 88 campos, las otras 12 tablas y las líneas de relación se prepararon en un archivo .dia generado con un programa a partir de ese script, y ese archivo se abrió en DIA. Lo que se ve es lo mismo que se obtiene con el procedimiento anterior, y cada tabla se puede abrir y editar con el mismo diálogo."
+  },
+  {
+   "p": "En la figura siguiente se ven tres tablas relacionadas, Categories, Suppliers y Products, ya dentro de DIA. Products tiene SupplierID y CategoryID marcados como FK, y los índices I1 (nombre del producto), I2 (proveedor) e I3 (categoría)."
+  },
+  {
+   "img": "evidencias/12_tres_tablas.png",
+   "ancho": 16,
+   "cap": "Figura 11. Categories, Suppliers y Products en DIA, con las FK de Products unidas a sus tablas padre."
+  },
+  {
+   "p": "Se incluyeron todas las tablas del script de Microsoft. Las entidades que menciona el enunciado son Suppliers, Products, Categories, Employees, Customers, Shippers, y Orders con su detalle Order Details. Para las «regiones geográficas», el script trae Region, Territories y EmployeeTerritories. CustomerDemographics y CustomerCustomerDemo no se nombran en el enunciado, pero el script las crea en el mismo bloque, con sus claves y relaciones, y sin ellas Customers quedaría con un perfil incompleto; por eso entraron. El diagrama queda en 13 tablas."
+  },
+  {
+   "h2": "Paso 8: Crear las referencias y la cardinalidad"
+  },
+  {
+   "p": "Para relacionar una tabla hija con su tabla padre se eligió la herramienta **Referencia**, se pulsó sobre el campo FK de la tabla hija y, sin soltar, se arrastró hasta el campo PK de la tabla padre. Al soltar, la línea se pega a los dos campos (los extremos se ven en verde cuando la conexión es válida). En la figura se dibujó de esta manera la referencia entre CategoryID de Products y CategoryID de Categories."
+  },
+  {
+   "img": "evidencias/13_referencia_dibujada.png",
+   "ancho": 16,
+   "cap": "Figura 12. Referencia dibujada a mano con la herramienta Referencia, de Products.CategoryID a Categories.CategoryID (la otra línea es la que traía el archivo cargado)."
+  },
+  {
+   "p": "La cardinalidad se escribe en las propiedades de la referencia (doble clic sobre la línea). En **Inicio de la descripción** se puso «1», que es el lado de la tabla padre, y en **Final de la descripción** «N», el lado de la tabla hija. Así toda relación se lee igual: un registro de la tabla padre se relaciona con muchos de la hija. El mismo diálogo permite cambiar el color y el ancho de la línea; se usó azul oscuro y 0,10 cm."
+  },
+  {
+   "img": "evidencias/16_dialogo_referencia.png",
+   "ancho": 16,
+   "cap": "Figura 13. Propiedades de una referencia: «1» al inicio (padre) y «N» al final (hijo)."
+  },
+  {
+   "p": "Se tienen así 13 referencias, una por cada restricción FOREIGN KEY del script. La de Products hacia Categories, por ejemplo, es:"
+  },
+  {
+   "code": "CONSTRAINT \"FK_Products_Categories\" FOREIGN KEY (\"CategoryID\")\n    REFERENCES \"dbo\".\"Categories\" (\"CategoryID\")"
+  },
+  {
+   "h2": "Paso 9: Ordenar el diagrama"
+  },
+  {
+   "p": "Las tablas se acomodaron por capas de izquierda a derecha para que las líneas se crucen lo menos posible: Categories y Suppliers; Products; Order Details; Orders; Customers, Employees y Shippers; y, en la última columna, las tablas de segundo nivel de Customers (CustomerCustomerDemo y CustomerDemographics) y de Employees (EmployeeTerritories, Territories y Region). Se agregó un título y una leyenda con las marcas, con la herramienta de texto."
+  },
+  {
+   "p": "Para ver todo el diagrama se abrió el menú **Ver** y se eligió **Ajuste óptimo** (Ctrl+E), que cambia la ampliación hasta que todo quepa en la ventana. Aquí quedó en 47,3 %."
+  },
+  {
+   "img": "evidencias/14_menu_ver.png",
+   "ancho": 16,
+   "cap": "Figura 14. Menú «Ver», con la opción «Ajuste óptimo»."
+  },
+  {
+   "img": "evidencias/15_diagrama_completo_dia.png",
+   "ancho": 16,
+   "cap": "Figura 15. Diagrama completo de Northwind en DIA, con ajuste óptimo (47,3 %)."
+  },
+  {
+   "h2": "Paso 10: Guardar el diagrama"
+  },
+  {
+   "p": "En la ventana del diagrama se abrió el menú **Archivo** y se eligió **Guardar como** (Mayús+Ctrl+S). En el diálogo «Guardar diagrama» se escribió la ruta y el nombre **Northwind.dia**, y se dejó sin marcar «Comprimir archivos del diagrama» para que el archivo sea XML legible."
+  },
+  {
+   "img": "evidencias/19_menu_archivo.png",
+   "ancho": 16,
+   "cap": "Figura 16. Menú «Archivo»: Guardar, Guardar como y Exportar."
+  },
+  {
+   "img": "evidencias/17_dialogo_guardar.png",
+   "ancho": 16,
+   "cap": "Figura 17. Diálogo «Guardar diagrama» con el nombre Northwind.dia."
+  },
+  {
+   "p": "Como ya existía un archivo con ese nombre (el que se usó para abrir el diagrama), DIA preguntó si se quería sobrescribir. Se respondió **Sí**, y el título de la ventana quedó sin asterisco."
+  },
+  {
+   "img": "evidencias/18_confirmar_sobrescribir.png",
+   "ancho": 16,
+   "cap": "Figura 18. Aviso «El archivo ya existe» al guardar."
+  },
+  {
+   "h2": "Paso 11: Exportar el diagrama a imagen"
+  },
+  {
+   "p": "Para obtener la imagen del informe se abrió **Archivo → Exportar…**, se escribió el nombre **Northwind_ER.png** y se dejó «Determinar tipo de archivo» en «Por extensión», con lo que DIA elige el formato PNG por la terminación del nombre."
+  },
+  {
+   "img": "evidencias/20_dialogo_exportar.png",
+   "ancho": 16,
+   "cap": "Figura 19. Diálogo «Exportar diagrama» con el archivo Northwind_ER.png."
+  },
+  {
+   "p": "El PNG que sale por defecto mide 1939 × 710 píxeles y, con 13 tablas, el texto no se lee. Se repitió la exportación desde la línea de comandos del mismo programa, con un ancho de 8000 píxeles, y se guardó como Northwind_ER_alta.png:"
+  },
+  {
+   "code": "dia.exe --export=Northwind_ER_alta.png --size=8000x Northwind.dia"
+  },
+  {
+   "p": "En el informe esa imagen entra completa y, para poder leerla, también en tres recortes por zonas hechos sobre ella."
+  },
+  {
+   "img": "evidencias/21_Northwind_ER_alta.png",
+   "ancho": 16.5,
+   "cap": "Figura 20. Diagrama E-R completo de Northwind exportado por DIA (8000 × 2929 px)."
+  },
+  {
+   "img": "evidencias/zona_A.png",
+   "ancho": 16.5,
+   "cap": "Figura 21. Zona izquierda: Categories, Suppliers, Products y Order Details."
+  },
+  {
+   "img": "evidencias/zona_B.png",
+   "ancho": 16.5,
+   "cap": "Figura 22. Zona central: Orders, Customers, CustomerCustomerDemo y CustomerDemographics."
+  },
+  {
+   "img": "evidencias/zona_C.png",
+   "ancho": 16.5,
+   "cap": "Figura 23. Zona inferior derecha: Employees, Shippers, EmployeeTerritories, Territories y Region."
+  },
+  {
+   "salto": true
+  },
+  {
+   "h2": "Resumen de tablas, claves e índices"
+  },
+  {
+   "tabla": {
+    "titulo": "Tabla 2. Entidades del diagrama E-R de Northwind",
+    "cols": [
+     "Tabla",
+     "PK",
+     "FK",
+     "Índices y únicos"
+    ],
+    "filas": [
+     [
+      "Categories",
+      "CategoryID",
+      "—",
+      "I1 (CategoryName); U1 (CategoryName)"
+     ],
+     [
+      "Suppliers",
+      "SupplierID",
+      "—",
+      "I1 (CompanyName); I2 (PostalCode)"
+     ],
+     [
+      "Products",
+      "ProductID",
+      "SupplierID, CategoryID",
+      "I1 (ProductName); I2 (SupplierID); I3 (CategoryID)"
+     ],
+     [
+      "Order Details",
+      "OrderID, ProductID",
+      "OrderID, ProductID",
+      "I1 (OrderID); I2 (ProductID)"
+     ],
+     [
+      "Orders",
+      "OrderID",
+      "CustomerID, EmployeeID, ShipVia",
+      "I1 (CustomerID); I2 (EmployeeID); I3 (OrderDate); I4 (ShippedDate); I5 (ShipVia); I6 (ShipPostalCode)"
+     ],
+     [
+      "Customers",
+      "CustomerID",
+      "—",
+      "I1 (City); I2 (CompanyName); I3 (PostalCode); I4 (Region)"
+     ],
+     [
+      "Employees",
+      "EmployeeID",
+      "ReportsTo",
+      "I1 (LastName+FirstName); I2 (PostalCode); U1 (LastName+FirstName)"
+     ],
+     [
+      "Shippers",
+      "ShipperID",
+      "—",
+      "—"
+     ],
+     [
+      "CustomerCustomerDemo",
+      "CustomerID, CustomerTypeID",
+      "CustomerID, CustomerTypeID",
+      "—"
+     ],
+     [
+      "CustomerDemographics",
+      "CustomerTypeID",
+      "—",
+      "—"
+     ],
+     [
+      "EmployeeTerritories",
+      "EmployeeID, TerritoryID",
+      "EmployeeID, TerritoryID",
+      "—"
+     ],
+     [
+      "Territories",
+      "TerritoryID",
+      "RegionID",
+      "—"
+     ],
+     [
+      "Region",
+      "RegionID",
+      "—",
+      "—"
+     ]
+    ]
+   }
+  },
+  {
+   "p": "La tabla anterior reúne las 13 entidades del diagrama. Las columnas se tomaron del script instnwnd.sql de Microsoft y se compararon con las hojas del archivo Northwind.xlsx del curso: coinciden en las ocho hojas que tiene el libro (Categories, Customers, Employees, Orders Details, Orders, Product, Shippers y Suppliers), salvo que a la hoja Employees le falta el campo PhotoPath, que sí está en el script."
+  },
+  {
+   "p": "Dos marcas del diagrama vienen del enunciado y no del script. El enunciado dice que en Employees el índice I1 abarca apellido y nombre (que además deben ser únicos como par) y que I2 está en el código postal; el script solo crea un índice sobre LastName, así que el diagrama sigue al enunciado y muestra «I1 U1» en LastName y FirstName. Además, el enunciado pide que CategoryName sea único (U1), mientras que el script lo crea como índice común; en el diagrama se marcó como I1 y U1. En el resto de tablas los índices son los que crea el script, numerados por tabla. El script define algunos dos veces con distinto nombre sobre la misma columna (por ejemplo CustomerID y CustomersOrders en Orders); aquí cuentan como uno solo."
+  },
+  {
+   "salto": true
+  },
+  {
+   "h2": "Relaciones entre las tablas"
+  },
+  {
+   "tabla": {
+    "titulo": "Tabla 3. Relaciones (tabla padre → tabla hija)",
+    "cols": [
+     "Padre → hija (campo FK)",
+     "Card.",
+     "Significado de negocio"
+    ],
+    "filas": [
+     [
+      "Categories → Products (CategoryID)",
+      "1 : N",
+      "Una categoría agrupa muchos productos."
+     ],
+     [
+      "Suppliers → Products (SupplierID)",
+      "1 : N",
+      "Un proveedor suministra muchos productos."
+     ],
+     [
+      "Products → Order Details (ProductID)",
+      "1 : N",
+      "Un producto aparece en muchas líneas de pedido."
+     ],
+     [
+      "Orders → Order Details (OrderID)",
+      "1 : N",
+      "Un pedido tiene una o más líneas de detalle."
+     ],
+     [
+      "Customers → Orders (CustomerID)",
+      "1 : N",
+      "Un cliente hace muchos pedidos."
+     ],
+     [
+      "Employees → Orders (EmployeeID)",
+      "1 : N",
+      "Un empleado atiende muchos pedidos."
+     ],
+     [
+      "Shippers → Orders (ShipVia → ShipperID)",
+      "1 : N",
+      "Un transportista entrega muchos pedidos."
+     ],
+     [
+      "Employees → Employees (ReportsTo → EmployeeID)",
+      "1 : N",
+      "Recursiva: un jefe tiene varios subordinados."
+     ],
+     [
+      "Employees → EmployeeTerritories (EmployeeID)",
+      "1 : N",
+      "Un empleado cubre varios territorios."
+     ],
+     [
+      "Territories → EmployeeTerritories (TerritoryID)",
+      "1 : N",
+      "Un territorio tiene varios empleados (con la anterior resuelve N:M)."
+     ],
+     [
+      "Region → Territories (RegionID)",
+      "1 : N",
+      "Una región agrupa varios territorios."
+     ],
+     [
+      "Customers → CustomerCustomerDemo (CustomerID)",
+      "1 : N",
+      "Un cliente puede tener varios tipos de cliente."
+     ],
+     [
+      "CustomerDemographics → CustomerCustomerDemo (CustomerTypeID)",
+      "1 : N",
+      "Un tipo de cliente se asigna a varios clientes (con la anterior resuelve N:M)."
+     ]
+    ]
+   }
+  },
+  {
+   "p": "En el script, las FK de Orders, Products y Employees (ReportsTo) aceptan Null, de modo que un pedido puede registrarse sin cliente o sin empleado asignado; en el diagrama se representa igual como 1 : N. Las FK de Order Details, EmployeeTerritories y CustomerCustomerDemo forman parte de la clave primaria de su tabla y no aceptan Null, y RegionID en Territories también es obligatorio."
+  }
+ ],
+ "conclusion": [
+  "Armar el diagrama obligó a leer la base de datos tabla por tabla y a decidir qué es clave y qué es dato. Lo más claro fue ver cómo una relación de muchos a muchos, como pedidos y productos o empleados y territorios, se resuelve con una tabla intermedia cuya clave primaria es la combinación de las dos FK. También hubo diferencias que no se esperaban: el enunciado pide índices y valores únicos que el script oficial de Microsoft no crea igual, y DIA no tiene casillas para FK ni para índices, así que esas marcas hubo que escribirlas en el tipo del campo. Con 13 tablas y 88 campos tampoco era práctico teclear todo a mano: Categories se hizo completa en el programa y el resto se cargó desde un archivo generado, y así se dice en el informe.",
+  "Para un sistema de información, las PK, las FK y los índices son lo que mantiene los datos confiables. La PK evita filas repetidas y le da a cada cliente, producto o pedido una identidad estable. La FK impide que exista una línea de pedido sin pedido o un producto con un proveedor que no existe, y por eso los reportes que cruzan tablas, como ventas por categoría o pedidos por empleado, no dan resultados sin sentido. Los índices y los únicos no cambian lo que significan los datos, pero determinan si una búsqueda por apellido o por código postal responde enseguida o recorre toda la tabla, y si dos categorías pueden llamarse igual. Un modelo bien definido desde el comienzo es lo que permite que los informes gerenciales salgan de una sola fuente."
+ ],
+ "referencias": [
+  "Clarence, I. (2026). Modelado de BD (Lab) [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP.",
+  "Microsoft. (s. f.). instnwnd.sql [Script de la base de datos Northwind]. En Microsoft SQL Server samples, carpeta samples/databases/northwind-pubs. GitHub. Recuperado el 24 de octubre de 2026 de https://github.com/microsoft/sql-server-samples/tree/master/samples/databases/northwind-pubs"
+ ]
+}

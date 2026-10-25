@@ -1,0 +1,397 @@
+{
+ "lab": 6,
+ "titulo": "Modelado de la Organización",
+ "fecha": "2026.10.27",
+ "salida": "Lab06_SIG_Rios_Gerald",
+ "objetivo": "aplicar el modelado del negocio con UML al caso «Aplicación para una Galería de Arte»: identificar los límites del sistema, los actores del negocio y sus objetivos, definir los casos de uso del negocio y dibujar en DIA el diagrama de casos de uso, el diagrama de actividades del proceso «Comprar cuadro» y su versión detallada con carriles.",
+ "contenido": [
+  {
+   "h2": "Paso 1: Leer el caso e identificar los límites del sistema"
+  },
+  {
+   "p": "Se partió de la lámina «Ejemplo: Aplicación para una Galería de Arte» del material del laboratorio y de los cuatro pasos de la lámina «Casos de Uso»: identificar los límites del sistema, identificar los actores principales, identificar los objetivos de cada uno y definir los casos de uso que los satisfagan. Después se siguió, con el mismo orden, el ejemplo resuelto «Caso Empresa de Fabricación» de la segunda presentación: actores y casos de uso del negocio, diagrama de casos de uso, ficha del proceso, diagrama de actividades, diagrama de actividades detallado y, al final, trabajadores y entidades del negocio."
+  },
+  {
+   "p": "Del texto del caso se subrayaron las acciones que la aplicación tiene que resolver. Quedan dentro del límite del sistema: la compra de cuadros con su precio recomendado, la venta de cuadros, el registro de cuadros, de compras y de ventas, el cálculo con la información de subastas y el coeficiente de moda, la detección de tendencias y los tres informes. Quedan fuera las personas y entidades que solo se relacionan con la galería: quien vende el cuadro, quien lo compra y quien envía la información de subastas."
+  },
+  {
+   "bullets": [
+    "Dentro del sistema: Comprar cuadro, Vender cuadro, Calcular precio recomendado, Actualizar datos de subastas y coeficientes de moda, Detectar tendencias del mercado y Generar informes.",
+    "Fuera del sistema: el vendedor del cuadro, el comprador (el «cliente» al que el caso quiere adelantar la compra) y el proveedor de la información de subastas.",
+    "El agente de la galería es quien usa la aplicación. Por eso se trata como trabajador del negocio y aparece en los carriles del diagrama detallado, no como actor externo."
+   ]
+  },
+  {
+   "nota": "Supuestos tomados del caso, porque el texto no los dice: (1) el vendedor es quien lleva el cuadro a la galería y por eso inicia la compra; (2) quien envía el CD mensual de subastas se llama aquí «proveedor de información de subastas»; (3) el coeficiente de moda se actualiza con la información mensual, ya que el texto solo indica que cambia de mes a mes; (4) los tres informes son compras del año, ventas del año y artistas de moda, porque la frase del caso termina en puntos suspensivos; (5) si el vendedor no acepta la oferta, la compra no se registra."
+  },
+  {
+   "h2": "Paso 2: Identificar los actores del negocio y sus objetivos"
+  },
+  {
+   "p": "Un actor del negocio es alguien o algo externo a la empresa que interactúa con ella (lámina 12 del material). Aplicado a la galería, el resultado de cada actor y su objetivo se resume en la Tabla 1. El agente de la galería se incluye al final porque la lámina 19 lo define como trabajador del negocio: realiza las actividades y manipula las entidades."
+  },
+  {
+   "tabla": {
+    "titulo": "Tabla 1. Actores del negocio, trabajadores y objetivos",
+    "cols": [
+     "Actor / trabajador",
+     "Tipo",
+     "Objetivo según el caso"
+    ],
+    "filas": [
+     [
+      "Vendedor del cuadro",
+      "Actor del negocio",
+      "Vender su cuadro a la galería al precio recomendado."
+     ],
+     [
+      "Comprador (cliente de la galería)",
+      "Actor del negocio",
+      "Comprar cuadros de un artista antes de que otros detecten la tendencia."
+     ],
+     [
+      "Proveedor de información de subastas",
+      "Actor del negocio",
+      "Hacerle llegar a la galería, cada mes, los datos de subastas de todo el mundo."
+     ],
+     [
+      "Agente de la galería",
+      "Trabajador del negocio",
+      "Comprar y vender cuadros con el precio recomendado, registrar cada operación y obtener los informes."
+     ]
+    ]
+   }
+  },
+  {
+   "h2": "Paso 3: Definir los casos de uso del negocio"
+  },
+  {
+   "p": "Un caso de uso del negocio es la secuencia de acciones que la organización realiza para dar un resultado observable y de valor a un actor, es decir, lo mismo que un proceso de negocio (lámina 13). Por eso se nombran con verbo y sustantivo, como pide la lámina 7. Cada objetivo de la Tabla 1 se asignó a un caso de uso, y el resultado está en la Tabla 2."
+  },
+  {
+   "salto": true
+  },
+  {
+   "tabla": {
+    "titulo": "Tabla 2. Casos de uso del negocio de la galería",
+    "cols": [
+     "Caso de uso",
+     "Actor asociado",
+     "Objetivo que satisface"
+    ],
+    "filas": [
+     [
+      "Comprar cuadro",
+      "Vendedor del cuadro (inicia)",
+      "Adquirir el cuadro al precio recomendado y dejar la compra registrada."
+     ],
+     [
+      "Calcular precio recomendado",
+      "Ninguno (lo incluye Comprar cuadro)",
+      "Obtener el precio que el agente debería pagar según la clasificación del cuadro."
+     ],
+     [
+      "Vender cuadro",
+      "Comprador (inicia)",
+      "Registrar la fecha de venta, el nombre y la dirección del comprador y el precio real."
+     ],
+     [
+      "Actualizar datos de subastas y coeficientes de moda",
+      "Proveedor de información de subastas (inicia)",
+      "Mantener al día la información con la que se calculan los precios."
+     ],
+     [
+      "Detectar tendencias del mercado",
+      "Comprador",
+      "Descubrir las compras por valores mayores a los esperados para poder comprar antes que otros."
+     ],
+     [
+      "Generar informes",
+      "Ninguno (lo pide la galería)",
+      "Emitir los tres informes: compras del año, ventas del año y artistas de moda."
+     ]
+    ]
+   }
+  },
+  {
+   "h2": "Paso 4: Abrir DIA y elegir la hoja de formas UML"
+  },
+  {
+   "p": "Se abrió DIA 0.97.2 desde el menú Inicio. La ventana principal es la caja de herramientas; el lienzo se abre en una ventana aparte. En la caja hay una lista desplegable de hojas de formas y se eligió «UML», que trae el actor, el caso de uso, el paquete grande, la actividad, el estado inicial y final, la bifurcación (decisión), la transición, la asociación y la dependencia. Estos son los objetos que se usan en todo el laboratorio."
+  },
+  {
+   "img": "evidencias/01_dia_hoja_uml.png",
+   "ancho": 15.5,
+   "cap": "Figura 1. DIA 0.97.2 abierto con la hoja de formas UML elegida en la caja de herramientas."
+  },
+  {
+   "h2": "Paso 5: Dibujar el diagrama de casos de uso del negocio"
+  },
+  {
+   "p": "Con la hoja UML activa se dibujó el diagrama de la Figura 3, siguiendo el ejemplo del profesor (actores a los lados, casos de uso dentro de la empresa y asociaciones marcadas con «initiator»)."
+  },
+  {
+   "pasos": [
+    "Se tomó la herramienta «Paquete grande» y se arrastró un rectángulo grande que representa el límite del sistema. Su nombre se escribió en las propiedades: «Galería de Arte (sistema de compra-venta de cuadros)».",
+    "Con la herramienta «Actor» se colocaron, fuera del límite, el vendedor del cuadro, el comprador y el proveedor de información de subastas, y se les escribió el nombre.",
+    "Con la herramienta «Caso de uso» se colocaron dentro del paquete los seis casos de la Tabla 2, con el nombre de cada uno como texto.",
+    "Con la herramienta «Asociación» se unió cada actor con su caso. En las tres asociaciones donde el actor inicia el proceso se escribió «<<initiator>>» en el nombre de la asociación.",
+    "Con la herramienta «Dependencia» se unió Comprar cuadro con Calcular precio recomendado y se escribió «include» en el estereotipo, porque calcular el precio es parte de cada compra."
+   ]
+  },
+  {
+   "p": "Para revisar un objeto se hizo doble clic sobre él con la herramienta de selección. En la Figura 2 se ve el diálogo «Propiedades: UML - Usecase» del caso «Comprar cuadro»: ancho y color de línea, color de relleno, texto de fuera, colaboración, fuente, tamaño y color del texto. La barra de estado de la ventana indica «Seleccionados «Comprar cuadro»». Para ver todo el diagrama en pantalla se redujo la ampliación con Ctrl y la tecla menos."
+  },
+  {
+   "img": "evidencias/02_propiedades_caso_uso.png",
+   "ancho": 15.5,
+   "cap": "Figura 2. Diálogo de propiedades del caso de uso «Comprar cuadro» abierto con doble clic."
+  },
+  {
+   "img": "evidencias/03_dia_casos_uso.png",
+   "ancho": 15.5,
+   "cap": "Figura 3. Diagrama de casos de uso del negocio de la galería abierto en DIA, con la hoja UML en la caja de herramientas."
+  },
+  {
+   "nota": "Nota sobre los archivos: los tres archivos .dia se generaron con un script que escribe los mismos objetos de la hoja UML (paquete, actores, casos de uso, actividades, decisiones, transiciones, asociaciones y dependencia), para que las posiciones y los enlaces quedaran alineados. Después se abrieron en DIA, se revisaron y se guardaron desde el propio programa, y las imágenes PNG se exportaron con Archivo > Exportar. Todas las capturas muestran DIA con esos archivos abiertos."
+  },
+  {
+   "img": "diagramas/casos_uso_negocio.png",
+   "ancho": 14.5,
+   "cap": "Figura 4. Diagrama de casos de uso del negocio exportado desde DIA a PNG."
+  },
+  {
+   "p": "Calcular precio recomendado y Generar informes quedan sin actor externo, igual que «Gestionar Almacén» en el ejemplo de la fábrica: son procesos internos de la galería. Detectar tendencias se une al comprador porque es quien se beneficia del aviso, aunque no lo inicie."
+  },
+  {
+   "h2": "Paso 6: Escribir la ficha del proceso «Comprar cuadro»"
+  },
+  {
+   "p": "Como en la lámina 17 (ficha de «Registrar Pedido»), se documentó el caso de uso con sus tres filas: proceso de negocio, objetivo y descripción numerada. Cada paso de la descripción sale del texto del caso. La ficha está en la Tabla 3 y es la base de los dos diagramas de actividades."
+  },
+  {
+   "salto": true
+  },
+  {
+   "tabla": {
+    "titulo": "Tabla 3. Ficha del proceso de negocio «Comprar cuadro»",
+    "cols": [
+     "Campo",
+     "Contenido"
+    ],
+    "filas": [
+     [
+      "Proceso de negocio",
+      "Comprar cuadro"
+     ],
+     [
+      "Objetivo",
+      "Adquirir un cuadro para la galería al precio recomendado por el sistema y dejar la compra registrada."
+     ],
+     [
+      "Descripción",
+      "1. El vendedor lleva el cuadro a la galería (supuesto) y el agente introduce los datos básicos: nombre y apellidos del artista, título y fecha de la obra, dimensiones, técnica, tema y clasificación (obra maestra, obra representativa u otro tipo).\n2. El sistema calcula el precio recomendado según la clasificación:\n   • Obra maestra: compara el cuadro con los del registro de cuadros, toma el más parecido y aplica un algoritmo que considera la coincidencia de tema, técnica y dimensiones. Usa la información de subastas que la galería recibe cada mes en un CD.\n   • Obra representativa: se calcula como si fuera una obra maestra y después se aplica una corrección.\n   • Otro tipo: se calcula con el área del cuadro y el coeficiente de moda del artista. Si no hay coeficiente para ese artista, la norma es no comprar el cuadro y el proceso termina.\n3. El sistema proporciona al agente el precio recomendado que la galería debería pagar.\n4. El agente le ofrece ese precio al vendedor.\n5. Si el vendedor acepta, el agente introduce los datos adicionales del vendedor y de la compra, y la compra queda en el registro de compras. Si no acepta, no se compra (supuesto)."
+     ]
+    ]
+   }
+  },
+  {
+   "h2": "Paso 7: Dibujar el diagrama de actividades de «Comprar cuadro»"
+  },
+  {
+   "p": "El diagrama de actividades documenta de forma gráfica la secuencia de la ficha (lámina 15). Se dibujó con los objetos de la hoja UML así:"
+  },
+  {
+   "pasos": [
+    "Con la herramienta «Estado inicial/final» se colocó el círculo negro de inicio arriba. Los tres fines se hicieron con la misma herramienta, marcando la casilla de estado final en sus propiedades (círculo con anillo).",
+    "Con la herramienta «Actividad» se crearon las acciones de la ficha: Introducir los datos básicos del cuadro, los tres cálculos de precio, Proporcionar el precio recomendado, Ofrecer el precio al vendedor, Introducir los datos del vendedor y de la compra, Registrar la compra y No comprar el cuadro.",
+    "Con la herramienta «Bifurcación» (el rombo) se pusieron las decisiones: la clasificación del cuadro con tres salidas, la pregunta de si hay coeficiente de moda, la que reúne los tres cálculos y la de si el vendedor acepta la oferta.",
+    "Con la herramienta «Transición» se unieron los objetos en orden. En las salidas de las decisiones se escribió la guarda: [Obra maestra], [Representativa], [Otro tipo], y [Sí] o [No] en las preguntas de dos salidas.",
+    "Se rotularon los tres fines: «Fin: no se compra» (sin coeficiente de moda), «Fin: oferta rechazada» y «Fin: cuadro comprado», con la herramienta de texto."
+   ]
+  },
+  {
+   "img": "evidencias/05_dia_actividades.png",
+   "ancho": 15.5,
+   "cap": "Figura 5. Diagrama de actividades de «Comprar cuadro» abierto en DIA con Ver > Ajuste óptimo (Ctrl+E)."
+  },
+  {
+   "img": "diagramas/actividades_comprar_cuadro.png",
+   "ancho": 12.5,
+   "cap": "Figura 6. Diagrama de actividades de «Comprar cuadro» exportado desde DIA a PNG."
+  },
+  {
+   "p": "Hay un inicio y tres fines, cada uno con su rótulo. El caso sin coeficiente de moda sale por la rama «Otro tipo» y termina sin compra, que es la norma del texto. Si el vendedor rechaza la oferta, el proceso termina sin registrar nada. Solo cuando acepta se llega al registro de la compra."
+  },
+  {
+   "h2": "Paso 8: Dibujar el diagrama de actividades detallado con carriles"
+  },
+  {
+   "p": "El diagrama detallado (lámina 21) reparte las mismas actividades entre quienes las hacen. En la fábrica los carriles son Cliente, Comercial, JefeTécnico y JefeProducción; en la galería son tres: el vendedor del cuadro, el agente de la galería y el sistema de la galería. El tercer carril es un supuesto, porque el caso dice que «el sistema debe proporcionar el precio recomendado» y conviene mostrar qué hace la aplicación y qué hace la persona."
+  },
+  {
+   "pasos": [
+    "Se colocaron tres «Paquete grande» uno al lado del otro y de la misma altura, con el título de cada carril como nombre.",
+    "Dentro de cada carril se pusieron las actividades que le corresponden: el vendedor presenta el cuadro y decide si acepta; el agente introduce los datos, ofrece el precio y anota los datos de la compra; el sistema calcula el precio, lo proporciona y registra la compra.",
+    "Se agregaron el inicio, las decisiones «¿Se pudo calcular?» y «¿Acepta la oferta?», los tres fines y las transiciones. Cuando una flecha cruza de un carril a otro se ve quién le pasa el trabajo a quién."
+   ]
+  },
+  {
+   "img": "evidencias/07_dia_carriles.png",
+   "ancho": 15.5,
+   "cap": "Figura 7. Diagrama de actividades detallado con carriles abierto en DIA con Ver > Ajuste óptimo (Ctrl+E)."
+  },
+  {
+   "img": "diagramas/actividades_carriles_comprar_cuadro.png",
+   "ancho": 13.5,
+   "cap": "Figura 8. Diagrama de actividades detallado de «Comprar cuadro» exportado desde DIA a PNG."
+  },
+  {
+   "p": "A diferencia del diagrama anterior, aquí el cálculo según la clasificación se resume en una sola actividad del sistema, porque el detalle del cálculo ya está en el diagrama anterior. La decisión «¿Se pudo calcular?» agrupa el único caso en que el sistema no puede dar un precio: una obra de otro tipo sin coeficiente de moda."
+  },
+  {
+   "h2": "Paso 9: Identificar los trabajadores y las entidades del negocio"
+  },
+  {
+   "p": "Un trabajador del negocio realiza actividades dentro de un caso de uso y manipula entidades; una entidad es una «cosa» que los trabajadores usan, como la factura o el pedido en el ejemplo de la fábrica (láminas 19 y 20). En la galería solo se nombra un trabajador, el agente, y las entidades son las que aparecen en el texto del caso. Se presentan como tablas porque este paso no pedía otro diagrama en DIA."
+  },
+  {
+   "tabla": {
+    "titulo": "Tabla 4. Trabajadores del negocio",
+    "cols": [
+     "Trabajador",
+     "Actividades que realiza",
+     "Entidades que manipula"
+    ],
+    "filas": [
+     [
+      "Agente de la galería",
+      "Introducir los datos básicos del cuadro, ofrecer el precio al vendedor, introducir los datos adicionales de la compra, registrar la venta, consultar los informes.",
+      "Cuadro, Compra, Venta, Informe."
+     ]
+    ]
+   }
+  },
+  {
+   "salto": true
+  },
+  {
+   "tabla": {
+    "titulo": "Tabla 5. Entidades del negocio",
+    "cols": [
+     "Entidad",
+     "Qué representa",
+     "Datos que nombra el caso"
+    ],
+    "filas": [
+     [
+      "Cuadro",
+      "La obra que se compra o se vende.",
+      "Título, fecha de la obra, dimensiones, técnica, tema y clasificación."
+     ],
+     [
+      "Artista",
+      "Autor del cuadro.",
+      "Nombre y apellidos."
+     ],
+     [
+      "Registro de cuadros",
+      "Cuadros que ya tiene la galería, para comparar y tomar el más parecido.",
+      "Los datos de cada cuadro."
+     ],
+     [
+      "Información de subastas",
+      "Datos de subastas de todo el mundo, recibidos cada mes en un CD.",
+      "Se renueva mensualmente."
+     ],
+     [
+      "Coeficiente de moda",
+      "Valor por artista que se usa para las obras de otro tipo.",
+      "Varía de mes a mes; puede no existir para un artista."
+     ],
+     [
+      "Precio recomendado",
+      "Resultado del cálculo para el cuadro que se quiere comprar.",
+      "Se calcula según la clasificación."
+     ],
+     [
+      "Compra",
+      "Operación en que la galería adquiere el cuadro.",
+      "Datos adicionales del vendedor y de la compra."
+     ],
+     [
+      "Venta",
+      "Operación en que la galería vende el cuadro.",
+      "Fecha de venta, nombre y dirección del comprador, precio de venta real."
+     ],
+     [
+      "Registro de compras y ventas",
+      "Historial de todas las operaciones, necesario para detectar tendencias.",
+      "Todas las compras y todas las ventas."
+     ],
+     [
+      "Tendencia",
+      "Secuencia de compras por valores mayores a los esperados para un artista.",
+      "Se detecta al comparar el precio de venta con el esperado."
+     ],
+     [
+      "Informe",
+      "Salida para la gerencia.",
+      "Compras del año, ventas del año y artistas de moda (supuesto)."
+     ]
+    ]
+   }
+  },
+  {
+   "h2": "Paso 10: Guardar y exportar los diagramas"
+  },
+  {
+   "p": "El diagrama de casos de uso se guardó con Archivo > Guardar como (Mayús+Ctrl+S), en la carpeta de entregables y sin comprimir; como el archivo ya existía, DIA pidió confirmar que se sobrescribía y se aceptó. Después se usó Archivo > Exportar con el tipo de archivo «Por extensión» y el nombre terminado en .png. Los dos diagramas de actividades se abrieron con Archivo > Abrir, se ajustó la vista con Ver > Ajuste óptimo, se guardaron con Ctrl+S y se exportaron de la misma forma."
+  },
+  {
+   "tabla": {
+    "titulo": "Tabla 6. Archivos producidos en el laboratorio",
+    "cols": [
+     "Diagrama",
+     "Archivo DIA",
+     "Archivo PNG"
+    ],
+    "filas": [
+     [
+      "Casos de uso del negocio",
+      "casos_uso_negocio.dia",
+      "casos_uso_negocio.png"
+     ],
+     [
+      "Actividades de «Comprar cuadro»",
+      "actividades_comprar_cuadro.dia",
+      "actividades_comprar_cuadro.png"
+     ],
+     [
+      "Actividades detallado con carriles",
+      "actividades_carriles_comprar_cuadro.dia",
+      "actividades_carriles_comprar_cuadro.png"
+     ]
+    ]
+   }
+  },
+  {
+   "img": "evidencias/09_guardar_como.png",
+   "ancho": 15.5,
+   "cap": "Figura 9. Diálogo Guardar diagrama de DIA con el nombre casos_uso_negocio.dia y la carpeta de entregables."
+  },
+  {
+   "img": "evidencias/10_exportar.png",
+   "ancho": 15.5,
+   "cap": "Figura 10. Diálogo Exportar diagrama de DIA con el tipo de archivo «Por extensión»."
+  }
+ ],
+ "conclusion": [
+  "Siguiendo el orden del ejemplo de la fábrica se pasó del texto del caso a seis casos de uso del negocio, tres actores externos y un trabajador, y de ahí a la ficha y a los dos diagramas de actividades de «Comprar cuadro». Lo que más ayudó fue subrayar en el texto cada verbo que la aplicación tenía que resolver: de ese subrayado salió casi toda la lista de casos y de entidades, sin inventar funciones.",
+  "Lo que más costó fue decidir qué es actor y qué es trabajador. El agente usa la aplicación, pero según las láminas es parte del negocio, así que quedó en los carriles y no en el diagrama de casos de uso. También hubo que suponer el carril del sistema y quién inicia cada caso, porque el texto no lo dice, y eso quedó anotado en el informe. Al terminar quedan guardados tres diagramas en formato .dia y exportados a PNG."
+ ],
+ "referencias": [
+  "Clarence, I. (2026). LAB 6 MODELADO DE LA ORGANIZACIÓN_1 [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP.",
+  "Clarence, I. (2026). LAB 6 MODELADO DE LA ORGANIZACIÓN_2 [Material del curso]. Universidad Tecnológica de Panamá, Virtual-UTP."
+ ]
+}
