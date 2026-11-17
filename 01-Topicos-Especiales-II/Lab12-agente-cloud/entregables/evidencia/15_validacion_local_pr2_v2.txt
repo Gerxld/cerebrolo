@@ -1,0 +1,31 @@
+> git log --oneline -4
+dd63fb6 Agregar casos de prueba de filtrado faltantes
+2227ca4 Agregar categorías y filtrado de tareas pendientes
+823e1fe Initial plan
+dd19199 Línea base: gestor de tareas (tasks.py, app.py, pruebas) y README
+
+> python app.py
+Tareas pendientes:
+- 2: Preparar laboratorio [Trabajo]
+
+Tareas pendientes de categoría 'trabajo':
+- 2: Preparar laboratorio [Trabajo]
+
+> python -m unittest discover -s tests -v
+test_agregar_tarea (test_tasks.TestTasks.test_agregar_tarea) ... ok
+test_agregar_tarea_categoria_vacia (test_tasks.TestTasks.test_agregar_tarea_categoria_vacia) ... ok
+test_completar_tarea (test_tasks.TestTasks.test_completar_tarea) ... ok
+test_pendientes_filtra_categoria_inexistente (test_tasks.TestTasks.test_pendientes_filtra_categoria_inexistente) ... ok
+test_pendientes_filtra_mayusculas (test_tasks.TestTasks.test_pendientes_filtra_mayusculas) ... ok
+test_pendientes_filtra_por_categoria_sin_mayusculas (test_tasks.TestTasks.test_pendientes_filtra_por_categoria_sin_mayusculas) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.000s
+
+OK
+
+> git diff --stat main
+ app.py              | 11 ++++++++---
+ tasks.py            | 20 ++++++++++++++++----
+ tests/test_tasks.py | 34 ++++++++++++++++++++++++++++++++--
+ 3 files changed, 56 insertions(+), 9 deletions(-)

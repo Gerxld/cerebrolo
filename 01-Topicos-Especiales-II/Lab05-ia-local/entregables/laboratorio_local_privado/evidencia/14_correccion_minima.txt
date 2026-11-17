@@ -1,0 +1,38 @@
+Fecha y hora de inicio: 2026-10-30 11:50:52
+Comando: C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe run qwen2.5-coder:3b   (prompt entregado por entrada estandar)
+------------------------------------------------------------
+PROMPT ENVIADO:
+Corrige solo los casos límite de este código: dividir con b igual a cero, promedio de una lista vacía y porcentaje con total igual a cero.
+Mantén los nombres y los parámetros de las funciones. En esos casos lanza ValueError con un mensaje claro en español; no devuelvas textos como resultado. No agregues nada más.
+Devuelve solo el código corregido.
+
+def dividir(a, b):
+    return a / b
+
+def promedio(valores):
+    return sum(valores) / len(valores)
+
+def porcentaje(valor, total):
+    return (valor / total) * 100
+------------------------------------------------------------
+RESPUESTA DEL MODELO:
+```python
+def dividir(a, b):
+    if b == 0:
+        raise ValueError("El divisor no puede ser cero.")
+    return a / b
+
+def promedio(valores):
+    if not valores:
+        raise ValueError("La lista de valores no puede estar vacía.")
+    return sum(valores) / len(valores)
+
+def porcentaje(valor, total):
+    if total == 0:
+        raise ValueError("El total no puede ser cero.")
+    return (valor / total) * 100
+```
+------------------------------------------------------------
+Codigo de salida: 0
+Fecha y hora de fin: 2026-10-30 11:51:00
+Tiempo transcurrido: 7.9 s

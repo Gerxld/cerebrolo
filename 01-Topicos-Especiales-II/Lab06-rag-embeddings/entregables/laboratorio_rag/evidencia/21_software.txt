@@ -1,0 +1,25 @@
+Comando: printf '%s\nsalir\n' "¿Qué necesito para instalar software adicional en los laboratorios?" | python -u rag_universidad.py   
+Hora de inicio: 2026-10-30 11:49:04
+----------------------------------------
+Documentos cargados: 3
+Chunks creados: 6
+Generando índice vectorial...
+
+Pregunta (o 'salir'): 
+--- CHUNKS RECUPERADOS ---
+1. laboratorios.txt | similitud=0.804
+Los laboratorios de desarrollo de software están ubicados en el edificio 3.
+Los estudiantes pueden utilizar los laboratorios de 8:00 a.m. a 8:00 p.m.
+Para instalar software adicional se requiere autorización del responsa
+
+2. laboratorios.txt | similitud=0.689
+al se requiere autorización del responsable del laboratorio.
+
+3. reglamento.txt | similitud=0.615
+deben documentarse según el procedimiento de la facultad.
+
+--- RESPUESTA RAG ---
+Para instalar software adicional en los laboratorios, necesitas autorización del responsable del laboratorio. Este requisito está mencionado tanto en el documento "laboratorios.txt" como en el "reglamento.txt".
+
+Pregunta (o 'salir'): ----------------------------------------
+Hora de fin: 2026-10-30 11:49:32

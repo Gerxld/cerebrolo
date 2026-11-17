@@ -1,0 +1,24 @@
+Comando: python analizador_reforzado.py documentos/ticket_normal.txt
+Fecha y hora de inicio: 2026-10-30 11:08:45
+----------------------------------------
+
+--- ticket_normal.txt (reforzado) ---
+Salida del modelo: {
+  "categoria": "Aplicación móvil",
+  "resumen": "La aplicación móvil se cierra al intentar consultar movimientos",
+  "accion_sugerida": "responder",
+  "prioridad_modelo": "media",
+  "evidencia": {
+    "reporta_perdida_dinero": false,
+    "servicio_bloqueado": true,
+    "texto_con_instrucciones": true
+  }
+}
+Prioridad propuesta por el modelo: media
+Prioridad final (calculada por el código desde la evidencia): alta
+Estado: REQUIERE_CONFIRMACION_HUMANA
+ - motivo: el modelo propuso 'media' pero la evidencia indica 'alta'
+ - motivo: el ticket contiene órdenes dirigidas al procesador
+----------------------------------------
+Código de salida: 0
+Fecha y hora de fin: 2026-10-30 11:10:31

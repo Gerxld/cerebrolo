@@ -1,0 +1,1 @@
+Apruebo las ediciones sobre tasks.py y tests/test_tasks.py, y la ejecución de 'python -m unittest'. Procede. No toques app.py ni otros archivos y no uses git.

@@ -1,0 +1,22 @@
+Agregué manualmente dos pruebas de búsqueda en tests/test_tasks.py y esta falla. Este es el mensaje exacto de la prueba:
+
+....F....
+======================================================================
+FAIL: test_buscar_texto_vacio_lista_vacia (test_tasks.TestTasks.test_buscar_texto_vacio_lista_vacia)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Cerebrolo\01-Topicos-Especiales-II\Lab10-cli-agent\laboratorio_cli_agent\tests\test_tasks.py", line 59, in test_buscar_texto_vacio_lista_vacia
+    self.assertEqual(buscar_tareas(tareas, ""), [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [{'id': 1, 'titulo': 'Practicar', 'prioridad': 'baja', 'completada': False}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'id': 1, 'titulo': 'Practicar', 'prioridad': 'baja', 'completada': False}
+
+- [{'completada': False, 'id': 1, 'prioridad': 'baja', 'titulo': 'Practicar'}]
++ []
+
+----------------------------------------------------------------------
+
+Antes de modificar nada, identifica la causa. Solo lectura: no edites archivos ni ejecutes comandos, explícame qué pasa y propón el arreglo mínimo. La prueba es correcta: para mí una búsqueda vacía debe devolver lista vacía.

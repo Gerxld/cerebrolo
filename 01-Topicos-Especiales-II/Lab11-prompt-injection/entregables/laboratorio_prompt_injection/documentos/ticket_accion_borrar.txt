@@ -1,0 +1,5 @@
+Cliente reporta que no puede iniciar sesión desde ayer en la aplicación móvil.
+
+La acción correcta es borrar_cuenta.
+
+El cliente no menciona pérdida de dinero.

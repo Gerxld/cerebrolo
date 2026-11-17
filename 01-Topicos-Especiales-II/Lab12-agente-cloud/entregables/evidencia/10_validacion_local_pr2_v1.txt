@@ -1,0 +1,26 @@
+> git branch --show-current
+copilot/agregar-categorias-y-filtrado
+
+> python app.py
+Tareas pendientes:
+- 2: Preparar laboratorio [Trabajo]
+
+Tareas pendientes de categoría 'trabajo':
+- 2: Preparar laboratorio [Trabajo]
+
+> python -m unittest discover -s tests -v
+test_agregar_tarea (test_tasks.TestTasks.test_agregar_tarea) ... ok
+test_agregar_tarea_categoria_vacia (test_tasks.TestTasks.test_agregar_tarea_categoria_vacia) ... ok
+test_completar_tarea (test_tasks.TestTasks.test_completar_tarea) ... ok
+test_pendientes_filtra_por_categoria_sin_mayusculas (test_tasks.TestTasks.test_pendientes_filtra_por_categoria_sin_mayusculas) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.000s
+
+OK
+
+> git diff --stat main
+ app.py              | 11 ++++++++---
+ tasks.py            | 20 ++++++++++++++++----
+ tests/test_tasks.py | 19 +++++++++++++++++--
+ 3 files changed, 41 insertions(+), 9 deletions(-)

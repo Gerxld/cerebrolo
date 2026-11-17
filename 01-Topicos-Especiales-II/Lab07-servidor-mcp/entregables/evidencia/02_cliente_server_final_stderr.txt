@@ -1,0 +1,12 @@
+[10/29/26 11:03:13] INFO     Tool 'calcular_promedio' failed:     server.py:453
+                             'Error executing tool                             
+                             calcular_promedio: Las notas deben                
+                             estar entre 0 y 100'                              
+                    INFO     Tool 'calcular_promedio' failed:     server.py:453
+                             'Error executing tool                             
+                             calcular_promedio: Debe proporcionar              
+                             al menos una nota'                                
+[10/29/26 11:03:14] INFO     Tool 'estado_estudiante' failed:     server.py:453
+                             'Error executing tool                             
+                             estado_estudiante: Promedio fuera de              
+                             rango'                                            

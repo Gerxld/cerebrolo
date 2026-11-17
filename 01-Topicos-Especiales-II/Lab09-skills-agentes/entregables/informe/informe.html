@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Laboratorio 9 — Skills para agentes de IA</title>
+<style>
+  @page { size: Letter; margin: 2.5cm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 12pt; line-height: 1.5; text-align: justify;
+    color: #111; margin: 0;
+  }
+  h1, h2, h3 { font-family: "Times New Roman", Times, serif; text-align: left; page-break-after: avoid; }
+  h1 { font-size: 14pt; margin: 1.4em 0 0.5em; }
+  h2 { font-size: 13pt; margin: 1.2em 0 0.4em; }
+  h3 { font-size: 12pt; margin: 1em 0 0.3em; }
+  h1.nueva-pagina { page-break-before: always; }
+  p { margin: 0 0 0.7em 0; }
+
+  /* ---------- Portada ---------- */
+  .portada {
+    height: 22cm; display: flex; flex-direction: column;
+    align-items: center; text-align: center; page-break-after: always;
+  }
+  .portada .logos { display: flex; justify-content: space-between; width: 100%; margin-bottom: 0.8cm; }
+  .portada .logos img { width: 105px; height: 105px; object-fit: contain; }
+  .portada .titulo-bloque { margin-top: 0.9cm; }
+  .portada .titulo-bloque p { margin: 0.35em 0; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px; }
+  .portada .presentado { margin-top: 1.1cm; }
+  .portada .presentado p, .portada .revisado p, .portada .fecha p { margin: 0.3em 0; font-weight: bold; text-transform: uppercase; }
+  .portada .nombres { font-weight: normal !important; text-transform: none !important; }
+  .portada .revisado { margin-top: 1.2cm; }
+  .portada .fecha { margin-top: 1.1cm; }
+
+  /* ---------- Índice ---------- */
+  .indice { page-break-after: always; }
+  .indice h1 { text-align: center; }
+  .indice ol { list-style: none; padding: 0; margin: 0; }
+  .indice li { display: flex; align-items: baseline; margin: 0.25em 0; }
+  .indice li.n2 { padding-left: 1.2em; }
+  .indice li .t { white-space: nowrap; }
+  .indice li .dots { flex: 1; border-bottom: 1px dotted #444; margin: 0 0.3em; transform: translateY(-0.25em); }
+  .indice li .p { white-space: nowrap; }
+
+  /* ---------- Contenido ---------- */
+  table { width: 100%; border-collapse: collapse; margin: 0.8em 0; font-size: 10.5pt; page-break-inside: avoid; }
+  th, td { border: 1px solid #666; padding: 5px 7px; text-align: left; vertical-align: top; }
+  th { background: #e2e2e2; font-weight: bold; }
+  .tabla-titulo { font-weight: bold; margin: 0.8em 0 0.2em; text-align: left; }
+  .tabla-nota { font-size: 10pt; font-style: italic; margin-top: -0.4em; }
+  figure { margin: 1em 0; text-align: center; page-break-inside: avoid; }
+  figure img { max-width: 100%; max-height: 18cm; }
+  figcaption { font-size: 10.5pt; font-style: italic; margin-top: 0.3em; }
+  ul, ol { margin: 0.3em 0 0.8em 1.3em; padding: 0; }
+  li { margin-bottom: 0.3em; }
+  .referencias p { padding-left: 1.27cm; text-indent: -1.27cm; text-align: left; }
+  blockquote { margin: 0.6em 0 0.8em 1.27cm; text-align: justify; }
+  pre { font-family: Consolas, "Courier New", monospace; font-size: 9pt; line-height: 1.3; background: #f3f3f3; border: 1px solid #bbb; padding: 6px 8px; text-align: left; white-space: pre-wrap; margin: 0.5em 0 0.8em; }
+  code { font-family: Consolas, "Courier New", monospace; font-size: 10pt; }
+  figure img { border: 1px solid #999; }
+  .tabla-titulo { break-after: avoid; page-break-after: avoid; }
+</style>
+</head>
+<body>
+
+<body>
+
+<!-- PORTADA -->
+<div class="portada">
+  <div class="logos">
+    <img src="../assets/utp.png" alt="Logo UTP">
+    <img src="../assets/fisc.png" alt="Logo FISC">
+  </div>
+  <div class="titulo-bloque">
+    <p>Universidad Tecnológica de Panamá</p>
+    <p>Facultad de Ingeniería de Sistemas Computacionales</p>
+    <p>Lic. en Desarrollo y Gestión de Software</p>
+    <p style="margin-top:1em;">Tópicos Especiales II</p>
+    <p>Laboratorio 9 — Skills para agentes de IA</p>
+    <p>1GS241</p>
+  </div>
+  <div class="presentado">
+    <p>Presentado por:</p>
+    <p class="nombres">Ríos, Gerald (8-987-741)</p>
+  </div>
+  <div class="revisado">
+    <p>Revisado por:</p>
+    <p class="nombres">Profesor Regis Rivera</p>
+  </div>
+  <div class="fecha">
+    <p>Fecha de entrega</p>
+    <p class="nombres">29 / 10 / 2026</p>
+  </div>
+</div>
+
+<div class="indice">
+  <h1>Índice</h1>
+  <ol>
+    <li><span class="t">Introducción</span><span class="dots"></span><span class="p">3</span></li>
+    <li><span class="t">1. Herramienta y entorno</span><span class="dots"></span><span class="p">3</span></li>
+    <li><span class="t">2. Proyecto de práctica y revisión manual</span><span class="dots"></span><span class="p">4</span></li>
+    <li><span class="t">3. Construcción de la skill python-code-review</span><span class="dots"></span><span class="p">4</span></li>
+    <li><span class="t">4. Pruebas de activación</span><span class="dots"></span><span class="p">5</span></li>
+    <li class="n2"><span class="t">4.1 Activación correcta sin nombrar la skill</span><span class="dots"></span><span class="p">6</span></li>
+    <li class="n2"><span class="t">4.2 Caso donde la skill no debe activarse</span><span class="dots"></span><span class="p">7</span></li>
+    <li class="n2"><span class="t">4.3 Activación explícita</span><span class="dots"></span><span class="p">8</span></li>
+    <li class="n2"><span class="t">4.4 Descripción demasiado genérica</span><span class="dots"></span><span class="p">8</span></li>
+    <li class="n2"><span class="t">4.5 Descripción restaurada y mejorada</span><span class="dots"></span><span class="p">9</span></li>
+    <li><span class="t">5. Evolución de la skill</span><span class="dots"></span><span class="p">9</span></li>
+    <li class="n2"><span class="t">5.1 Regla nueva en el checklist: antes y después</span><span class="dots"></span><span class="p">9</span></li>
+    <li class="n2"><span class="t">5.2 Cambio de columnas en la plantilla</span><span class="dots"></span><span class="p">10</span></li>
+    <li class="n2"><span class="t">5.3 Verificación final y ajuste del script</span><span class="dots"></span><span class="p">10</span></li>
+    <li><span class="t">6. Informes generados</span><span class="dots"></span><span class="p">11</span></li>
+    <li><span class="t">7. Versión portable</span><span class="dots"></span><span class="p">12</span></li>
+    <li><span class="t">8. Reto final: python-test-designer</span><span class="dots"></span><span class="p">12</span></li>
+    <li><span class="t">9. Preguntas de reflexión</span><span class="dots"></span><span class="p">14</span></li>
+    <li><span class="t">Conclusiones</span><span class="dots"></span><span class="p">16</span></li>
+    <li><span class="t">Referencias Bibliográficas</span><span class="dots"></span><span class="p">16</span></li>
+  </ol>
+</div>
+<h1>Introducción</h1>
+<p>Este laboratorio pide convertir un procedimiento que normalmente repetiríamos con prompts, la revisión de código Python, en una carpeta portable con instrucciones, recursos y un script de comprobación. Armamos la skill <code>python-code-review</code> tal como la describe el enunciado, la probamos contra dos archivos con defectos conocidos y la modificamos tres veces para ver qué cambia en el resultado. Al final construimos la segunda skill del reto, <code>python-test-designer</code>.</p>
+<p>Lo que sigue cuenta lo que hicimos y lo que salió, incluidos dos tropiezos con el script de sintaxis que nos obligaron a ajustar el procedimiento. Todas las ejecuciones con el agente quedaron guardadas como transcripciones JSON completas en la carpeta de evidencia, y las figuras son capturas de esas mismas transcripciones.</p>
+
+<h1>1. Herramienta y entorno</h1>
+<p>El enunciado propone GitHub Copilot en modo Agent dentro de VS Code, con ChatGPT Skills como ruta alternativa. En el equipo donde trabajamos no hay Copilot instalado, así que usamos Claude Code, que implementa el mismo estándar abierto Agent Skills: una carpeta con un <code>SKILL.md</code> obligatorio con frontmatter <code>name</code> y <code>description</code>, y las carpetas opcionales <code>scripts/</code>, <code>references/</code> y <code>assets/</code> (Agent Skills, s. f.). La estructura y el contenido de la skill siguen lo que pide el enunciado.</p>
+<p>Hay dos diferencias prácticas con el enunciado. Claude Code busca las skills de proyecto en <code>.claude/skills/</code> y no en <code>.agents/skills/</code>, por lo que la skill vive ahí; el contenido interno no cambia. Y como en modo no interactivo no hay un comando <code>/skills</code>, el descubrimiento lo comprobamos con la lista de skills que aparece en el evento de inicio de cada transcripción. Las pruebas se corrieron con <code>claude -p</code>, el modelo Sonnet y la salida <code>stream-json</code>, que registra cada llamada a herramienta. Dejamos permitidas solo las herramientas necesarias: <code>Skill</code>, <code>Read</code> y la ejecución de <code>check_syntax.py</code>; ninguna de escritura. No se instaló nada en la configuración global del equipo.</p>
+<p>No tenemos <code>skills-ref</code> instalado ni probamos la ruta de ChatGPT, que el enunciado marca como opcional.</p>
+
+<h1>2. Proyecto de práctica y revisión manual</h1>
+<p>Creamos la carpeta <code>laboratorio_skills/ejemplo/</code> con <code>calculadora.py</code> y <code>usuarios.py</code> exactamente como los da el enunciado. Antes de ejecutar nada con el agente, anotamos los defectos que se ven al leer <code>calculadora.py</code>, que sirven de línea base:</p>
+<ol>
+  <li>La última línea, <code>print(dividir(10, 0))</code>, lanza <code>ZeroDivisionError</code> apenas se ejecuta o importa el módulo.</li>
+  <li><code>dividir</code> no controla que <code>b</code> sea cero.</li>
+  <li><code>promedio</code> con lista vacía hace <code>len(valores)</code> igual a cero y falla; con el valor por defecto <code>[]</code>, llamarla sin argumentos siempre falla.</li>
+  <li><code>valores=[]</code> es un parámetro mutable por defecto.</li>
+  <li>El <code>except:</code> de <code>procesar</code> atrapa cualquier cosa y devuelve <code>0</code>, de modo que una entrada inválida no se distingue de un cero real.</li>
+</ol>
+<p>Corrimos el script del paso 11 a mano contra ambos archivos. Además lo probamos con un archivo con error de sintaxis y sin argumentos para ver sus tres salidas posibles (Figura 1).</p>
+<figure><img src="../screenshots/02_script_manual.png" alt="check_syntax.py ejecutado manualmente: sintaxis válida, error de sintaxis y uso sin argumentos."><figcaption>Figura 1. check_syntax.py ejecutado manualmente: sintaxis válida, error de sintaxis y uso sin argumentos.</figcaption></figure>
+
+
+<h1>3. Construcción de la skill python-code-review</h1>
+<p>Creamos las carpetas y los cuatro archivos con el contenido del enunciado: <code>SKILL.md</code>, <code>references/checklist.md</code>, <code>assets/report-template.md</code> y <code>scripts/check_syntax.py</code>. La Figura 2 muestra la estructura final del proyecto, que incluye también la skill del reto.</p>
+<figure><img src="../screenshots/01_arbol_skills.png" alt="Estructura del proyecto de práctica con las dos skills."><figcaption>Figura 2. Estructura del proyecto de práctica con las dos skills.</figcaption></figure>
+
+<p>Para el paso 13 escribimos un pequeño verificador (<code>evidencia/validar_skill.py</code>) en lugar de revisar a ojo. Comprueba que la carpeta se llama igual que <code>name</code>, que el archivo es <code>SKILL.md</code>, que el nombre usa solo minúsculas, números y guiones, que la descripción no pasa de 1024 caracteres y que las rutas a <code>references</code>, <code>assets</code> y <code>scripts</code> existen. Las dos skills pasan todas las comprobaciones; la salida está en <code>evidencia/00_validacion_manual.txt</code>.</p>
+
+<h1>4. Pruebas de activación</h1>
+<p>Todas las pruebas se hicieron desde la carpeta del proyecto. La Tabla 1 resume cada una y señala la línea de la transcripción JSON donde aparece (o falta) la llamada a la herramienta <code>Skill</code>.</p>
+<p class="tabla-titulo">Tabla 1. Pruebas de activación de python-code-review.</p>
+<table>
+<tr><th>Prueba</th><th>Petición</th><th>¿Skill invocada?</th><th>Resultado</th></tr>
+<tr><td>Activación correcta</td><td>Revisar <code>calculadora.py</code> (errores, mantenimiento, seguridad), sin nombrar la skill</td><td>Sí, línea 5 de <code>01_activacion_calculadora.jsonl</code></td><td>Lee checklist y plantilla, corre <code>check_syntax.py</code> y entrega el informe con la plantilla</td></tr>
+<tr><td>No debe activarse</td><td>«Explícame qué es una lista en Python y dame tres ejemplos simples»</td><td>No; el evento <code>result</code> marca un solo turno y cero herramientas</td><td>Responde directo con tres ejemplos</td></tr>
+<tr><td>Explícita</td><td><code>/python-code-review ejemplo/calculadora.py</code></td><td>No hay llamada <code>Skill</code>: el comando expande la skill directamente</td><td>Lee checklist y plantilla, corre el script, entrega informe</td></tr>
+<tr><td>Descripción genérica</td><td>Misma revisión que la primera, con <code>description: Ayuda con Python.</code></td><td>No</td><td>Revisa a su manera: sin script, sin plantilla</td></tr>
+<tr><td>Descripción mejorada</td><td>Revisión de <code>calculadora.py</code></td><td>Sí, línea 3 de <code>05b_...jsonl</code></td><td>Flujo completo</td></tr>
+<tr><td>Descripción mejorada</td><td>Pregunta de la lista</td><td>No</td><td>Responde directo</td></tr>
+</table>
+
+<h2>4.1 Activación correcta sin nombrar la skill</h2>
+<p>Usamos la petición del paso 16 casi literal. El modelo llamó a <code>Skill</code> con <code>python-code-review</code> en la línea 5 del JSON, leyó <code>checklist.md</code> y <code>report-template.md</code>, ejecutó <code>check_syntax.py</code> (respuesta <code>OK: sintaxis válida</code>) y entregó el informe sin tocar el archivo (Figura 3). Los cinco defectos de nuestra lista aparecen en ese informe y además aparecieron otros: la falta de validación de tipos, la ausencia de docstrings y pruebas, y el truncamiento silencioso de <code>int()</code> en <code>procesar</code>. Cada hallazgo trae la línea y el fragmento de código que lo respalda, y los comprobamos contra el archivo.</p>
+<figure><img src="../screenshots/03_activacion_correcta.png" alt="Transcripción de la activación correcta: llamada a la skill, lecturas, script y respuesta."><figcaption>Figura 3. Transcripción de la activación correcta: llamada a la skill, lecturas, script y respuesta.</figcaption></figure>
+
+<p>Una observación: en esta primera ejecución el modelo agregó una columna «Tipo» que la plantilla no tiene. Eso se corrigió más adelante con la verificación final del paso 26.</p>
+
+<h2>4.2 Caso donde la skill no debe activarse</h2>
+<p>Con la pregunta educativa del paso 19 el modelo respondió en un solo turno, sin llamar a ninguna herramienta (Figura 4). La descripción original, que dice «cuando el usuario pida revisar, auditar o evaluar código Python», fue suficiente para no interferir.</p>
+<figure><img src="../screenshots/04_no_activacion.png" alt="Pregunta educativa: ninguna herramienta ni skill invocada."><figcaption>Figura 4. Pregunta educativa: ninguna herramienta ni skill invocada.</figcaption></figure>
+
+
+<h2>4.3 Activación explícita</h2>
+<p>Ejecutamos <code>/python-code-review ejemplo/calculadora.py</code>. Nos costó entenderlo en el primer intento: el shell de Git Bash convirtió <code>/python-code-review</code> en una ruta de Windows y el agente buscó un archivo que no existía. Repetimos la prueba con la conversión de rutas desactivada y funcionó. La transcripción muestra que no hay llamada a <code>Skill</code>, porque el comando ya entrega el contenido de la skill al modelo; aun así siguió el flujo completo (checklist, plantilla, script), como se ve en la Figura 5. El informe resultante fue equivalente al de la activación automática; la diferencia es que no depende de que el modelo decida por la descripción.</p>
+<figure><img src="../screenshots/06_activacion_explicita.png" alt="Activación explícita con el comando de la skill."><figcaption>Figura 5. Activación explícita con el comando de la skill.</figcaption></figure>
+
+
+<h2>4.4 Descripción demasiado genérica</h2>
+<p>Cambiamos la descripción a <code>Ayuda con Python.</code> y corrimos cuatro peticiones generales: la pregunta de la lista, pedir una función que sume dos números, una duda sobre convertir cadenas a enteros y una consulta sobre <code>usuarios.py</code>. Esperábamos activaciones incorrectas y no las vimos: la skill no se invocó en ninguna. Lo que sí pasó fue lo contrario. Con la petición de revisión que antes activaba la skill, el modelo ya no la invocó: leyó el archivo y revisó por su cuenta, sin <code>check_syntax.py</code> y sin la plantilla (Figura 6). Con una descripción sin criterio la skill dejó de usarse cuando hacía falta, así que el problema que observamos fue la falta de activación y no la activación indebida. No podemos afirmar con cuatro peticiones que nunca se active de más, pero no lo reprodujimos.</p>
+<figure><img src="../screenshots/05_descripcion_generica.png" alt="Con la descripción genérica, la revisión no invoca la skill ni el script."><figcaption>Figura 6. Con la descripción genérica, la revisión no invoca la skill ni el script.</figcaption></figure>
+
+
+<h2>4.5 Descripción restaurada y mejorada</h2>
+<p>Pusimos la descripción mejorada del paso 22, con la exclusión explícita de enseñar sintaxis y de crear código desde cero. La revisión volvió a invocar la skill (línea 3 de <code>05b_descripcion_mejorada_revision.jsonl</code>) y la pregunta de la lista siguió sin activarla. Esa es la descripción con la que quedó la versión final.</p>
+
+<h1>5. Evolución de la skill</h1>
+<h2>5.1 Regla nueva en el checklist: antes y después</h2>
+<p>Pusimos temporalmente <code>API_KEY = 'demo-secret'</code> como línea 2 de <code>calculadora.py</code> y corrimos la misma petición dos veces. La primera vez, con el checklist original, la skill ya detectó el secreto porque el checklist tenía «credenciales o secretos en el código», pero lo clasificó como MEDIO y mostró el valor completo. Luego agregamos al checklist una regla específica sobre archivos, claves o tokens embebidos que además fija la severidad en CRÍTICO y pide enmascarar el valor. En la segunda ejecución el hallazgo salió como CRÍTICO, con <code>API_KEY = 'de***'</code> y la propuesta de leerlo de una variable de entorno (Figura 7 y Tabla 2). Quedó una filtración menor: en el resumen final el modelo escribió «demo-secret» al comentar que podía ser solo de ejemplo.</p>
+<figure><img src="../screenshots/10_antes_despues.png" alt="Hallazgo del secreto antes y después de la regla nueva."><figcaption>Figura 7. Hallazgo del secreto antes y después de la regla nueva.</figcaption></figure>
+
+<p class="tabla-titulo">Tabla 2. Efecto de la regla nueva (misma petición, mismo modelo).</p>
+<table>
+<tr><th></th><th>Antes</th><th>Después</th></tr>
+<tr><td>Severidad</td><td>MEDIO</td><td>CRÍTICO</td></tr>
+<tr><td>Valor en la evidencia</td><td><code>API_KEY = 'demo-secret'</code></td><td><code>API_KEY = 'de***'</code></td></tr>
+<tr><td>Corrección</td><td>Leerla con <code>os.environ</code> y rotarla si era real</td><td>Igual, con la variable de entorno</td></tr>
+</table>
+<p>El modelo es el mismo en las dos ejecuciones; lo único que cambió fue un archivo de texto. Con una sola ejecución por lado no podemos descartar algo de variación entre corridas, pero la diferencia sigue lo que dice la regla nueva. Después de la prueba restauramos <code>calculadora.py</code> a su contenido original; la copia con la clave quedó en <code>evidencia/calculadora_con_API_KEY.py</code>.</p>
+
+<h2>5.2 Cambio de columnas en la plantilla</h2>
+<p>Reordenamos las columnas de <code>report-template.md</code> a Archivo / línea, Severidad, Problema, Corrección y Evidencia. En la ejecución siguiente la tabla del informe salió con ese orden exacto, así que el agente adopta la plantilla que encuentra. Después restauramos el orden original del enunciado.</p>
+
+<h2>5.3 Verificación final y ajuste del script</h2>
+<p>Agregamos la sección «Verificación final» del paso 26 a <code>SKILL.md</code>. La revisión conjunta de los dos archivos (paso 27) nos dio un problema que no esperábamos: en tres ejecuciones seguidas el modelo no corrió <code>check_syntax.py</code>. La primera vez dijo que el script, al usar <code>py_compile</code>, escribe un <code>.pyc</code> en <code>__pycache__</code> y que habíamos pedido no modificar archivos. En la segunda el comando quedó bloqueado por permisos, en parte por culpa nuestra, porque autorizamos solo la herramienta Bash y el modelo usó PowerShell. La tercera vez, con ambos permisos, el modelo prefirió una comprobación propia con <code>ast</code> por la misma razón de la primera. Las tres transcripciones quedaron en la evidencia (<code>11_</code>, <code>12_</code> y <code>13_</code>).</p>
+<p>La causa de fondo era real: el script del enunciado sí deja un archivo en el proyecto revisado, lo que choca con la regla de no modificar nada. Hicimos dos cambios. En <code>SKILL.md</code> el paso 3 ahora dice que es obligatorio y que no modifica nada. Y en el script el bytecode se escribe en una carpeta temporal, de modo que no queda <code>__pycache__</code>; el original se conserva en <code>evidencia/versiones_skill/</code>. Con los dos cambios, la revisión conjunta ejecutó el script sobre ambos archivos (Figura 8).</p>
+<figure><img src="../screenshots/07_conjunta.png" alt="Revisión conjunta de calculadora.py y usuarios.py con el script ejecutado sobre ambos archivos."><figcaption>Figura 8. Revisión conjunta de calculadora.py y usuarios.py con el script ejecutado sobre ambos archivos.</figcaption></figure>
+
+
+<h1>6. Informes generados</h1>
+<p>Con la skill en su versión final generamos los tres informes, guardados en <code>entregables/informes_generados/</code>: <code>informe_calculadora.md</code>, <code>informe_usuarios.md</code> y <code>informe_conjunta.md</code>. En los tres la tabla usa el orden de columnas de la plantilla original. La revisión conjunta distingue los archivos y las severidades como pedía el paso 27 (Tabla 3).</p>
+<p class="tabla-titulo">Tabla 3. Hallazgos del informe de la revisión conjunta.</p>
+<table>
+<tr><th>Severidad</th><th>Archivo / línea</th><th>Problema</th></tr>
+<tr><td>CRÍTICO</td><td>usuarios.py:8-9</td><td>Ejecución arbitraria de código con <code>eval</code> sobre una entrada sin validar</td></tr>
+<tr><td>ALTO</td><td>calculadora.py:15</td><td>Llamada a nivel de módulo que lanza <code>ZeroDivisionError</code> al importar</td></tr>
+<tr><td>ALTO</td><td>calculadora.py:3-4</td><td><code>dividir</code> no controla el divisor cero</td></tr>
+<tr><td>ALTO</td><td>calculadora.py:6-7</td><td><code>promedio</code> falla con lista vacía</td></tr>
+<tr><td>MEDIO</td><td>calculadora.py:6</td><td>Parámetro mutable por defecto</td></tr>
+<tr><td>MEDIO</td><td>calculadora.py:10-13</td><td><code>except:</code> desnudo que devuelve 0 sin avisar</td></tr>
+<tr><td>MEDIO</td><td>usuarios.py:3-6</td><td>Devuelve <code>None</code> implícito y puede lanzar <code>KeyError</code> si falta la clave <code>id</code></td></tr>
+<tr><td>BAJO</td><td>usuarios.py:3</td><td>El parámetro <code>id</code> tapa la función integrada</td></tr>
+<tr><td>BAJO</td><td>ambos</td><td>Sin docstrings, tipos ni pruebas</td></tr>
+</table>
+<p>Nos llamó la atención que las severidades no son idénticas entre ejecuciones. El informe individual de <code>usuarios.py</code> clasificó el <code>None</code> implícito como ALTO y el de la revisión conjunta como MEDIO. El checklist solo dice «CRÍTICO, ALTO, MEDIO o BAJO» sin criterios, así que ese margen es de la skill y no del modelo; una mejora sería definir qué entra en cada nivel.</p>
+
+<h1>7. Versión portable</h1>
+<p>Copiamos únicamente la carpeta <code>python-code-review</code> (con <code>SKILL.md</code>, <code>references/</code>, <code>assets/</code> y <code>scripts/</code>) a <code>entregables/python-code-review/</code>, sin el proyecto de ejemplo. Lo mismo hicimos con <code>python-test-designer</code>. El paquete <code>Lab09_TopicosII_Rios_Gerald.zip</code> contiene las dos skills, el proyecto de práctica, los informes generados y la evidencia.</p>
+
+<h1>8. Reto final: python-test-designer</h1>
+<p>La segunda skill tiene un <code>SKILL.md</code> y una plantilla de plan de pruebas. Su descripción dice que se usa al diseñar pruebas para código Python y excluye revisar la calidad, depurar o explicar sintaxis. Pide casos normales, límites y errores esperados, con entrada y resultado concretos, y le prohíbe revisar o ejecutar nada. La mantuvimos separada de la primera a propósito.</p>
+<p>Con «Diseña las pruebas para <code>ejemplo/calculadora.py</code>…» se invocó <code>python-test-designer</code> (línea 3 de <code>17_test_designer_activacion.jsonl</code>) y produjo un plan con las tres funciones y los tres grupos de casos, con observaciones donde el comportamiento actual difiere del esperado (Figura 9). Con la petición de revisión de <code>usuarios.py</code> se invocó <code>python-code-review</code> y no la de pruebas (línea 3 de <code>18_test_designer_no_activa_review.jsonl</code>, Figura 10).</p>
+<figure><img src="../screenshots/08_test_designer.png" alt="Activación de python-test-designer al pedir pruebas."><figcaption>Figura 9. Activación de python-test-designer al pedir pruebas.</figcaption></figure>
+
+<figure><img src="../screenshots/09_test_designer_no_activa.png" alt="Una petición de revisión invoca python-code-review y no python-test-designer."><figcaption>Figura 10. Una petición de revisión invoca python-code-review y no python-test-designer.</figcaption></figure>
+
+<p>Probamos también una petición que combinaba las dos: «Revisa <code>usuarios.py</code> y luego diseña las pruebas que necesitaría». La primera vez que la intentamos se agotó el límite de uso de la herramienta de línea de comandos y la repetimos después. Se invocó solo <code>python-test-designer</code> (línea 5 de <code>19_combinadas.jsonl</code>); la revisión no pasó por <code>python-code-review</code> y el script de sintaxis no se ejecutó, de modo que el resultado fue únicamente el plan de pruebas. Es decir, las skills quedan bien separadas, pero el agente no las encadenó por sí solo. Para combinarlas habría que pedir los dos pasos en peticiones distintas o nombrarlas.</p>
+
+<h1>9. Preguntas de reflexión</h1>
+<p><b>1. ¿Qué diferencia existe entre una Skill y un prompt guardado?</b> Un prompt guardado es texto que el usuario pega cada vez. Una skill es una carpeta que el agente descubre por sí mismo, que carga solo si la tarea lo pide y que trae junto al texto sus plantillas y scripts. En la primera prueba no nombramos la skill y el agente la encontró.</p>
+<p><b>2. ¿Qué función cumplen name y description antes de cargar el contenido completo de SKILL.md?</b> Son lo único que el agente ve de todas las skills al arrancar (Agent Skills, s. f.). Con eso decide si alguna le sirve para la petición, y solo después carga el cuerpo de <code>SKILL.md</code>. Por eso la descripción es la parte más sensible, como vimos con «Ayuda con Python.».</p>
+<p><b>3. ¿Por qué conviene mover información extensa a references en lugar de poner todo en SKILL.md?</b> Porque el cuerpo de <code>SKILL.md</code> se carga entero cada vez que la skill se activa, y los archivos de <code>references/</code> solo cuando hacen falta. Se mantiene corto lo que siempre se lee y el checklist puede crecer sin gastar contexto en peticiones que no lo necesitan. Además, editar una regla en <code>checklist.md</code> bastó para cambiar el informe sin tocar el flujo.</p>
+<p><b>4. ¿Qué ventaja aporta incluir scripts en una skill?</b> Una comprobación determinista que no depende de la opinión del modelo: <code>check_syntax.py</code> responde OK o error igual cada vez, y deja constancia en la transcripción de que se ejecutó. El costo, que vimos, es que el script tiene efectos y permisos que hay que pensar: el <code>__pycache__</code> y la aprobación de comandos nos frenaron tres ejecuciones.</p>
+<p><b>5. ¿Por qué una descripción demasiado genérica puede ser un problema?</b> Porque no le da al agente criterio para decidir. En nuestra prueba, con «Ayuda con Python.» el agente dejó de usar la skill ante una revisión de código real. También puede ocurrir lo opuesto, que se active en tareas que no le corresponden; eso no lo reprodujimos, aunque el enunciado lo plantea.</p>
+<p><b>6. ¿Qué diferencia existe entre una Skill, un MCP Server y un Agent?</b> Una skill es conocimiento y procedimiento empaquetado en archivos: enseña cómo hacer una tarea. Un servidor MCP expone herramientas o datos externos a los que el modelo puede conectarse, por ejemplo una base de datos o una API. Un agente es el sistema que razona, planifica y usa herramientas para cumplir un objetivo, y puede apoyarse en skills y en servidores MCP. Aquí el agente fue Claude Code y la skill, la carpeta que le dimos.</p>
+<p><b>7. ¿Por qué una skill puede versionarse y revisarse como código?</b> Porque es una carpeta de archivos de texto. Se puede guardar en Git, comparar versiones y revisar los cambios antes de aceptarlos. Nosotros lo hicimos a pequeña escala: guardamos cada versión de <code>SKILL.md</code>, del checklist, de la plantilla y del script en <code>evidencia/versiones_skill/</code>, y los cambios se ven con un diff.</p>
+
+<h1 class="nueva-pagina">Conclusiones</h1>
+<p>La skill <code>python-code-review</code> funcionó como la describe el enunciado: el agente la encontró sin que la nombráramos, siguió su flujo, ejecutó el script y entregó el informe con la plantilla. Los cinco defectos de nuestra revisión manual aparecieron en el informe, junto con otros que no habíamos anotado. No se activó con una pregunta educativa. Las pruebas de la regla de secretos y del orden de columnas mostraron que cambiar un archivo de texto cambia el resultado sin tocar el modelo.</p>
+<p>Lo que más costó fue el script de sintaxis. El del enunciado escribe en <code>__pycache__</code>, y eso chocaba con pedir una revisión sin modificar nada; tres ejecuciones seguidas lo esquivaron y tuvimos que ajustar tanto <code>SKILL.md</code> como el script. También esperábamos que la descripción genérica provocara activaciones indebidas y vimos lo contrario, y con pocas pruebas no sacamos una conclusión general. La activación explícita no aparece como llamada a <code>Skill</code> en la transcripción, algo que no esperábamos. La petición combinada activó solo la skill de pruebas y no encadenó la revisión. No probamos la ruta de ChatGPT ni la validación con <code>skills-ref</code>. Además, los niveles de severidad varían un poco entre corridas porque el checklist no define criterios, y eso queda como mejora pendiente.</p>
+
+<h1>Referencias Bibliográficas</h1>
+<div class="referencias">
+  <p>Agent Skills. (s. f.). <i>Specification</i>. Recuperado el 29 de octubre de 2026, de https://agentskills.io/specification</p>
+</div>
+
+</body>
+</html>

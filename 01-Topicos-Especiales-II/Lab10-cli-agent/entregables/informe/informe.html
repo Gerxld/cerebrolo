@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Laboratorio 10 — Modalidad CLI Agent</title>
+<style>
+  @page { size: Letter; margin: 2.5cm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 12pt; line-height: 1.5; text-align: justify;
+    color: #111; margin: 0;
+  }
+  h1, h2, h3 { font-family: "Times New Roman", Times, serif; text-align: left; page-break-after: avoid; }
+  h1 { font-size: 14pt; margin: 1.4em 0 0.5em; }
+  h2 { font-size: 13pt; margin: 1.2em 0 0.4em; }
+  h3 { font-size: 12pt; margin: 1em 0 0.3em; }
+  h1.nueva-pagina { page-break-before: always; }
+  p { margin: 0 0 0.7em 0; }
+  code { font-family: Consolas, "Courier New", monospace; font-size: 10pt; }
+
+  .portada {
+    height: 22cm; display: flex; flex-direction: column;
+    align-items: center; text-align: center; page-break-after: always;
+  }
+  .portada .logos { display: flex; justify-content: space-between; width: 100%; margin-bottom: 0.8cm; }
+  .portada .logos img { width: 105px; height: 105px; object-fit: contain; }
+  .portada .titulo-bloque { margin-top: 0.9cm; }
+  .portada .titulo-bloque p { margin: 0.35em 0; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px; }
+  .portada .presentado { margin-top: 1.1cm; }
+  .portada .presentado p, .portada .revisado p, .portada .fecha p { margin: 0.3em 0; font-weight: bold; text-transform: uppercase; }
+  .portada .nombres { font-weight: normal !important; text-transform: none !important; }
+  .portada .revisado { margin-top: 1.2cm; }
+  .portada .fecha { margin-top: 1.1cm; }
+
+  .indice { page-break-after: always; }
+  .indice h1 { text-align: center; }
+  .indice ol { list-style: none; padding: 0; margin: 0; }
+  .indice li { display: flex; align-items: baseline; margin: 0.25em 0; }
+  .indice li.n2 { padding-left: 1.2em; }
+  .indice li .t { white-space: nowrap; }
+  .indice li .dots { flex: 1; border-bottom: 1px dotted #444; margin: 0 0.3em; transform: translateY(-0.25em); }
+  .indice li .p { white-space: nowrap; }
+
+  table { width: 100%; table-layout: fixed; border-collapse: collapse; margin: 0.8em 0; font-size: 10pt; line-height: 1.3; }
+  tr { page-break-inside: avoid; }
+  th, td { overflow-wrap: anywhere; border: 1px solid #666; padding: 4px 6px; text-align: left; vertical-align: top; }
+  th { background: #e2e2e2; font-weight: bold; }
+  .tabla-titulo { font-weight: bold; margin: 0.8em 0 0.2em; text-align: left; page-break-after: avoid; }
+  figure { margin: 1em 0; text-align: center; page-break-inside: avoid; }
+  figure img { max-width: 100%; max-height: 17cm; }
+  figcaption { font-size: 10.5pt; font-style: italic; margin-top: 0.3em; }
+  ul, ol { margin: 0.3em 0 0.8em 1.3em; padding: 0; }
+  li { margin-bottom: 0.3em; }
+  blockquote { margin: 0.6em 0 0.8em 1.27cm; text-align: justify; }
+  pre.bloque { font-family: Consolas, "Courier New", monospace; font-size: 9.5pt; line-height: 1.3; background: #f2f2f2; border: 1px solid #bbb; padding: 6px 10px; margin: 0.5em 0 0.9em; white-space: pre-wrap; text-align: left; page-break-inside: avoid; }
+</style>
+</head>
+<body>
+
+<div class="portada">
+  <div class="logos">
+    <img src="../assets/utp.png" alt="Logo UTP">
+    <img src="../assets/fisc.png" alt="Logo FISC">
+  </div>
+  <div class="titulo-bloque">
+    <p>Universidad Tecnológica de Panamá</p>
+    <p>Facultad de Ingeniería de Sistemas Computacionales</p>
+    <p>Lic. en Desarrollo y Gestión de Software</p>
+    <p style="margin-top:1em;">Tópicos Especiales II</p>
+    <p>Laboratorio 10 — Modalidad CLI Agent</p>
+    <p>1GS241</p>
+  </div>
+  <div class="presentado">
+    <p>Presentado por:</p>
+    <p class="nombres">Ríos, Gerald (8-987-741)</p>
+  </div>
+  <div class="revisado">
+    <p>Revisado por:</p>
+    <p class="nombres">Profesor Regis Rivera</p>
+  </div>
+  <div class="fecha">
+    <p>Fecha de entrega</p>
+    <p class="nombres">29 / 10 / 2026</p>
+  </div>
+</div>
+
+<div class="indice">
+  <h1>Índice</h1>
+  <ol>
+    <li><span class="t">Introducción</span><span class="dots"></span><span class="p">@@Introducción@@</span></li>
+    <li><span class="t">1. Requisitos locales y línea base</span><span class="dots"></span><span class="p">@@1. Requisitos@@</span></li>
+    <li class="n2"><span class="t">1.1 Requisitos y herramienta</span><span class="dots"></span><span class="p">@@1.1@@</span></li>
+    <li class="n2"><span class="t">1.2 Proyecto inicial y pruebas de partida</span><span class="dots"></span><span class="p">@@1.2@@</span></li>
+    <li><span class="t">2. Análisis inicial sin modificar archivos</span><span class="dots"></span><span class="p">@@2. Análisis@@</span></li>
+    <li><span class="t">3. Primera tarea: prioridad</span><span class="dots"></span><span class="p">@@3. Primera@@</span></li>
+    <li class="n2"><span class="t">3.1 Prompt y permisos solicitados</span><span class="dots"></span><span class="p">@@3.1@@</span></li>
+    <li class="n2"><span class="t">3.2 Revisión del diff y pruebas propias</span><span class="dots"></span><span class="p">@@3.2@@</span></li>
+    <li><span class="t">4. Segunda tarea: búsqueda con alcance limitado</span><span class="dots"></span><span class="p">@@4. Segunda@@</span></li>
+    <li class="n2"><span class="t">4.1 Prompt y revisión del alcance</span><span class="dots"></span><span class="p">@@4.1@@</span></li>
+    <li class="n2"><span class="t">4.2 Cambio que pedimos limitar</span><span class="dots"></span><span class="p">@@4.2@@</span></li>
+    <li class="n2"><span class="t">4.3 Corrección basada en evidencia</span><span class="dots"></span><span class="p">@@4.3@@</span></li>
+    <li><span class="t">5. Explicación final del agente y decisión sobre el commit</span><span class="dots"></span><span class="p">@@5. Explicación@@</span></li>
+    <li><span class="t">6. Reto final: ordenar por prioridad</span><span class="dots"></span><span class="p">@@6. Reto@@</span></li>
+    <li><span class="t">7. Registro de comandos solicitados</span><span class="dots"></span><span class="p">@@7. Registro@@</span></li>
+    <li><span class="t">8. Respuestas a las preguntas de reflexión</span><span class="dots"></span><span class="p">@@8. Respuestas@@</span></li>
+    <li><span class="t">Conclusiones</span><span class="dots"></span><span class="p">@@Conclusiones@@</span></li>
+  </ol>
+</div>
+
+<h1>Introducción</h1>
+<p>Este laboratorio trabaja la modalidad de agente en línea de comandos: un asistente que vive en la terminal, lee el proyecto, propone cambios, intenta ejecutar comandos y espera que nosotros decidamos qué se aprueba. El enunciado deja Codex CLI como ruta principal y acepta Claude Code como alternativa equivalente; usamos Claude Code (versión 2.1.312, modelo Sonnet 5.5) y conservamos el resto de los pasos tal como están.</p>
+<p>Sobre un pequeño gestor de tareas en Python hicimos el análisis inicial, agregamos prioridad, agregamos búsqueda con el alcance acotado y cerramos con un reto propio, que fue ordenar por prioridad. En cada tarea revisamos el diff de Git y repetimos las pruebas a mano. Este informe sigue ese orden y adjunta las transcripciones, los JSON de cada sesión y las capturas de terminal. Las respuestas a las preguntas de reflexión y las conclusiones cierran el documento.</p>
+<p>Una aclaración sobre el modo de trabajo. Para que todo quedara transcrito corrimos el agente en modo no interactivo (<code>claude -p</code> con salida <code>stream-json</code>), siempre con el modo de permisos por defecto: nunca usamos aprobación automática ni el modo que omite permisos. Como en ese modo no aparece el cuadro de aprobación de la interfaz, el procedimiento fue este: primero lanzábamos cada tarea con solo permisos de lectura, el agente intentaba editar y ejecutar, el sistema lo negaba y el JSON dejaba la lista exacta de lo que pidió. Con esa lista a la vista decidíamos qué aprobar y volvíamos a lanzar la sesión permitiendo únicamente eso. Es el mismo criterio de «leer la acción antes de aprobarla», aplicado con otro mecanismo.</p>
+
+<h1>1. Requisitos locales y línea base</h1>
+<h2>1.1 Requisitos y herramienta</h2>
+<p>Comprobamos Python y Git desde la terminal. El agente quedó instalado y disponible como <code>claude</code> en el equipo de trabajo.</p>
+<pre class="bloque">&gt; python --version
+Python 3.13.5
+&gt; git --version
+git version 2.49.0.windows.1
+&gt; claude --version
+2.1.312 (Claude Code)</pre>
+
+<h2>1.2 Proyecto inicial y pruebas de partida</h2>
+<p>Creamos la carpeta <code>laboratorio_cli_agent</code>, ejecutamos <code>git init</code> y escribimos a mano <code>tasks.py</code>, <code>app.py</code> y <code>tests/test_tasks.py</code>, copiando el código del enunciado sin cambios. Antes de abrir el agente corrimos el programa y las pruebas para saber que todo funcionaba. La Figura 1 muestra el resultado de esa línea base.</p>
+<figure>
+  <img src="../screenshots/01_pruebas_antes.png" alt="Pruebas antes">
+  <figcaption>Figura 1. Requisitos y pruebas de la línea base, antes de usar el agente: 2 pruebas en OK.</figcaption>
+</figure>
+<p>Con eso hicimos el commit de línea base con el mensaje que indica la guía, «Línea base del laboratorio CLI Agent» (hash <code>e73d92f</code>). Una diferencia con la guía: agregamos un <code>.gitignore</code> con <code>__pycache__/</code> y <code>*.pyc</code> para que los archivos compilados no ensuciaran los diffs. También configuramos el nombre y el correo de Git solo dentro de este repositorio.</p>
+
+<h1>2. Análisis inicial sin modificar archivos</h1>
+<p>Abrimos el agente dentro de la carpeta del proyecto, con permisos únicamente de lectura (<code>Read</code>, <code>Glob</code>, <code>Grep</code>), y escribimos este prompt, que es el del enunciado:</p>
+<pre class="bloque">Analiza este proyecto de Python.
+Explícame:
+1. qué hace cada archivo,
+2. qué comportamiento cubren las pruebas,
+3. qué riesgos ves en la forma de asignar los IDs.
+No modifiques ningún archivo y no ejecutes instalaciones.</pre>
+<p>El agente leyó los tres archivos y el <code>.gitignore</code> (cinco llamadas de lectura en total, sin una sola petición de escritura ni de comandos) y <code>git status</code> quedó limpio al terminar. Esta es su explicación, resumida de la transcripción completa que va en la evidencia:</p>
+<blockquote>
+<p><b>Archivos.</b> <code>tasks.py</code> es la lógica: tareas como diccionarios dentro de una lista; <code>agregar_tarea</code> recorta el título y falla si queda vacío, y asigna <code>id = len(tareas) + 1</code>; <code>completar_tarea</code> busca por id; <code>pendientes</code> filtra. <code>app.py</code> es un script de demostración, no una CLI real, sin <code>if __name__ == "__main__"</code>. <code>tests/test_tasks.py</code> tiene dos pruebas con <code>unittest</code>.</p>
+<p><b>Cobertura.</b> Solo el camino feliz: guardar el título con <code>completada</code> en <code>False</code> y completar una tarea. No se prueban el título vacío, el id inexistente, la mezcla de completadas con pendientes ni la asignación de ids.</p>
+<p><b>Riesgo en los IDs.</b> <code>len(tareas) + 1</code> supone que la lista nunca pierde elementos. Con los ids 1, 2 y 3, si se borra el 1 y se agrega otra tarea, la nueva recibe el 3 y choca con la existente. Propone <code>max(...) + 1</code> o un contador propio.</p>
+</blockquote>
+<p>Contrastamos la explicación con el código real y es correcta en lo que afirma. Comprobamos además el riesgo con unas pocas líneas: creamos las tareas A, B y C, borramos la primera y agregamos D, y el resultado fue <code>[(2, 'B'), (3, 'C'), (3, 'D')]</code>, con dos tareas con id 3 (evidencia en <code>15_verificaciones_extra.txt</code>). La observación sobre <code>tests/</code> sin <code>__init__.py</code> también es cierta y nos sirvió más adelante. No propuso cambios ni pidió instalar nada, así que no hubo nada que rechazar en este paso. El hallazgo de los IDs no entraba en el alcance de las tareas siguientes y lo dejamos anotado como riesgo pendiente.</p>
+
+<h1>3. Primera tarea: prioridad</h1>
+<h2>3.1 Prompt y permisos solicitados</h2>
+<p>El prompt para implementar la prioridad fue el del enunciado, sin cambios:</p>
+<pre class="bloque">Implementa prioridad para las tareas con los valores alta, media o baja.
+
+Requisitos:
+- agregar_tarea debe recibir una prioridad;
+- prioridad inválida debe producir ValueError;
+- app.py debe mostrar la prioridad;
+- agrega o actualiza pruebas unitarias;
+- no agregues dependencias externas;
+- conserva el comportamiento actual de completar y listar pendientes;
+- antes de terminar, ejecuta las pruebas.</pre>
+<p>En la primera corrida, con solo lectura, el agente leyó los tres archivos y pidió cuatro ediciones (una en <code>tasks.py</code>, dos en <code>app.py</code>, una en <code>tests/test_tasks.py</code>) y un comando de pruebas. Todo quedó denegado, no se tocó ningún archivo, y el agente explicó en prosa lo que haría. La Figura 2 muestra las seis peticiones tal como constan en el JSON.</p>
+<figure>
+  <img src="../screenshots/12_permisos_s2a.png" alt="Permisos">
+  <figcaption>Figura 2. Peticiones del agente en la corrida sin permisos de escritura ni de ejecución (JSON de la sesión).</figcaption>
+</figure>
+<p>Antes de aprobar leímos cada petición. Las ediciones tocaban solo los tres archivos que el requisito menciona y los textos nuevos eran los esperados: una constante <code>PRIORIDADES</code>, una validación y la prioridad dentro del diccionario. El comando era <code>python -m unittest discover -s tests -t . -v; python app.py</code>, dos comandos de solo lectura sobre nuestro código, sin instalaciones ni Git. Aprobamos las cuatro ediciones y los comandos de prueba (<code>python -m unittest</code> y <code>python app.py</code>). Una decisión de diseño la tomamos nosotros: el agente avisó de que «ALTA» sería inválida porque la prioridad distingue mayúsculas, y le indicamos que lo mantuviera, porque el enunciado habla de los valores alta, media o baja y no pide normalizar.</p>
+<p>En la segunda corrida el agente aplicó las ediciones y lanzó el primer comando con <code>-t .</code>, que falló porque <code>tests</code> no es un paquete importable (lo comprobamos nosotros después con el mismo error). Lo reintentó sin esa opción y las pruebas pasaron. No creó <code>__init__.py</code>, que habría sido un archivo fuera de lo pedido, y ahí sí valoramos que se detuviera.</p>
+
+<h2>3.2 Revisión del diff y pruebas propias</h2>
+<p>Salimos del agente y corrimos <code>git status</code> y <code>git diff</code>. Se modificaron exactamente tres archivos: <code>app.py</code>, <code>tasks.py</code> y <code>tests/test_tasks.py</code>. La Figura 3 contiene el diff del código.</p>
+<figure>
+  <img src="../screenshots/03_diff_prioridad_codigo.png" alt="Diff prioridad">
+  <figcaption>Figura 3. git diff de app.py y tasks.py tras la tarea de prioridad.</figcaption>
+</figure>
+<p>Lo que revisamos línea por línea fue lo siguiente. La firma pasó a <code>agregar_tarea(tareas, titulo, prioridad)</code> sin valor por defecto, lo que rompe las llamadas antiguas, pero era justo lo pedido («debe recibir una prioridad») y el agente actualizó las dos llamadas de <code>app.py</code>. La validación va después de la del título, de modo que el título vacío conserva su mensaje original. <code>completar_tarea</code> y <code>pendientes</code> no se tocaron. En las pruebas, las dos existentes solo cambiaron de firma, no se debilitó ninguna aserción, y se agregaron tres: prioridades válidas, prioridades inválidas (<code>"urgente"</code>, <code>""</code>, <code>None</code>, <code>"ALTA"</code>) y que <code>pendientes</code> excluya las completadas. Esta última no la pedíamos, pero es del mismo alcance y la dejamos. No encontramos nombres cambiados ni refactorizaciones.</p>
+<p>Aunque el agente informó que las pruebas pasaban, las repetimos nosotros desde la terminal. La Figura 4 muestra el programa y las cinco pruebas en OK.</p>
+<figure>
+  <img src="../screenshots/05_pruebas_despues_prioridad.png" alt="Pruebas después de prioridad">
+  <figcaption>Figura 4. Ejecución propia después de la prioridad: la salida de app.py ya muestra la prioridad y pasan 5 pruebas.</figcaption>
+</figure>
+
+<h1>4. Segunda tarea: búsqueda con alcance limitado</h1>
+<h2>4.1 Prompt y revisión del alcance</h2>
+<p>Antes de pedir la búsqueda pusimos los cambios de prioridad en el área de preparación de Git (<code>git add .</code>, sin commit) para que el siguiente <code>git diff</code> mostrara solo lo nuevo. El prompt fue:</p>
+<pre class="bloque">Agrega una función buscar_tareas(tareas, texto) que busque sin
+distinguir mayúsculas y minúsculas.
+
+Condiciones:
+- modifica tasks.py y las pruebas necesarias;
+- no cambies la estructura actual de las tareas;
+- no cambies app.py todavía;
+- no agregues paquetes;
+- ejecuta las pruebas al finalizar.</pre>
+<p>Otra vez la primera corrida fue solo de lectura: tres ediciones denegadas. Al leer lo propuesto aprobamos las ediciones en <code>tasks.py</code> y en las pruebas, y los comandos de prueba. En el diff, <code>app.py</code> no aparece, la estructura de las tareas no cambió y no hay paquetes nuevos, así que el alcance se respetó. La función comparaba con <code>casefold()</code>, que para el español da el mismo resultado que <code>lower()</code>. Allí el agente informó además que <code>python -m unittest</code> a secas ejecuta cero pruebas con código de salida 5; lo verificamos y es cierto, porque sin <code>discover</code> no encuentra la carpeta <code>tests</code>.</p>
+
+<h2>4.2 Cambio que pedimos limitar</h2>
+<p>El diff traía una línea que no habíamos pedido: <code>texto = texto.strip().casefold()</code>. El enunciado solo pide ignorar mayúsculas y minúsculas; recortar espacios es un comportamiento nuevo que cambia el resultado de buscar, por ejemplo, <code>" leer "</code>. Las pruebas estaban en verde y nada de eso se habría notado sin leer el diff (Figura 5).</p>
+<figure>
+  <img src="../screenshots/06_diff_busqueda.png" alt="Diff búsqueda">
+  <figcaption>Figura 5. git diff de tasks.py tras la búsqueda; la línea con strip() es la que pedimos limitar.</figcaption>
+</figure>
+<p>Pedimos que se redujera el cambio a lo mínimo, con este prompt:</p>
+<pre class="bloque">En buscar_tareas, la línea texto = texto.strip().casefold() recorta
+espacios, y eso no lo pedí: solo pedí búsqueda sin distinguir
+mayúsculas y minúsculas. Reduce el cambio: quita únicamente el strip()
+y deja el resto igual (casefold, firma, pruebas). Hazlo en tasks.py y
+ejecuta 'python -m unittest discover -s tests'. No toques otros
+archivos ni uses git.</pre>
+<p>El agente hizo una sola edición, cambió esa línea por <code>texto = texto.casefold()</code>, y las siete pruebas siguieron en OK.</p>
+
+<h2>4.3 Corrección basada en evidencia</h2>
+<p>Para el paso de la prueba provocada agregamos a mano dos casos al final de <code>tests/test_tasks.py</code>: buscar un texto inexistente (<code>"inexistente"</code>) y buscar el texto vacío (<code>""</code>), ambos esperando una lista vacía. El primero pasó. El segundo falló, como muestra la Figura 6, porque <code>"" in "cualquier cadena"</code> es verdadero en Python y la búsqueda devolvía todas las tareas.</p>
+<figure>
+  <img src="../screenshots/08_prueba_fallo.png" alt="Fallo">
+  <figcaption>Figura 6. Prueba agregada por nosotros que falla: la búsqueda vacía devuelve todas las tareas.</figcaption>
+</figure>
+<p>Siguiendo la guía, le entregamos al agente el mensaje exacto de la prueba (el bloque <code>FAIL</code> con el traceback completo) y le pedimos primero la causa, en modo solo lectura y sin tocar el código. Explicó lo anterior, propuso una guarda <code>if not texto: return []</code> y dejó una decisión abierta: un texto de solo espacios seguiría la ruta normal. Esa decisión era nuestra y la resolvimos en contra de normalizar: si ya quitamos el <code>strip()</code> por no estar pedido, tampoco vamos a reintroducirlo por otra vía. Aprobamos solo la guarda. La Figura 7 muestra las nueve pruebas en OK, con las dos nuestras incluidas y sin haber modificado ninguna aserción.</p>
+<figure>
+  <img src="../screenshots/09_prueba_corregida.png" alt="Corregida">
+  <figcaption>Figura 7. Mismas pruebas después de que el agente aplicó la guarda: 9 pruebas en OK.</figcaption>
+</figure>
+
+<h1>5. Explicación final del agente y decisión sobre el commit</h1>
+<p>Pedimos al agente un resumen de lo que hizo en la sesión: archivos, decisiones, pruebas y riesgos pendientes, con la instrucción de verificar contra el estado real del repositorio. Lo comparamos con el diff y con los archivos. Los archivos y las decisiones coinciden con lo que vimos (<code>casefold</code> en lugar de <code>lower</code>, sin <code>strip</code>, guarda para la cadena vacía, <code>app.py</code> intacto) y el conteo de pruebas, 0 con <code>unittest</code> a secas, 7 y luego 9 con <code>discover</code>, también. El agente intentó volver a correr las pruebas para verificar y se lo negamos, porque esa validación la hacemos nosotros; por eso en su respuesta aclaró que su única verificación disponible era la última corrida de nueve pruebas. Lo que más nos sirvió fueron los riesgos que dejó señalados: <code>buscar_tareas(tareas, None)</code> devuelve <code>[]</code> en vez de fallar, un número como texto lanza <code>AttributeError</code>, <code>"   "</code> no se trata como vacío y <code>python -m unittest</code> sin <code>discover</code> no corre nada. De esos cuatro, el de <code>None</code> lo dejamos anotado como decisión pendiente; los demás ya los conocíamos.</p>
+<p>Con el resultado revisado, la decisión fue conservar todo. El commit lo hacemos nosotros y no el agente. En la prueba de control (Figura 10) le pedimos que lo hiciera y el sistema de permisos lo negó, de modo que el historial sigue limpio. Los comandos que ejecutamos para cerrar son:</p>
+<pre class="bloque">git add .
+git commit -m "Agregar prioridad y búsqueda con ayuda de CLI Agent"</pre>
+<p>El <code>git add .</code> quedó hecho antes del reto, como se cuenta en la sección siguiente, así que el commit recoge solo prioridad y búsqueda (<code>app.py</code>, <code>tasks.py</code> y <code>tests/test_tasks.py</code>, 67 líneas agregadas y 8 quitadas), y las nueve pruebas de ese estado pasan. El historial quedó así:</p>
+<pre class="bloque">$ git log --oneline
+fabe271 Agregar prioridad y búsqueda con ayuda de CLI Agent
+e73d92f Línea base del laboratorio CLI Agent</pre>
+
+<h1>6. Reto final: ordenar por prioridad</h1>
+<p>Elegimos ordenar por prioridad. Nos pareció la mejora que mejor aprovecha lo que ya existe: la constante <code>PRIORIDADES</code> da el orden y el reto obliga al agente a respetar dos propiedades fáciles de romper, que son no mutar la lista original y mantener el orden de creación entre tareas de igual prioridad. Antes de lanzarlo volvimos a preparar los cambios previos con <code>git add .</code> para aislar el diff. El prompt, con alcance, restricciones y pruebas explícitas, fue:</p>
+<pre class="bloque">Agrega una función ordenar_por_prioridad(tareas) que devuelva una lista
+nueva con las tareas ordenadas de prioridad alta a baja (alta, media,
+baja).
+
+Condiciones:
+- modifica solo tasks.py y tests/test_tasks.py;
+- no modifiques la lista original ni la estructura de las tareas;
+- las tareas con la misma prioridad conservan su orden de creación;
+- no cambies app.py ni agregues paquetes;
+- agrega pruebas unitarias (orden correcto, estabilidad, lista original
+  intacta, lista vacía);
+- ejecuta python -m unittest discover -s tests al finalizar.</pre>
+<p>El agente pidió dos lecturas, tres ediciones y un comando de pruebas, todo dentro de lo autorizado. La implementación es una línea con <code>sorted()</code> y la posición de cada prioridad dentro de <code>PRIORIDADES</code> como clave. Revisamos que <code>sorted</code> devuelve una lista nueva y es estable, que no hay cambios en <code>app.py</code> y que las cuatro pruebas piden lo que le pedimos (Figura 8). Un detalle que dejamos como riesgo: si una tarea no trae una prioridad válida, la función lanza <code>ValueError</code> al buscar el índice; con tareas creadas por <code>agregar_tarea</code> eso no ocurre.</p>
+<figure>
+  <img src="../screenshots/10_diff_reto_codigo.png" alt="Diff reto">
+  <figcaption>Figura 8. git diff de tasks.py con la función del reto. Las cuatro pruebas nuevas van en tests/test_tasks.py.</figcaption>
+</figure>
+<p>Ejecutamos las pruebas y una demostración manual con cuatro tareas de prioridades mezcladas. Pasan las trece pruebas, el orden resultó ser alta, alta, media, baja con las dos altas en su orden de creación, y la lista original quedó con los ids 1, 2, 3 y 4 sin cambios (Figura 9).</p>
+<figure>
+  <img src="../screenshots/11_reto_pruebas_demo.png" alt="Pruebas y demo del reto">
+  <figcaption>Figura 9. Ejecución propia después del reto: 13 pruebas en OK y demostración del orden y de la lista intacta.</figcaption>
+</figure>
+
+<h1>7. Registro de comandos solicitados</h1>
+<p>La Tabla 1 resume lo que el agente intentó ejecutar o editar en cada sesión y qué decidimos. La columna de evidencia remite al archivo JSON de la sesión y a la línea donde consta la petición; la lista completa, con las lecturas, está en <code>evidencia/sesiones/RESUMEN_SESIONES.md</code>. En ninguna sesión el agente trabajó con aprobación automática: el campo <code>permissionMode</code> de cada JSON dice <code>default</code>.</p>
+<p class="tabla-titulo">Tabla 1. Acciones solicitadas por el agente y decisión tomada</p>
+<table>
+<colgroup><col style="width:33%"><col style="width:25%"><col style="width:25%"><col style="width:17%"></colgroup>
+<tr><th>Acción solicitada</th><th>Decisión</th><th>Motivo</th><th>JSON : línea</th></tr>
+<tr><td>Read, Glob de los archivos del proyecto (análisis inicial)</td><td>Aprobado</td><td>Solo lectura, es lo que se pidió</td><td>s1 : 2–11</td></tr>
+<tr><td>Edit tasks.py, app.py (x2) y tests/test_tasks.py para la prioridad</td><td>Rechazado en la primera corrida; aprobado después de leer la propuesta</td><td>Archivos dentro del alcance; contenido esperado</td><td>s2a : 15–24 / s2b : 2–8</td></tr>
+<tr><td><code>python -m unittest discover -s tests -t . -v; python app.py</code></td><td>Rechazado en la primera corrida; aprobado el subconjunto <code>python -m unittest</code> y <code>python app.py</code></td><td>Solo ejecuta nuestro código; sin instalaciones ni Git</td><td>s2a : 27 / s2b : 11–17</td></tr>
+<tr><td>Edit tasks.py y tests/test_tasks.py para la búsqueda (3 ediciones)</td><td>Rechazado en la primera corrida; aprobado después</td><td>Dentro del alcance; <code>app.py</code> no figuraba</td><td>s3a : 8–14 / s3b : 2–6</td></tr>
+<tr><td><code>python -m unittest</code> y <code>... discover -s tests -v</code></td><td>Aprobado</td><td>Pruebas del propio proyecto</td><td>s3b : 9, 14</td></tr>
+<tr><td>Edit: quitar <code>strip()</code> de buscar_tareas</td><td>Aprobado (era lo que pedimos)</td><td>Reduce el cambio al alcance</td><td>s4 : 2</td></tr>
+<tr><td>Edit: guarda <code>if not texto</code></td><td>Aprobado tras el diagnóstico</td><td>Arreglo mínimo en la implementación; la prueba no se tocó</td><td>s5b : 2</td></tr>
+<tr><td><code>python -m unittest discover -s tests</code> (verificación del resumen final, dos veces)</td><td>Rechazado</td><td>La validación la hacemos nosotros</td><td>s6 : 8, 16</td></tr>
+<tr><td>Edit tasks.py y tests (3 ediciones) y pruebas del reto</td><td>Aprobado</td><td>Dentro del alcance declarado en el prompt</td><td>s7 : 7–14</td></tr>
+<tr><td><code>git add .; git commit -m "Agregar prioridad y búsqueda con ayuda de CLI Agent"</code></td><td>Rechazado</td><td>El commit es decisión del estudiante</td><td>s8 : 5</td></tr>
+<tr><td><code>pip install pytest</code></td><td>Rechazado</td><td>Dependencia externa que el laboratorio prohíbe</td><td>s8 : 6</td></tr>
+</table>
+<p>Una precisión sobre las dos últimas filas. El agente no intentó por su cuenta hacer un commit ni instalar paquetes durante las tareas reales. Esa sesión (s8) la provocamos nosotros, a propósito, como prueba de control: le pedimos el commit y la instalación para comprobar que el modo por defecto los bloquea. Los bloqueó, el historial de Git sigue con el único commit de línea base y no se instaló nada (Figura 10). Un detalle que nos llamó la atención: sin que se lo pidiéramos, el agente agregó a su mensaje de commit una línea de coautoría. Otra razón para hacer nosotros el commit.</p>
+<figure>
+  <img src="../screenshots/13_permisos_s8.png" alt="Comandos negados">
+  <figcaption>Figura 10. Comandos negados: la prueba de control (commit y pip install) y las pruebas del resumen final.</figcaption>
+</figure>
+
+<h1>8. Respuestas a las preguntas de reflexión</h1>
+<h2>8.1 ¿Qué diferencia principal observó entre un CLI Agent y un Editor con IA?</h2>
+<p>En el editor con IA la propuesta aparece dentro del archivo, como un diff que aceptamos o rechazamos en el sitio, y el agente casi nunca sale de lo que está abierto. En el CLI Agent el trabajo es de tipo encargo: se le pide una tarea completa, él decide qué archivos abrir, edita varios y quiere ejecutar comandos. Eso desplaza nuestra atención, porque ya no revisamos una sugerencia puntual sino un conjunto de acciones, y nos obliga a mirar fuera del agente (Git, las pruebas) para saber qué pasó.</p>
+<h2>8.2 ¿Qué ventaja ofrece que el agente pueda ejecutar comandos y pruebas desde la terminal?</h2>
+<p>Se corrige a sí mismo antes de entregarnos algo. En la prioridad ejecutó el comando de pruebas, falló por el <code>-t .</code>, y lo reintentó bien sin que interviniéramos. En la búsqueda descubrió por su cuenta que <code>python -m unittest</code> sin <code>discover</code> no corre nada, algo que habría pasado inadvertido si solo hubiera escrito código. La ventaja es real, pero lo que ejecuta es una afirmación suya y no un certificado: por eso repetimos cada corrida a mano.</p>
+<h2>8.3 ¿Qué riesgo aparece si se aprueban todos los comandos automáticamente?</h2>
+<p>El agente deja de pasar por nuestro criterio justo en las acciones difíciles de deshacer. En nuestras sesiones, cuando probamos el control, intentó hacer el commit y añadió una línea de coautoría que no pedimos, e intentó instalar <code>pytest</code>, una dependencia que el laboratorio prohíbe. Con aprobación automática ambos comandos habrían corrido. Y en las tareas normales, un <code>strip()</code> que no pedimos y una función sin la guarda habrían entrado al historial sin que nadie los mirara.</p>
+<h2>8.4 ¿Por qué git diff es importante, aunque las pruebas pasen?</h2>
+<p>Porque las pruebas solo dicen lo que alguien pensó en probar. El <code>strip()</code> de la búsqueda pasó todas las pruebas y aun así era un comportamiento que no pedimos; la búsqueda vacía devolvía todas las tareas y ninguna prueba del agente lo detectaba, y solo apareció porque agregamos un caso propio. El diff muestra el alcance real (qué archivos y qué líneas), y las pruebas muestran únicamente si el comportamiento esperado se mantiene.</p>
+<h2>8.5 ¿En qué momento del laboratorio la decisión humana fue más importante que la generación de código?</h2>
+<p>En el diagnóstico de la búsqueda vacía. El código de la guarda es una línea y el agente la escribió bien, pero había que decidir qué debía significar buscar un texto vacío y qué hacer con los espacios, y esa fue una decisión de producto, no de programación. Además fue la ocasión en que dijimos «la prueba es correcta» y exigimos arreglar la implementación en lugar de ajustar la prueba. También pesó la decisión de rechazar el comando de verificación del resumen final: el agente quería confirmar sus propias pruebas, y preferimos hacerlo nosotros.</p>
+
+<h1 class="nueva-pagina">Conclusiones</h1>
+<p>El flujo completo funcionó y el agente respetó el alcance en las tres tareas. No tocó <code>app.py</code> cuando se le dijo que no lo hiciera, no creó archivos no pedidos y se detuvo ante un comando que no se le había autorizado. Las pruebas pasaron de 2 en la línea base a 5 con la prioridad, 7 con la búsqueda, 9 con los casos manuales y 13 con el reto, y las repetimos todas desde nuestra terminal.</p>
+<p>Lo que sí necesitó intervención humana fue poco pero concreto: el <code>strip()</code> que no pedimos, la búsqueda vacía que devolvía todo y el comando de verificación que no aprobamos. Dos cosas quedaron a medias. Una es el commit final, que le corresponde al estudiante y cuyos comandos exactos están en el informe. La otra es la forma de aprobar: como corrimos el agente en modo no interactivo, las aprobaciones se tomaron al volver a lanzar cada sesión con la lista de permisos y no pulsando «sí» en un cuadro de la interfaz. Quedan también como riesgos abiertos los IDs duplicados al borrar, que comprobamos que son reales, y el manejo de <code>None</code> y de textos con espacios en la búsqueda.</p>
+
+</body>
+</html>

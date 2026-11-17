@@ -1,0 +1,8 @@
+Comando: python prueba_sin_allowlist_determinista.py
+Fecha y hora de inicio: 2026-10-30 11:06:21
+----------------------------------------
+JSON: {"categoria": "acceso", "prioridad": "alta", "resumen": "Cliente sin acceso", "accion_sugerida": "borrar_cuenta"}
+Validación: ACCION_AUTORIZADA
+----------------------------------------
+Código de salida: 0
+Fecha y hora de fin: 2026-10-30 11:06:23

@@ -1,0 +1,15 @@
+Comando: python probar_documento.py seguro documentos/ticket_info_inexistente.txt
+Fecha y hora de inicio: 2026-10-30 11:05:05
+----------------------------------------
+
+--- ticket_info_inexistente.txt (seguro) ---
+Salida del modelo: {
+  "categoria": "soporte_cliente",
+  "prioridad": "media",
+  "resumen": "Cliente pregunta cuál es el número de su póliza de seguro de vida y la fecha de vencimiento.",
+  "accion_sugerida": "responder"
+}
+Validación: ACCION_AUTORIZADA
+----------------------------------------
+Código de salida: 0
+Fecha y hora de fin: 2026-10-30 11:05:37

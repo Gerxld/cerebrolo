@@ -1,0 +1,244 @@
+diff --git a/app.py b/app.py
+index 284116b..553e616 100644
+--- a/app.py
++++ b/app.py
+@@ -1,62 +1,86 @@
+-"""Gestor de tareas por consola - Versión 2.
++"""Gestor de tareas por consola.
+ 
+-Funciones:
+-    1) Agregar una tarea con título y prioridad (baja, media o alta).
+-    2) Listar las tareas existentes.
+-    3) Salir.
+-
+-Las tareas se guardan solo en memoria (se pierden al cerrar el programa).
++Este archivo contiene solo el menú y la interacción con el usuario.
++La lógica de las tareas está en tareas.py.
+ """
+ 
+-PRIORIDADES_VALIDAS = ("baja", "media", "alta")
++import tareas as logica
+ 
+ 
+ def mostrar_menu():
+     print("\n=== Gestor de tareas ===")
+     print("1. Agregar tarea")
+     print("2. Listar tareas")
+-    print("3. Salir")
++    print("3. Completar tarea")
++    print("4. Salir")
+ 
+ 
+ def pedir_prioridad():
+     while True:
+-        prioridad = input("Prioridad (baja, media, alta): ").strip().lower()
+-        if prioridad in PRIORIDADES_VALIDAS:
+-            return prioridad
+-        print("Prioridad no válida. Debe ser: baja, media o alta.")
++        entrada = input("Prioridad (baja, media, alta): ")
++        try:
++            return logica.normalizar_prioridad(entrada)
++        except ValueError as error:
++            print(error)
+ 
+ 
+-def agregar_tarea(tareas):
++def opcion_agregar(lista_tareas):
+     titulo = input("Título de la tarea: ").strip()
+     if not titulo:
+         print("El título no puede estar vacío.")
+         return
+     prioridad = pedir_prioridad()
+-    tareas.append({"titulo": titulo, "prioridad": prioridad})
+-    print(f"Tarea agregada: {titulo} (prioridad {prioridad})")
++    try:
++        tarea = logica.agregar_tarea(lista_tareas, titulo, prioridad)
++    except ValueError as error:
++        print(error)
++        return
++    print(f"Tarea agregada: {tarea['titulo']} (prioridad {tarea['prioridad']})")
+ 
+ 
+-def listar_tareas(tareas):
+-    if not tareas:
++def opcion_listar(lista_tareas):
++    if not lista_tareas:
+         print("No hay tareas registradas.")
+         return
+     print("\nTareas:")
+-    for numero, tarea in enumerate(tareas, start=1):
+-        print(f"{numero}. {tarea['titulo']} [prioridad: {tarea['prioridad']}]")
++    for numero, tarea in enumerate(lista_tareas, start=1):
++        marca = "[X]" if tarea["completada"] else "[ ]"
++        print(f"{numero}. {marca} {tarea['titulo']} (prioridad: {tarea['prioridad']})")
++
++
++def opcion_completar(lista_tareas):
++    if not lista_tareas:
++        print("No hay tareas registradas.")
++        return
++    opcion_listar(lista_tareas)
++    entrada = input("Número de la tarea a completar: ").strip()
++    try:
++        numero = int(entrada)
++    except ValueError:
++        print("Debe escribir un número entero.")
++        return
++    try:
++        tarea = logica.completar_tarea(lista_tareas, numero)
++    except ValueError as error:
++        print(error)
++        return
++    print(f"Tarea completada: {tarea['titulo']}")
+ 
+ 
+ def main():
+-    tareas = []
++    lista_tareas = []
+ 
+     while True:
+         mostrar_menu()
+         opcion = input("Seleccione una opción: ").strip()
+ 
+         if opcion == "1":
+-            agregar_tarea(tareas)
++            opcion_agregar(lista_tareas)
+         elif opcion == "2":
+-            listar_tareas(tareas)
++            opcion_listar(lista_tareas)
+         elif opcion == "3":
++            opcion_completar(lista_tareas)
++        elif opcion == "4":
+             print("Hasta luego.")
+             break
+         else:
+@@ -66,5 +90,5 @@ def main():
+ if __name__ == "__main__":
+     try:
+         main()
+-    except EOFError:
++    except (EOFError, KeyboardInterrupt):
+         print("\nEntrada finalizada. Hasta luego.")
+diff --git a/tareas.py b/tareas.py
+new file mode 100644
+index 0000000..430985f
+--- /dev/null
++++ b/tareas.py
+@@ -0,0 +1,41 @@
++"""Lógica de tareas (sin entrada/salida por consola)."""
++
++PRIORIDADES_VALIDAS = ("baja", "media", "alta")
++
++
++def normalizar_prioridad(prioridad):
++    """Devuelve la prioridad en minúsculas y sin espacios.
++
++    Lanza ValueError si no es baja, media o alta.
++    """
++    valor = str(prioridad).strip().lower()
++    if valor not in PRIORIDADES_VALIDAS:
++        raise ValueError("Prioridad no válida. Debe ser: baja, media o alta.")
++    return valor
++
++
++def agregar_tarea(lista_tareas, titulo, prioridad):
++    """Crea una tarea, la agrega a la lista y la devuelve.
++
++    Lanza ValueError si el título está vacío o la prioridad no es válida.
++    """
++    titulo = str(titulo).strip()
++    if not titulo:
++        raise ValueError("El título no puede estar vacío.")
++    prioridad = normalizar_prioridad(prioridad)
++
++    tarea = {"titulo": titulo, "prioridad": prioridad, "completada": False}
++    lista_tareas.append(tarea)
++    return tarea
++
++
++def completar_tarea(lista_tareas, numero):
++    """Marca como completada la tarea con ese número (empezando en 1).
++
++    Lanza ValueError si el número no corresponde a ninguna tarea.
++    """
++    if not 1 <= numero <= len(lista_tareas):
++        raise ValueError(f"No existe la tarea número {numero}.")
++    tarea = lista_tareas[numero - 1]
++    tarea["completada"] = True
++    return tarea
+diff --git a/test_tareas.py b/test_tareas.py
+new file mode 100644
+index 0000000..71d807a
+--- /dev/null
++++ b/test_tareas.py
+@@ -0,0 +1,70 @@
++import unittest
++
++import tareas
++
++
++class TestTareas(unittest.TestCase):
++    def setUp(self):
++        self.lista = []
++
++    def test_agregar_tarea_valida(self):
++        tarea = tareas.agregar_tarea(self.lista, "  Leer  ", " ALTA ")
++
++        self.assertEqual(len(self.lista), 1)
++        self.assertIs(self.lista[0], tarea)
++        self.assertEqual(tarea["titulo"], "Leer")
++        self.assertEqual(tarea["prioridad"], "alta")
++        self.assertFalse(tarea["completada"])
++
++    def test_rechazar_prioridad_invalida(self):
++        with self.assertRaises(ValueError):
++            tareas.agregar_tarea(self.lista, "Leer", "urgente")
++
++        self.assertEqual(self.lista, [])
++
++    def test_rechazar_titulo_vacio(self):
++        with self.assertRaises(ValueError):
++            tareas.agregar_tarea(self.lista, "   ", "media")
++
++        self.assertEqual(self.lista, [])
++
++    def test_marcar_tarea_como_completada(self):
++        tareas.agregar_tarea(self.lista, "Leer", "baja")
++        tareas.agregar_tarea(self.lista, "Escribir", "media")
++
++        tareas.completar_tarea(self.lista, 2)
++
++        self.assertFalse(self.lista[0]["completada"])
++        self.assertTrue(self.lista[1]["completada"])
++
++    def test_completar_tarea_inexistente(self):
++        tareas.agregar_tarea(self.lista, "Leer", "baja")
++
++        with self.assertRaises(ValueError):
++            tareas.completar_tarea(self.lista, 5)
++
++        self.assertFalse(self.lista[0]["completada"])
++
++    def test_completar_tarea_con_cero(self):
++        tareas.agregar_tarea(self.lista, "Leer", "baja")
++        tareas.agregar_tarea(self.lista, "Escribir", "media")
++
++        with self.assertRaises(ValueError):
++            tareas.completar_tarea(self.lista, 0)
++
++        self.assertFalse(self.lista[0]["completada"])
++        self.assertFalse(self.lista[1]["completada"])
++
++    def test_completar_tarea_con_numero_negativo(self):
++        tareas.agregar_tarea(self.lista, "Leer", "baja")
++        tareas.agregar_tarea(self.lista, "Escribir", "media")
++
++        with self.assertRaises(ValueError):
++            tareas.completar_tarea(self.lista, -1)
++
++        self.assertFalse(self.lista[0]["completada"])
++        self.assertFalse(self.lista[1]["completada"])
++
++
++if __name__ == "__main__":
++    unittest.main()

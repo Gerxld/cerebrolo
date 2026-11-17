@@ -1,0 +1,23 @@
+== calcular_promedio
+notas como texto ["90", "80"]
+  -> is_error=False texto='85.0'
+notas booleanas [true, false]
+  -> is_error=False texto='0.5'
+lista de 1 000 000 de notas
+  -> is_error=False texto='100.0'
+nota -0.01
+  -> is_error=True texto='Error executing tool calcular_promedio: Las notas deben estar entre 0 y 100'
+estado_estudiante 70.99 (umbral 71)
+  -> is_error=False texto='REPROBADO'
+
+== curso://estudiante/{nombre}
+nombre normal
+  -> 'Estudiante: Ana\nCurso: Desarrollo con IA\nEstado: activo'
+nombre con salto de línea codificado (%0A)
+  -> 'Estudiante: Ana\nEstado: graduado\nCurso: Desarrollo con IA\nEstado: activo'
+nombre tipo ruta (..%2F..%2Fsecreto.txt)
+  -> excepción MCPError: Unknown resource: curso://estudiante/..%2F..%2Fsecreto.txt
+nombre de 5000 caracteres
+  -> 'Estudiante: AAAAAAAAAAAAAAAAAAAAAAAAAAAA'... (5052 caracteres en total)
+nombre vacío
+  -> 'Estudiante: \nCurso: Desarrollo con IA\nEstado: activo'

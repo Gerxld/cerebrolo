@@ -1,0 +1,51 @@
+Fecha y hora de inicio: 2026-10-30 11:51:24
+Directorio: C:/Cerebrolo/01-Topicos-Especiales-II/Lab05-ia-local/entregables/laboratorio_local_privado
+Comando: python consultar_modelo_basico.py
+------------------------------------------------------------
+Aquí está un ejemplo de una prueba unittest para la función `dividir(a, b)`:
+
+```python
+import unittest
+
+def dividir(a, b):
+    """Devuelve el resultado de dividir a por b."""
+    if b == 0:
+        raise ValueError("No se puede dividir por cero")
+    return a / b
+
+class TestDividir(unittest.TestCase):
+    def test_dividir_con_cero(self):
+        """Prueba que se lanza una excepción si se intenta dividir por cero."""
+        self.assertRaises(ValueError, dividir, 10, 0)
+
+    def test_dividir_con_numeros(self):
+        """Prueba que la función divide correctamente."""
+        self.assertEqual(dividir(10, 2), 5)
+        self.assertEqual(dividir(8, 4), 2)
+        self.assertEqual(dividir(9, 3), 3)
+        self.assertEqual(dividir(5, 2), 2.5)
+
+    def test_dividir_con_floats(self):
+        """Prueba que la función divide correctamente con floats."""
+        self.assertAlmostEqual(dividir(10.5, 2), 5.25)
+        self.assertAlmostEqual(dividir(8.25, 4), 2.0625)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### Explicación:
+
+1. **Test `test_dividir_con_cero`:** Verifica que la función lanza una excepción `ValueError` cuando se intenta dividir por cero.
+
+2. **Test `test_dividir_con_numeros`:** Verifica que la función divide correctamente números enteros y flotantes.
+
+3. **Test `test_dividir_con_floats`:** Verifica que la función divide correctamente números flotantes con una precisión aceptable.
+
+### Ejecución de las Pruebas:
+
+Para ejecutar estas pruebas, simplemente ejecuta el script. La librería `unittest` se encargará de encontrar y ejecutar todas las funciones que terminan en `test_`. Si todas las pruebas pasan, el resultado será "OK". Si hay algún fallo, la prueba que falla se indicará.
+------------------------------------------------------------
+Código de salida: 0
+Fecha y hora de fin: 2026-10-30 11:51:54
+Tiempo transcurrido: 30.6 s

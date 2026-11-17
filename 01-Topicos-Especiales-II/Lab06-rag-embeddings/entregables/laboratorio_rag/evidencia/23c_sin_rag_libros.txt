@@ -1,0 +1,6 @@
+Comando: C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe run qwen2.5:3b "¿Cuántos libros puedo retirar de la biblioteca y por cuántos días?"   (sin documentos, sin RAG)
+Hora de inicio: 2026-10-30 12:00:14
+----------------------------------------
+Lo siento, pero no tengo la capacidad de proporcionar información detallada sobre la política de préstamo de la biblioteca en particular ya que esto suele variar dependiendo de la biblioteca específica. Te recomiendo que contactes directamente con la biblioteca para obtener esta información. Generalmente, se pueden retener entre 1 a 2 libros por cada día de alquiler, pero esto puede variar.
+----------------------------------------
+Hora de fin: 2026-10-30 12:00:25

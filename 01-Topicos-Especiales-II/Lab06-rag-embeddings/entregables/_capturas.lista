@@ -1,0 +1,20 @@
+01_entorno|01_entorno|Paso 1, 2 y 7: versiones, modelos y dependencias
+20_libros|02_paso20|Paso 20: pregunta de libros
+21_software|03_paso21|Paso 21: software adicional
+22_matricula|04_paso22|Paso 22: pregunta sin respuesta
+23_sin_rag|05_paso23_matricula|Paso 23: matrícula sin RAG
+23b_sin_rag_libros|06_paso23_libros_a|Paso 23: libros sin RAG (corrida 1)
+23c_sin_rag_libros|07_paso23_libros_b|Paso 23: libros sin RAG (corrida 2)
+24a_horario_antes|08_paso24_antes|Paso 24: horario original
+24b_horario_despues|09_paso24_despues|Paso 24: horario modificado
+25_chunk120_libros|10_paso25_c120_libros|Paso 25: chunk 120, libros
+25_chunk120_software|11_paso25_c120_software|Paso 25: chunk 120, software
+25_chunk400_libros|12_paso25_c400_libros|Paso 25: chunk 400, libros
+25_chunk400_software|13_paso25_c400_software|Paso 25: chunk 400, software
+26_k1_software|14_paso26_k1_software|Paso 26: k=1, software
+26_k5_software|15_paso26_k5_software|Paso 26: k=5, software
+26_k5_libros|16_paso26_k5_libros|Paso 26: k=5, libros
+27a_facil|17_paso27_facil|Paso 27: pregunta fácil
+27b_dos_documentos|18_paso27_dos_docs|Paso 27: dos documentos, primer intento
+27b4_dos_documentos_otra_redaccion|19_paso27_dos_docs_b|Paso 27: dos documentos, otra redacción
+27c_sin_respuesta|20_paso27_sin_respuesta|Paso 27: sin respuesta

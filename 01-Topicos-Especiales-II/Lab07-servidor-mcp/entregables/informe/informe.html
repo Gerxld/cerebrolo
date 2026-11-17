@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Laboratorio 7 — Servidor MCP en Python con MCP Inspector</title>
+<style>
+  @page { size: Letter; margin: 2.5cm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; text-align: justify; color: #111; margin: 0; }
+  h1, h2, h3 { font-family: "Times New Roman", Times, serif; text-align: left; page-break-after: avoid; }
+  h1 { font-size: 14pt; margin: 1.4em 0 0.5em; }
+  h2 { font-size: 13pt; margin: 1.2em 0 0.4em; }
+  h3 { font-size: 12pt; margin: 1em 0 0.3em; }
+  h1.nueva-pagina { page-break-before: always; }
+  p { margin: 0 0 0.7em 0; }
+
+  .portada { height: 22cm; display: flex; flex-direction: column; align-items: center; text-align: center; page-break-after: always; }
+  .portada .logos { display: flex; justify-content: space-between; width: 100%; margin-bottom: 0.8cm; }
+  .portada .logos img { width: 105px; height: 105px; object-fit: contain; }
+  .portada .titulo-bloque { margin-top: 0.9cm; }
+  .portada .titulo-bloque p { margin: 0.35em 0; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px; }
+  .portada .presentado { margin-top: 1.1cm; }
+  .portada .presentado p, .portada .revisado p, .portada .fecha p { margin: 0.3em 0; font-weight: bold; text-transform: uppercase; }
+  .portada .nombres { font-weight: normal !important; text-transform: none !important; }
+  .portada .revisado { margin-top: 1.2cm; }
+  .portada .fecha { margin-top: 1.1cm; }
+
+  .indice { page-break-after: always; line-height: 1.25; }
+  .indice h1 { text-align: center; }
+  .indice ol { list-style: none; padding: 0; margin: 0; }
+  .indice li { display: flex; align-items: baseline; margin: 0.2em 0; }
+  .indice li.n2 { padding-left: 1.2em; }
+  .indice li .t { white-space: nowrap; }
+  .indice li .dots { flex: 1; border-bottom: 1px dotted #444; margin: 0 0.3em; transform: translateY(-0.25em); }
+  .indice li .p { white-space: nowrap; }
+
+  table { width: 100%; border-collapse: collapse; margin: 0.8em 0; font-size: 10.5pt; page-break-inside: avoid; line-height: 1.3; }
+  th, td { border: 1px solid #666; padding: 5px 7px; text-align: left; vertical-align: top; }
+  th { background: #e2e2e2; font-weight: bold; }
+  .tabla-titulo { font-weight: bold; margin: 0.8em 0 0.2em; text-align: left; page-break-after: avoid; }
+  figure { margin: 0.8em 0; text-align: center; page-break-inside: avoid; }
+  figure img { max-width: 100%; max-height: 16cm; border: 1px solid #ccc; }
+  figcaption { font-size: 10.5pt; font-style: italic; margin-top: 0.3em; line-height: 1.3; }
+  ul, ol { margin: 0.3em 0 0.8em 1.3em; padding: 0; }
+  li { margin-bottom: 0.3em; }
+  pre { font-family: Consolas, "Courier New", monospace; font-size: 9pt; line-height: 1.3; background: #f4f4f4; border: 1px solid #ccc; padding: 6px 8px; margin: 0.6em 0 0.9em; white-space: pre-wrap; text-align: left; page-break-inside: avoid; }
+  code { font-family: Consolas, "Courier New", monospace; font-size: 10pt; }
+  .referencias p { padding-left: 1.27cm; text-indent: -1.27cm; text-align: left; }
+</style>
+</head>
+<body>
+
+<div class="portada">
+  <div class="logos">
+    <img src="../assets/utp.png" alt="Logo UTP">
+    <img src="../assets/fisc.png" alt="Logo FISC">
+  </div>
+  <div class="titulo-bloque">
+    <p>Universidad Tecnológica de Panamá</p>
+    <p>Facultad de Ingeniería de Sistemas Computacionales</p>
+    <p>Lic. en Desarrollo y Gestión de Software</p>
+    <p style="margin-top:1em;">Tópicos Especiales II</p>
+    <p>Laboratorio 7 — Servidor MCP en Python con MCP Inspector</p>
+    <p>1GS241</p>
+  </div>
+  <div class="presentado">
+    <p>Presentado por:</p>
+    <p class="nombres">Ríos, Gerald (8-987-741)</p>
+  </div>
+  <div class="revisado">
+    <p>Revisado por:</p>
+    <p class="nombres">Profesor Regis Rivera</p>
+  </div>
+  <div class="fecha">
+    <p>Fecha de entrega</p>
+    <p class="nombres">29 / 10 / 2026</p>
+  </div>
+</div>
+
+<div class="indice">
+  <h1>Índice</h1>
+  <ol>
+    <li><span class="t">Introducción</span><span class="dots"></span><span class="p">3</span></li>
+    <li><span class="t">1. Preparación del entorno</span><span class="dots"></span><span class="p">3</span></li>
+    <li class="n2"><span class="t">1.1 Herramientas disponibles</span><span class="dots"></span><span class="p">3</span></li>
+    <li class="n2"><span class="t">1.2 Proyecto con uv y SDK de MCP</span><span class="dots"></span><span class="p">4</span></li>
+    <li><span class="t">2. Primera versión del servidor</span><span class="dots"></span><span class="p">4</span></li>
+    <li><span class="t">3. Pruebas con MCP Inspector</span><span class="dots"></span><span class="p">4</span></li>
+    <li class="n2"><span class="t">3.1 Arranque y conexión</span><span class="dots"></span><span class="p">4</span></li>
+    <li class="n2"><span class="t">3.2 Tool calcular_promedio con un caso válido</span><span class="dots"></span><span class="p">5</span></li>
+    <li class="n2"><span class="t">3.3 Casos inválidos: por qué la validación vive en el servidor</span><span class="dots"></span><span class="p">7</span></li>
+    <li class="n2"><span class="t">3.4 Resource curso://reglas-entrega</span><span class="dots"></span><span class="p">11</span></li>
+    <li class="n2"><span class="t">3.5 Prompt revisar_codigo</span><span class="dots"></span><span class="p">12</span></li>
+    <li class="n2"><span class="t">3.6 Las tres primitivas</span><span class="dots"></span><span class="p">13</span></li>
+    <li><span class="t">4. Segunda Tool y Resource parametrizado (reto guiado)</span><span class="dots"></span><span class="p">14</span></li>
+    <li class="n2"><span class="t">4.1 Tool estado_estudiante</span><span class="dots"></span><span class="p">14</span></li>
+    <li class="n2"><span class="t">4.2 Resource curso://estudiante/{nombre}</span><span class="dots"></span><span class="p">17</span></li>
+    <li class="n2"><span class="t">4.3 server.py completo</span><span class="dots"></span><span class="p">18</span></li>
+    <li><span class="t">5. Cliente de respaldo con el SDK</span><span class="dots"></span><span class="p">20</span></li>
+    <li><span class="t">6. Análisis de seguridad y permisos</span><span class="dots"></span><span class="p">21</span></li>
+    <li class="n2"><span class="t">6.1 Datos que un servidor MCP no debería exponer</span><span class="dots"></span><span class="p">21</span></li>
+    <li class="n2"><span class="t">6.2 Lo que encontramos en este servidor</span><span class="dots"></span><span class="p">21</span></li>
+    <li class="n2"><span class="t">6.3 Revisión mínima antes de confiar en un servidor</span><span class="dots"></span><span class="p">23</span></li>
+    <li class="n2"><span class="t">6.4 Mínimo privilegio y confirmación humana</span><span class="dots"></span><span class="p">23</span></li>
+    <li><span class="t">7. Preguntas de reflexión</span><span class="dots"></span><span class="p">24</span></li>
+    <li><span class="t">Conclusiones</span><span class="dots"></span><span class="p">25</span></li>
+    <li><span class="t">Referencias Bibliográficas</span><span class="dots"></span><span class="p">25</span></li>
+  </ol>
+</div>
+
+<h1>Introducción</h1>
+<p>En este laboratorio construimos un servidor MCP (Model Context Protocol) en Python, le expusimos una Tool, dos Resources y un Prompt, y lo probamos con MCP Inspector antes de conectarlo a ningún asistente de IA. El servidor se llama <code>AsistenteAcademico</code> y simula una herramienta pequeña para un curso de desarrollo de software: calcula promedios, clasifica el estado de un estudiante, entrega las reglas de entrega del curso y arma una solicitud de revisión de código.</p>
+<p>El informe sigue el orden de los 21 pasos del enunciado. Cada prueba tiene su captura del Inspector y, como respaldo, una salida de texto generada con un cliente corto escrito con el propio SDK, para no depender solo de las imágenes. Al final respondemos el análisis de seguridad con ejemplos de este servidor y las seis preguntas de reflexión.</p>
+<p>En el camino apareció algo que el enunciado no menciona: con la versión del SDK que instaló <code>uv</code>, los errores de la Tool llegan al cliente sin su mensaje. Lo explicamos en la sección 3.3 porque cambia lo que significa «probar un caso inválido».</p>
+
+<h1>1. Preparación del entorno</h1>
+<h2>1.1 Herramientas disponibles</h2>
+<p>Corrimos los comandos del paso 1 y del paso 2 en la terminal. Los cuatro respondieron sin necesidad de instalar nada, así que nos saltamos la instalación de Node.js y de uv que el enunciado describe para quien no los tiene.</p>
+<div class="tabla-titulo">Tabla 1. Versiones encontradas en el equipo</div>
+<table>
+  <tr><th>Comando</th><th>Resultado</th></tr>
+  <tr><td><code>python --version</code></td><td>Python 3.13.5</td></tr>
+  <tr><td><code>node --version</code></td><td>v22.17.0</td></tr>
+  <tr><td><code>npx --version</code></td><td>10.9.2</td></tr>
+  <tr><td><code>uv --version</code></td><td>uv 0.11.5</td></tr>
+</table>
+
+<h2>1.2 Proyecto con uv y SDK de MCP</h2>
+<p>Creamos la carpeta <code>laboratorio_mcp</code>, ejecutamos <code>uv init</code> y luego <code>uv add "mcp[cli]"</code>. uv creó el entorno virtual y resolvió 40 paquetes. La versión estable que instaló del SDK oficial fue <code>mcp 2.3.0</code>, y el <code>pyproject.toml</code> quedó con la dependencia <code>mcp[cli]&gt;=2.3.0</code> y con <code>requires-python = "&gt;=3.13"</code>, porque uv tomó el intérprete 3.13.5 que ya estaba en el equipo (el enunciado pide 3.10 o superior, así que cumple).</p>
+<p><code>uv init</code> también deja un <code>main.py</code> de ejemplo que no usamos; lo borramos para que no se confunda con el servidor.</p>
+
+<h1>2. Primera versión del servidor</h1>
+<p>Para los pasos 5 a 9 escribimos <code>server.py</code> con el código del enunciado, tal cual: el objeto <code>MCPServer("AsistenteAcademico")</code>, la Tool <code>calcular_promedio</code>, el Resource <code>curso://reglas-entrega</code> y el Prompt <code>revisar_codigo</code>. El import <code>from mcp.server import MCPServer</code> funcionó sin cambios con la versión 2.3.0; no lo probamos con otras versiones del SDK. Solo agregamos al final un bloque <code>if __name__ == "__main__": mcp.run()</code>. <code>mcp dev</code> no lo necesita, pero lo usamos más adelante para que el cliente de respaldo pueda lanzar el servidor directamente con <code>python server.py</code>.</p>
+<p>Las tres primitivas quedan declaradas con decoradores y el SDK genera el resto. De la firma <code>calcular_promedio(notas: list[float]) -&gt; float</code> sale el esquema de entrada (una lista de números) y el de salida (un número); la cadena de documentación de cada función se convierte en la descripción que ve el cliente.</p>
+
+<h1>3. Pruebas con MCP Inspector</h1>
+<h2>3.1 Arranque y conexión</h2>
+<p>Desde la carpeta del proyecto ejecutamos <code>uv run mcp dev server.py</code> (paso 10). La primera vez <code>npx</code> tuvo que descargar el paquete del Inspector y la terminal se quedó casi un minuto sin imprimir nada, lo que al principio parecía un bloqueo. Luego apareció el aviso de que MCP Inspector v1 está marcado como obsoleto y recomienda <code>@latest</code>; seguimos con la v1.0.3 porque es la que <code>mcp dev</code> lanza por defecto. La consola también imprime una dirección con un token de sesión en la URL, y sin ese token el Inspector no deja conectar.</p>
+<p>Las capturas las tomamos con Playwright abriendo esa dirección y operando la interfaz del Inspector real. El Inspector ya traía el transporte STDIO y el comando <code>uv run --with mcp==2.3.0 mcp run server.py</code> precargados; solo hubo que pulsar Connect.</p>
+<figure>
+  <img src="../screenshots/01_inspector_conectado.png" alt="Inspector conectado">
+  <figcaption>Figura 1. MCP Inspector v1.0.3 conectado por STDIO; la barra lateral muestra el estado «Connected» y el nombre del servidor, AsistenteAcademico.</figcaption>
+</figure>
+<p>La conexión se estableció a la primera, con el nombre del servidor visible, así que seguimos al paso 12 (la pestaña Tools apareció habilitada junto con Resources y Prompts).</p>
+
+<h2>3.2 Tool calcular_promedio con un caso válido</h2>
+<p>En la pestaña Tools pulsamos List Tools y el Inspector mostró <code>calcular_promedio</code> con su descripción. Al abrirla vimos que el formulario se arma solo a partir de los tipos de la función: el parámetro <code>notas</code> es obligatorio (asterisco rojo), se presenta como lista con el botón Add Item y cada elemento es un campo numérico. También aparece el esquema de salida. Notamos que las insignias de la herramienta marcan Destructive y Open-world como activas aunque la función solo calcula; es lo que el Inspector muestra cuando el servidor no declara anotaciones, y lo retomamos en la sección 6.</p>
+<figure>
+  <img src="../screenshots/02_tools_formulario.png" alt="Formulario de calcular_promedio">
+  <figcaption>Figura 2. Formulario generado por el Inspector para calcular_promedio a partir de la firma de la función.</figcaption>
+</figure>
+<p>Con las notas 90, 80 y 100 el resultado fue correcto, como pedía el paso 13.</p>
+<figure>
+  <img src="../screenshots/03_promedio_valido.png" alt="Ejecución válida">
+  <figcaption>Figura 3. Ejecución válida de calcular_promedio con 90, 80 y 100: Tool Result Success, contenido estructurado <code>result: 90</code>.</figcaption>
+</figure>
+<p>El enunciado anota como resultado esperado «90.0». El Inspector muestra <code>90</code> porque JSON no distingue entre entero y decimal; el cliente de respaldo (sección 5) sí recibe <code>{'result': 90.0}</code> y el texto <code>'90.0'</code>, que es lo que devuelve el <code>round()</code> de Python.</p>
+
+<h2>3.3 Casos inválidos: por qué la validación vive en el servidor</h2>
+<p>Para el paso 14 probamos dos entradas: las notas 90, 95 y 120 (una por encima de 100) y la lista vacía. En ambos casos el Inspector marcó el resultado como Error. Lo que nos sorprendió fue el mensaje: en lugar de «Las notas deben estar entre 0 y 100» o «Debe proporcionar al menos una nota», que son los textos que escribimos en cada <code>ValueError</code>, el cliente recibió solamente <code>Error executing tool calcular_promedio</code>.</p>
+<figure>
+  <img src="../screenshots/04_promedio_nota_mayor_100.png" alt="Error con nota mayor a 100">
+  <figcaption>Figura 4. Nota mayor que 100 (90, 95 y 120) con el código del enunciado: el servidor rechaza la llamada, pero el mensaje llega genérico.</figcaption>
+</figure>
+<figure>
+  <img src="../screenshots/05_promedio_lista_vacia.png" alt="Error con lista vacía">
+  <figcaption>Figura 5. Lista vacía con el código del enunciado: mismo error genérico.</figcaption>
+</figure>
+<p>Para entender el porqué leímos el código del SDK instalado (<code>mcp/server/mcpserver/exceptions.py</code> y <code>server.py</code>). En la versión 2.3.0, un <code>ValueError</code> que sale de una Tool se trata como una falla inesperada: el servidor registra el traceback completo en su salida de error y al cliente solo le devuelve el nombre de la Tool. Para fallas anticipadas el SDK ofrece la excepción <code>ToolError</code>, cuyo mensaje sí viaja al cliente con la marca de error. Esa diferencia importa porque la especificación de MCP pide que los errores de validación de entrada se reporten dentro del resultado de la Tool, con un mensaje útil, para que el modelo pueda corregirse y reintentar (Model Context Protocol, 2025).</p>
+<p>Cambiamos los <code>ValueError</code> de <code>calcular_promedio</code> por <code>ToolError</code> (importado de <code>mcp.server.mcpserver.exceptions</code>), sin tocar las condiciones, y repetimos las dos pruebas. El rechazo es el mismo y ahora el mensaje llega completo.</p>
+<figure>
+  <img src="../screenshots/11_promedio_error_toolerror_mayor_100.png" alt="Error con mensaje, nota mayor a 100">
+  <figcaption>Figura 6. Misma entrada de la Figura 4 después de usar ToolError: el cliente lee «Las notas deben estar entre 0 y 100».</figcaption>
+</figure>
+<figure>
+  <img src="../screenshots/12_promedio_error_toolerror_lista_vacia.png" alt="Error con mensaje, lista vacía">
+  <figcaption>Figura 7. Lista vacía después de usar ToolError: «Debe proporcionar al menos una nota».</figcaption>
+</figure>
+<p>Sobre la pregunta de fondo del paso 14, la validación tiene que estar en el servidor porque un prompt es solo una sugerencia escrita para el modelo: nadie garantiza que el modelo la respete, que el usuario no pida otra cosa o que el cliente sea un asistente y no una persona (o un script) mandando JSON directo. Aquí lo comprobamos de la forma más simple: el Inspector, que no sabe nada de «notas entre 0 y 100», nos dejó enviar 120 sin protestar, y quien detuvo la llamada fue la función del servidor. Lo mismo dice la especificación, que obliga a los servidores a validar todas las entradas de una Tool (Model Context Protocol, 2025).</p>
+
+<h2>3.4 Resource curso://reglas-entrega</h2>
+<p>En la pestaña Resources, List Resources mostró un solo elemento, listado con el nombre de la función (<code>reglas_entrega</code>) y no con la URI. Al abrirlo, el Inspector hizo un <code>resources/read</code> sobre <code>curso://reglas-entrega</code> y devolvió el contenido con tipo <code>text/plain</code>. La vista del Inspector corta los textos largos con puntos suspensivos; hay que hacer clic sobre el valor para verlo completo, que es lo que muestra la captura.</p>
+<figure>
+  <img src="../screenshots/06_resource_reglas_entrega.png" alt="Resource reglas de entrega">
+  <figcaption>Figura 8. Lectura del Resource curso://reglas-entrega: las cuatro reglas llegan igual que en server.py.</figcaption>
+</figure>
+<p>Comparamos el texto recibido con el definido en <code>server.py</code> y coincide línea por línea (código fuente, README, sin contraseñas ni claves API, pruebas antes de entregar). El cliente de respaldo lo confirma en texto en <code>evidencia/02_cliente_server_final_stdout.txt</code>.</p>
+
+<h2>3.5 Prompt revisar_codigo</h2>
+<p>En Prompts seleccionamos <code>revisar_codigo</code>. El Inspector pide el argumento <code>codigo</code> en un campo de una sola línea, así que no pudimos pegar un fragmento de varias líneas y usamos uno en una línea: <code>def promedio(notas): return sum(notas) / len(notas)</code>, que además tiene un error real (divide entre cero con una lista vacía), a propósito para que el ejemplo tuviera sentido.</p>
+<figure>
+  <img src="../screenshots/07_prompt_revisar_codigo.png" alt="Prompt renderizado">
+  <figcaption>Figura 9. Prompt revisar_codigo renderizado: un mensaje con rol <code>user</code> y el fragmento insertado al final de la plantilla.</figcaption>
+</figure>
+<p>El resultado es un mensaje listo para entregarse a un modelo («Revisa el siguiente código como docente. Identifica errores, riesgos y una mejora concreta.» seguido del código). Ahí termina el trabajo del servidor: no se ejecutó el código ni se hizo ninguna acción, solo se armó texto, que es justo lo que pedía comprobar el paso 16.</p>
+
+<h2>3.6 Las tres primitivas</h2>
+<p>Con lo visto completamos la idea del paso 17: Tool = acción; Resource = dato o contexto; Prompt = plantilla elegida por el usuario. La Tabla 2 las junta con lo que vimos en este servidor.</p>
+<div class="tabla-titulo">Tabla 2. Las tres primitivas en AsistenteAcademico</div>
+<table>
+  <tr><th>Primitiva</th><th>Qué es</th><th>Ejemplo del servidor</th><th>Cómo se invoca</th></tr>
+  <tr><td>Tool</td><td>Una acción que el modelo puede decidir ejecutar</td><td><code>calcular_promedio</code>, <code>estado_estudiante</code></td><td><code>tools/call</code> con argumentos</td></tr>
+  <tr><td>Resource</td><td>Información que la aplicación carga como contexto, identificada por una URI</td><td><code>curso://reglas-entrega</code>, <code>curso://estudiante/{nombre}</code></td><td><code>resources/read</code> con la URI</td></tr>
+  <tr><td>Prompt</td><td>Plantilla que el usuario elige y completa</td><td><code>revisar_codigo</code></td><td><code>prompts/get</code> con argumentos</td></tr>
+</table>
+
+<h1>4. Segunda Tool y Resource parametrizado (reto guiado)</h1>
+<h2>4.1 Tool estado_estudiante</h2>
+<p>Para el paso 18 agregamos <code>estado_estudiante(promedio: float) -&gt; str</code>, que devuelve «APROBADO» desde 71 y «REPROBADO» por debajo, y rechaza valores fuera de 0 a 100. Después de guardar el archivo reconectamos el Inspector (el paso 19 habla de reiniciar la sesión) y al pulsar List Tools aparecieron las dos herramientas. Esa es la gracia del paso: el cliente no sabía de la segunda Tool hasta que el servidor la declaró.</p>
+<figure>
+  <img src="../screenshots/08_tools_lista_dos_tools.png" alt="Lista con dos tools">
+  <figcaption>Figura 10. Tools list después de reconectar: calcular_promedio y estado_estudiante.</figcaption>
+</figure>
+<p>Probamos 90 (aprobado), 65 (reprobado) y 150 (fuera de rango).</p>
+<figure>
+  <img src="../screenshots/09_estado_estudiante_aprobado.png" alt="estado_estudiante aprobado">
+  <figcaption>Figura 11. estado_estudiante con promedio 90: resultado «APROBADO».</figcaption>
+</figure>
+<figure>
+  <img src="../screenshots/09b_estado_estudiante_reprobado.png" alt="estado_estudiante reprobado">
+  <figcaption>Figura 12. estado_estudiante con promedio 65: resultado «REPROBADO».</figcaption>
+</figure>
+<figure>
+  <img src="../screenshots/09c_estado_estudiante_fuera_de_rango.png" alt="estado_estudiante fuera de rango">
+  <figcaption>Figura 13. Promedio 150 con <code>ValueError</code>, antes del cambio a ToolError: se rechaza, con mensaje genérico. Después del cambio el cliente recibe «Promedio fuera de rango» (ver sección 5).</figcaption>
+</figure>
+
+<h2>4.2 Resource curso://estudiante/{nombre}</h2>
+<p>El reto del paso 20 era un Resource con un parámetro en la URI. A diferencia del Resource anterior, este no aparece en List Resources sino en List Templates, porque es una plantilla y no una URI concreta. Al seleccionarlo, el Inspector genera un campo <code>nombre</code>; escribimos «Gerald Ríos» y el cliente armó la URI <code>curso://estudiante/Gerald%20R%C3%ADos</code> (con el espacio y la tilde codificados), mientras que la función recibió el nombre ya decodificado.</p>
+<figure>
+  <img src="../screenshots/10_resource_parametrizado_ficha.png" alt="Resource parametrizado">
+  <figcaption>Figura 14. Lectura de la plantilla curso://estudiante/{nombre} con «Gerald Ríos»: la ficha devuelve el nombre, el curso y el estado.</figcaption>
+</figure>
+
+<h2>4.3 server.py completo</h2>
+<p>Esta es la versión final del archivo entregado. Difiere del enunciado en dos cosas: el import y uso de <code>ToolError</code> en lugar de <code>ValueError</code> (sección 3.3) y el bloque final para ejecutarlo directo.</p>
+<pre>from mcp.server import MCPServer
+from mcp.server.mcpserver.exceptions import ToolError
+
+mcp = MCPServer("AsistenteAcademico")
+
+
+@mcp.tool()
+def calcular_promedio(notas: list[float]) -> float:
+    """Calcula el promedio de una lista de notas entre 0 y 100."""
+    if not notas:
+        raise ToolError("Debe proporcionar al menos una nota")
+    if any(n < 0 or n > 100 for n in notas):
+        raise ToolError("Las notas deben estar entre 0 y 100")
+    return round(sum(notas) / len(notas), 2)
+
+
+@mcp.tool()
+def estado_estudiante(promedio: float) -> str:
+    """Clasifica el estado académico a partir del promedio."""
+    if promedio < 0 or promedio > 100:
+        raise ToolError("Promedio fuera de rango")
+    return "APROBADO" if promedio >= 71 else "REPROBADO"
+
+
+@mcp.resource("curso://reglas-entrega")
+def reglas_entrega() -> str:
+    """Reglas vigentes para entregar laboratorios."""
+    return (
+        "1. Entregar código fuente.\n"
+        "2. Incluir README con instrucciones.\n"
+        "3. No incluir contraseñas ni claves API.\n"
+        "4. Ejecutar pruebas antes de entregar."
+    )
+
+
+@mcp.resource("curso://estudiante/{nombre}")
+def ficha_estudiante(nombre: str) -> str:
+    """Devuelve una ficha académica de ejemplo."""
+    return f"Estudiante: {nombre}\nCurso: Desarrollo con IA\nEstado: activo"
+
+
+@mcp.prompt()
+def revisar_codigo(codigo: str) -> str:
+    """Construye una solicitud de revisión de código para un estudiante."""
+    return (
+        "Revisa el siguiente código como docente. "
+        "Identifica errores, riesgos y una mejora concreta.\n\n"
+        f"{codigo}"
+    )
+
+
+if __name__ == "__main__":
+    mcp.run()</pre>
+
+<h1>5. Cliente de respaldo con el SDK</h1>
+<p>Como las capturas del Inspector truncan textos y no se pueden buscar, escribimos <code>cliente_prueba.py</code>, un cliente corto con <code>ClientSession</code> y <code>stdio_client</code> que lanza el servidor, ejecuta <code>initialize</code>, lista tools, resources, plantillas y prompts, y llama a cada capacidad. Lo corrimos dos veces: con el servidor del enunciado (<code>ValueError</code>) y con la versión final (<code>ToolError</code>). Las salidas están en la carpeta <code>evidencia</code> y la Tabla 3 resume lo esencial.</p>
+<div class="tabla-titulo">Tabla 3. Salida del cliente de respaldo contra el servidor</div>
+<table>
+  <tr><th>Llamada</th><th>Con ValueError (enunciado)</th><th>Con ToolError (final)</th></tr>
+  <tr><td>initialize</td><td colspan="2">servidor AsistenteAcademico, protocolo 2025-11-25</td></tr>
+  <tr><td>tools/list</td><td colspan="2">calcular_promedio, estado_estudiante</td></tr>
+  <tr><td>resources/list</td><td colspan="2">curso://reglas-entrega</td></tr>
+  <tr><td>templates/list</td><td colspan="2">curso://estudiante/{nombre}</td></tr>
+  <tr><td>prompts/list</td><td colspan="2">revisar_codigo</td></tr>
+  <tr><td>calcular_promedio [90, 80, 100]</td><td colspan="2">sin error; <code>{'result': 90.0}</code></td></tr>
+  <tr><td>calcular_promedio [95, 120]</td><td>error: «Error executing tool calcular_promedio»</td><td>error: «…calcular_promedio: Las notas deben estar entre 0 y 100»</td></tr>
+  <tr><td>calcular_promedio []</td><td>error: «Error executing tool calcular_promedio»</td><td>error: «…calcular_promedio: Debe proporcionar al menos una nota»</td></tr>
+  <tr><td>estado_estudiante 90, 71, 65</td><td colspan="2">APROBADO, APROBADO, REPROBADO</td></tr>
+  <tr><td>estado_estudiante 150</td><td>error: «Error executing tool estado_estudiante»</td><td>error: «…estado_estudiante: Promedio fuera de rango»</td></tr>
+  <tr><td>read curso://reglas-entrega</td><td colspan="2">las cuatro reglas, idénticas a server.py</td></tr>
+  <tr><td>read curso://estudiante/Gerald</td><td colspan="2">Estudiante: Gerald / Curso: Desarrollo con IA / Estado: activo</td></tr>
+  <tr><td>get_prompt revisar_codigo</td><td colspan="2">un mensaje <code>user</code> con la plantilla y el código</td></tr>
+</table>
+<p>Los archivos son <code>01_cliente_server_enunciado_stdout.txt</code> y <code>02_cliente_server_final_stdout.txt</code>, cada uno con su archivo <code>_stderr.txt</code>. En el de la primera corrida se ve el traceback completo que el servidor guardó y que nunca llegó al cliente; en el de la segunda solo hay líneas INFO con el motivo del rechazo.</p>
+
+<h1>6. Análisis de seguridad y permisos</h1>
+<h2>6.1 Datos que un servidor MCP no debería exponer</h2>
+<p>El paso 21 pide tres ejemplos. Los pensamos con este mismo servidor como punto de partida:</p>
+<ul>
+  <li><b>Contraseñas.</b> Si en vez del texto fijo de <code>reglas_entrega</code> el Resource leyera un archivo <code>.env</code> o una configuración con credenciales de la base de datos del curso, cualquier cliente conectado podría cargarlas como «contexto» y pasárselas a un modelo. La regla 3 de nuestro propio Resource dice justamente que no se incluyan contraseñas ni claves.</li>
+  <li><b>Tokens y API keys.</b> Una Tool que devolviera variables de entorno para «diagnosticar» el servidor, o que registrara en el log los argumentos completos de cada llamada, filtraría tokens hacia el cliente o hacia archivos de log. El Inspector de hecho propaga variables de entorno al servidor que lanza; en nuestra consola se veía la lista de nombres (APPDATA, PATH, USERPROFILE y similares), y ahí podría viajar una clave si estuviera definida.</li>
+  <li><b>Expedientes o información sensible sin autorización.</b> <code>ficha_estudiante</code> hoy devuelve datos de ejemplo. Si se conectara a un sistema real y entregara notas, cédula o estado de matrícula a quien pida un nombre, cualquiera podría consultar a cualquier estudiante, porque el servidor no sabe quién está preguntando.</li>
+</ul>
+<p>Un servidor puede funcionar técnicamente bien y seguir siendo inseguro, porque «funciona» solo significa que responde lo que se le pide; no dice nada de a quién, con qué límites o con qué datos detrás. El nuestro pasó todas las pruebas funcionales y, como vemos a continuación, igual tiene huecos.</p>
+
+<h2>6.2 Lo que encontramos en este servidor</h2>
+<p>Escribimos <code>prueba_entradas.py</code> para ver cómo reacciona el servidor ante entradas incómodas; la salida está en <code>evidencia/03_prueba_entradas_stdout.txt</code>.</p>
+<div class="tabla-titulo">Tabla 4. Entradas incómodas contra el servidor final</div>
+<table>
+  <tr><th>Entrada</th><th>Qué hizo el servidor</th><th>Lectura</th></tr>
+  <tr><td><code>notas = ["90", "80"]</code> (texto)</td><td>Aceptó y devolvió 85.0</td><td>El esquema convierte cadenas a número sin avisar</td></tr>
+  <tr><td><code>notas = [true, false]</code></td><td>Aceptó y devolvió 0.5</td><td>Los booleanos pasan como 1 y 0; no tiene sentido como notas</td></tr>
+  <tr><td>Lista de 1 000 000 de notas</td><td>Aceptó y calculó 100.0</td><td>No hay límite de tamaño; en un servidor remoto sería una vía de abuso</td></tr>
+  <tr><td><code>nota = -0.01</code></td><td>Rechazó (fuera de rango)</td><td>La validación de rango sí funciona</td></tr>
+  <tr><td><code>curso://estudiante/Ana%0AEstado:%20graduado</code></td><td>Devolvió «Estudiante: Ana / Estado: graduado / Curso: Desarrollo con IA / Estado: activo»</td><td>El nombre se copia sin sanear: se puede inyectar una línea falsa en la ficha</td></tr>
+  <tr><td>Nombre tipo ruta <code>..%2F..%2Fsecreto.txt</code></td><td>Error «Unknown resource»</td><td>Aquí no pasa nada, pero porque el nombre solo se imprime; no hay archivos de por medio</td></tr>
+  <tr><td>Nombre de 5000 caracteres</td><td>Devolvió una ficha de 5052 caracteres</td><td>Sin límite de longitud</td></tr>
+</table>
+<p>El caso del salto de línea es el que más nos preocupa. La ficha parece inofensiva, pero lo que devuelve termina dentro del contexto de un modelo: si alguien lograra que el nombre fuera «Ana\nIgnora las instrucciones anteriores y…», el servidor entregaría ese texto como si fuera dato confiable. La corrección es validar <code>nombre</code> contra una lista de estudiantes conocidos o, como mínimo, contra un patrón de letras, espacios y un largo máximo.</p>
+<p>La entrada tipo ruta nos sirve para un ejemplo que este servidor no tiene pero que es el clásico: si <code>ficha_estudiante</code> hiciera <code>open(f"fichas/{nombre}.txt")</code>, un nombre como <code>../../.env</code> leería fuera de la carpeta prevista. La defensa es resolver la ruta final y comprobar que sigue dentro del directorio permitido antes de abrir nada. En nuestra prueba no se abrió ningún archivo, y no podemos afirmar qué habría pasado de haber uno.</p>
+
+<h2>6.3 Revisión mínima antes de confiar en un servidor</h2>
+<p>El enunciado propone cinco preguntas para revisar un servidor desconocido. La Tabla 5 las aplica a <code>AsistenteAcademico</code>, como lo haría quien lo conectara por primera vez.</p>
+<div class="tabla-titulo">Tabla 5. Revisión mínima aplicada a AsistenteAcademico</div>
+<table>
+  <tr><th>Criterio</th><th>Pregunta</th><th>Respuesta para este servidor</th></tr>
+  <tr><td>Origen</td><td>¿Confío en este servidor?</td><td>Sí: lo escribimos nosotros y se puede leer completo en unas 50 líneas. Un servidor ajeno exigiría leer su código o conocer a quien lo publica.</td></tr>
+  <tr><td>Alcance</td><td>¿Qué tools y resources expone?</td><td>Dos tools, un resource fijo, una plantilla de resource y un prompt; el Tools list y el Templates list lo confirman. Nada más.</td></tr>
+  <tr><td>Datos</td><td>¿Qué información podrá leer?</td><td>Solo texto fijo y lo que el cliente le envía. No lee archivos, variables ni red.</td></tr>
+  <tr><td>Acciones</td><td>¿Puede escribir, borrar o ejecutar?</td><td>No. Ninguna función escribe, borra ni ejecuta código; <code>revisar_codigo</code> solo arma texto.</td></tr>
+  <tr><td>Aprobación</td><td>¿Qué debe confirmar el usuario?</td><td>Para estas tools de solo cálculo, poco. Aun así, el cliente debería mostrar qué se llama y con qué argumentos.</td></tr>
+</table>
+
+<h2>6.4 Mínimo privilegio y confirmación humana</h2>
+<p>El principio de mínimo privilegio se cumple en este servidor casi por omisión: no toca el disco, la red ni secretos, así que un fallo en él alcanza poco. Aun así hay dos cosas que mejorar. Primero, correrlo con un usuario o carpeta sin credenciales, porque un servidor STDIO se ejecuta con los permisos de quien lo lanza. Segundo, declarar que las tools son de solo lectura: ya vimos que el Inspector las muestra como Destructive y Open-world al no tener anotaciones, y la especificación pide a los clientes tratar esas anotaciones como no confiables salvo que vengan de un servidor de confianza (Model Context Protocol, 2025). Marcarlas bien no sustituye ninguna otra defensa. No probamos cómo se declaran en el SDK, así que queda como pendiente.</p>
+<p>Sobre la confirmación humana, la especificación indica que debería haber siempre una persona con la capacidad de denegar invocaciones de Tools, que los clientes deberían mostrar los argumentos antes de llamar al servidor para evitar fugas de datos, y que los servidores deben limitar la frecuencia de las llamadas (Model Context Protocol, 2025). Para <code>calcular_promedio</code> la confirmación sería una molestia menor; para una Tool como <code>borrar_nota</code> o <code>enviar_correo</code> sería indispensable, y la decisión debe estar en el cliente, porque un servidor malicioso no se va a pedir permiso a sí mismo. Esto conecta con las reglas de nuestro propio curso: no aceptamos cambios sin revisar el diff, y ninguna acción de una herramienta con permisos debería ejecutarse sin que alguien la haya visto.</p>
+
+<h1>7. Preguntas de reflexión</h1>
+<p><b>1. ¿Cuál es la diferencia entre un Host MCP, un Cliente MCP y un Servidor MCP?</b></p>
+<p>El host es la aplicación de IA que coordina todo (por ejemplo Claude Code o VS Code); el cliente es el componente que el host crea para mantener una conexión con un servidor, uno por servidor; y el servidor es el programa que ofrece contexto y capacidades (Model Context Protocol, s. f.). En este laboratorio el Inspector hizo de host y de cliente a la vez, y <code>server.py</code> fue el servidor.</p>
+<p><b>2. ¿Por qué una Tool no debe confundirse con un Prompt?</b></p>
+<p>Porque hacen cosas distintas y las controla quien no es. Una Tool ejecuta código y puede tener efectos; la decide el modelo y debería poder vetarla una persona. Un Prompt es texto que el usuario escoge y completa. En la Figura 9 vimos que renderizar <code>revisar_codigo</code> no ejecutó nada; si lo hubiéramos implementado como Tool, el modelo podría haberlo disparado por su cuenta.</p>
+<p><b>3. ¿Quién decide normalmente usar una Tool, un Resource y un Prompt?</b></p>
+<p>La Tool, el modelo, según el contexto de la conversación; el Resource, la aplicación cliente, que decide qué cargar como contexto; y el Prompt, el usuario, que lo elige de una lista. Para las Tools la especificación lo describe como «model-controlled» y recomienda que haya siempre confirmación humana (Model Context Protocol, 2025); para Resource y Prompt nos basamos en las definiciones del enunciado.</p>
+<p><b>4. ¿Qué ventaja aporta MCP frente a crear una integración diferente para cada aplicación de IA?</b></p>
+<p>Se escribe el servidor una vez y cualquier host que hable MCP lo puede usar. Lo vivimos en pequeño: el mismo <code>server.py</code> funcionó con el Inspector y con nuestro cliente en Python sin cambiarle una línea. Además el cliente descubre las capacidades con <code>tools/list</code> y similares, así que no hay que programar cada herramienta dentro de cada aplicación.</p>
+<p><b>5. ¿Qué riesgo existe al conectar un servidor MCP desconocido o con herramientas de escritura?</b></p>
+<p>Que ejecute algo que no queremos: borrar o modificar archivos, enviar datos a terceros o exponer credenciales, usando los permisos de quien lo conectó. Si además el texto que devuelve se mete en el contexto del modelo, puede traer instrucciones escondidas. Por eso la revisión de la Tabla 5 antes de conectar, y por eso las herramientas de escritura piden confirmación y permisos mínimos.</p>
+<p><b>6. ¿Qué parte de este laboratorio seguiría siendo válida si se cambiara el modelo de IA o el host utilizado?</b></p>
+<p>Casi todo el servidor. El contrato (Tools, Resources y Prompts con sus esquemas), las validaciones y los límites viven en <code>server.py</code> y no dependen de qué modelo lo use. Lo que sí cambiaría es la forma de confirmar acciones y de mostrar los errores, que es responsabilidad del host.</p>
+
+<h1>Conclusiones</h1>
+<p>Logramos un servidor MCP con una Tool, un Resource y un Prompt funcionando, más la segunda Tool y el Resource parametrizado del reto, y todo quedó probado en el Inspector y con un cliente en Python. La parte que más trabajo dio no fue escribir el código del enunciado, que corrió sin cambios con <code>mcp 2.3.0</code>, sino entender por qué el error de la Tool llegaba sin mensaje. Nos tomó leer el código del SDK para descubrir que un <code>ValueError</code> cuenta como falla inesperada y que para errores anticipados se usa <code>ToolError</code>.</p>
+<p>Del análisis de seguridad sacamos que pasar las pruebas funcionales no basta: el servidor aceptó booleanos como notas, listas de un millón de elementos y nombres con saltos de línea. Ninguno de esos casos se arregla en el Inspector ni en el prompt, sino validando en el servidor. Lo que no hicimos: declarar anotaciones de solo lectura en las Tools, porque no probamos cómo se hace en este SDK, y usar la versión nueva del Inspector, ya que <code>mcp dev</code> lanzó la v1.0.3, marcada como obsoleta.</p>
+
+<h1>Referencias Bibliográficas</h1>
+<div class="referencias">
+  <p>Model Context Protocol. (s. f.). <i>Architecture overview</i>. https://modelcontextprotocol.io/docs/learn/architecture</p>
+  <p>Model Context Protocol. (2025, 25 de noviembre). <i>Tools</i>. En <i>Specification 2025-11-25</i>. https://modelcontextprotocol.io/specification/2025-11-25/server/tools</p>
+</div>
+
+</body>
+</html>

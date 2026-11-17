@@ -1,0 +1,20 @@
+Fecha y hora de inicio: 2026-10-30 11:52:53
+Directorio: C:/Cerebrolo/01-Topicos-Especiales-II/Lab05-ia-local/entregables/laboratorio_local_privado
+Comando: python medir_tiempos.py
+------------------------------------------------------------
+ronda 1 | corta           | prompt=42 tokens | respuesta=25 tokens | total=  3.6 s | carga= 0.0 s | generacion=18.3 tokens/s
+   respuesta: En Python, la función `sum` se utiliza para calcular la suma de todos los elementos de una lista o iterable.
+ronda 1 | calculadora.py  | prompt=168 tokens | respuesta=530 tokens | total= 35.1 s | carga= 0.0 s | generacion=16.7 tokens/s
+   respuesta: El código proporcionado es correcto y no presenta casos límite o errores significativos. Sin embargo, puedo sugerir algunas mejoras y mejoras de estilo que podrían hacerse para mejorar la legibilidad y mantenibilidad del código:
+   
+   1. **Docstrings**: Añadir docstrings a las funciones para explicar su propósito, parámetros y comportamiento.
+   
+   2. **Documentación del código**: Añadir comentarios adicionales para clarificar cualquier lógica compleja o para explicar decisiones tomadas.
+   
+   3. **Constantes o variables de configuración**: Siempre es buena práctica definir constantes o var
+ronda 2 | corta           | prompt=42 tokens | respuesta=25 tokens | total=  3.5 s | carga= 0.0 s | generacion=17.9 tokens/s
+ronda 2 | calculadora.py  | prompt=168 tokens | respuesta=576 tokens | total= 38.9 s | carga= 0.0 s | generacion=16.2 tokens/s
+------------------------------------------------------------
+Código de salida: 0
+Fecha y hora de fin: 2026-10-30 11:54:15
+Tiempo transcurrido: 81.5 s

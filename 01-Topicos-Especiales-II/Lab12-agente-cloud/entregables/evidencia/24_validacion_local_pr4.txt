@@ -1,0 +1,34 @@
+> git branch --show-current
+copilot/agregar-funcion-eliminar-tarea
+
+> python app.py
+Tareas pendientes:
+- 2: Preparar laboratorio [Trabajo]
+
+Tareas pendientes de categoría 'trabajo':
+- 2: Preparar laboratorio [Trabajo]
+
+> python -m unittest discover -s tests -v
+test_agregar_tarea (test_tasks.TestTasks.test_agregar_tarea) ... ok
+test_agregar_tarea_categoria_vacia (test_tasks.TestTasks.test_agregar_tarea_categoria_vacia) ... ok
+test_completar_tarea (test_tasks.TestTasks.test_completar_tarea) ... ok
+test_eliminar_tarea_existente (test_tasks.TestTasks.test_eliminar_tarea_existente) ... ok
+test_eliminar_tarea_id_inexistente (test_tasks.TestTasks.test_eliminar_tarea_id_inexistente) ... ok
+test_eliminar_tarea_lista_vacia (test_tasks.TestTasks.test_eliminar_tarea_lista_vacia) ... ok
+test_pendientes_filtra_categoria_inexistente (test_tasks.TestTasks.test_pendientes_filtra_categoria_inexistente) ... ok
+test_pendientes_filtra_mayusculas (test_tasks.TestTasks.test_pendientes_filtra_mayusculas) ... ok
+test_pendientes_filtra_por_categoria_sin_mayusculas (test_tasks.TestTasks.test_pendientes_filtra_por_categoria_sin_mayusculas) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.001s
+
+OK
+
+> git diff --stat main
+ tasks.py            |  7 +++++++
+ tests/test_tasks.py | 22 +++++++++++++++++++++-
+ 2 files changed, 28 insertions(+), 1 deletion(-)
+
+> Caso no cubierto: ids repetidos tras eliminar
+[(2, 'B'), (2, 'C')]
+completar_tarea(t, 2) marca: B

@@ -1,0 +1,25 @@
+Comando: printf '%s\nsalir\n' "¿Cuál es el horario de la biblioteca de lunes a viernes y los sábados?" | python -u rag_universidad.py   
+Hora de inicio: 2026-10-30 12:00:37
+----------------------------------------
+Documentos cargados: 3
+Chunks creados: 6
+Generando índice vectorial...
+
+Pregunta (o 'salir'): 
+--- CHUNKS RECUPERADOS ---
+1. servicios.txt | similitud=0.731
+La biblioteca universitaria abre de lunes a viernes de 7:00 a.m. a 9:00 p.m.
+Los sábados abre de 8:00 a.m. a 4:00 p.m.
+El préstamo regular permite retirar hasta 5 libros por un máximo de 14 días.
+
+2. reglamento.txt | similitud=0.584
+deben documentarse según el procedimiento de la facultad.
+
+3. servicios.txt | similitud=0.514
+imo de 14 días.
+
+--- RESPUESTA RAG ---
+La biblioteca universitaria abre de lunes a viernes de 7:00 a.m. a 9:00 p.m. Los sábados abre de 8:00 a.m. a 4:00 p.m.
+
+Pregunta (o 'salir'): ----------------------------------------
+Hora de fin: 2026-10-30 12:01:01

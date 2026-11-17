@@ -1,0 +1,10 @@
+test_agregar_tarea_valida (test_tareas.TestTareas.test_agregar_tarea_valida) ... ok
+test_completar_tarea_inexistente (test_tareas.TestTareas.test_completar_tarea_inexistente) ... ok
+test_marcar_tarea_como_completada (test_tareas.TestTareas.test_marcar_tarea_como_completada) ... ok
+test_rechazar_prioridad_invalida (test_tareas.TestTareas.test_rechazar_prioridad_invalida) ... ok
+test_rechazar_titulo_vacio (test_tareas.TestTareas.test_rechazar_titulo_vacio) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.001s
+
+OK

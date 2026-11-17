@@ -1,0 +1,56 @@
+diff --git a/tasks.py b/tasks.py
+index ea974a9..74201a3 100644
+--- a/tasks.py
++++ b/tasks.py
+@@ -23,6 +23,13 @@ def completar_tarea(tareas, tarea_id):
+     raise ValueError("Tarea no encontrada")
+ 
+ 
++def eliminar_tarea(tareas, tarea_id):
++    for indice, tarea in enumerate(tareas):
++        if tarea["id"] == tarea_id:
++            return tareas.pop(indice)
++    raise ValueError("Tarea no encontrada")
++
++
+ def pendientes(tareas, categoria=None):
+     tareas_pendientes = [t for t in tareas if not t["completada"]]
+     if categoria is None:
+diff --git a/tests/test_tasks.py b/tests/test_tasks.py
+index 71a1bd4..5c044b7 100644
+--- a/tests/test_tasks.py
++++ b/tests/test_tasks.py
+@@ -1,5 +1,5 @@
+ import unittest
+-from tasks import agregar_tarea, completar_tarea, pendientes
++from tasks import agregar_tarea, completar_tarea, eliminar_tarea, pendientes
+ 
+ 
+ class TestTasks(unittest.TestCase):
+@@ -45,6 +45,26 @@ def test_pendientes_filtra_mayusculas(self):
+         resultado_mayusculas = pendientes(tareas, "TRABAJO")
+         self.assertEqual(resultado_mayusculas, resultado_minusculas)
+ 
++    def test_eliminar_tarea_existente(self):
++        tareas = []
++        agregar_tarea(tareas, "Leer documentación", "Estudio")
++        agregar_tarea(tareas, "Preparar laboratorio", "Trabajo")
++
++        tarea_eliminada = eliminar_tarea(tareas, 1)
++        self.assertEqual(tarea_eliminada["id"], 1)
++        self.assertEqual(tareas, [{"id": 2, "titulo": "Preparar laboratorio", "completada": False, "categoria": "Trabajo"}])
++
++    def test_eliminar_tarea_id_inexistente(self):
++        tareas = []
++        agregar_tarea(tareas, "Leer documentación", "Estudio")
++
++        with self.assertRaisesRegex(ValueError, "Tarea no encontrada"):
++            eliminar_tarea(tareas, 99)
++
++    def test_eliminar_tarea_lista_vacia(self):
++        with self.assertRaisesRegex(ValueError, "Tarea no encontrada"):
++            eliminar_tarea([], 1)
++
+ 
+ if __name__ == "__main__":
+     unittest.main()

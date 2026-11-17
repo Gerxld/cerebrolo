@@ -1,0 +1,16 @@
+> python check_syntax.py ejemplo/calculadora.py
+OK: sintaxis válida en ejemplo/calculadora.py
+rc=0
+> python check_syntax.py ejemplo/usuarios.py
+OK: sintaxis válida en ejemplo/usuarios.py
+rc=0
+> python check_syntax.py (archivo con error de sintaxis)
+ERROR DE SINTAXIS:   File "../entregables/evidencia/ejemplo_sintaxis_invalida.py", line 1
+    def f(:
+          ^
+SyntaxError: invalid syntax
+
+rc=1
+> python check_syntax.py (sin argumentos)
+Uso: python check_syntax.py <archivo.py>
+rc=2

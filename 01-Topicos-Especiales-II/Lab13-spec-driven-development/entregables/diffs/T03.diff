@@ -1,0 +1,20 @@
+diff --git a/prestamos.py b/prestamos.py
+index 5540a79..14f61c8 100644
+--- a/prestamos.py
++++ b/prestamos.py
+@@ -55,4 +55,14 @@ def registrar_prestamo(prestamos, usuario, libro, fecha):
+     return prestamo
+ 
+ def devolver_prestamo(prestamos, usuario, libro):
+-    raise NotImplementedError("Pendiente de especificación")
++    usuario = _texto_limpio(usuario)
++    libro = _texto_limpio(libro)
++    for prestamo in prestamos:
++        if (
++            prestamo["usuario"] == usuario
++            and prestamo["libro"] == libro
++            and not prestamo["devuelto"]
++        ):
++            prestamo["devuelto"] = True
++            return prestamo
++    raise ValueError("no existe un préstamo activo de ese libro para el usuario")

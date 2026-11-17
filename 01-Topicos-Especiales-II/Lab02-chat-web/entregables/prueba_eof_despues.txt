@@ -1,0 +1,7 @@
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Salir
+Seleccione una opción: Título de la tarea: Prioridad (baja, media, alta): 
+Entrada finalizada. Hasta luego.

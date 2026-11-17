@@ -1,0 +1,42 @@
+Fecha y hora: 2026-10-30 11:50:02
+Paso 11: validacion manual de casos limite sobre calculadora.py original (python -c)
+------------------------------------------------------------
+> python -c "from calculadora import *; print(dividir(10, 0))"
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    from calculadora import *; print(dividir(10, 0))
+                                     ~~~~~~~^^^^^^^
+  File "C:\Cerebrolo\01-Topicos-Especiales-II\Lab05-ia-local\entregables\laboratorio_local_privado\calculadora.py", line 2, in dividir
+    return a / b
+           ~~^~~
+ZeroDivisionError: division by zero
+> python -c "from calculadora import *; print(promedio([]))"
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    from calculadora import *; print(promedio([]))
+                                     ~~~~~~~~^^^^
+  File "C:\Cerebrolo\01-Topicos-Especiales-II\Lab05-ia-local\entregables\laboratorio_local_privado\calculadora.py", line 5, in promedio
+    return sum(valores) / len(valores)
+           ~~~~~~~~~~~~~^~~~~~~~~~~~~~
+ZeroDivisionError: division by zero
+> python -c "from calculadora import *; print(porcentaje(5, 0))"
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    from calculadora import *; print(porcentaje(5, 0))
+                                     ~~~~~~~~~~^^^^^^
+  File "C:\Cerebrolo\01-Topicos-Especiales-II\Lab05-ia-local\entregables\laboratorio_local_privado\calculadora.py", line 8, in porcentaje
+    return (valor / total) * 100
+            ~~~~~~^~~~~~~
+ZeroDivisionError: division by zero
+> python -c "from calculadora import *; print(dividir(10, 4))"
+2.5
+> python -c "from calculadora import *; print(promedio([2, 4, 6]))"
+4.0
+> python -c "from calculadora import *; print(porcentaje(25, 200))"
+12.5
+------------------------------------------------------------
+Revision de la propuesta del modelo (paso 10), casos con la version del modelo (no se copio al archivo):
+dividir(10, 0) de la version del modelo -> 'Error: División por cero' str
+dividir(10, 0) + 1 -> TypeError: can only concatenate str (not "int") to str
+round(promedio([]), 2) -> TypeError: type str doesn't define __round__ method
+Conclusion: los 3 casos limite fallan en el original con ZeroDivisionError sin mensaje claro; la version del modelo los 'arregla' devolviendo un str, que puede confundirse con un resultado.

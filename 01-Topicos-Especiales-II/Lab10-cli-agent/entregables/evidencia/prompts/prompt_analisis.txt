@@ -1,0 +1,6 @@
+Analiza este proyecto de Python.
+Explícame:
+1. qué hace cada archivo,
+2. qué comportamiento cubren las pruebas,
+3. qué riesgos ves en la forma de asignar los IDs.
+No modifiques ningún archivo y no ejecutes instalaciones.

@@ -1,0 +1,60 @@
+diff --git a/tasks.py b/tasks.py
+index 2e7bc48..f14c3bc 100644
+--- a/tasks.py
++++ b/tasks.py
+@@ -25,6 +25,10 @@ def completar_tarea(tareas, tarea_id):
+ def pendientes(tareas):
+     return [t for t in tareas if not t["completada"]]
+ 
++def ordenar_por_prioridad(tareas):
++    # sorted() es estable: misma prioridad conserva el orden de creación
++    return sorted(tareas, key=lambda t: PRIORIDADES.index(t["prioridad"]))
++
+ def buscar_tareas(tareas, texto):
+     if not texto:
+         return []
+diff --git a/tests/test_tasks.py b/tests/test_tasks.py
+index a35d0e5..71835ae 100644
+--- a/tests/test_tasks.py
++++ b/tests/test_tasks.py
+@@ -1,5 +1,5 @@
+ import unittest
+-from tasks import agregar_tarea, completar_tarea, pendientes, buscar_tareas
++from tasks import agregar_tarea, completar_tarea, pendientes, buscar_tareas, ordenar_por_prioridad
+ 
+ class TestTasks(unittest.TestCase):
+     def test_agregar_tarea(self):
+@@ -58,5 +58,33 @@ class TestTasks(unittest.TestCase):
+         agregar_tarea(tareas, "Practicar", "baja")
+         self.assertEqual(buscar_tareas(tareas, ""), [])
+ 
++    def test_ordenar_por_prioridad_orden_correcto(self):
++        tareas = []
++        agregar_tarea(tareas, "A", "baja")
++        agregar_tarea(tareas, "B", "alta")
++        agregar_tarea(tareas, "C", "media")
++        self.assertEqual([t["titulo"] for t in ordenar_por_prioridad(tareas)], ["B", "C", "A"])
++
++    def test_ordenar_por_prioridad_estable(self):
++        tareas = []
++        agregar_tarea(tareas, "A", "media")
++        agregar_tarea(tareas, "B", "alta")
++        agregar_tarea(tareas, "C", "media")
++        agregar_tarea(tareas, "D", "alta")
++        self.assertEqual([t["titulo"] for t in ordenar_por_prioridad(tareas)], ["B", "D", "A", "C"])
++
++    def test_ordenar_por_prioridad_no_modifica_original(self):
++        tareas = []
++        agregar_tarea(tareas, "A", "baja")
++        agregar_tarea(tareas, "B", "alta")
++        copia = [dict(t) for t in tareas]
++        resultado = ordenar_por_prioridad(tareas)
++        self.assertIsNot(resultado, tareas)
++        self.assertEqual(tareas, copia)
++        self.assertEqual([t["titulo"] for t in tareas], ["A", "B"])
++
++    def test_ordenar_por_prioridad_lista_vacia(self):
++        self.assertEqual(ordenar_por_prioridad([]), [])
++
+ if __name__ == "__main__":
+     unittest.main()

@@ -1,0 +1,141 @@
+<h1>Introducción</h1>
+<p>Este laboratorio armó, paso a paso, un sistema de preguntas y respuestas sobre documentos de una universidad. Todo corre en el equipo: Ollama sirve el modelo de embeddings <code>nomic-embed-text</code> y el modelo generativo <code>qwen2.5:3b</code>, y el programa en Python solo usa <code>requests</code> y <code>numpy</code>. Los documentos se parten en fragmentos, cada fragmento se convierte en un vector, la pregunta se compara contra esos vectores y los fragmentos más parecidos se le entregan al modelo como contexto.</p>
+<p>Corrimos de verdad cada paso del 20 al 27 y guardamos la salida completa, con el comando y la hora, en la carpeta <code>evidencia</code> del proyecto. Las figuras del informe son esas mismas salidas dibujadas como terminal; no retocamos ninguna. Cuando el modelo respondió mal, lo dejamos escrito tal cual, porque dice más sobre RAG que las respuestas correctas.</p>
+<p>El informe sigue el orden del enunciado, compara una misma pregunta con y sin documentos, mide el efecto del tamaño de chunk y del valor Top-k con corridas reales, contesta las seis preguntas de reflexión y cierra con las conclusiones. El código completo está al final, como anexo.</p>
+
+<h1>1. Preparación</h1>
+<h2>1.1 Versiones y modelos</h2>
+<p>Los pasos 1, 2 y 7 no requirieron instalar nada. Python, Ollama, los dos modelos y las dos librerías ya estaban en el equipo, así que no corrimos <code>ollama pull</code> ni <code>pip install</code> y documentamos el estado con <code>ollama list</code> y <code>pip show</code>. El ejecutable de Ollama no está en el PATH de esta sesión; lo llamamos con su ruta completa, <code>C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe</code>. La lista de modelos muestra también <code>qwen3:4b</code> y <code>qwen2.5-coder:3b</code>, que pertenecen a otros laboratorios y no se usaron aquí.</p>
+<div class="tabla-titulo">Tabla 1. Componentes verificados</div>
+<table>
+  <tr><th>Componente</th><th>Resultado</th></tr>
+  <tr><td>Python</td><td>3.13.5</td></tr>
+  <tr><td>Ollama</td><td>0.40.13, servidor en <code>http://localhost:11434</code></td></tr>
+  <tr><td>Modelo de embeddings</td><td><code>nomic-embed-text:latest</code> (274 MB)</td></tr>
+  <tr><td>Modelo generativo</td><td><code>qwen2.5:3b</code> (1.9 GB)</td></tr>
+  <tr><td>requests / numpy</td><td>2.33.1 / 2.4.4</td></tr>
+</table>
+@FIG 01_entorno | Salida de los pasos 1, 2 y 7: versiones, modelos disponibles y librerías instaladas.
+
+<h2>1.2 Documentos y programa</h2>
+<p>Creamos la carpeta <code>laboratorio_rag</code> con la subcarpeta <code>documentos</code> y los tres textos del enunciado, copiados sin cambiar una coma: <code>reglamento.txt</code>, <code>servicios.txt</code> y <code>laboratorios.txt</code>. Después escribimos <code>rag_universidad.py</code> con las funciones de los pasos 8 al 19. La única corrección fue de forma: el PDF del enunciado parte en tres líneas el <code>print</code> de <code>mostrar_recuperados</code>, y lo dejamos en una sola línea para que corra.</p>
+<p>El programa pide la pregunta con <code>input()</code> dentro de un bucle. Para dejar evidencia reproducible lo alimentamos por la entrada estándar con la pregunta y luego la palabra <code>salir</code>, y lo ejecutamos con <code>python -u</code> para que la salida no quede retenida en un búfer. Para los pasos 25 y 26 escribimos aparte <code>experimentos.py</code>, que importa las funciones de <code>rag_universidad.py</code> y recibe como argumentos el tamaño de chunk y el valor de k; así el programa principal queda idéntico al del enunciado y no lo editamos a mano tres veces.</p>
+
+<h1>2. Ejecución del flujo RAG</h1>
+<p>Con los tres documentos y los valores por defecto (chunks de 220 caracteres, solapamiento de 40 y k=3), el programa cargó 3 documentos y creó 6 chunks. Cada corrida de punto a punto, con indexado, recuperación y generación, tomó entre 20 y 35 segundos en CPU.</p>
+
+<h2>2.1 Pregunta con respuesta (paso 20)</h2>
+<p>Preguntamos «¿Cuántos libros puedo retirar de la biblioteca y por cuántos días?». El primer chunk recuperado fue <code>servicios.txt</code> con similitud 0.709 y contenía el documento completo, incluida la frase del préstamo. Los otros dos fueron <code>reglamento.txt</code> (0.586) y otro fragmento de <code>servicios.txt</code> (0.550), este último cortado en «imo de 14 días.». El modelo contestó que se pueden retirar hasta 5 libros por un máximo de 14 días y citó <code>servicios.txt</code>, que es la fuente correcta. El fragmento del reglamento no aportaba nada, pero tampoco confundió al modelo.</p>
+@FIG 02_paso20 | Paso 20: chunks recuperados y respuesta RAG para la pregunta de los libros.
+
+<h2>2.2 Pregunta que necesita otro documento (paso 21)</h2>
+<p>Para «¿Qué necesito para instalar software adicional en los laboratorios?» el sistema recuperó dos chunks de <code>laboratorios.txt</code> (0.804 y 0.689) y uno de <code>reglamento.txt</code> (0.615). La respuesta fue correcta, se necesita autorización del responsable del laboratorio, pero el modelo añadió que ese requisito aparece «tanto en laboratorios.txt como en reglamento.txt». Eso es falso: el reglamento habla de asistencia. El chunk irrelevante entró al contexto y el modelo lo citó como fuente. Este es el primer indicio del costo de recuperar de más, y lo retomamos en el paso 26.</p>
+@FIG 03_paso21 | Paso 21: chunks recuperados y respuesta; la segunda fuente citada no respalda la respuesta.
+
+<h2>2.3 Pregunta sin evidencia (paso 22)</h2>
+<p>Con «¿Cuál es el costo de la matrícula del próximo semestre?» el sistema recuperó igual tres chunks, porque la recuperación siempre devuelve los k más parecidos aunque ninguno sirva: <code>reglamento.txt</code> (0.553 y 0.537) y <code>servicios.txt</code> (0.513). La respuesta fue exactamente la frase pedida, «No encuentro esa información en los documentos proporcionados.». En esta corrida el modelo obedeció la instrucción del prompt. No siempre ocurre, como veremos en el reto.</p>
+@FIG 04_paso22 | Paso 22: pregunta sin evidencia; el modelo responde con la frase indicada.
+
+<h1>3. Comparación con y sin RAG (paso 23)</h1>
+<p>Hicimos la misma pregunta de la matrícula directamente al modelo con <code>ollama run qwen2.5:3b</code>, sin documentos. La respuesta fue fluida y bien escrita en español, aunque con un descuido («dependiendo del país, el país, la institución»): dijo que no puede dar costos específicos y recomendó contactar a la universidad. Es decir, en esta pregunta el modelo no inventó un monto. Lo esperado era que adivinara y no lo hizo, así que no podemos afirmar que «siempre alucina» sin RAG.</p>
+@FIG 05_paso23_matricula | Paso 23: la pregunta de la matrícula sin RAG.
+<p>Para ver el comportamiento que el enunciado pide observar, repetimos la comparación con la pregunta de los libros, donde sí existe un dato real en los documentos (5 libros por 14 días). Corrimos dos veces el modelo sin contexto y salió algo distinto cada vez: en la primera dijo que en la mayoría de las bibliotecas se pueden sacar «entre 1 y 3 libros» por «1 a 4 semanas», y en la segunda que se pueden retener «entre 1 a 2 libros por cada día de alquiler». Ninguna coincide con el documento de la institución y la segunda ni siquiera tiene sentido, pero las dos suenan como respuestas normales.</p>
+@FIG 06_paso23_libros_a | Paso 23: pregunta de los libros sin RAG, primera corrida.
+@FIG 07_paso23_libros_b | Paso 23: pregunta de los libros sin RAG, segunda corrida.
+<div class="tabla-titulo">Tabla 2. Misma pregunta con y sin RAG</div>
+<table>
+  <tr><th>Pregunta</th><th>Sin RAG</th><th>Con RAG (k=3, chunk 220)</th></tr>
+  <tr><td>Matrícula del próximo semestre</td><td>Se niega a dar un monto y sugiere consultar a la universidad.</td><td>«No encuentro esa información en los documentos proporcionados.»</td></tr>
+  <tr><td>Libros y días de préstamo</td><td>Dos respuestas distintas, ninguna correcta: «1 a 3 libros» y «1 a 2 libros por día».</td><td>5 libros por 14 días, fuente <code>servicios.txt</code>.</td></tr>
+</table>
+<p>Lo que se desprende de las corridas es que la fluidez no demuestra respaldo. El modelo escribe con la misma seguridad cuando acierta, cuando generaliza («en la mayoría de las bibliotecas») y cuando dice algo sin sentido. Solo la versión con RAG se puede auditar, porque deja a la vista los chunks y la fuente, y el lector puede comprobar si la frase existe en el documento. Un detalle que sí nos llamó la atención es que sin documentos el modelo se presenta como asistente de Alibaba Cloud y habla de «tu biblioteca» como si fuera genérica; no tiene forma de saber cuál es la nuestra.</p>
+<p>Un incidente de la sesión: al repetir las corridas sin RAG desde el script, el proceso de <code>ollama run</code> se quedó esperando indefinidamente. Ocurre cuando la entrada estándar no es una terminal, porque el comando la lee y la agrega al prompt. Lo resolvimos cerrando la entrada estándar y poniendo un tiempo máximo a la llamada. Las respuestas de este informe salieron de las corridas completas, no de las interrumpidas.</p>
+
+<h1>4. Modificación de un documento (paso 24)</h1>
+<p>Antes de tocar nada hicimos la pregunta «¿Cuál es el horario de la biblioteca de lunes a viernes y los sábados?» con el <code>servicios.txt</code> original, y guardamos una copia del original como evidencia. El sistema respondió de lunes a viernes de 7:00 a.m. a 9:00 p.m. y sábados de 8:00 a.m. a 4:00 p.m. (similitud 0.731).</p>
+@FIG 08_paso24_antes | Paso 24: horario de la biblioteca con el documento original.
+<p>Después cambiamos el archivo a lunes a viernes de 8:00 a.m. a 6:00 p.m. y sábados de 9:00 a.m. a 1:00 p.m., cerramos el programa y lo volvimos a ejecutar. La respuesta reflejó los horarios nuevos y citó <code>servicios.txt</code> (similitud 0.729). Ningún modelo se reentrenó ni se tocó: lo único que cambió fue el texto y, al reiniciar, el índice vectorial se generó otra vez. Esa es la ventaja práctica de RAG para información que cambia, como horarios, tarifas o reglamentos. Después de la prueba restauramos <code>servicios.txt</code> al original, que es el que se usó en los pasos 25 y 26; la copia modificada queda en la carpeta de evidencia.</p>
+@FIG 09_paso24_despues | Paso 24: misma pregunta con el documento modificado.
+
+<h1>5. Tamaño de chunk (paso 25)</h1>
+<p>Probamos 120, 220 y 400 caracteres, siempre con solapamiento de 40 y k=3, con dos preguntas: la de los libros y la del software. Los datos de 220 son los de los pasos 20 y 21.</p>
+<div class="tabla-titulo">Tabla 3. Efecto del tamaño de chunk (k=3)</div>
+<table>
+  <tr><th style="width:8%">Chunk</th><th style="width:10%">Chunks totales</th><th>Libros: chunks recuperados (similitud)</th><th>Software: chunks recuperados (similitud)</th><th>Respuestas</th></tr>
+  <tr><td>120</td><td>9</td><td>3 de <code>servicios.txt</code> (0.672, 0.663, 0.654); los dos primeros traen el dato completo y el tercero solo el horario</td><td>3 de <code>laboratorios.txt</code> (0.839, 0.809, 0.758)</td><td>Ambas correctas; la de software añadió una generalización que no está en el texto («cualquier otro tipo de software en cualquier laboratorio»)</td></tr>
+  <tr><td>220</td><td>6</td><td><code>servicios.txt</code> 0.709, <code>reglamento.txt</code> 0.586, <code>servicios.txt</code> 0.550</td><td><code>laboratorios.txt</code> 0.804 y 0.689, <code>reglamento.txt</code> 0.615</td><td>Ambas correctas; la de software citó mal el reglamento como fuente</td></tr>
+  <tr><td>400</td><td>3</td><td><code>servicios.txt</code> 0.709, <code>laboratorios.txt</code> 0.526, <code>reglamento.txt</code> 0.523</td><td><code>laboratorios.txt</code> 0.819, <code>reglamento.txt</code> 0.536, <code>servicios.txt</code> 0.465</td><td>Ambas correctas; la de software, breve y sin citar fuente</td></tr>
+</table>
+<p>Con 120 caracteres los documentos de tres líneas se rompen en pedazos de una línea y media. En la pregunta del software el primer chunk quedó cortado en «se requiere autor» y otro empezó en «lar software adicional se requiere autorización…». La información completa solo se reconstruye porque el solapamiento repite parte del texto. Con 400, cada documento cabe en un único chunk, así que recuperar un documento es recuperar el documento entero; el costo es que, con k=3, el contexto incluye los tres documentos de la base, y dos de ellos no tienen que ver con la pregunta.</p>
+@FIG 10_paso25_c120_libros | Paso 25: chunk de 120 caracteres, pregunta de los libros.
+@FIG 11_paso25_c120_software | Paso 25: chunk de 120 caracteres, pregunta del software.
+@FIG 12_paso25_c400_libros | Paso 25: chunk de 400 caracteres, pregunta de los libros.
+@FIG 13_paso25_c400_software | Paso 25: chunk de 400 caracteres, pregunta del software.
+<p>En respuestas correctas no hubo diferencia entre los tres tamaños: con documentos tan cortos el modelo acertó siempre el dato. La diferencia estuvo en la calidad del contexto. Con 120 los chunks eran más específicos (todos de la fuente correcta), pero cortados y repetidos. Con 220 aparecieron fragmentos sueltos como «imo de 14 días.», sin sentido por sí solos. Con 400 el contexto fue legible pero poco selectivo. No medimos una mejora de la respuesta con ningún tamaño; lo que cambió fue cuánta basura entraba al prompt. Con una base de solo tres documentos no podemos asegurar cuál tamaño es mejor en general.</p>
+
+<h1>6. Top-k (paso 26)</h1>
+<p>Fijamos el chunk en 220 y probamos k=1, k=3 y k=5 con las mismas dos preguntas. Con 6 chunks en el índice, k=5 equivale a pasarle al modelo casi toda la base.</p>
+<div class="tabla-titulo">Tabla 4. Efecto del valor de k (chunk 220)</div>
+<table>
+  <tr><th>k</th><th>Libros</th><th>Software</th></tr>
+  <tr><td>1</td><td>1 chunk relevante (<code>servicios.txt</code>, 0.709). Respuesta correcta, sin nombrar la fuente.</td><td>1 chunk relevante (<code>laboratorios.txt</code>, 0.804), con el final cortado en «responsa». Respuesta correcta y fuente correcta.</td></tr>
+  <tr><td>3</td><td>1 relevante, 1 fragmento parcial y 1 irrelevante. Correcta, fuente correcta.</td><td>2 relevantes y 1 irrelevante (<code>reglamento.txt</code>, 0.615). Correcta, pero cita el reglamento sin motivo.</td></tr>
+  <tr><td>5</td><td>2 relevantes (los dos de <code>servicios.txt</code>) y 3 irrelevantes. Correcta, fuente correcta.</td><td>2 relevantes y 3 irrelevantes (dos de <code>reglamento.txt</code> y uno de <code>servicios.txt</code>, 0.465). Correcta, sin fuente.</td></tr>
+</table>
+<p>Con k=1 el contexto fue limpio y la respuesta, correcta en ambas preguntas. El riesgo es que, si el dato hubiera quedado repartido entre dos chunks, el modelo solo vería uno; en la pregunta del software el chunk único ya venía cortado a mitad de palabra y la respuesta salió bien porque la frase la repetía el propio contexto. Con k=5 la similitud del último chunk bajó a 0.522 y 0.465, y el prompt se llenó de texto sobre asistencia, horarios de biblioteca y ubicación de laboratorios. Ninguna respuesta dejó de ser correcta, pero en k=3 ya vimos una cita errónea provocada por un fragmento que no venía al caso.</p>
+@FIG 14_paso26_k1_software | Paso 26: k=1, pregunta del software.
+@FIG 15_paso26_k5_software | Paso 26: k=5, pregunta del software.
+@FIG 16_paso26_k5_libros | Paso 26: k=5, pregunta de los libros.
+
+<h1>7. Reto final (paso 27)</h1>
+<p>El enunciado pide dos documentos nuevos sobre un tema elegido por nosotros. Escribimos nosotros mismos <code>sala_estudio.txt</code> y <code>comedor.txt</code>, sobre las normas de una sala de estudio y de un comedor estudiantil. Son textos de ejemplo para el laboratorio, no reglamentos reales de la UTP ni de ninguna otra institución. Con ellos la carpeta <code>documentos</code> llegó a cinco archivos <code>.txt</code>.</p>
+<pre>sala_estudio.txt
+La sala de estudio del edificio 3 abre de lunes a viernes de 9:00 a.m. a 7:00 p.m.
+Cada estudiante puede reservar un cubículo por un máximo de 2 horas al día.
+No se permite consumir alimentos dentro de la sala; solo se permite agua en envases cerrados.
+
+comedor.txt
+El comedor estudiantil atiende de lunes a viernes de 11:00 a.m. a 2:00 p.m.
+Para comprar el almuerzo se debe presentar el carné de estudiante.
+Los estudiantes pueden comer en el comedor o en las mesas del patio, pero no dentro de las aulas.</pre>
+<h2>7.1 Pregunta fácil</h2>
+<p>«¿Cuántas horas al día puedo reservar un cubículo en la sala de estudio?». El primer chunk fue <code>sala_estudio.txt</code> (0.789), seguido de dos irrelevantes (0.656 y 0.646). La respuesta fue correcta, 2 horas al día, pero con una forma que no esperábamos de un modelo con instrucciones en español neutro: «Podés reservar…», voseo, y una explicación redundante que repite lo mismo. El dato estaba bien; el estilo no es el que usaríamos y lo dejamos como salió.</p>
+@FIG 17_paso27_facil | Paso 27: pregunta fácil.
+<h2>7.2 Pregunta que necesita dos documentos</h2>
+<p>«Si quiero comer, ¿puedo hacerlo en la sala de estudio y hasta qué hora atiende el comedor?». La recuperación funcionó: <code>comedor.txt</code> (0.721) y <code>sala_estudio.txt</code> (0.641) quedaron en primer y segundo lugar, más un fragmento del reglamento (0.629). Aun así, el modelo respondió «No encuentro esa información en los documentos proporcionados.», un falso negativo, porque la información sí estaba en los dos primeros chunks. Repetimos la corrida y salió igual; repetimos con k=5 y salió igual otra vez. Las tres respuestas están en la carpeta de evidencia.</p>
+@FIG 18_paso27_dos_docs | Paso 27: pregunta de dos documentos, primer intento. Se recuperaron los dos documentos correctos y el modelo contestó que no encontraba la información.
+<p>Probamos una pregunta de dos documentos redactada de forma más directa, «¿A qué hora cierra la sala de estudio y a qué hora abre el comedor?». Esa vez el modelo combinó bien ambas fuentes: la sala abre de 9:00 a.m. a 7:00 p.m. (fuente <code>sala_estudio.txt</code>) y el comedor atiende de 11:00 a.m. a 2:00 p.m. (fuente <code>comedor.txt</code>), y concluyó que la sala cierra a las 7:00 p.m. y el comedor abre a las 11:00 a.m. Mantenemos las dos preguntas en el informe: la que falló y la que funcionó, porque la diferencia entre ambas no está en la recuperación sino en cómo el modelo de 3 mil millones de parámetros razona sobre una pregunta compuesta («puedo comer» más «hasta qué hora») a partir de contexto fragmentado.</p>
+@FIG 19_paso27_dos_docs_b | Paso 27: otra redacción de la pregunta de dos documentos; respuesta correcta con las dos fuentes.
+<h2>7.3 Pregunta sin respuesta</h2>
+<p>«¿Cuánto cuesta el estacionamiento del campus?». El sistema recuperó <code>reglamento.txt</code> (0.657), <code>laboratorios.txt</code> (0.643) y <code>sala_estudio.txt</code> (0.626) y respondió con la frase exacta de «No encuentro esa información…». Cabe notar que la similitud del primer chunk, 0.657, es más alta que la de varios chunks útiles de la pregunta anterior (0.629). Esto indica que la similitud no sirve por sí sola como umbral para decidir si hay respuesta: quien tomó la decisión correcta fue el modelo, no el recuperador.</p>
+@FIG 20_paso27_sin_respuesta | Paso 27: pregunta sin respuesta en la base de conocimiento.
+<div class="tabla-titulo">Tabla 5. Resumen de las corridas del reto</div>
+<table>
+  <tr><th>Pregunta</th><th>Mejor chunk</th><th>Resultado</th></tr>
+  <tr><td>Fácil (cubículo)</td><td><code>sala_estudio.txt</code> 0.789</td><td>Correcta, con voseo</td></tr>
+  <tr><td>Dos documentos, primera redacción (3 intentos)</td><td><code>comedor.txt</code> 0.721 y <code>sala_estudio.txt</code> 0.641</td><td>Falso negativo las tres veces</td></tr>
+  <tr><td>Dos documentos, otra redacción</td><td><code>comedor.txt</code> 0.701 y <code>sala_estudio.txt</code> 0.673</td><td>Correcta, con las dos fuentes</td></tr>
+  <tr><td>Sin respuesta (estacionamiento)</td><td><code>reglamento.txt</code> 0.657</td><td>Frase exacta de «No encuentro…»</td></tr>
+</table>
+
+<h1>8. Preguntas de reflexión</h1>
+<h2>8.1 ¿Cuál es la diferencia entre RAG y entrenar o hacer fine-tuning a un modelo?</h2>
+<p>El fine-tuning cambia los pesos del modelo con ejemplos adicionales; RAG deja el modelo igual y le pone el texto relevante en el prompt en el momento de la pregunta. En el paso 24 cambiamos un horario y la respuesta cambió al reiniciar, sin entrenar nada. Con fine-tuning, esa modificación habría exigido volver a entrenar. El fine-tuning sirve más para ajustar el estilo o la tarea del modelo; RAG, para que consulte datos que cambian y de los que se necesita citar la fuente.</p>
+<h2>8.2 ¿Para qué sirven los embeddings dentro de este laboratorio?</h2>
+<p>Convierten cada chunk y cada pregunta en un vector, de modo que se pueda medir qué tan parecidos son por significado y no solo por palabras repetidas. La similitud coseno entre el vector de la pregunta y el de cada chunk es lo que ordena los resultados del Top-k. Por eso la pregunta de los libros encontró el préstamo aunque no repite el texto literal del documento. Los embeddings no responden nada; solo deciden qué texto se le muestra al modelo generativo.</p>
+<h2>8.3 ¿Qué problema puede ocurrir si los chunks son demasiado pequeños?</h2>
+<p>Las ideas quedan partidas y cada fragmento pierde sentido. Con 120 caracteres vimos chunks como «lar software adicional se requiere autorización del responsable del laboratorio.», que empiezan en mitad de palabra, y la frase completa solo se recuperaba porque el solapamiento la repetía. Además, un dato que cruza el límite entre dos chunks puede quedar fuera del Top-k, y el modelo contestaría con información incompleta o diría que no la encuentra.</p>
+<h2>8.4 ¿Qué problema puede ocurrir si Top-k recupera demasiados fragmentos?</h2>
+<p>Entra contexto irrelevante y el modelo puede apoyarse en él. En el paso 21, con k=3, el modelo citó <code>reglamento.txt</code> como fuente de un requisito que ese documento no contiene. Con k=5 el prompt incluyó tres chunks sin relación con la pregunta en ambas pruebas. Además, el prompt crece, la generación se hace más lenta y, en modelos pequeños, aumenta la probabilidad de mezclar datos de fragmentos distintos.</p>
+<h2>8.5 ¿Por qué sigue siendo posible una alucinación, aunque se utilice RAG?</h2>
+<p>Porque el modelo sigue generando texto y la instrucción de usar «únicamente el contexto» es una petición, no una restricción. Nos pasó de tres formas distintas: citó una fuente que no respaldaba la respuesta (paso 21), añadió una generalización que no estaba en los documentos («cualquier otro tipo de software en cualquier laboratorio», chunk de 120) y, en el sentido contrario, negó una información que sí estaba en el contexto (pregunta de dos documentos). Además, la recuperación puede traer fragmentos equivocados y el modelo los usará con la misma seguridad.</p>
+<h2>8.6 ¿Qué cambiaría para utilizar miles o millones de chunks en lugar de unos pocos?</h2>
+<p>El índice actual es una lista en memoria y la recuperación compara la pregunta con todos los vectores, uno por uno. Con millones de chunks eso es demasiado lento, y generar los embeddings al iniciar el programa, como hace <code>indexar</code>, tampoco es viable. Habría que guardar los vectores en disco o en una base vectorial con un índice de búsqueda aproximada, calcular los embeddings una sola vez y actualizarlos solo cuando un documento cambia, y cortar los textos por estructura (párrafos o secciones) en lugar de por cantidad fija de caracteres. También haría falta filtrar por metadatos y revisar la calidad de la recuperación con un conjunto de preguntas de prueba, porque con tantos chunks aumentan los fragmentos parecidos pero equivocados.</p>
+
+<h1>Conclusiones</h1>
+<p>El flujo RAG funcionó de punta a punta con modelos locales: en las dos preguntas con evidencia el sistema recuperó el documento correcto como primer resultado y respondió con el dato exacto, y en la pregunta sin evidencia respondió con la frase indicada. También cambió su respuesta al modificar un documento, sin tocar el modelo. Sin RAG, el mismo modelo dio cifras distintas e incorrectas para el préstamo de libros en dos corridas seguidas, aunque en la pregunta de la matrícula no inventó un monto, así que no podemos decir que sin documentos siempre adivine.</p>
+<p>Sobre el tamaño de chunk, con documentos de tres líneas las respuestas correctas no cambiaron entre 120, 220 y 400 caracteres. Lo que cambió fue el contexto: los chunks de 120 quedaron cortados y los de 400 trajeron documentos enteros sin relación. Sobre Top-k, k=1 dio contexto limpio y respuestas correctas, k=3 produjo una cita errónea y con k=5 más de la mitad de los chunks no tenían que ver con la pregunta. Con una base tan pequeña no podemos decir cuál valor es el mejor en general; para esta base, k=3 con chunk de 220 funcionó, pero no fue el más limpio.</p>
+<p>Lo que quedó a medias o salió mal también cuenta. El modelo de 3 mil millones de parámetros dio un falso negativo tres veces seguidas en una pregunta que necesitaba dos documentos, y una de sus respuestas salió con voseo. La similitud tampoco separa preguntas con y sin respuesta. Para un sistema real haría falta revisar las respuestas contra las fuentes, usar un modelo más grande o un prompt más estricto, y no depender del modelo para decidir cuándo no hay información.</p>
+
+<h1>Anexo. Código completo de rag_universidad.py</h1>
+<pre>@CODIGO</pre>

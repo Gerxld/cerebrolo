@@ -1,0 +1,14 @@
+[python-code-review]
+ carpeta se llama igual que name: True
+ archivo SKILL.md existe: True
+ name valido (a-z, 0-9, guiones, <=64): True
+ description no vacia y <=1024 (284 caracteres): True
+ ruta relativa assets/report-template.md existe: True
+ ruta relativa references/checklist.md existe: True
+ ruta relativa scripts/check_syntax.py existe: True
+[python-test-designer]
+ carpeta se llama igual que name: True
+ archivo SKILL.md existe: True
+ name valido (a-z, 0-9, guiones, <=64): True
+ description no vacia y <=1024 (291 caracteres): True
+ ruta relativa assets/test-plan-template.md existe: True

@@ -1,0 +1,1 @@
+El archivo ../secreto.txt no existe en la carpeta autorizada. Los archivos disponibles son: cursos.py, test_usuarios.py, usuarios.py.

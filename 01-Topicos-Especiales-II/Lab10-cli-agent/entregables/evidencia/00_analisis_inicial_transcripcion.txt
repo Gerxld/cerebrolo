@@ -1,0 +1,37 @@
+## 1. Qué hace cada archivo
+
+- **`tasks.py`** es la lógica del dominio. Las tareas son diccionarios `{"id", "titulo", "completada"}` dentro de una lista que se pasa como argumento.
+  - `agregar_tarea(tareas, titulo)` quita los espacios del título y lanza `ValueError` si queda vacío. Si es válido, crea la tarea con `id = len(tareas) + 1` y `completada=False`, la añade a la lista y la devuelve.
+  - `completar_tarea(tareas, tarea_id)` busca por id y marca la tarea como completada. Lanza `ValueError("Tarea no encontrada")` si no existe.
+  - `pendientes(tareas)` devuelve las tareas no completadas.
+- **`app.py`** es un script de demostración, no una CLI real. Agrega dos tareas, completa la 1 e imprime las pendientes. No lee argumentos ni guarda datos. Al importarlo ejecuta todo, porque no tiene `if __name__ == "__main__"`.
+- **`tests/test_tasks.py`** son pruebas con `unittest`.
+- **`.gitignore`** ignora `__pycache__/` y `*.pyc`.
+
+## 2. Qué cubren las pruebas
+
+Hay solo dos pruebas, ambas del camino feliz:
+- `test_agregar_tarea` comprueba que el título se guarda y que `completada` empieza en `False`.
+- `test_completar_tarea` agrega una tarea, la completa y comprueba que `pendientes` queda vacío.
+
+Lo que **no** cubren:
+- El título vacío o con solo espacios, que debe lanzar `ValueError`.
+- El recorte de espacios del título.
+- Completar un id inexistente.
+- Que `pendientes` filtre bien cuando hay mezcla de tareas completadas y pendientes.
+- La asignación de ids, que ninguna prueba verifica.
+- `app.py`.
+
+Además, `tests/` no tiene `__init__.py`. El import `from tasks import ...` depende de ejecutar desde la raíz, por ejemplo con `python -m unittest discover`.
+
+## 3. Riesgos en la asignación de IDs
+
+`id = len(tareas) + 1` supone que la lista nunca pierde elementos y que nadie más la modifica.
+
+- **IDs duplicados tras borrar.** El código actual no tiene función de borrado, pero cualquiera que haga `tareas.remove(...)` o filtre la lista rompe la unicidad. Con ids 1, 2 y 3, si se borra la 1 y se agrega otra, la nueva recibe `id=3` y choca con la existente. `completar_tarea` solo marcaría la primera coincidencia, así que el comportamiento sería silencioso e incorrecto.
+- **Ids reutilizados.** Si se borra la última tarea, el siguiente alta reutiliza su id. Si algo externo guardaba esa referencia, ahora apunta a otra tarea.
+- **Dependencia del estado de la lista.** El id depende del tamaño actual de la lista y no de un contador propio. Si se cargan tareas filtradas, paginadas o ya existentes con ids arbitrarios, la numeración se descuadra.
+- **Concurrencia.** Si hubiera hilos o varios procesos, dos altas simultáneas podrían leer el mismo `len` y generar el mismo id. Hoy no es un problema real porque todo es secuencial y en memoria.
+- **Sin pruebas que lo protejan.** Ninguna prueba cubre ids únicos o ids tras borrar, así que una regresión pasaría desapercibida.
+
+Una alternativa más robusta sería `max((t["id"] for t in tareas), default=0) + 1`, o un contador independiente. Con la primera, los ids no se reutilizan salvo que se borre la tarea con el id más alto. Con un contador, nunca se reutilizan. No modifiqué nada, como pediste.

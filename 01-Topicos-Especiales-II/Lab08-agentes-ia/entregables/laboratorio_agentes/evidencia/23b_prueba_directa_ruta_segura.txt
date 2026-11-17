@@ -1,0 +1,10 @@
+Fecha y hora: 2026-10-30 11:15:45
+Comando: python prueba_ruta_segura.py
+------------------------------------------------------------
+ruta_segura('usuarios.py') -> C:\Cerebrolo\01-Topicos-Especiales-II\Lab08-agentes-ia\entregables\laboratorio_agentes\proyecto\usuarios.py
+ruta_segura('../secreto.txt') -> ERROR: Ruta fuera de la carpeta autorizada
+ruta_segura('..\\secreto.txt') -> ERROR: Ruta fuera de la carpeta autorizada
+ruta_segura('subcarpeta/../../secreto.txt') -> ERROR: Ruta fuera de la carpeta autorizada
+ruta_segura('C:\\Cerebrolo\\01-Topicos-Especiales-II\\Lab08-agentes-ia\\entregables\\laboratorio_agentes\\secreto.txt') -> ERROR: Ruta fuera de la carpeta autorizada
+ruta_segura('C:\\Windows\\win.ini') -> ERROR: Ruta fuera de la carpeta autorizada
+ruta_segura('.') -> C:\Cerebrolo\01-Topicos-Especiales-II\Lab08-agentes-ia\entregables\laboratorio_agentes\proyecto

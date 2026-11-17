@@ -1,0 +1,1 @@
+Diagnóstico aceptado. Aplica solo la guarda 'if not texto: return []' en tasks.py (solo la cadena vacía; los espacios no se tratan distinto). No toques las pruebas, que no se debilitan. Ejecuta 'python -m unittest discover -s tests'. No uses git.

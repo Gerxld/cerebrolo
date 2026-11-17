@@ -1,0 +1,15 @@
+diff --git a/prestamos.py b/prestamos.py
+index 14f61c8..8306e3f 100644
+--- a/prestamos.py
++++ b/prestamos.py
+@@ -42,8 +42,8 @@ def registrar_prestamo(prestamos, usuario, libro, fecha):
+         raise ValueError("el vencimiento supera 9999-12-31") from None
+     if _libro_esta_activo(prestamos, libro):
+         raise ValueError("el libro ya tiene un préstamo activo")
+-    if _contar_activos(prestamos, usuario) >= 3:
+-        raise ValueError("el usuario ya tiene 3 préstamos activos")
++    if _contar_activos(prestamos, usuario) >= 2:
++        raise ValueError("el usuario ya tiene 2 préstamos activos")
+     prestamo = {
+         "usuario": usuario,
+         "libro": libro,

@@ -1,0 +1,99 @@
+Fecha y hora de inicio: 2026-10-30 11:27:50
+Directorio: C:/Cerebrolo/01-Topicos-Especiales-II/Lab08-agentes-ia/entregables/laboratorio_agentes
+Comando: echo "Quiero un reporte llamado cobertura.md que diga qué funciones del proyecto no tienen ninguna prueba." | python agente_proyecto.py
+------------------------------------------------------------
+Objetivo para el agente: 
+--- Iteración 1 ---
+Herramienta: listar_archivos
+Argumentos: {}
+Observación: cursos.py
+test_usuarios.py
+usuarios.py
+
+--- Iteración 2 ---
+Herramienta: leer_archivo
+Argumentos: {'nombre': 'usuarios.py'}
+Observación: def email_valido(email):
+    return "@" in email and "." in email.split("@")[-1]
+
+def crear_usuario(nombre, email):
+    if not nombre.strip():
+        raise ValueError("Nombre obligatorio")
+    if not email_valido(email):
+        raise ValueError("Email inválido")
+    return {"nombre": nombre.strip(), "email": email.lower()}
+
+
+--- Iteración 3 ---
+Herramienta: leer_archivo
+Argumentos: {'nombre': 'test_usuarios.py'}
+Observación: import unittest
+from usuarios import email_valido, crear_usuario
+
+class TestUsuarios(unittest.TestCase):
+    def test_email_valido(self):
+        self.assertTrue(email_valido("ana@utp.ac.pa"))
+
+    def test_email_invalido(self):
+        self.assertFalse(email_valido("ana@utp"))
+
+    def test_nombre_obligatorio(self):
+        with self.assertRaises(ValueError):
+            crear_usuario("", "ana@utp.ac.pa")
+
+if __name__ == "__main__":
+    unittest.main()
+
+
+--- Iteración 4 ---
+Herramienta: leer_archivo
+Argumentos: {'nombre': 'cursos.py'}
+Observación: def crear_curso(codigo, nombre):
+    if not codigo.strip():
+        raise ValueError("Código obligatorio")
+    return {"codigo": codigo.upper(), "nombre": nombre.strip()}
+
+def buscar_curso(cursos, codigo):
+    for curso in cursos:
+        if curso["codigo"] == codigo.upper():
+            return curso
+    return None
+
+
+--- Iteración 5 ---
+
+RESPUESTA FINAL:
+Okay, let's see. The user wants a report called cobertura.md that lists functions without any tests.
+
+First, I listed the files: cursos.py, test_usuarios.py, usuarios.py.
+
+Then I read usuarios.py and found two functions: email_valido and crear_usuario. Then I read test_usuarios.py and saw that both functions have tests. So those two are covered.
+
+Next, I read cursos.py and found two functions: crear_curso and buscar_curso. But there's no test file for cursos.py. The test files available are only test_usuarios.py, which tests the usuarios module. So the functions in cursos.py don't have tests.
+
+Therefore, the report should list crear_curso and buscar_curso as functions without tests.
+
+I need to generate the report content. The report should be in Markdown, name cobertura.md.
+
+So the content would be something like:
+
+# Cobertura de Pruebas
+
+Las siguientes funciones no tienen pruebas:
+
+- crear_curso
+- buscar_curso
+
+Wait, but the user said "qué funciones del proyecto no tienen ninguna prueba". So the answer is those two functions from cursos.py.
+
+I need to make sure that there's no test file for cursos.py. Since the only test file is test_usuarios.py, which tests the usuarios module, the cursos.py functions are uncovered.
+
+So the report content is as above.
+
+Now, write that in the report format.
+</think>
+
+
+------------------------------------------------------------
+Código de salida: 0
+Fecha y hora de fin: 2026-10-30 11:35:30

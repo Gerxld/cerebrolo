@@ -1,0 +1,100 @@
+> git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   app.py
+	modified:   tasks.py
+	modified:   tests/test_tasks.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+> git diff
+warning: in the working copy of 'app.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tasks.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_tasks.py', LF will be replaced by CRLF the next time Git touches it
+diff --git a/app.py b/app.py
+index ab8d5f8..bd76d05 100644
+--- a/app.py
++++ b/app.py
+@@ -2,10 +2,10 @@ from tasks import agregar_tarea, completar_tarea, pendientes
+ 
+ tareas = []
+ 
+-agregar_tarea(tareas, "Estudiar pruebas unitarias")
+-agregar_tarea(tareas, "Preparar exposición")
++agregar_tarea(tareas, "Estudiar pruebas unitarias", "alta")
++agregar_tarea(tareas, "Preparar exposición", "media")
+ completar_tarea(tareas, 1)
+ 
+ print("Tareas pendientes:")
+ for tarea in pendientes(tareas):
+-    print(f'- {tarea["id"]}: {tarea["titulo"]}')
++    print(f'- {tarea["id"]}: {tarea["titulo"]} (prioridad: {tarea["prioridad"]})')
+diff --git a/tasks.py b/tasks.py
+index 2de7ec3..94d5a7b 100644
+--- a/tasks.py
++++ b/tasks.py
+@@ -1,8 +1,17 @@
+-def agregar_tarea(tareas, titulo):
++PRIORIDADES = ("alta", "media", "baja")
++
++def agregar_tarea(tareas, titulo, prioridad):
+     titulo = titulo.strip()
+     if not titulo:
+         raise ValueError("El título es obligatorio")
+-    tarea = {"id": len(tareas) + 1, "titulo": titulo, "completada": False}
++    if prioridad not in PRIORIDADES:
++        raise ValueError("Prioridad inválida: use alta, media o baja")
++    tarea = {
++        "id": len(tareas) + 1,
++        "titulo": titulo,
++        "prioridad": prioridad,
++        "completada": False,
++    }
+     tareas.append(tarea)
+     return tarea
+ 
+diff --git a/tests/test_tasks.py b/tests/test_tasks.py
+index 81b22a3..ea6f53e 100644
+--- a/tests/test_tasks.py
++++ b/tests/test_tasks.py
+@@ -4,15 +4,36 @@ from tasks import agregar_tarea, completar_tarea, pendientes
+ class TestTasks(unittest.TestCase):
+     def test_agregar_tarea(self):
+         tareas = []
+-        tarea = agregar_tarea(tareas, "Leer capítulo")
++        tarea = agregar_tarea(tareas, "Leer capítulo", "alta")
+         self.assertEqual(tarea["titulo"], "Leer capítulo")
++        self.assertEqual(tarea["prioridad"], "alta")
+         self.assertFalse(tarea["completada"])
+ 
++    def test_prioridades_validas(self):
++        tareas = []
++        for prioridad in ("alta", "media", "baja"):
++            tarea = agregar_tarea(tareas, "Tarea", prioridad)
++            self.assertEqual(tarea["prioridad"], prioridad)
++
++    def test_prioridad_invalida(self):
++        tareas = []
++        for prioridad in ("urgente", "", None, "ALTA"):
++            with self.assertRaises(ValueError):
++                agregar_tarea(tareas, "Tarea", prioridad)
++        self.assertEqual(tareas, [])
++
+     def test_completar_tarea(self):
+         tareas = []
+-        agregar_tarea(tareas, "Practicar")
++        agregar_tarea(tareas, "Practicar", "baja")
+         completar_tarea(tareas, 1)
+         self.assertEqual(len(pendientes(tareas)), 0)
+ 
++    def test_pendientes_excluye_completadas(self):
++        tareas = []
++        agregar_tarea(tareas, "A", "alta")
++        agregar_tarea(tareas, "B", "media")
++        completar_tarea(tareas, 1)
++        self.assertEqual([t["titulo"] for t in pendientes(tareas)], ["B"])
++
+ if __name__ == "__main__":
+     unittest.main()

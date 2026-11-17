@@ -1,0 +1,92 @@
+Fecha y hora de inicio: 2026-10-30 11:35:47
+Directorio: C:/Cerebrolo/01-Topicos-Especiales-II/Lab08-agentes-ia/entregables/laboratorio_agentes
+Comando: echo "Quiero un reporte llamado cobertura.md que diga qué funciones del proyecto no tienen ninguna prueba." | python agente_proyecto.py
+------------------------------------------------------------
+Objetivo para el agente: 
+--- Iteración 1 ---
+Herramienta: listar_archivos
+Argumentos: {}
+Observación: cursos.py
+test_usuarios.py
+usuarios.py
+
+--- Iteración 2 ---
+Herramienta: leer_archivo
+Argumentos: {'nombre': 'usuarios.py'}
+Observación: def email_valido(email):
+    return "@" in email and "." in email.split("@")[-1]
+
+def crear_usuario(nombre, email):
+    if not nombre.strip():
+        raise ValueError("Nombre obligatorio")
+    if not email_valido(email):
+        raise ValueError("Email inválido")
+    return {"nombre": nombre.strip(), "email": email.lower()}
+
+
+--- Iteración 3 ---
+Herramienta: leer_archivo
+Argumentos: {'nombre': 'test_usuarios.py'}
+Observación: import unittest
+from usuarios import email_valido, crear_usuario
+
+class TestUsuarios(unittest.TestCase):
+    def test_email_valido(self):
+        self.assertTrue(email_valido("ana@utp.ac.pa"))
+
+    def test_email_invalido(self):
+        self.assertFalse(email_valido("ana@utp"))
+
+    def test_nombre_obligatorio(self):
+        with self.assertRaises(ValueError):
+            crear_usuario("", "ana@utp.ac.pa")
+
+if __name__ == "__main__":
+    unittest.main()
+
+
+--- Iteración 4 ---
+Herramienta: leer_archivo
+Argumentos: {'nombre': 'cursos.py'}
+Observación: def crear_curso(codigo, nombre):
+    if not codigo.strip():
+        raise ValueError("Código obligatorio")
+    return {"codigo": codigo.upper(), "nombre": nombre.strip()}
+
+def buscar_curso(cursos, codigo):
+    for curso in cursos:
+        if curso["codigo"] == codigo.upper():
+            return curso
+    return None
+
+
+--- Iteración 5 ---
+Herramienta: guardar_reporte
+Argumentos: {'nombre': 'cobertura.md', 'contenido': '# Funciones sin pruebas\n\n- crear_curso\n- buscar_curso'}
+Observación: Reporte guardado en C:\Cerebrolo\01-Topicos-Especiales-II\Lab08-agentes-ia\entregables\laboratorio_agentes\reportes\cobertura.md
+
+--- Iteración 6 ---
+
+RESPUESTA FINAL:
+Okay, let me recap what happened here. The user wanted a report called cobertura.md that lists functions in the project with no tests.
+
+First, I used listar_archivos to find the project files: cursos.py, test_usuarios.py, and usuarios.py.
+
+Then, I checked usuarios.py and found two functions: email_valido and crear_usuario. Then, I read test_usuarios.py, which tests those two functions. So they have tests.
+
+Next, I read cursos.py and found two functions: crear_curso and buscar_curso. Since there's no test file for cursos.py (only test_usuarios.py exists), those two functions have no tests.
+
+I then generated the report in Markdown with the two functions listed. The report was saved successfully.
+
+The user's request was fulfilled, so the final answer should confirm the report was created with the listed functions. The system response shows it's saved, so I just need to state that the report is done with the two functions.
+</think>
+
+El reporte **cobertura.md** ha sido generado correctamente y contiene las siguientes funciones del proyecto que no tienen pruebas:
+
+- `crear_curso`
+- `buscar_curso`
+
+✅ **Resultado final**: Las funciones de `cursos.py` no están cubiertas por pruebas.
+------------------------------------------------------------
+Código de salida: 0
+Fecha y hora de fin: 2026-10-30 11:43:34

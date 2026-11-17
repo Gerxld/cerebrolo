@@ -1,0 +1,30 @@
+Fecha y hora de inicio: 2026-10-30 11:17:21
+Directorio: C:/Cerebrolo/01-Topicos-Especiales-II/Lab08-agentes-ia/entregables/laboratorio_agentes
+Comando: echo "Analiza el proyecto y responde: 1. ¿En qué archivo se valida el correo electrónico? 2. ¿Qué casos cubren las pruebas de usuarios? 3. Guarda un reporte llamado revision_usuarios.md con tus conclusiones." | python agente_limite.py
+------------------------------------------------------------
+Objetivo para el agente: 
+--- Iteración 1 ---
+Herramienta: listar_archivos
+Argumentos: {}
+Observación: cursos.py
+test_usuarios.py
+usuarios.py
+
+--- Iteración 2 ---
+Herramienta: leer_archivo
+Argumentos: {'nombre': 'usuarios.py'}
+Observación: def email_valido(email):
+    return "@" in email and "." in email.split("@")[-1]
+
+def crear_usuario(nombre, email):
+    if not nombre.strip():
+        raise ValueError("Nombre obligatorio")
+    if not email_valido(email):
+        raise ValueError("Email inválido")
+    return {"nombre": nombre.strip(), "email": email.lower()}
+
+
+Valor devuelto por ejecutar_agente: 'El agente alcanzó el máximo de iteraciones.'
+------------------------------------------------------------
+Código de salida: 0
+Fecha y hora de fin: 2026-10-30 11:18:55

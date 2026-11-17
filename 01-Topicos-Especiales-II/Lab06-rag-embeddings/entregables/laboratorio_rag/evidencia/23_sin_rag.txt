@@ -1,0 +1,7 @@
+Comando: C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe run qwen2.5:3b "¿Cuál es el costo de la matrícula del próximo semestre?"  (sin documentos, sin RAG)
+Hora de inicio: 2026-10-30 11:49:58
+----------------------------------------
+Lo siento por la confusión, pero como asistente de inteligencia artificial, no tengo la capacidad de proporcionar información sobre costos específicos como matrículas de escuelas o universidades. Este tipo de información variará dependiendo del país, el país, la institución educativa y más. Te recomiendo que contactes directamente con la universidad o institución educativa para obtener información precisa y actualizada sobre los costos de matrícula para el próximo semestre.
+
+----------------------------------------
+Hora de fin: 2026-10-30 11:50:05

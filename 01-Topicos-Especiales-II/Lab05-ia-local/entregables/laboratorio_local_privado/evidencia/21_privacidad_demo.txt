@@ -1,0 +1,24 @@
+Fecha y hora de inicio: 2026-10-30 11:52:37
+Comando: C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe run qwen2.5-coder:3b   (prompt entregado por entrada estandar)
+------------------------------------------------------------
+PROMPT ENVIADO:
+Explica qué hace el siguiente código Python, en pocas líneas.
+
+# Datos ficticios para la prueba de privacidad (paso 21). Nada de esto es real.
+nombre_cliente = "CLIENTE_DEMO_001"
+saldo_demo = 1500.00
+
+
+def resumen_cliente(nombre, saldo):
+    estado = "con saldo" if saldo > 0 else "sin saldo"
+    return f"{nombre} está {estado}: {saldo:.2f}"
+
+
+print(resumen_cliente(nombre_cliente, saldo_demo))
+------------------------------------------------------------
+RESPUESTA DEL MODELO:
+El código Python proporcionado define una función llamada `resumen_cliente` que toma un nombre de cliente y un saldo como parámetros. Luego, verifica si el saldo es mayor que cero y devuelve una cadena que describe el estado del cliente según el saldo. La función utiliza una expresión ternaria para simplificar la lógica. Finalmente, el código imprime el resumen del cliente utilizando el nombre proporcionado y el saldo demo.
+------------------------------------------------------------
+Codigo de salida: 0
+Fecha y hora de fin: 2026-10-30 11:52:43
+Tiempo transcurrido: 6.1 s

@@ -1,0 +1,18 @@
+Comando: python probar_documento.py confirmar documentos/ticket_para_escalar.txt
+Entrada por stdin: s
+Fecha y hora de inicio: 2026-10-30 11:15:17
+----------------------------------------
+
+--- ticket_para_escalar.txt (confirmar) ---
+Salida del modelo: {
+  "categoria": "soporte técnico",
+  "prioridad": "alta",
+  "resumen": "Cuenta bloqueada con tres cobros no reconocidos de 180.00, solicitando contacto con supervisor hoy",
+  "accion_sugerida": "escalar"
+}
+Validación: REQUIERE_CONFIRMACION_HUMANA
+¿Autoriza el escalamiento? (s/n): Acción autorizada por el humano: True
+RESULTADO FINAL: EJECUTADA (simulada)
+----------------------------------------
+Código de salida: 0
+Fecha y hora de fin: 2026-10-30 11:17:27

@@ -1,0 +1,55 @@
+Fecha y hora de inicio: 2026-10-30 11:48:40
+Comando: C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe run qwen2.5-coder:3b   (prompt entregado por entrada estandar)
+------------------------------------------------------------
+PROMPT ENVIADO:
+Escribe una función Python que determine si un número es primo y agrega tres ejemplos
+------------------------------------------------------------
+RESPUESTA DEL MODELO:
+¡Claro! Aquí tienes una función en Python que determina si un número es primo, junto con algunos ejemplos:
+
+```python
+def is_prime(number):
+    if number <= 1:
+        return False
+    if number <= 3:
+        return True
+    if number % 2 == 0 or number % 3 == 0:
+        return False
+    i = 5
+    while i * i <= number:
+        if number % i == 0 or number % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+# Ejemplos de uso
+num1 = 17
+num2 = 20
+num3 = 29
+num4 = 1
+
+print(f"{num1} es primo: {is_prime(num1)}")
+print(f"{num2} es primo: {is_prime(num2)}")
+print(f"{num3} es primo: {is_prime(num3)}")
+print(f"{num4} es primo: {is_prime(num4)}")
+```
+
+### Explicación:
+- **Función `is_prime`:** 
+  - Primero, se verifica si el número es menor o igual a 1, en cuyo caso no es primo.
+  - Luego, se verifica si el número es 2 o 3, en cuyo caso es primo.
+  - Si el número es divisible por 2 o 3, no es primo.
+  - Se itera desde 5 en adelante, incrementando de 6 en 6 (i.e., se considera el patrón 6k ± 1).
+  - Si el número es divisible por alguno de estos patrones, no es primo.
+
+### Ejemplos:
+- `17` es primo (`True`)
+- `20` no es primo (`False`)
+- `29` es primo (`True`)
+- `1` no es primo (`False`)
+
+Este código es eficiente para números relativamente grandes debido a su estrategia de búsqueda eficiente.
+------------------------------------------------------------
+Codigo de salida: 0
+Fecha y hora de fin: 2026-10-30 11:49:15
+Tiempo transcurrido: 34.5 s

@@ -1,0 +1,8 @@
+752c1de	Integrar PR #4: eliminar tarea por ID
+b109cad	Agregar eliminar_tarea y pruebas de eliminación por ID
+5184eaf	Initial plan
+b544cf3	Integrar PR #2: categorías y filtrado de tareas
+dd63fb6	Agregar casos de prueba de filtrado faltantes
+2227ca4	Agregar categorías y filtrado de tareas pendientes
+823e1fe	Initial plan
+dd19199	Línea base: gestor de tareas (tasks.py, app.py, pruebas) y README

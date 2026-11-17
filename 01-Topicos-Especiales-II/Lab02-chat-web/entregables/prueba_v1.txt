@@ -1,0 +1,33 @@
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Salir
+Seleccione una opción: Título de la tarea: Tarea agregada: Estudiar Python
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Salir
+Seleccione una opción: Título de la tarea: Tarea agregada: Preparar demo
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Salir
+Seleccione una opción: 
+Tareas:
+1. Estudiar Python
+2. Preparar demo
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Salir
+Seleccione una opción: Opción no válida. Intente de nuevo.
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Salir
+Seleccione una opción: Hasta luego.

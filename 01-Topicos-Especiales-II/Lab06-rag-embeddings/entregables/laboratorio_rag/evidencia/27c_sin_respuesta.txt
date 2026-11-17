@@ -1,0 +1,27 @@
+Comando: printf '%s\nsalir\n' "¿Cuánto cuesta el estacionamiento del campus?" | python -u rag_universidad.py   
+Hora de inicio: 2026-10-30 12:05:51
+----------------------------------------
+Documentos cargados: 5
+Chunks creados: 10
+Generando índice vectorial...
+
+Pregunta (o 'salir'): 
+--- CHUNKS RECUPERADOS ---
+1. reglamento.txt | similitud=0.657
+deben documentarse según el procedimiento de la facultad.
+
+2. laboratorios.txt | similitud=0.643
+Los laboratorios de desarrollo de software están ubicados en el edificio 3.
+Los estudiantes pueden utilizar los laboratorios de 8:00 a.m. a 8:00 p.m.
+Para instalar software adicional se requiere autorización del responsa
+
+3. sala_estudio.txt | similitud=0.626
+La sala de estudio del edificio 3 abre de lunes a viernes de 9:00 a.m. a 7:00 p.m.
+Cada estudiante puede reservar un cubículo por un máximo de 2 horas al día.
+No se permite consumir alimentos dentro de la sala; solo se p
+
+--- RESPUESTA RAG ---
+No encuentro esa información en los documentos proporcionados.
+
+Pregunta (o 'salir'): ----------------------------------------
+Hora de fin: 2026-10-30 12:06:19

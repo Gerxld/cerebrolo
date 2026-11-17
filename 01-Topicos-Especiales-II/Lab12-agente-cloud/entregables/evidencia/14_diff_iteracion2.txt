@@ -1,0 +1,26 @@
+diff --git a/tests/test_tasks.py b/tests/test_tasks.py
+index c3b5834..71a1bd4 100644
+--- a/tests/test_tasks.py
++++ b/tests/test_tasks.py
+@@ -30,6 +30,21 @@ class TestTasks(unittest.TestCase):
+         self.assertEqual(len(resultado), 1)
+         self.assertEqual(resultado[0]["titulo"], "Preparar laboratorio")
+ 
++    def test_pendientes_filtra_categoria_inexistente(self):
++        tareas = []
++        agregar_tarea(tareas, "Leer documentación", "Estudio")
++        agregar_tarea(tareas, "Preparar laboratorio", "Trabajo")
++
++        self.assertEqual(pendientes(tareas, "salud"), [])
++
++    def test_pendientes_filtra_mayusculas(self):
++        tareas = []
++        agregar_tarea(tareas, "Preparar laboratorio", "Trabajo")
++
++        resultado_minusculas = pendientes(tareas, "trabajo")
++        resultado_mayusculas = pendientes(tareas, "TRABAJO")
++        self.assertEqual(resultado_mayusculas, resultado_minusculas)
++
+ 
+ if __name__ == "__main__":
+     unittest.main()

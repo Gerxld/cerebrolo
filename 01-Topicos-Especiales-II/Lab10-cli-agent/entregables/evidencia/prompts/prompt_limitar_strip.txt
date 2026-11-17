@@ -1,0 +1,1 @@
+En buscar_tareas, la línea texto = texto.strip().casefold() recorta espacios, y eso no lo pedí: solo pedí búsqueda sin distinguir mayúsculas y minúsculas. Reduce el cambio: quita únicamente el strip() y deja el resto igual (casefold, firma, pruebas). Hazlo en tasks.py y ejecuta 'python -m unittest discover -s tests'. No toques otros archivos ni uses git.

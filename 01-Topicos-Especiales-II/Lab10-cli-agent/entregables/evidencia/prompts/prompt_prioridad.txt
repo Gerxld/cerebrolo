@@ -1,0 +1,10 @@
+Implementa prioridad para las tareas con los valores alta, media o baja.
+
+Requisitos:
+- agregar_tarea debe recibir una prioridad;
+- prioridad inválida debe producir ValueError;
+- app.py debe mostrar la prioridad;
+- agrega o actualiza pruebas unitarias;
+- no agregues dependencias externas;
+- conserva el comportamiento actual de completar y listar pendientes;
+- antes de terminar, ejecuta las pruebas.

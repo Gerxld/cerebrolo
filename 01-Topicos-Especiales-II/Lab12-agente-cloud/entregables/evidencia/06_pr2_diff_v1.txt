@@ -1,0 +1,95 @@
+diff --git a/app.py b/app.py
+index 09450aa..31e1177 100644
+--- a/app.py
++++ b/app.py
+@@ -1,9 +1,14 @@
+ from tasks import agregar_tarea, completar_tarea, pendientes
+ 
+ tareas = []
+-agregar_tarea(tareas, "Estudiar agentes cloud")
+-agregar_tarea(tareas, "Preparar laboratorio")
++agregar_tarea(tareas, "Estudiar agentes cloud", "Estudio")
++agregar_tarea(tareas, "Preparar laboratorio", "Trabajo")
+ completar_tarea(tareas, 1)
+ 
++print("Tareas pendientes:")
+ for tarea in pendientes(tareas):
+-    print(f'- {tarea["id"]}: {tarea["titulo"]}')
++    print(f'- {tarea["id"]}: {tarea["titulo"]} [{tarea["categoria"]}]')
++
++print("\nTareas pendientes de categoría 'trabajo':")
++for tarea in pendientes(tareas, "trabajo"):
++    print(f'- {tarea["id"]}: {tarea["titulo"]} [{tarea["categoria"]}]')
+diff --git a/tasks.py b/tasks.py
+index 6f11288..ea974a9 100644
+--- a/tasks.py
++++ b/tasks.py
+@@ -1,8 +1,16 @@
+-def agregar_tarea(tareas, titulo):
++def agregar_tarea(tareas, titulo, categoria):
+     titulo = titulo.strip()
+     if not titulo:
+         raise ValueError("El título es obligatorio")
+-    tarea = {"id": len(tareas) + 1, "titulo": titulo, "completada": False}
++    categoria = categoria.strip()
++    if not categoria:
++        raise ValueError("La categoría es obligatoria")
++    tarea = {
++        "id": len(tareas) + 1,
++        "titulo": titulo,
++        "completada": False,
++        "categoria": categoria,
++    }
+     tareas.append(tarea)
+     return tarea
+ 
+@@ -15,5 +23,9 @@ def completar_tarea(tareas, tarea_id):
+     raise ValueError("Tarea no encontrada")
+ 
+ 
+-def pendientes(tareas):
+-    return [t for t in tareas if not t["completada"]]
++def pendientes(tareas, categoria=None):
++    tareas_pendientes = [t for t in tareas if not t["completada"]]
++    if categoria is None:
++        return tareas_pendientes
++    categoria_buscada = categoria.strip().lower()
++    return [t for t in tareas_pendientes if t["categoria"].lower() == categoria_buscada]
+diff --git a/tests/test_tasks.py b/tests/test_tasks.py
+index ac86af7..c3b5834 100644
+--- a/tests/test_tasks.py
++++ b/tests/test_tasks.py
+@@ -5,16 +5,31 @@
+ class TestTasks(unittest.TestCase):
+     def test_agregar_tarea(self):
+         tareas = []
+-        tarea = agregar_tarea(tareas, "Leer documentación")
++        tarea = agregar_tarea(tareas, "Leer documentación", " Estudio ")
+         self.assertEqual(tarea["titulo"], "Leer documentación")
+         self.assertFalse(tarea["completada"])
++        self.assertEqual(tarea["categoria"], "Estudio")
+ 
+     def test_completar_tarea(self):
+         tareas = []
+-        agregar_tarea(tareas, "Practicar")
++        agregar_tarea(tareas, "Practicar", "Estudio")
+         completar_tarea(tareas, 1)
+         self.assertEqual(pendientes(tareas), [])
+ 
++    def test_agregar_tarea_categoria_vacia(self):
++        with self.assertRaisesRegex(ValueError, "La categoría es obligatoria"):
++            agregar_tarea([], "Leer documentación", "   ")
++
++    def test_pendientes_filtra_por_categoria_sin_mayusculas(self):
++        tareas = []
++        agregar_tarea(tareas, "Leer documentación", "Estudio")
++        agregar_tarea(tareas, "Preparar laboratorio", "Trabajo")
++        completar_tarea(tareas, 1)
++
++        resultado = pendientes(tareas, "trabajo")
++        self.assertEqual(len(resultado), 1)
++        self.assertEqual(resultado[0]["titulo"], "Preparar laboratorio")
++
+ 
+ if __name__ == "__main__":
+     unittest.main()

@@ -1,0 +1,9 @@
+> python -c (demostracion del reto)
+Original: [(1, 'Sacar la basura', 'baja'), (2, 'Entregar lab 10', 'alta'), (3, 'Leer tema 8', 'media'), (4, 'Estudiar para el parcial', 'alta')]
+- 2: Entregar lab 10 (alta)
+- 4: Estudiar para el parcial (alta)
+- 3: Leer tema 8 (media)
+- 1: Sacar la basura (baja)
+Original tras ordenar: [1, 2, 3, 4]
+buscar 'LAB': ['Entregar lab 10']
+buscar 'zzz': []

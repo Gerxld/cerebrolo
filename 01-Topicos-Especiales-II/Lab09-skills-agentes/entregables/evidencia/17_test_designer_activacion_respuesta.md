@@ -1,0 +1,82 @@
+# Plan de pruebas
+
+## Resumen
+Archivo: `ejemplo/calculadora.py`. Funciones cubiertas: `dividir`, `promedio` y `procesar`.
+
+El archivo termina con `print(dividir(10, 0))` a nivel de módulo. Esa línea lanza `ZeroDivisionError` en cuanto se importa el módulo, así que ninguna prueba puede hacer `import calculadora` mientras siga ahí. Esto va en Observaciones, y no modifiqué el archivo.
+
+El código no documenta qué debe pasar con entradas inválidas. Los resultados de los casos de error son los que espera una prueba razonable, y donde el código hace otra cosa lo marco como "comportamiento actual distinto".
+
+## Función: dividir(a, b)
+
+| Grupo | Caso | Entrada | Resultado esperado |
+|-------|------|---------|--------------------|
+| Normal | Enteros con resultado exacto | `dividir(10, 2)` | `5.0` |
+| Normal | Resultado decimal | `dividir(7, 2)` | `3.5` |
+| Normal | Flotantes | `dividir(1.5, 0.5)` | `3.0` |
+| Normal | Divisor negativo | `dividir(9, -3)` | `-3.0` |
+| Límite | Numerador cero | `dividir(0, 5)` | `0.0` |
+| Límite | Cero negativo en el resultado | `dividir(0, -5)` | `-0.0` (que `== 0`) |
+| Límite | Divisor muy pequeño | `dividir(1, 1e-300)` | `1e300` |
+| Límite | Desbordamiento a infinito | `dividir(1e308, 1e-308)` | `inf` |
+| Límite | Booleano como número | `dividir(True, 2)` | `0.5` |
+| Error esperado | División entre cero (entero) | `dividir(10, 0)` | `ZeroDivisionError` |
+| Error esperado | División entre cero (flotante) | `dividir(10, 0.0)` | `ZeroDivisionError` |
+| Error esperado | Cero entre cero | `dividir(0, 0)` | `ZeroDivisionError` |
+| Error esperado | Texto como operando | `dividir("10", 2)` | `TypeError` |
+| Error esperado | `None` como operando | `dividir(None, 2)` | `TypeError` |
+| Error esperado | Falta un argumento | `dividir(5)` | `TypeError` |
+
+## Función: promedio(valores=[])
+
+| Grupo | Caso | Entrada | Resultado esperado |
+|-------|------|---------|--------------------|
+| Normal | Lista de enteros | `promedio([2, 4, 6])` | `4.0` |
+| Normal | Resultado decimal | `promedio([1, 2])` | `1.5` |
+| Normal | Flotantes | `promedio([0.5, 1.5])` | `1.0` |
+| Normal | Con negativos | `promedio([-2, 2, 4])` | `1.33…` (`4/3`, comparar con `pytest.approx`) |
+| Normal | Otro iterable con `len` | `promedio((10, 20))` | `15.0` |
+| Límite | Un solo elemento | `promedio([5])` | `5.0` |
+| Límite | Todos ceros | `promedio([0, 0, 0])` | `0.0` |
+| Límite | Elementos iguales | `promedio([3, 3, 3])` | `3.0` |
+| Límite | Valores muy grandes | `promedio([1e308, 1e308])` | `inf` (la suma desborda) |
+| Límite | Llamada sin argumentos (usa el valor por defecto `[]`) | `promedio()` | `ZeroDivisionError` |
+| Límite | Lista por defecto compartida entre llamadas | `promedio()` dos veces seguidas | `ZeroDivisionError` las dos veces, sin que la lista cambie |
+| Error esperado | Lista vacía | `promedio([])` | `ZeroDivisionError` |
+| Error esperado | `None` | `promedio(None)` | `TypeError` |
+| Error esperado | Elementos de texto | `promedio(["a", "b"])` | `TypeError` |
+| Error esperado | Mezcla de números y texto | `promedio([1, "2"])` | `TypeError` |
+| Error esperado | Generador (no tiene `len`) | `promedio(x for x in [1, 2])` | `TypeError` |
+| Error esperado | Número suelto en vez de lista | `promedio(5)` | `TypeError` |
+
+## Función: procesar(numero)
+
+| Grupo | Caso | Entrada | Resultado esperado |
+|-------|------|---------|--------------------|
+| Normal | Entero | `procesar(7)` | `7` |
+| Normal | Cadena numérica | `procesar("42")` | `42` |
+| Normal | Flotante (se trunca) | `procesar(3.9)` | `3` |
+| Normal | Cadena con espacios | `procesar(" 8 ")` | `8` |
+| Normal | Cadena negativa | `procesar("-5")` | `-5` |
+| Límite | Cero | `procesar(0)` | `0` |
+| Límite | Flotante negativo (trunca hacia cero) | `procesar(-3.9)` | `-3` |
+| Límite | Cadena vacía | `procesar("")` | `0` |
+| Límite | `None` | `procesar(None)` | `0` |
+| Límite | Cadena decimal | `procesar("3.5")` | `0` (`int("3.5")` falla) |
+| Límite | Entero muy grande | `procesar("9" * 30)` | `int("9" * 30)` (Python no desborda) |
+| Límite | Booleano | `procesar(True)` | `1` |
+| Error esperado | Texto no numérico | `procesar("abc")` | `0` |
+| Error esperado | Infinito | `procesar(float("inf"))` | `0` (`OverflowError` capturado) |
+| Error esperado | NaN | `procesar(float("nan"))` | `0` (`ValueError` capturado) |
+| Error esperado | Lista | `procesar([1])` | `0` (`TypeError` capturado) |
+
+## Observaciones
+
+1. **Efecto secundario al importar (`calculadora.py:15`).** Comportamiento actual distinto: importar el módulo ejecuta `print(dividir(10, 0))` y falla con `ZeroDivisionError` antes de que corra cualquier prueba. Para probar, esa línea tendría que quedar bajo `if __name__ == "__main__":` o salir del módulo. Eso lo decides tú, porque pediste no tocar el archivo. Mientras tanto, las pruebas solo pueden cargar el módulo con un truco como `runpy` con captura de la excepción, que no recomiendo.
+2. **`promedio` con argumento mutable por defecto (`calculadora.py:6`).** `valores=[]` es compartido entre llamadas. Hoy no causa daño porque la función no modifica la lista, pero `promedio()` no tiene sentido útil: siempre lanza `ZeroDivisionError`. El caso de las dos llamadas seguidas deja constancia de que la lista no cambia.
+3. **`promedio([])` y `promedio()`.** Comportamiento actual distinto de lo deseable: lanzan `ZeroDivisionError` genérico, sin mensaje que diga que la lista está vacía. Una prueba puede fijar la excepción actual o exigir un `ValueError` explícito. Hay que decidir cuál se quiere.
+4. **`procesar` con `except:` desnudo (`calculadora.py:12`).** Captura todo, incluso `KeyboardInterrupt` y `SystemExit`, y convierte cualquier error en `0`. No se puede distinguir un `0` legítimo (`procesar("0")`) de una entrada inválida (`procesar("abc")`). Los casos de error esperados de `procesar` reflejan este comportamiento, no uno ideal.
+5. **`procesar("3.5")` devuelve `0`, pero `procesar(3.5)` devuelve `3`.** La misma cantidad da resultados distintos según llegue como texto o como número. Conviene tener ambos casos en la suite para que la diferencia quede a la vista.
+6. **`dividir` y los tipos.** `dividir("10", 2)` falla con `TypeError`, mientras que `procesar` sí acepta cadenas numéricas. Si el diseño busca que `dividir` use `procesar` antes de dividir, no está escrito en el código, así que no lo incluí como caso.
+
+No ejecuté nada ni creé archivos. Si quieres, el siguiente paso es convertir este plan en un `test_calculadora.py` con pytest. Antes habría que resolver la Observación 1.

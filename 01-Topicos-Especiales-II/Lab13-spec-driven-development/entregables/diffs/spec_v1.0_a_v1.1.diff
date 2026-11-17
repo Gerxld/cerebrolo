@@ -1,0 +1,62 @@
+diff --git a/docs/spec.md b/docs/spec.md
+index 96c20c0..7a160e5 100644
+--- a/docs/spec.md
++++ b/docs/spec.md
+@@ -1,4 +1,4 @@
+-# Especificación: préstamos de libros (versión 1.0)
++# Especificación: préstamos de libros (versión 1.1)
+ Objetivo: registrar y devolver préstamos sin base de datos.
+ Fuera de alcance: UI, login, multas, renovaciones, persistencia.
+ 
+@@ -7,7 +7,7 @@ R01: registrar_prestamo(prestamos, usuario, libro, fecha)
+ R02: fecha_vencimiento = fecha_prestamo + 14 días calendario.
+ R03: fecha debe ser válida y tener formato AAAA-MM-DD.
+ R04: usuario y libro no pueden quedar vacíos tras strip().
+-R05: cada usuario admite a lo sumo 3 préstamos activos.
++R05: cada usuario admite a lo sumo 2 préstamos activos.
+ R06: un libro admite a lo sumo un préstamo activo global.
+ R07: devolver_prestamo(prestamos, usuario, libro)
+      marca devuelto=True y devuelve ese dict.
+@@ -19,7 +19,7 @@ Todo error produce ValueError y no modifica la lista.
+ 
+ ## Decisiones de negocio (paso 5, fijadas por el enunciado)
+ 
+-- Máximo 3 préstamos activos por usuario.
++- Máximo 2 préstamos activos por usuario (eran 3 en la versión 1.0; ver historial de cambios).
+ - Un libro no puede estar prestado a dos usuarios a la vez.
+ - Plazo de exactamente 14 días calendario.
+ - La fecha se recibe como AAAA-MM-DD.
+@@ -81,7 +81,7 @@ AC01 (R01): al registrar Ana / Python / 2026-09-01,
+ AC02 (R02): el vencimiento es 2026-09-15.
+ AC03 (R03): fecha malformada o imposible → ValueError.
+ AC04 (R04): texto vacío o espacios → ValueError.
+-AC05 (R05): al intentar el cuarto préstamo activo → ValueError.
++AC05 (R05): al intentar el tercer préstamo activo → ValueError.
+ AC06 (R06): libro activo repetido, incluso otro usuario → ValueError.
+ AC07 (R07): devolver cambia devuelto a True.
+ AC08 (R08): devolver sin préstamo activo → ValueError.
+@@ -107,3 +107,24 @@ En cada caso fallido, la lista queda intacta.
+ Control de aprobación
+ 
+ Versión 1.0 revisada: fecha 29/10/2026; aprobador(es) Gerald Ríos
++
++## Historial de cambios
++
++Versión 1.1
++- Motivo: solicitud de cambio del cliente: "Por una restricción de espacio,
++  cada usuario ahora puede mantener máximo DOS préstamos activos en lugar de tres".
++- Fecha: 29/10/2026.
++- Responsable: Gerald Ríos.
++- Cambia: R05 (límite de 3 a 2) y AC05 (el tercer préstamo activo, no el
++  cuarto, produce ValueError). Las pruebas afectadas: test_r05_maximo_activos.
++- No cambia: R01–R04 y R06–R08, AC01–AC04 y AC06–AC08, las decisiones D1–D11
++  y la estructura del préstamo. Las decisiones D8 y D9 se leen con el límite
++  nuevo (el orden de validación sigue siendo R04, R03, R06, R05).
++- Los comentarios del punto de control 1 que mencionan "3" corresponden a la
++  versión 1.0 y se dejan como están, porque documentan lo aprobado en su momento.
++
++Versión 1.0
++- Versión inicial revisada el 29/10/2026 (paso 8), con límite de 3 préstamos
++  activos por usuario. Copia de esa versión: entregables/docs/spec.md.
++
++Versión 1.1 revisada: fecha 29/10/2026; aprobador(es) Gerald Ríos

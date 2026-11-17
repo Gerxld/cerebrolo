@@ -1,0 +1,47 @@
+Fecha y hora de inicio: 2026-10-30 11:50:46
+Directorio: C:/Cerebrolo/01-Topicos-Especiales-II/Lab05-ia-local/entregables/laboratorio_local_privado
+Comando: python -m unittest test_calculadora.py
+------------------------------------------------------------
+.EE..E
+======================================================================
+ERROR: test_dividir_por_cero (test_calculadora.TestCalculadora.test_dividir_por_cero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Cerebrolo\01-Topicos-Especiales-II\Lab05-ia-local\entregables\laboratorio_local_privado\test_calculadora.py", line 22, in test_dividir_por_cero
+    dividir(10, 0)
+    ~~~~~~~^^^^^^^
+  File "C:\Cerebrolo\01-Topicos-Especiales-II\Lab05-ia-local\entregables\laboratorio_local_privado\calculadora.py", line 2, in dividir
+    return a / b
+           ~~^~~
+ZeroDivisionError: division by zero
+
+======================================================================
+ERROR: test_porcentaje_cero_total (test_calculadora.TestCalculadora.test_porcentaje_cero_total)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Cerebrolo\01-Topicos-Especiales-II\Lab05-ia-local\entregables\laboratorio_local_privado\test_calculadora.py", line 32, in test_porcentaje_cero_total
+    porcentaje(10, 0)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Cerebrolo\01-Topicos-Especiales-II\Lab05-ia-local\entregables\laboratorio_local_privado\calculadora.py", line 8, in porcentaje
+    return (valor / total) * 100
+            ~~~~~~^~~~~~~
+ZeroDivisionError: division by zero
+
+======================================================================
+ERROR: test_promedio_lista_vacia (test_calculadora.TestCalculadora.test_promedio_lista_vacia)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Cerebrolo\01-Topicos-Especiales-II\Lab05-ia-local\entregables\laboratorio_local_privado\test_calculadora.py", line 28, in test_promedio_lista_vacia
+    promedio([])
+    ~~~~~~~~^^^^
+  File "C:\Cerebrolo\01-Topicos-Especiales-II\Lab05-ia-local\entregables\laboratorio_local_privado\calculadora.py", line 5, in promedio
+    return sum(valores) / len(valores)
+           ~~~~~~~~~~~~~^~~~~~~~~~~~~~
+ZeroDivisionError: division by zero
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.002s
+
+FAILED (errors=3)
+------------------------------------------------------------
+Fecha y hora de fin: 2026-10-30 11:50:46

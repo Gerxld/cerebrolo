@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Laboratorio 2 — Desarrollo asistido por chat web</title>
+<style>
+  @page { size: Letter; margin: 2.5cm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; text-align: justify; color: #111; margin: 0; }
+  h1, h2, h3 { font-family: "Times New Roman", Times, serif; text-align: left; page-break-after: avoid; }
+  h1 { font-size: 14pt; margin: 1.4em 0 0.5em; }
+  h2 { font-size: 13pt; margin: 1.2em 0 0.4em; }
+  h3 { font-size: 12pt; margin: 1em 0 0.3em; }
+  h1.nueva-pagina { page-break-before: always; }
+  p { margin: 0 0 0.7em 0; }
+  .portada { height: 22cm; display: flex; flex-direction: column; align-items: center; text-align: center; page-break-after: always; }
+  .portada .logos { display: flex; justify-content: space-between; width: 100%; margin-bottom: 0.8cm; }
+  .portada .logos img { width: 105px; height: 105px; object-fit: contain; }
+  .portada .titulo-bloque { margin-top: 0.9cm; }
+  .portada .titulo-bloque p { margin: 0.35em 0; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px; }
+  .portada .presentado { margin-top: 1.1cm; }
+  .portada .presentado p, .portada .revisado p, .portada .fecha p { margin: 0.3em 0; font-weight: bold; text-transform: uppercase; }
+  .portada .nombres { font-weight: normal !important; text-transform: none !important; }
+  .portada .revisado { margin-top: 1.2cm; }
+  .portada .fecha { margin-top: 1.1cm; }
+  .indice { page-break-after: always; }
+  .indice h1 { text-align: center; }
+  .indice ol { list-style: none; padding: 0; margin: 0; }
+  .indice li { display: flex; align-items: baseline; margin: 0.25em 0; }
+  .indice li.n2 { padding-left: 1.2em; }
+  .indice li .t { white-space: nowrap; }
+  .indice li .dots { flex: 1; border-bottom: 1px dotted #444; margin: 0 0.3em; transform: translateY(-0.25em); }
+  .indice li .p { white-space: nowrap; }
+  table { width: 100%; border-collapse: collapse; margin: 0.8em 0; font-size: 10.5pt; line-height: 1.3; }
+  th, td { border: 1px solid #666; padding: 5px 7px; text-align: left; vertical-align: top; }
+  th { background: #e2e2e2; font-weight: bold; }
+  tr { page-break-inside: avoid; }
+  .tabla-titulo { font-weight: bold; margin: 0.8em 0 0.2em; text-align: left; page-break-after: avoid; }
+  figure { margin: 0.8em 0; text-align: center; page-break-inside: avoid; }
+  figure img { max-width: 100%; border: 1px solid #999; }
+  figure img.term { border: none; }
+  figcaption { font-size: 10.5pt; font-style: italic; margin-top: 0.3em; }
+  ul, ol { margin: 0.3em 0 0.8em 1.3em; padding: 0; }
+  li { margin-bottom: 0.3em; }
+  .prompt { margin: 0.4em 0 0.7em 1.27cm; font-size: 11pt; line-height: 1.35; }
+  code { font-family: Consolas, "Courier New", monospace; font-size: 10.5pt; }
+</style>
+</head>
+<body>
+
+<div class="portada">
+  <div class="logos">
+    <img src="../assets/utp.png" alt="Logo UTP">
+    <img src="../assets/fisc.png" alt="Logo FISC">
+  </div>
+  <div class="titulo-bloque">
+    <p>Universidad Tecnológica de Panamá</p>
+    <p>Facultad de Ingeniería de Sistemas Computacionales</p>
+    <p>Lic. en Desarrollo y Gestión de Software</p>
+    <p style="margin-top:1em;">Tópicos Especiales II</p>
+    <p>Laboratorio 2 — Desarrollo asistido por chat web</p>
+    <p>1GS241</p>
+  </div>
+  <div class="presentado">
+    <p>Presentado por:</p>
+    <p class="nombres">Ríos, Gerald (8-987-741)</p>
+  </div>
+  <div class="revisado">
+    <p>Revisado por:</p>
+    <p class="nombres">Profesor Regis Rivera</p>
+  </div>
+  <div class="fecha">
+    <p>Fecha de entrega</p>
+    <p class="nombres">29 / 10 / 2026</p>
+  </div>
+</div>
+
+<div class="indice">
+  <h1>Índice</h1>
+  <ol>
+    <li><span class="t">Introducción</span><span class="dots"></span><span class="p">3</span></li>
+    <li><span class="t">1. Entorno y contexto de trabajo</span><span class="dots"></span><span class="p">3</span></li>
+    <li><span class="t">2. Registro de solicitudes al chat web</span><span class="dots"></span><span class="p">4</span></li>
+    <li><span class="t">3. Verificación local</span><span class="dots"></span><span class="p">14</span></li>
+    <li class="n2"><span class="t">3.1 Pruebas automáticas antes y después</span><span class="dots"></span><span class="p">14</span></li>
+    <li class="n2"><span class="t">3.2 Ejecución manual</span><span class="dots"></span><span class="p">14</span></li>
+    <li class="n2"><span class="t">3.3 Diff multiarchivo</span><span class="dots"></span><span class="p">16</span></li>
+    <li><span class="t">4. Sugerencias modificadas y rechazadas</span><span class="dots"></span><span class="p">18</span></li>
+    <li><span class="t">5. Preguntas de reflexión</span><span class="dots"></span><span class="p">20</span></li>
+    <li><span class="t">Conclusiones</span><span class="dots"></span><span class="p">21</span></li>
+  </ol>
+</div>
+
+<h1>Introducción</h1>
+<p>Este laboratorio consistió en construir un gestor de tareas de consola en Python 3 conversando con un asistente en una página web de chat, sin autocompletado ni chat dentro del editor. El flujo fue siempre el mismo: pedir el archivo completo, leerlo, pasarlo a los archivos locales, ejecutarlo y volver al chat cuando algo no cuadraba. Usamos Claude en claude.ai con el modelo Sonnet 5.5.</p>
+<p>El informe recoge nueve solicitudes al chat con su captura, la verificación local de cada versión (pruebas automáticas antes y después, ejecución manual y diff), las sugerencias que modificamos o rechazamos con su razón, y las respuestas a las preguntas de reflexión. No hicimos el reto opcional de persistencia en JSON.</p>
+
+<h1>1. Entorno y contexto de trabajo</h1>
+<p>El código quedó en la carpeta <code>laboratorio_chat_web</code> con tres archivos: <code>app.py</code> (menú), <code>tareas.py</code> (lógica) y <code>test_tareas.py</code> (pruebas con <code>unittest</code>). Todo se ejecutó con Python 3 desde la terminal, sin librerías externas. La conversación se abrió desde cero con el prompt sugerido de la guía para fijar el contexto antes de pedir código, y no pegamos contraseñas, claves ni datos personales en ningún mensaje.</p>
+<p>El chat no toca el proyecto: devuelve el código y nosotros lo transferimos. Para cada respuesta copiamos el texto del archivo a su versión local, lo comparamos con la anterior cuando había una y lo corrimos antes de darlo por bueno. Las versiones intermedias se conservaron en la carpeta <code>versiones</code> del paquete entregado.</p>
+<p>Hubo un tropiezo práctico a mitad del laboratorio: la cuenta del chat llegó al límite de uso justo después de la sexta solicitud y la séptima quedó detenida con el aviso de límite. Retomamos la misma conversación cuando se renovó el cupo, por eso el registro sigue una sola conversación continua.</p>
+
+<h1 class="nueva-pagina">2. Registro de solicitudes al chat web</h1>
+<p>La Tabla 1 resume las nueve solicitudes. Debajo va cada una con su prompt, lo que respondió el chat y la captura de la conversación.</p>
+<p class="tabla-titulo">Tabla 1. Solicitudes al chat y cambio que produjo cada una</p>
+<table>
+  <tr><th style="width:4%">N.°</th><th style="width:20%">Paso de la guía</th><th>Cambio que produjo</th></tr>
+  <tr><td>1</td><td>4. Contexto</td><td>Ninguno en el código; el chat confirmó el marco y esperó el requisito.</td></tr>
+  <tr><td>2</td><td>5. Primera funcionalidad</td><td><code>app.py</code> versión 1: menú, agregar, listar y salir, con lista en memoria.</td></tr>
+  <tr><td>3</td><td>6. Lectura antes de copiar</td><td>Ninguno; explicación de cada función y del flujo.</td></tr>
+  <tr><td>4</td><td>9. Cambio de requisito</td><td><code>app.py</code> versión 2: tareas como diccionarios con prioridad y función <code>pedir_prioridad()</code> con bucle.</td></tr>
+  <tr><td>5</td><td>12. Depuración</td><td><code>try/except EOFError</code> en el punto de entrada del programa.</td></tr>
+  <tr><td>6</td><td>14. Refactor y pruebas</td><td>Lógica en <code>tareas.py</code>, menú en <code>app.py</code> y cinco pruebas en <code>test_tareas.py</code>.</td></tr>
+  <tr><td>7</td><td>16. Completar desde el menú</td><td>Opción 3 del menú, <code>opcion_completar</code> y marcas <code>[ ]</code> / <code>[X]</code> al listar.</td></tr>
+  <tr><td>8</td><td>17. Revisión final</td><td>Catorce hallazgos; ningún cambio de código directo (ver sección 4).</td></tr>
+  <tr><td>9</td><td>17. Aplicar lo elegido</td><td><code>KeyboardInterrupt</code> capturado, <code>try/except</code> alrededor de <code>agregar_tarea</code> y dos pruebas nuevas.</td></tr>
+</table>
+
+<h2>Solicitud 1: contexto de trabajo</h2>
+<p>Prompt (el sugerido por la guía):</p>
+<p class="prompt">Estoy realizando un laboratorio de desarrollo de software con IA mediante chat web. Crearé una aplicación de consola en Python 3 para gestionar tareas. No uses librerías externas. Quiero avanzar por etapas y yo ejecutaré todo localmente. No generes todavía el proyecto completo; espera mi siguiente requisito</p>
+<p>El chat respondió que trabajaría por etapas, solo con la biblioteca estándar, y preguntó por la versión de Python, la estructura de archivos y si habría persistencia. No contestamos esas preguntas porque no cambiaban el requisito inmediato.</p>
+<figure><img src="../capturas/chat_01.jpg" alt="Solicitud 1"><figcaption>Figura 1. Solicitud 1: contexto de trabajo y respuesta del chat.</figcaption></figure>
+
+<h2>Solicitud 2: primera versión</h2>
+<p>Prompt (el sugerido por la guía):</p>
+<p class="prompt">Genera una primera versión de app.py. Debe permitir: 1) agregar una tarea con un título, 2) listar las tareas existentes y 3) salir. Usa una lista en memoria y un menú de consola. Devuelve el archivo completo. No agregues persistencia ni prioridades todavía.</p>
+<p>Devolvió un <code>app.py</code> con <code>mostrar_menu</code>, <code>agregar_tarea</code>, <code>listar_tareas</code> y <code>main</code>. Lo copiamos y probamos agregar dos tareas, listar, escribir una opción inválida y salir; todo coincidió con el requisito.</p>
+<figure><img src="../capturas/chat_02.jpg" alt="Solicitud 2"><figcaption>Figura 2. Solicitud 2: primera versión de app.py (panel derecho).</figcaption></figure>
+
+<h2>Solicitud 3: explicación antes de seguir</h2>
+<p>Prompt (el sugerido por la guía):</p>
+<p class="prompt">Explícame brevemente qué hace cada función y cuál es el flujo principal. No cambies el código todavía.</p>
+<p>El chat describió las cuatro funciones y el ciclo <code>while True</code> con su <code>break</code> en la opción 3. Con eso confirmamos la condición de salida y que la lista <code>tareas</code> se pasa como argumento, sin variables globales.</p>
+<figure><img src="../capturas/chat_03.jpg" alt="Solicitud 3"><figcaption>Figura 3. Solicitud 3: explicación de funciones y flujo.</figcaption></figure>
+
+<h2>Solicitud 4: prioridad por tarea</h2>
+<p>Prompt (el sugerido por la guía):</p>
+<p class="prompt">Cambia la aplicación para que cada tarea tenga título y prioridad: baja, media o alta. Si el usuario escribe otra prioridad, debe mostrarse un mensaje y volver a pedirla. Mantén las funciones de agregar, listar y salir. Devuelve app.py completo.</p>
+<p>La respuesta trajo una estructura nueva, el diccionario <code>{"titulo": ..., "prioridad": ...}</code> en lugar de un texto suelto, y una validación nueva, <code>pedir_prioridad()</code>, que repite la pregunta hasta recibir <code>baja</code>, <code>media</code> o <code>alta</code>. Antes de reemplazar el archivo comparamos las dos versiones con <code>git diff --no-index</code> y probamos los tres casos de la guía, incluido "Leer" con prioridad "urgente", que mostró el mensaje y volvió a preguntar.</p>
+<figure><img src="../capturas/chat_04.jpg" alt="Solicitud 4"><figcaption>Figura 4. Solicitud 4: versión 2 con prioridades.</figcaption></figure>
+
+<h2>Solicitud 5: depuración de un error real</h2>
+<p>En las pruebas de la versión 2 nos encontramos con un error real: al escribir el título "Leer" y pulsar Ctrl+Z y Enter en la pregunta de prioridad (Windows), o al cerrar la entrada estándar, el programa terminaba con un traceback <code>EOFError: EOF when reading a line</code>. Lo reprodujimos con la entrada <code>1</code>, <code>Leer</code> y fin de archivo. Usamos la plantilla de la guía con el mensaje, los pasos y el fragmento de <code>pedir_prioridad</code>:</p>
+<p class="prompt">Al ejecutar mi aplicación obtengo este problema: el programa termina con un traceback "EOFError: EOF when reading a line" en la línea de input() de pedir_prioridad. Ocurre cuando hago: opción 1, escribo el título "Leer" y en la pregunta de prioridad presiono Ctrl+Z y Enter en Windows (o cierro la entrada estándar). Este es el fragmento relacionado: def pedir_prioridad(): while True: prioridad = input("Prioridad (baja, media, alta): ").strip().lower(); if prioridad in PRIORIDADES_VALIDAS: return prioridad; print("Prioridad no válida. Debe ser: baja, media o alta."). Identifica la causa, explica por qué ocurre y propón la corrección más pequeña posible.</p>
+<p>El chat explicó que <code>input()</code> lanza <code>EOFError</code> cuando no hay más entrada, que nadie la captura y que cualquier otro <code>input()</code> del programa fallaría igual. Propuso un <code>try/except EOFError</code> de cuatro líneas alrededor de <code>main()</code>, y advirtió que capturarla dentro del <code>while</code> de <code>pedir_prioridad</code> causaría un bucle infinito. La explicación tenía sentido, así que la aplicamos y repetimos exactamente el mismo caso: ya no hubo traceback (Figuras 15 y 16).</p>
+<figure><img src="../capturas/chat_05.jpg" alt="Solicitud 5, prompt y diagnóstico"><figcaption>Figura 5. Solicitud 5: prompt y diagnóstico de la causa.</figcaption></figure>
+<figure><img src="../capturas/chat_06.jpg" alt="Solicitud 5, corrección"><figcaption>Figura 6. Solicitud 5: corrección propuesta y qué evitar.</figcaption></figure>
+
+<h2>Solicitud 6: separar la lógica y crear pruebas</h2>
+<p>Prompt (el sugerido por la guía, precedido de una línea que cuenta que aplicamos la corrección anterior):</p>
+<p class="prompt">Aplico ese cambio tal cual y probé de nuevo el mismo caso: ya no sale el traceback. Ahora refactoriza la solución para que la lógica de tareas quede en tareas.py y el menú permanezca en app.py. Después crea test_tareas.py usando unittest. Incluye pruebas para agregar una tarea válida, rechazar una prioridad inválida y marcar una tarea como completada. No uses librerías externas. Devuelve los tres archivos completos por separado.</p>
+<p>Devolvió tres archivos. <code>tareas.py</code> con <code>normalizar_prioridad</code>, <code>agregar_tarea</code> y <code>completar_tarea</code>, que lanzan <code>ValueError</code> y no usan <code>input()</code> ni <code>print()</code>; <code>app.py</code> solo con el menú, importando <code>tareas as logica</code> y con funciones renombradas (<code>opcion_agregar</code>, <code>opcion_listar</code>) para que no choquen con el módulo; y <code>test_tareas.py</code> con cinco pruebas. Se pasó de lo pedido en dos cosas: agregó <code>completar_tarea</code> y el campo <code>completada</code>, y dos pruebas extra (título vacío y completar una tarea inexistente). Lo discutimos en la sección 4.</p>
+<figure><img src="../capturas/chat_07.jpg" alt="Solicitud 6"><figcaption>Figura 7. Solicitud 6: refactor en tres archivos y pruebas.</figcaption></figure>
+
+<h2>Solicitud 7: completar tareas desde el menú</h2>
+<p>Prompt (el sugerido por la guía, precedido de una línea con el resultado de las pruebas):</p>
+<p class="prompt">Corrí las 5 pruebas con python -m unittest -v y pasan. Agrega la posibilidad de marcar una tarea como completada desde el menú. Al listar, muestra [ ] para pendiente y [X] para completada. Mantén las funciones y pruebas existentes. Indica qué archivos cambian y devuelve solo los archivos que deban modificarse completos.</p>
+<p>Esta solicitud se quedó detenida por el límite de uso de la cuenta y la reenviamos al renovarse el cupo. El chat cambió solo <code>app.py</code>: nueva opción 3 "Completar tarea" (Salir pasó a la 4), función <code>opcion_completar</code> que muestra la lista y valida que el dato sea un número, y el listado con <code>[ ]</code> y <code>[X]</code>. También cambió por su cuenta <code>[prioridad: alta]</code> por <code>(prioridad: alta)</code> para que los corchetes de la prioridad no se confundan con los del estado; lo aceptamos porque la razón es válida y el cambio es de una línea, pero lo anotamos porque no lo habíamos pedido.</p>
+<figure><img src="../capturas/chat_08.jpg" alt="Solicitud 7"><figcaption>Figura 8. Solicitud 7: respuesta con los cambios en app.py.</figcaption></figure>
+
+<h2>Solicitud 8: revisión final</h2>
+<p>Prompt (el sugerido por la guía, con una línea inicial y la aclaración de qué archivos revisar):</p>
+<p class="prompt">Apliqué ese app.py y corrí las 5 pruebas, que pasan. Revisa estos archivos (app.py, tareas.py y test_tareas.py tal como quedaron en esta conversación) buscando errores lógicos, validaciones faltantes, duplicación y problemas de legibilidad. No reescribas todo. Enumera los hallazgos por prioridad y explica cada recomendación.</p>
+<p>El chat enumeró catorce hallazgos en cuatro grupos: dos de prioridad alta (validación de tipos en <code>tareas.py</code>), cuatro de prioridad media (validación duplicada, prioridades repetidas, completar una tarea ya completada, Ctrl+C), cuatro de legibilidad y cuatro de pruebas. Aclaró que ninguno de los de prioridad alta se puede disparar desde el menú. No aplicamos nada de inmediato: decidimos hallazgo por hallazgo (sección 4).</p>
+<figure><img src="../capturas/chat_09.jpg" alt="Solicitud 8, hallazgos 1 a 5"><figcaption>Figura 9. Solicitud 8: hallazgos de prioridad alta y media.</figcaption></figure>
+<figure><img src="../capturas/chat_10.jpg" alt="Solicitud 8, hallazgos 8 a 14"><figcaption>Figura 10. Solicitud 8: hallazgos de legibilidad y de pruebas.</figcaption></figure>
+
+<h2>Solicitud 9: aplicar solo lo elegido</h2>
+<p>Con la lista de hallazgos delante, ajustamos la solicitud para que el chat tocara únicamente lo que habíamos decidido:</p>
+<p class="prompt">Gracias por la revisión. No voy a aplicar los hallazgos 1 y 2 (validar tipos con isinstance): el menú solo pasa str e int, y no quiero sobreingeniería. Tampoco 4, 5, 7, 8, 9, 10, 12, 13 ni 14. Aplica solo estos tres cambios, sin tocar nada más: (a) hallazgo 6, que Ctrl+C también termine sin traceback; (b) hallazgo 11, agrega pruebas de completar_tarea con 0 y con un número negativo; (c) hallazgo 3 solo en parte: deja la comprobación de título vacío en app.py tal como está, para no pedir la prioridad de una tarea sin título, pero envuelve la llamada a logica.agregar_tarea en un try/except ValueError que muestre el mensaje. Indica qué archivos cambian y devuelve solo esos archivos completos.</p>
+<p>Devolvió <code>app.py</code> y <code>test_tareas.py</code> y dijo no haber tocado nada más. Lo comprobamos: el texto de <code>app.py</code> devuelto coincide con la versión anterior más esos tres cambios, y nada más. <code>tareas.py</code> no se modificó.</p>
+<figure><img src="../capturas/chat_11.jpg" alt="Solicitud 9"><figcaption>Figura 11. Solicitud 9: cambios aplicados y archivos devueltos.</figcaption></figure>
+
+<h1 class="nueva-pagina">3. Verificación local</h1>
+<h2>3.1 Pruebas automáticas antes y después</h2>
+<p>La primera suite existió desde la solicitud 6, así que el "antes" es el estado tras el refactor, con cinco pruebas. El "después" es el estado final, con siete: las dos nuevas son <code>test_completar_tarea_con_cero</code> y <code>test_completar_tarea_con_numero_negativo</code>. Ninguna prueba se modificó ni se debilitó para que pasara.</p>
+<figure><img class="term" src="../terminal/term_unittest_antes.png" alt="unittest antes"><figcaption>Figura 12. Salida de python -m unittest -v tras el refactor: cinco pruebas.</figcaption></figure>
+<figure><img class="term" src="../terminal/term_unittest_final.png" alt="unittest después"><figcaption>Figura 13. Salida de python -m unittest -v en el estado final: siete pruebas.</figcaption></figure>
+
+<h2>3.2 Ejecución manual</h2>
+<p>Corrimos la aplicación final con los casos de la guía: "Estudiar Python" con prioridad alta, "Preparar demo" con media y "Leer" con la prioridad inválida "urgente". El programa mostró el mensaje, volvió a pedir la prioridad y aceptó "baja". Después completamos la tarea 2 y el listado mostró <code>[X]</code> solo en esa. En las pruebas manuales también probamos un texto no numérico y un número fuera de rango al completar, que mostraron su mensaje sin cerrar el programa.</p>
+<figure><img class="term" src="../terminal/term_app_final.png" alt="Ejecución final"><figcaption>Figura 14. Ejecución de app.py con el caso inválido y la tarea completada.</figcaption></figure>
+<p>Sobre el error de la solicitud 5, repetimos la misma entrada (título "Leer" y fin de entrada en la prioridad) antes y después de la corrección:</p>
+<figure><img class="term" src="../terminal/term_eof_antes.png" alt="EOF antes"><figcaption>Figura 15. El caso que falló, antes de la corrección: traceback con EOFError.</figcaption></figure>
+<figure><img class="term" src="../terminal/term_eof_despues.png" alt="EOF después"><figcaption>Figura 16. El mismo caso después de la corrección: el programa termina limpio.</figcaption></figure>
+<p>Para Ctrl+C no podíamos mandar la señal por una tubería de entrada, así que lo simulamos haciendo que <code>input()</code> lanzara <code>KeyboardInterrupt</code> dentro de un script de prueba; el programa terminó con el mensaje de cierre y sin traceback. Es una simulación y no una pulsación real del teclado.</p>
+
+<h2>3.3 Diff multiarchivo</h2>
+<p>Para el diff tomamos como "antes" el estado previo al refactor (un solo <code>app.py</code> con la corrección de <code>EOFError</code>) y como "después" la carpeta final. El diff afecta tres archivos: <code>app.py</code> modificado, y <code>tareas.py</code> y <code>test_tareas.py</code> nuevos. El archivo completo (244 líneas) va en el paquete como <code>diff_multiarchivo.txt</code>; la figura muestra el comienzo.</p>
+<figure><img class="term" src="../terminal/term_diff.png" alt="Diff"><figcaption>Figura 17. Comienzo del diff multiarchivo entre el estado previo al refactor y el final.</figcaption></figure>
+
+<h1 class="nueva-pagina">4. Sugerencias modificadas y rechazadas</h1>
+<p>La revisión de la solicitud 8 fue donde más tuvimos que decidir. La guía pide tratar la respuesta como sugerencias y no aplicar lo que no podamos justificar. La Tabla 2 resume la decisión sobre cada hallazgo.</p>
+<p class="tabla-titulo">Tabla 2. Decisión sobre los hallazgos de la revisión</p>
+<table>
+  <tr><th style="width:12%">Hallazgos</th><th style="width:16%">Decisión</th><th>Razón</th></tr>
+  <tr><td>1, 2</td><td>Rechazados</td><td>Validar con <code>isinstance</code> que el título sea <code>str</code> y el número sea <code>int</code> protege contra llamadas que el programa nunca hace. El menú ya entrega texto y un entero.</td></tr>
+  <tr><td>3</td><td>Modificado</td><td>Aplicado solo en parte. Explicado abajo.</td></tr>
+  <tr><td>4, 5</td><td>Rechazados por ahora</td><td>Repetir la lista de prioridades en tres sitios y avisar si una tarea ya estaba completada son mejoras razonables, pero no corrigen un fallo y cada una toca varias líneas y mensajes de salida.</td></tr>
+  <tr><td>6</td><td>Aceptado</td><td>Ctrl+C no estaba capturado y terminaría con traceback. Es el mismo problema de la solicitud 5 y el arreglo es una sola cláusula.</td></tr>
+  <tr><td>7 a 10</td><td>Rechazados</td><td>Un diccionario para el menú, renombrar funciones, desacoplar las claves del diccionario y los identificadores estables son cambios para cuando el programa crezca (persistencia, borrar tareas). Con cuatro opciones solo agregarían estructura.</td></tr>
+  <tr><td>11</td><td>Aceptado</td><td>Probar 0 y un número negativo protege el límite inferior de <code>completar_tarea</code>, que es donde un índice como -1 marcaría la última tarea sin avisar.</td></tr>
+  <tr><td>12, 13, 14</td><td>Rechazados</td><td>Las pruebas de tipos dependen de los hallazgos 1 y 2, que rechazamos; <code>subTest</code> y las pruebas del menú con <code>mock</code> aumentan la complejidad de la suite para este alcance.</td></tr>
+</table>
+
+<h2>Sugerencia modificada: validación del título (hallazgo 3)</h2>
+<p>El chat señaló que el título vacío se valida dos veces, en <code>app.py</code> y en <code>tareas.py</code>, y que <code>opcion_agregar</code> llama a la lógica sin <code>try/except</code>. Su recomendación era dejar la regla solo en la lógica y que la interfaz capturara <code>ValueError</code>. Lo dijo él mismo: eso obligaría a pedir el título y la prioridad antes de validar, y habría que decidir si se vuelve a preguntar solo el dato inválido.</p>
+<p>No estuvimos de acuerdo con la primera mitad. Quitar la comprobación de la interfaz significa que alguien que deja el título en blanco igual tendría que contestar la prioridad de una tarea que se va a descartar, y eso empeora la experiencia sin ganar nada. Conservamos la comprobación en <code>app.py</code> como filtro de usuario y adoptamos solo la segunda mitad: la llamada a <code>logica.agregar_tarea</code> quedó dentro de un <code>try/except ValueError</code> que muestra el mensaje y regresa al menú. La duplicación sigue existiendo, y la asumimos: la lógica protege su propia regla y la interfaz evita preguntas inútiles. Con las reglas actuales ese <code>except</code> no se activa; es una red de seguridad, algo que el propio chat reconoció al devolver el código.</p>
+
+<h2>Sugerencia rechazada: validar tipos (hallazgos 1 y 2)</h2>
+<p>El chat propuso exigir que el título sea <code>str</code> y que el número sea <code>int</code> y no <code>bool</code>, porque <code>agregar_tarea(lista, None, "alta")</code> crearía una tarea llamada "None" y <code>completar_tarea(lista, "2")</code> lanzaría <code>TypeError</code> en lugar de <code>ValueError</code>. Es cierto en ambos casos, pero los dos caminos de entrada del programa lo impiden: el título viene de <code>input()</code> y el número pasa por <code>int()</code> en <code>opcion_completar</code>. El propio chat reconoció que ninguno se puede disparar desde el menú. Añadir <code>isinstance</code> en <code>tareas.py</code>, y más pruebas para cubrirlo (hallazgo 12), nos habría dado código que no necesitamos y que habría que explicar sin que sirva para el programa actual. Lo rechazamos y lo dejamos anotado como algo a retomar si otra interfaz llamara a la lógica.</p>
+
+<h2>Lo que el chat hizo sin que lo pidiéramos</h2>
+<p>En la solicitud 6 pedimos tres archivos y tres pruebas. Recibimos además <code>completar_tarea</code>, el campo <code>completada</code> y dos pruebas más (título vacío y tarea inexistente). La guía manda rechazar los cambios que la IA haga en archivos que no debía tocar; aquí los tres archivos eran los pedidos y el código extra era la lógica que la prueba de "marcar completada" necesitaba para existir. Revisamos las dos pruebas extra, comprobamos que prueban comportamiento real y las conservamos. También usamos <code>completar_tarea</code> después, en la solicitud 7. Lo anotamos igual, porque el chat amplió el alcance por su cuenta y solo lo mencionó en el texto de la respuesta.</p>
+
+<h1 class="nueva-pagina">5. Preguntas de reflexión</h1>
+<h2>1. ¿En qué momento del laboratorio la IA aportó más valor y por qué?</h2>
+<p>En la depuración de la solicitud 5. Con el mensaje de error, los pasos y el fragmento, el chat identificó la causa, explicó por qué afectaba a todos los <code>input()</code> y propuso el arreglo más pequeño, además de advertir sobre la corrección tentadora que habría producido un bucle infinito.</p>
+<h2>2. ¿Qué diferencia práctica observaste entre usar chat web y usar autocompletar dentro del editor?</h2>
+<p>El autocompletar sugiere sobre la marcha, línea a línea, dentro del archivo que ya tenemos abierto. El chat obliga a hacer el recorrido completo: explicar el contexto, pedir el archivo, copiarlo, ejecutarlo y volver con el resultado. Esto es más lento, pero deja una conversación donde se ve qué pedimos y qué cambió, y fuerza a leer todo el archivo antes de pegarlo. Como contrapartida, el chat solo conoce lo que le contamos: en la revisión tuvimos que indicarle que se refería a los archivos tal como habían quedado en la conversación.</p>
+<h2>3. ¿Por qué copiar código desde un chat no elimina la necesidad de ejecutar pruebas?</h2>
+<p>Porque el chat puede equivocarse o dejar casos sin cubrir y no lo sabe. El error de <code>EOFError</code> estaba en código que el chat generó y que a simple vista parecía correcto, y solo apareció al ejecutar con una entrada que cierra la terminal. Además, el chat afirmó haber corrido las pruebas en su propio entorno; eso no sustituye correrlas en el nuestro.</p>
+<h2>4. ¿Qué información fue útil incluir al reportar un error al chat?</h2>
+<p>El mensaje exacto del error, los pasos para reproducirlo (opción, título y qué se pulsó) y el fragmento de código donde ocurría. No hizo falta pegar el programa completo. Con eso el chat contestó con la causa concreta en lugar de una lista de posibilidades.</p>
+<h2>5. ¿Qué riesgo existe al pegar datos confidenciales o código privado en un servicio web?</h2>
+<p>El texto sale de nuestro equipo y queda en un servicio de un tercero, con sus propias políticas de retención y de uso. Un token, una contraseña o código de un cliente pegado en el chat deja de estar bajo nuestro control. En este laboratorio el código era propio y sin datos sensibles, y los mensajes de error que enviamos no incluían rutas ni credenciales. En una empresa hay reglas adicionales sobre qué se puede compartir con un servicio externo, y habría que respetarlas antes de pegar nada.</p>
+<h2>6. ¿Qué parte del resultado final puedes explicar sin consultar nuevamente a la IA?</h2>
+<p>El flujo del menú y su condición de salida, la separación entre <code>app.py</code> (entrada y salida) y <code>tareas.py</code> (reglas), por qué <code>normalizar_prioridad</code> y <code>agregar_tarea</code> lanzan <code>ValueError</code> y la interfaz las captura, y qué verifica cada una de las siete pruebas. También el motivo por el que el <code>except EOFError</code> va al final del programa y no dentro de <code>pedir_prioridad</code>.</p>
+
+<h1>Conclusiones</h1>
+<p>Terminamos con un gestor de tareas funcional en tres archivos y siete pruebas que pasan, construido a lo largo de nueve solicitudes al chat. Cada versión se ejecutó antes de aceptarla, y el error de <code>EOFError</code> fue lo que de verdad nos obligó a volver al chat con un problema concreto.</p>
+<p>Lo que más trabajo costó fue decidir qué no aplicar. La revisión final trajo catorce hallazgos razonables y casi todos eran mejoras para un programa más grande que este; aplicamos dos, modificamos uno y rechazamos el resto con su razón. También quedó claro que el chat amplía el alcance si no se le delimita, y la solicitud 9 funcionó mejor porque indicamos qué hallazgos sí y cuáles no. Hubo un contratiempo ajeno al código: el límite de uso de la cuenta detuvo la solicitud 7 hasta que se renovó. No hicimos el reto opcional de persistencia en JSON, y las pruebas del menú siguen sin existir; la suite cubre solo la lógica de <code>tareas.py</code>.</p>
+
+</body>
+</html>

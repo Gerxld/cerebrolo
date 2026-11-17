@@ -1,0 +1,83 @@
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Completar tarea
+4. Salir
+Seleccione una opción: No hay tareas registradas.
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Completar tarea
+4. Salir
+Seleccione una opción: Título de la tarea: Prioridad (baja, media, alta): Tarea agregada: Estudiar Python (prioridad alta)
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Completar tarea
+4. Salir
+Seleccione una opción: Título de la tarea: Prioridad (baja, media, alta): Tarea agregada: Preparar demo (prioridad media)
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Completar tarea
+4. Salir
+Seleccione una opción: 
+Tareas:
+1. [ ] Estudiar Python (prioridad: alta)
+2. [ ] Preparar demo (prioridad: media)
+Número de la tarea a completar: Debe escribir un número entero.
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Completar tarea
+4. Salir
+Seleccione una opción: 
+Tareas:
+1. [ ] Estudiar Python (prioridad: alta)
+2. [ ] Preparar demo (prioridad: media)
+Número de la tarea a completar: No existe la tarea número 9.
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Completar tarea
+4. Salir
+Seleccione una opción: 
+Tareas:
+1. [ ] Estudiar Python (prioridad: alta)
+2. [ ] Preparar demo (prioridad: media)
+Número de la tarea a completar: Tarea completada: Preparar demo
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Completar tarea
+4. Salir
+Seleccione una opción: 
+Tareas:
+1. [ ] Estudiar Python (prioridad: alta)
+2. [X] Preparar demo (prioridad: media)
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Completar tarea
+4. Salir
+Seleccione una opción: 
+Tareas:
+1. [ ] Estudiar Python (prioridad: alta)
+2. [X] Preparar demo (prioridad: media)
+Número de la tarea a completar: No existe la tarea número 4.
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Completar tarea
+4. Salir
+Seleccione una opción: 
+Entrada finalizada. Hasta luego.

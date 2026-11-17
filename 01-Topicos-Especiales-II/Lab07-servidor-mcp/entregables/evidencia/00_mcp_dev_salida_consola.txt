@@ -1,0 +1,166 @@
+Starting MCP inspector...
+
+⚠️  @modelcontextprotocol/inspector v1 is deprecated.
+    Upgrade:  npx @modelcontextprotocol/inspector@latest
+    v1 receives security fixes only.
+
+⚙️ Proxy server listening on localhost:6277
+🔑 Session token: <TOKEN_DE_SESION>
+   Use this token to authenticate requests or set DANGEROUSLY_OMIT_AUTH=true to disable auth
+
+🚀 MCP Inspector is up and running at:
+   http://localhost:6274/?MCP_PROXY_AUTH_TOKEN=<TOKEN_DE_SESION>
+
+New STDIO connection request
+Query parameters: {"command":"uv","args":"run --with mcp==2.3.0 mcp run server.py","env":"[names: APPDATA, HOMEDRIVE, HOMEPATH, LOCALAPPDATA, PATH, PROCESSOR_ARCHITECTURE, SYSTEMDRIVE, SYSTEMROOT, TEMP, USERNAME, USERPROFILE, PROGRAMFILES]","transportType":"stdio"}
+STDIO transport: command=C:\Users\HOME\.local\bin\uv.exe, args=run,--with,mcp==2.3.0,mcp,run,server.py
+Created client transport
+Created server transport
+Received POST message for sessionId 28abc608-6da2-48e8-93d4-49af05e1965e
+Received POST message for sessionId 28abc608-6da2-48e8-93d4-49af05e1965e
+Received POST message for sessionId 28abc608-6da2-48e8-93d4-49af05e1965e
+New STDIO connection request
+Query parameters: {"command":"uv","args":"run --with mcp==2.3.0 mcp run server.py","env":"[names: APPDATA, HOMEDRIVE, HOMEPATH, LOCALAPPDATA, PATH, PROCESSOR_ARCHITECTURE, SYSTEMDRIVE, SYSTEMROOT, TEMP, USERNAME, USERPROFILE, PROGRAMFILES]","transportType":"stdio"}
+STDIO transport: command=C:\Users\HOME\.local\bin\uv.exe, args=run,--with,mcp==2.3.0,mcp,run,server.py
+Created client transport
+Created server transport
+Received POST message for sessionId ddb4783e-a0c5-4c24-9a00-cf6a59cf4d93
+Received POST message for sessionId ddb4783e-a0c5-4c24-9a00-cf6a59cf4d93
+Received POST message for sessionId ddb4783e-a0c5-4c24-9a00-cf6a59cf4d93
+New STDIO connection request
+Query parameters: {"command":"uv","args":"run --with mcp==2.3.0 mcp run server.py","env":"[names: APPDATA, HOMEDRIVE, HOMEPATH, LOCALAPPDATA, PATH, PROCESSOR_ARCHITECTURE, SYSTEMDRIVE, SYSTEMROOT, TEMP, USERNAME, USERPROFILE, PROGRAMFILES]","transportType":"stdio"}
+STDIO transport: command=C:\Users\HOME\.local\bin\uv.exe, args=run,--with,mcp==2.3.0,mcp,run,server.py
+Created client transport
+Created server transport
+Received POST message for sessionId 75621e78-5fd0-44f2-97e9-1f513c78f860
+Received POST message for sessionId 75621e78-5fd0-44f2-97e9-1f513c78f860
+Received POST message for sessionId 75621e78-5fd0-44f2-97e9-1f513c78f860
+New STDIO connection request
+Query parameters: {"command":"uv","args":"run --with mcp==2.3.0 mcp run server.py","env":"[names: APPDATA, HOMEDRIVE, HOMEPATH, LOCALAPPDATA, PATH, PROCESSOR_ARCHITECTURE, SYSTEMDRIVE, SYSTEMROOT, TEMP, USERNAME, USERPROFILE, PROGRAMFILES]","transportType":"stdio"}
+STDIO transport: command=C:\Users\HOME\.local\bin\uv.exe, args=run,--with,mcp==2.3.0,mcp,run,server.py
+Created client transport
+Created server transport
+Received POST message for sessionId 277217e0-0ce4-42ba-822c-e6c3fb21bed5
+Received POST message for sessionId 277217e0-0ce4-42ba-822c-e6c3fb21bed5
+Received POST message for sessionId 277217e0-0ce4-42ba-822c-e6c3fb21bed5
+Received POST message for sessionId 277217e0-0ce4-42ba-822c-e6c3fb21bed5
+New STDIO connection request
+Query parameters: {"command":"uv","args":"run --with mcp==2.3.0 mcp run server.py","env":"[names: APPDATA, HOMEDRIVE, HOMEPATH, LOCALAPPDATA, PATH, PROCESSOR_ARCHITECTURE, SYSTEMDRIVE, SYSTEMROOT, TEMP, USERNAME, USERPROFILE, PROGRAMFILES]","transportType":"stdio"}
+STDIO transport: command=C:\Users\HOME\.local\bin\uv.exe, args=run,--with,mcp==2.3.0,mcp,run,server.py
+Created client transport
+Created server transport
+Received POST message for sessionId 698d8a1f-adb8-4a6a-b46f-1b9f44fbbe73
+Received POST message for sessionId 698d8a1f-adb8-4a6a-b46f-1b9f44fbbe73
+Received POST message for sessionId 698d8a1f-adb8-4a6a-b46f-1b9f44fbbe73
+New STDIO connection request
+Query parameters: {"command":"uv","args":"run --with mcp==2.3.0 mcp run server.py","env":"[names: APPDATA, HOMEDRIVE, HOMEPATH, LOCALAPPDATA, PATH, PROCESSOR_ARCHITECTURE, SYSTEMDRIVE, SYSTEMROOT, TEMP, USERNAME, USERPROFILE, PROGRAMFILES]","transportType":"stdio"}
+STDIO transport: command=C:\Users\HOME\.local\bin\uv.exe, args=run,--with,mcp==2.3.0,mcp,run,server.py
+Created client transport
+Created server transport
+Received POST message for sessionId 94686f51-e89d-4acd-a579-6be9614371a2
+Received POST message for sessionId 94686f51-e89d-4acd-a579-6be9614371a2
+Received POST message for sessionId 94686f51-e89d-4acd-a579-6be9614371a2
+Received POST message for sessionId 94686f51-e89d-4acd-a579-6be9614371a2
+Received POST message for sessionId 94686f51-e89d-4acd-a579-6be9614371a2
+New STDIO connection request
+Query parameters: {"command":"uv","args":"run --with mcp==2.3.0 mcp run server.py","env":"[names: APPDATA, HOMEDRIVE, HOMEPATH, LOCALAPPDATA, PATH, PROCESSOR_ARCHITECTURE, SYSTEMDRIVE, SYSTEMROOT, TEMP, USERNAME, USERPROFILE, PROGRAMFILES]","transportType":"stdio"}
+STDIO transport: command=C:\Users\HOME\.local\bin\uv.exe, args=run,--with,mcp==2.3.0,mcp,run,server.py
+Created client transport
+Created server transport
+Received POST message for sessionId e850ff05-81fc-4506-ad8f-229474c08804
+Received POST message for sessionId e850ff05-81fc-4506-ad8f-229474c08804
+Received POST message for sessionId e850ff05-81fc-4506-ad8f-229474c08804
+New STDIO connection request
+Query parameters: {"command":"uv","args":"run --with mcp==2.3.0 mcp run server.py","env":"[names: APPDATA, HOMEDRIVE, HOMEPATH, LOCALAPPDATA, PATH, PROCESSOR_ARCHITECTURE, SYSTEMDRIVE, SYSTEMROOT, TEMP, USERNAME, USERPROFILE, PROGRAMFILES]","transportType":"stdio"}
+STDIO transport: command=C:\Users\HOME\.local\bin\uv.exe, args=run,--with,mcp==2.3.0,mcp,run,server.py
+Created client transport
+Created server transport
+Received POST message for sessionId 0085e268-c12b-4ff9-9807-cd67977b7659
+Received POST message for sessionId 0085e268-c12b-4ff9-9807-cd67977b7659
+Received POST message for sessionId 0085e268-c12b-4ff9-9807-cd67977b7659
+Received POST message for sessionId 0085e268-c12b-4ff9-9807-cd67977b7659
+New STDIO connection request
+Query parameters: {"command":"uv","args":"run --with mcp==2.3.0 mcp run server.py","env":"[names: APPDATA, HOMEDRIVE, HOMEPATH, LOCALAPPDATA, PATH, PROCESSOR_ARCHITECTURE, SYSTEMDRIVE, SYSTEMROOT, TEMP, USERNAME, USERPROFILE, PROGRAMFILES]","transportType":"stdio"}
+STDIO transport: command=C:\Users\HOME\.local\bin\uv.exe, args=run,--with,mcp==2.3.0,mcp,run,server.py
+Created client transport
+Created server transport
+Received POST message for sessionId 3fcdcf5d-b6cf-4af9-a4d5-1c209babff33
+Received POST message for sessionId 3fcdcf5d-b6cf-4af9-a4d5-1c209babff33
+Received POST message for sessionId 3fcdcf5d-b6cf-4af9-a4d5-1c209babff33
+Received POST message for sessionId 3fcdcf5d-b6cf-4af9-a4d5-1c209babff33
+New STDIO connection request
+Query parameters: {"command":"uv","args":"run --with mcp==2.3.0 mcp run server.py","env":"[names: APPDATA, HOMEDRIVE, HOMEPATH, LOCALAPPDATA, PATH, PROCESSOR_ARCHITECTURE, SYSTEMDRIVE, SYSTEMROOT, TEMP, USERNAME, USERPROFILE, PROGRAMFILES]","transportType":"stdio"}
+STDIO transport: command=C:\Users\HOME\.local\bin\uv.exe, args=run,--with,mcp==2.3.0,mcp,run,server.py
+Created client transport
+Created server transport
+Received POST message for sessionId a6d66c74-b51d-4cf3-a99c-2f5bdd9640ac
+Received POST message for sessionId a6d66c74-b51d-4cf3-a99c-2f5bdd9640ac
+Received POST message for sessionId a6d66c74-b51d-4cf3-a99c-2f5bdd9640ac
+Received POST message for sessionId a6d66c74-b51d-4cf3-a99c-2f5bdd9640ac
+Received POST message for sessionId a6d66c74-b51d-4cf3-a99c-2f5bdd9640ac
+Received POST message for sessionId a6d66c74-b51d-4cf3-a99c-2f5bdd9640ac
+Received POST message for sessionId a6d66c74-b51d-4cf3-a99c-2f5bdd9640ac
+Received POST message for sessionId a6d66c74-b51d-4cf3-a99c-2f5bdd9640ac
+Received POST message for sessionId a6d66c74-b51d-4cf3-a99c-2f5bdd9640ac
+Received POST message for sessionId a6d66c74-b51d-4cf3-a99c-2f5bdd9640ac
+New STDIO connection request
+Query parameters: {"command":"uv","args":"run --with mcp==2.3.0 mcp run server.py","env":"[names: APPDATA, HOMEDRIVE, HOMEPATH, LOCALAPPDATA, PATH, PROCESSOR_ARCHITECTURE, SYSTEMDRIVE, SYSTEMROOT, TEMP, USERNAME, USERPROFILE, PROGRAMFILES]","transportType":"stdio"}
+STDIO transport: command=C:\Users\HOME\.local\bin\uv.exe, args=run,--with,mcp==2.3.0,mcp,run,server.py
+Created client transport
+Created server transport
+Received POST message for sessionId 248d6752-80f2-422f-af95-7f55b1f65f67
+Received POST message for sessionId 248d6752-80f2-422f-af95-7f55b1f65f67
+Received POST message for sessionId 248d6752-80f2-422f-af95-7f55b1f65f67
+Received POST message for sessionId 248d6752-80f2-422f-af95-7f55b1f65f67
+New STDIO connection request
+Query parameters: {"command":"uv","args":"run --with mcp==2.3.0 mcp run server.py","env":"[names: APPDATA, HOMEDRIVE, HOMEPATH, LOCALAPPDATA, PATH, PROCESSOR_ARCHITECTURE, SYSTEMDRIVE, SYSTEMROOT, TEMP, USERNAME, USERPROFILE, PROGRAMFILES]","transportType":"stdio"}
+STDIO transport: command=C:\Users\HOME\.local\bin\uv.exe, args=run,--with,mcp==2.3.0,mcp,run,server.py
+Created client transport
+Created server transport
+Received POST message for sessionId c9d29e0d-cbad-462b-bf57-d27b2344e2e5
+Received POST message for sessionId c9d29e0d-cbad-462b-bf57-d27b2344e2e5
+Received POST message for sessionId c9d29e0d-cbad-462b-bf57-d27b2344e2e5
+Received POST message for sessionId c9d29e0d-cbad-462b-bf57-d27b2344e2e5
+Received POST message for sessionId c9d29e0d-cbad-462b-bf57-d27b2344e2e5
+Received POST message for sessionId c9d29e0d-cbad-462b-bf57-d27b2344e2e5
+New STDIO connection request
+Query parameters: {"command":"uv","args":"run --with mcp==2.3.0 mcp run server.py","env":"[names: APPDATA, HOMEDRIVE, HOMEPATH, LOCALAPPDATA, PATH, PROCESSOR_ARCHITECTURE, SYSTEMDRIVE, SYSTEMROOT, TEMP, USERNAME, USERPROFILE, PROGRAMFILES]","transportType":"stdio"}
+STDIO transport: command=C:\Users\HOME\.local\bin\uv.exe, args=run,--with,mcp==2.3.0,mcp,run,server.py
+Created client transport
+Created server transport
+Received POST message for sessionId 92ec6efc-6782-4f5b-8162-5db7cf981418
+Received POST message for sessionId 92ec6efc-6782-4f5b-8162-5db7cf981418
+Received POST message for sessionId 92ec6efc-6782-4f5b-8162-5db7cf981418
+Received POST message for sessionId 92ec6efc-6782-4f5b-8162-5db7cf981418
+Received POST message for sessionId 92ec6efc-6782-4f5b-8162-5db7cf981418
+Received POST message for sessionId 92ec6efc-6782-4f5b-8162-5db7cf981418
+Received POST message for sessionId 92ec6efc-6782-4f5b-8162-5db7cf981418
+New STDIO connection request
+Query parameters: {"command":"uv","args":"run --with mcp==2.3.0 mcp run server.py","env":"[names: APPDATA, HOMEDRIVE, HOMEPATH, LOCALAPPDATA, PATH, PROCESSOR_ARCHITECTURE, SYSTEMDRIVE, SYSTEMROOT, TEMP, USERNAME, USERPROFILE, PROGRAMFILES]","transportType":"stdio"}
+STDIO transport: command=C:\Users\HOME\.local\bin\uv.exe, args=run,--with,mcp==2.3.0,mcp,run,server.py
+Created client transport
+Created server transport
+Received POST message for sessionId fb8f20d2-ef2c-428a-a04d-c3d2ef333e28
+Received POST message for sessionId fb8f20d2-ef2c-428a-a04d-c3d2ef333e28
+Received POST message for sessionId fb8f20d2-ef2c-428a-a04d-c3d2ef333e28
+New STDIO connection request
+Query parameters: {"command":"uv","args":"run --with mcp==2.3.0 mcp run server.py","env":"[names: APPDATA, HOMEDRIVE, HOMEPATH, LOCALAPPDATA, PATH, PROCESSOR_ARCHITECTURE, SYSTEMDRIVE, SYSTEMROOT, TEMP, USERNAME, USERPROFILE, PROGRAMFILES]","transportType":"stdio"}
+STDIO transport: command=C:\Users\HOME\.local\bin\uv.exe, args=run,--with,mcp==2.3.0,mcp,run,server.py
+Created client transport
+Created server transport
+Received POST message for sessionId 268090ee-cff8-4efa-b1d1-14470d1417b0
+Received POST message for sessionId 268090ee-cff8-4efa-b1d1-14470d1417b0
+Received POST message for sessionId 268090ee-cff8-4efa-b1d1-14470d1417b0
+Received POST message for sessionId 268090ee-cff8-4efa-b1d1-14470d1417b0
+Received POST message for sessionId 268090ee-cff8-4efa-b1d1-14470d1417b0
+Received POST message for sessionId 268090ee-cff8-4efa-b1d1-14470d1417b0
+New STDIO connection request
+Query parameters: {"command":"uv","args":"run --with mcp==2.3.0 mcp run server.py","env":"[names: APPDATA, HOMEDRIVE, HOMEPATH, LOCALAPPDATA, PATH, PROCESSOR_ARCHITECTURE, SYSTEMDRIVE, SYSTEMROOT, TEMP, USERNAME, USERPROFILE, PROGRAMFILES]","transportType":"stdio"}
+STDIO transport: command=C:\Users\HOME\.local\bin\uv.exe, args=run,--with,mcp==2.3.0,mcp,run,server.py
+Created client transport
+Created server transport
+Received POST message for sessionId c138eb5a-9310-4060-ae81-559e74780ae0
+Received POST message for sessionId c138eb5a-9310-4060-ae81-559e74780ae0
+Received POST message for sessionId c138eb5a-9310-4060-ae81-559e74780ae0
+Received POST message for sessionId c138eb5a-9310-4060-ae81-559e74780ae0
+Received POST message for sessionId c138eb5a-9310-4060-ae81-559e74780ae0

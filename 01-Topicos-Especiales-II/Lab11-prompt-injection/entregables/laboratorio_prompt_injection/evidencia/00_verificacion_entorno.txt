@@ -1,0 +1,16 @@
+Comando: { python --version; "$LOCALAPPDATA/Programs/Ollama/ollama.exe" --version; "$LOCALAPPDATA/Programs/Ollama/ollama.exe" list; python -m pip show ollama | head -3; }
+Fecha y hora de inicio: 2026-10-30 10:25:31
+----------------------------------------
+Python 3.13.5
+ollama version is 0.40.13
+NAME                       ID              SIZE      MODIFIED           
+qwen2.5:3b                 357c53fb659c    1.9 GB    About a minute ago    
+nomic-embed-text:latest    0a109f422b47    274 MB    23 hours ago          
+qwen3:4b                   359d7dd4bcda    2.5 GB    23 hours ago          
+qwen2.5-coder:3b           f72c60cabf62    1.9 GB    23 hours ago          
+Name: ollama
+Version: 0.6.3
+Summary: The official Python client for Ollama.
+----------------------------------------
+Código de salida: 0
+Fecha y hora de fin: 2026-10-30 10:25:32

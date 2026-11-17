@@ -1,0 +1,3 @@
+La asistencia mínima requerida para aprobar un curso es de 75%.
+Un estudiante con menos de 75% de asistencia puede perder el derecho a evaluación final.
+Las ausencias justificadas deben documentarse según el procedimiento de la facultad.

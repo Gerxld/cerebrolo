@@ -1,0 +1,18 @@
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Salir
+Seleccione una opción: Título de la tarea: Prioridad (baja, media, alta): Traceback (most recent call last):
+  File "C:\Cerebrolo\01-Topicos-Especiales-II\Lab02-chat-web\entregables\versiones\app_v2.py", line 67, in <module>
+    main()
+    ~~~~^^
+  File "C:\Cerebrolo\01-Topicos-Especiales-II\Lab02-chat-web\entregables\versiones\app_v2.py", line 56, in main
+    agregar_tarea(tareas)
+    ~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Cerebrolo\01-Topicos-Especiales-II\Lab02-chat-web\entregables\versiones\app_v2.py", line 34, in agregar_tarea
+    prioridad = pedir_prioridad()
+  File "C:\Cerebrolo\01-Topicos-Especiales-II\Lab02-chat-web\entregables\versiones\app_v2.py", line 23, in pedir_prioridad
+    prioridad = input("Prioridad (baja, media, alta): ").strip().lower()
+                ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+EOFError: EOF when reading a line

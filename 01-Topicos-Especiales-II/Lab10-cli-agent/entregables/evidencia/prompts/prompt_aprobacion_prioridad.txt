@@ -1,0 +1,1 @@
+Revisé lo que propusiste y apruebo las ediciones sobre tasks.py, app.py y tests/test_tasks.py, y la ejecución de 'python -m unittest' y 'python app.py'. Procede con la implementación y ejecuta las pruebas. Mantén la distinción de mayúsculas en la prioridad. No toques otros archivos ni uses git.

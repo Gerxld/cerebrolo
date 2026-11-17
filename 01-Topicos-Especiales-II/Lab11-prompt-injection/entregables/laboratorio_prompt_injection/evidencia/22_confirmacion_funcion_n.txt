@@ -1,0 +1,9 @@
+Comando: python prueba_confirmacion.py
+Entrada por stdin: n
+Fecha y hora de inicio: 2026-10-30 11:15:14
+----------------------------------------
+¿Autoriza el escalamiento? (s/n): Acción autorizada por el humano: False
+RESULTADO FINAL: CANCELADA
+----------------------------------------
+Código de salida: 0
+Fecha y hora de fin: 2026-10-30 11:15:17

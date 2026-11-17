@@ -1,0 +1,30 @@
+diff --git a/prestamos.py b/prestamos.py
+index 771cb1f..5540a79 100644
+--- a/prestamos.py
++++ b/prestamos.py
+@@ -24,6 +24,14 @@ def _fecha_valida(fecha):
+     return date.fromisoformat(fecha)  # ValueError si no existe en el calendario
+ 
+ 
++def _libro_esta_activo(prestamos, libro):
++    return any(p["libro"] == libro and not p["devuelto"] for p in prestamos)
++
++
++def _contar_activos(prestamos, usuario):
++    return sum(1 for p in prestamos if p["usuario"] == usuario and not p["devuelto"])
++
++
+ def registrar_prestamo(prestamos, usuario, libro, fecha):
+     usuario = _texto_limpio(usuario)
+     libro = _texto_limpio(libro)
+@@ -32,6 +40,10 @@ def registrar_prestamo(prestamos, usuario, libro, fecha):
+         vence = inicio + timedelta(days=14)
+     except OverflowError:
+         raise ValueError("el vencimiento supera 9999-12-31") from None
++    if _libro_esta_activo(prestamos, libro):
++        raise ValueError("el libro ya tiene un préstamo activo")
++    if _contar_activos(prestamos, usuario) >= 3:
++        raise ValueError("el usuario ya tiene 3 préstamos activos")
+     prestamo = {
+         "usuario": usuario,
+         "libro": libro,

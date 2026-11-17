@@ -1,0 +1,5 @@
+Laboratorio 2 - Tópicos Especiales II - Ríos, Gerald (8-987-741)
+Código: laboratorio_chat_web/ (app.py, tareas.py, test_tareas.py)
+Ejecutar:  python app.py
+Pruebas:   python -m unittest -v   (desde laboratorio_chat_web/)
+Evidencia: unittest_v4.txt (5 pruebas, antes), unittest_final.txt (7 pruebas), prueba_*.txt, terminal/*.png, diff_multiarchivo.txt, capturas/chat_NN.jpg, registro_solicitudes.md

@@ -1,0 +1,15 @@
+$ git log --oneline
+fabe271 Agregar prioridad y búsqueda con ayuda de CLI Agent
+e73d92f Línea base del laboratorio CLI Agent
+
+$ git show --stat HEAD
+commit fabe2713996a11df84d6f8fd19d06e4e35621b9a
+Author: Gerald Rios <correo-omitido>
+Date:   Fri Oct 30 13:38:38 2026 -0500
+
+    Agregar prioridad y búsqueda con ayuda de CLI Agent
+
+ app.py              |  6 +++---
+ tasks.py            | 19 +++++++++++++++++--
+ tests/test_tasks.py | 50 +++++++++++++++++++++++++++++++++++++++++++++++---
+ 3 files changed, 67 insertions(+), 8 deletions(-)

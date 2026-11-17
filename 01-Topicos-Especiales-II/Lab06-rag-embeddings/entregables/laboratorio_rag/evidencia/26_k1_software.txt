@@ -1,0 +1,20 @@
+Comando: python -u experimentos.py "¿Qué necesito para instalar software adicional en los laboratorios?" 220 1
+Hora de inicio: 2026-10-30 12:03:28
+----------------------------------------
+Documentos cargados: 3
+Tamano de chunk: 220 | solapamiento: 40 | k: 1
+Chunks creados: 6
+Generando índice vectorial...
+
+Pregunta: ¿Qué necesito para instalar software adicional en los laboratorios?
+
+--- CHUNKS RECUPERADOS ---
+1. laboratorios.txt | similitud=0.804
+Los laboratorios de desarrollo de software están ubicados en el edificio 3.
+Los estudiantes pueden utilizar los laboratorios de 8:00 a.m. a 8:00 p.m.
+Para instalar software adicional se requiere autorización del responsa
+
+--- RESPUESTA RAG ---
+Según los datos proporcionados en el documento "laboratorios.txt", para instalar software adicional en los laboratorios de desarrollo de software, es necesario obtener autorización del responsable.
+----------------------------------------
+Hora de fin: 2026-10-30 12:03:48

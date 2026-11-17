@@ -1,0 +1,32 @@
+Fecha y hora: 2026-10-30 11:43:47
+Comando: type reportes\revision_usuarios.md
+------------------------------------------------------------
+## Análisis de proyecto
+
+1. **Archivo de validación de correo electrónico**
+   - Se encuentra en `usuarios.py`
+   - Función: `email_valido(email)` que verifica que el correo contenga `@` y un punto en la parte después del `@`.
+
+2. **Casos de prueba para usuarios**
+   - `test_email_valido`: Valida correos correctamente formateados (ej. `ana@utp.ac.pa`)
+   - `test_email_invalido`: Verifica correos inválidos (ej. `ana@utp`)
+   - `test_nombre_obligatorio`: Asegura que el nombre no esté vacío al crear un usuario
+
+**Conclusión**: El proyecto valida el correo electrónico en `usuarios.py` y cubre tres casos clave en las pruebas de usuarios.
+------------------------------------------------------------
+Comparación con los archivos reales (grep -n 'def ' en proyecto)
+proyecto/cursos.py:1:def crear_curso(codigo, nombre):
+proyecto/cursos.py:6:def buscar_curso(cursos, codigo):
+proyecto/test_usuarios.py:5:    def test_email_valido(self):
+proyecto/test_usuarios.py:8:    def test_email_invalido(self):
+proyecto/test_usuarios.py:11:    def test_nombre_obligatorio(self):
+proyecto/usuarios.py:1:def email_valido(email):
+proyecto/usuarios.py:4:def crear_usuario(nombre, email):
+
+Reportes que existen en reportes/ al terminar el laboratorio:
+cobertura.md
+database_reporte.md
+errores_valueerror.md
+reporte_secreto.txt.md
+reporte_validacion_correo.md
+revision_usuarios.md

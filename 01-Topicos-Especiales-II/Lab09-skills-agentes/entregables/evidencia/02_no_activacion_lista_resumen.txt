@@ -1,0 +1,65 @@
+[linea 1] init: model=claude-sonnet-5-5 cwd=C:\Cerebrolo\01-Topicos-Especiales-II\Lab09-skills-agentes\laboratorio_skills
+[linea 1] skills disponibles: ['graphify', 'review-ux-ui', 'ui-ux-reviewer', 'python-code-review', 'diagramas', 'informe-utp', 'investigacion-apa', 'nuevo-trabajo', 'redaccion-humana', 'skill-creator:skill-creator', 'frontend-design:frontend-design', 'design:accessibility-review', 'design:design-critique', 'design:design-handoff', 'design:design-system', 'design:research-synthesis', 'design:user-research', 'design:ux-copy', 'design', 'design-sync', 'dataviz', 'update-config', 'verify', 'debug', 'code-review', 'simplify', 'batch', 'fewer-permission-prompts', 'doctor', 'loop', 'schedule', 'claude-api', 'run', 'run-skill-generator', 'plugin-authoring', 'anthropic-skills:built-in-browser', 'anthropic-skills:chrome-browser', 'anthropic-skills:computer-use', 'anthropic-skills:deep-research', 'anthropic-skills:docs', 'anthropic-skills:docx', 'anthropic-skills:google-workspace', 'anthropic-skills:import-memory', 'anthropic-skills:morning', 'anthropic-skills:pdf', 'anthropic-skills:pptx', 'anthropic-skills:skill-creator', 'anthropic-skills:web-artifacts-builder', 'anthropic-skills:xlsx']
+[linea 3] ASISTENTE: # Qué es una lista en Python
+
+Una lista es una colección **ordenada** y **modificable** de elementos. Se escribe entre corchetes `[]` y separa los elementos con comas. Sus características principales...
+[linea 5] RESULT: turns=1 costo_usd=0.1254951
+
+Herramientas usadas: []
+Skill invocada: NINGUNA
+
+=== RESPUESTA FINAL ===
+# Qué es una lista en Python
+
+Una lista es una colección **ordenada** y **modificable** de elementos. Se escribe entre corchetes `[]` y separa los elementos con comas. Sus características principales son estas:
+
+- **Ordenada:** cada elemento tiene una posición (índice) que empieza en 0.
+- **Mutable:** puedes agregar, quitar o cambiar elementos después de crearla.
+- **Heterogénea:** puede mezclar tipos de datos (números, textos, otras listas).
+- **Permite repetidos:** el mismo valor puede aparecer varias veces.
+
+## Ejemplo 1: crear y acceder a elementos
+
+```python
+frutas = ["manzana", "banano", "naranja"]
+
+print(frutas[0])    # manzana (primer elemento)
+print(frutas[-1])   # naranja (último elemento)
+print(len(frutas))  # 3
+```
+
+## Ejemplo 2: modificar la lista
+
+```python
+numeros = [10, 20, 30]
+
+numeros.append(40)      # agrega al final -> [10, 20, 30, 40]
+numeros[1] = 25         # cambia un valor -> [10, 25, 30, 40]
+numeros.remove(10)      # elimina un valor -> [25, 30, 40]
+
+print(numeros)          # [25, 30, 40]
+```
+
+## Ejemplo 3: recorrer una lista con un ciclo
+
+```python
+notas = [85, 90, 78, 92]
+
+suma = 0
+for nota in notas:
+    suma += nota
+
+promedio = suma / len(notas)
+print(f"Promedio: {promedio}")  # Promedio: 86.25
+```
+
+## Resumen de métodos comunes
+
+| Método | Qué hace |
+|---|---|
+| `append(x)` | Agrega `x` al final |
+| `insert(i, x)` | Inserta `x` en la posición `i` |
+| `remove(x)` | Elimina la primera aparición de `x` |
+| `pop()` | Quita y devuelve el último elemento |
+| `sort()` | Ordena la lista |
+| `len(lista)` | Devuelve la cantidad de elementos |

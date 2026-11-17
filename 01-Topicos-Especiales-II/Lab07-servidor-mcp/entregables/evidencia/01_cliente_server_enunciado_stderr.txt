@@ -1,0 +1,455 @@
+[10/29/26 11:02:59] ERROR    Tool 'calcular_promedio' raised an   server.py:455
+                             unexpected exception                              
+                             +- Traceback (most recent call las-+              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \mcp\server\mcpserver\tools\base |              
+                             | .py:179 in run                   |              
+                             |                                  |              
+                             |   176                     return |              
+                             |       else resolved              |              
+                             |   177                 pass_direc |              
+                             |   178                            |              
+                             | > 179             result = await |              
+                             |       pass_directly)             |              
+                             |   180                            |              
+                             |   181             # Registration |              
+                             |   182             # a body that  |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \mcp\server\mcpserver\utilities\ |              
+                             | func_metadata.py:164 in call_fn  |              
+                             |                                  |              
+                             |   161         kwargs = arguments |              
+                             |   162         if fn_is_async:    |              
+                             |   163             return await f |              
+                             | > 164         return await anyio |              
+                             |   165                            |              
+                             |   166     @deprecated(           |              
+                             |   167         "FuncMetadata.call |              
+                             |       3.0; "                     |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \anyio\to_thread.py:65 in        |              
+                             | run_sync                         |              
+                             |                                  |              
+                             |   62             stacklevel=2,   |              
+                             |   63         )                   |              
+                             |   64                             |              
+                             | > 65     return await get_async_ |              
+                             |   66         func, args, abandon |              
+                             |   67     )                       |              
+                             |   68                             |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \anyio\_backends\_asyncio.py:270 |              
+                             | 6 in run_sync_in_worker_thread   |              
+                             |                                  |              
+                             |   2703                     worke |              
+                             |   2704                           |              
+                             |   2705                 worker.qu |              
+                             | > 2706                 return aw |              
+                             |   2707                           |              
+                             |   2708     @classmethod          |              
+                             |   2709     def check_cancelled(c |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \anyio\_backends\_asyncio.py:110 |              
+                             | 0 in run                         |              
+                             |                                  |              
+                             |   1097                     excep |              
+                             |   1098                     threa |              
+                             |   1099                     try:  |              
+                             | > 1100                         r |              
+                             |   1101                     excep |              
+                             |   1102                         e |              
+                             |   1103                     final |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\server.py:12 in         |              
+                             | calcular_promedio                |              
+                             |                                  |              
+                             |    9     if not notas:           |              
+                             |   10         raise ValueError("D |              
+                             |   11     if any(n < 0 or n > 100 |              
+                             | > 12         raise ValueError("L |              
+                             |   13     return round(sum(notas) |              
+                             |   14                             |              
+                             |   15                             |              
+                             +----------------------------------+              
+                             ValueError: Las notas deben estar                 
+                             entre 0 y 100                                     
+                                                                               
+                             The above exception was the direct                
+                             cause of the following exception:                 
+                                                                               
+                             +- Traceback (most recent call las-+              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \mcp\server\mcpserver\server.py: |              
+                             | 442 in _handle_call_tool         |              
+                             |                                  |              
+                             |    439     ) -> CallToolResult | |              
+                             |    440         context = Context |              
+                             |        subscriptions=self._subsc |              
+                             |    441         try:              |              
+                             | >  442             return await  |              
+                             |    443         except MCPError:  |              
+                             |    444             raise         |              
+                             |    445         except Exception  |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \mcp\server\mcpserver\server.py: |              
+                             | 548 in call_tool                 |              
+                             |                                  |              
+                             |    545         """               |              
+                             |    546         if context is Non |              
+                             |    547             context = Con |              
+                             | >  548         return await self |              
+                             |        convert_result=True)      |              
+                             |    549                           |              
+                             |    550     async def list_resour |              
+                             |    551         """List all avail |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \mcp\server\mcpserver\tools\tool |              
+                             | _manager.py:87 in call_tool      |              
+                             |                                  |              
+                             |   84         if not tool:        |              
+                             |   85             raise ToolError |              
+                             |   86                             |              
+                             | > 87         return await tool.r |              
+                             |   88                             |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \mcp\server\mcpserver\tools\base |              
+                             | .py:213 in run                   |              
+                             |                                  |              
+                             |   210             raise ToolErro |              
+                             |   211         except Exception a |              
+                             |   212             # A crash: the |              
+                             | > 213             raise Unexpect |              
+                             |   214                            |              
+                             +----------------------------------+              
+                             UnexpectedToolError: Error executing              
+                             tool calcular_promedio                            
+[10/29/26 11:03:00] ERROR    Tool 'calcular_promedio' raised an   server.py:455
+                             unexpected exception                              
+                             +- Traceback (most recent call las-+              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \mcp\server\mcpserver\tools\base |              
+                             | .py:179 in run                   |              
+                             |                                  |              
+                             |   176                     return |              
+                             |       else resolved              |              
+                             |   177                 pass_direc |              
+                             |   178                            |              
+                             | > 179             result = await |              
+                             |       pass_directly)             |              
+                             |   180                            |              
+                             |   181             # Registration |              
+                             |   182             # a body that  |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \mcp\server\mcpserver\utilities\ |              
+                             | func_metadata.py:164 in call_fn  |              
+                             |                                  |              
+                             |   161         kwargs = arguments |              
+                             |   162         if fn_is_async:    |              
+                             |   163             return await f |              
+                             | > 164         return await anyio |              
+                             |   165                            |              
+                             |   166     @deprecated(           |              
+                             |   167         "FuncMetadata.call |              
+                             |       3.0; "                     |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \anyio\to_thread.py:65 in        |              
+                             | run_sync                         |              
+                             |                                  |              
+                             |   62             stacklevel=2,   |              
+                             |   63         )                   |              
+                             |   64                             |              
+                             | > 65     return await get_async_ |              
+                             |   66         func, args, abandon |              
+                             |   67     )                       |              
+                             |   68                             |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \anyio\_backends\_asyncio.py:270 |              
+                             | 6 in run_sync_in_worker_thread   |              
+                             |                                  |              
+                             |   2703                     worke |              
+                             |   2704                           |              
+                             |   2705                 worker.qu |              
+                             | > 2706                 return aw |              
+                             |   2707                           |              
+                             |   2708     @classmethod          |              
+                             |   2709     def check_cancelled(c |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \anyio\_backends\_asyncio.py:110 |              
+                             | 0 in run                         |              
+                             |                                  |              
+                             |   1097                     excep |              
+                             |   1098                     threa |              
+                             |   1099                     try:  |              
+                             | > 1100                         r |              
+                             |   1101                     excep |              
+                             |   1102                         e |              
+                             |   1103                     final |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\server.py:10 in         |              
+                             | calcular_promedio                |              
+                             |                                  |              
+                             |    7 def calcular_promedio(notas |              
+                             |    8     """Calcula el promedio  |              
+                             |    9     if not notas:           |              
+                             | > 10         raise ValueError("D |              
+                             |   11     if any(n < 0 or n > 100 |              
+                             |   12         raise ValueError("L |              
+                             |   13     return round(sum(notas) |              
+                             +----------------------------------+              
+                             ValueError: Debe proporcionar al                  
+                             menos una nota                                    
+                                                                               
+                             The above exception was the direct                
+                             cause of the following exception:                 
+                                                                               
+                             +- Traceback (most recent call las-+              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \mcp\server\mcpserver\server.py: |              
+                             | 442 in _handle_call_tool         |              
+                             |                                  |              
+                             |    439     ) -> CallToolResult | |              
+                             |    440         context = Context |              
+                             |        subscriptions=self._subsc |              
+                             |    441         try:              |              
+                             | >  442             return await  |              
+                             |    443         except MCPError:  |              
+                             |    444             raise         |              
+                             |    445         except Exception  |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \mcp\server\mcpserver\server.py: |              
+                             | 548 in call_tool                 |              
+                             |                                  |              
+                             |    545         """               |              
+                             |    546         if context is Non |              
+                             |    547             context = Con |              
+                             | >  548         return await self |              
+                             |        convert_result=True)      |              
+                             |    549                           |              
+                             |    550     async def list_resour |              
+                             |    551         """List all avail |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \mcp\server\mcpserver\tools\tool |              
+                             | _manager.py:87 in call_tool      |              
+                             |                                  |              
+                             |   84         if not tool:        |              
+                             |   85             raise ToolError |              
+                             |   86                             |              
+                             | > 87         return await tool.r |              
+                             |   88                             |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \mcp\server\mcpserver\tools\base |              
+                             | .py:213 in run                   |              
+                             |                                  |              
+                             |   210             raise ToolErro |              
+                             |   211         except Exception a |              
+                             |   212             # A crash: the |              
+                             | > 213             raise Unexpect |              
+                             |   214                            |              
+                             +----------------------------------+              
+                             UnexpectedToolError: Error executing              
+                             tool calcular_promedio                            
+[10/29/26 11:03:01] ERROR    Tool 'estado_estudiante' raised an   server.py:455
+                             unexpected exception                              
+                             +- Traceback (most recent call las-+              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \mcp\server\mcpserver\tools\base |              
+                             | .py:179 in run                   |              
+                             |                                  |              
+                             |   176                     return |              
+                             |       else resolved              |              
+                             |   177                 pass_direc |              
+                             |   178                            |              
+                             | > 179             result = await |              
+                             |       pass_directly)             |              
+                             |   180                            |              
+                             |   181             # Registration |              
+                             |   182             # a body that  |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \mcp\server\mcpserver\utilities\ |              
+                             | func_metadata.py:164 in call_fn  |              
+                             |                                  |              
+                             |   161         kwargs = arguments |              
+                             |   162         if fn_is_async:    |              
+                             |   163             return await f |              
+                             | > 164         return await anyio |              
+                             |   165                            |              
+                             |   166     @deprecated(           |              
+                             |   167         "FuncMetadata.call |              
+                             |       3.0; "                     |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \anyio\to_thread.py:65 in        |              
+                             | run_sync                         |              
+                             |                                  |              
+                             |   62             stacklevel=2,   |              
+                             |   63         )                   |              
+                             |   64                             |              
+                             | > 65     return await get_async_ |              
+                             |   66         func, args, abandon |              
+                             |   67     )                       |              
+                             |   68                             |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \anyio\_backends\_asyncio.py:270 |              
+                             | 6 in run_sync_in_worker_thread   |              
+                             |                                  |              
+                             |   2703                     worke |              
+                             |   2704                           |              
+                             |   2705                 worker.qu |              
+                             | > 2706                 return aw |              
+                             |   2707                           |              
+                             |   2708     @classmethod          |              
+                             |   2709     def check_cancelled(c |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \anyio\_backends\_asyncio.py:110 |              
+                             | 0 in run                         |              
+                             |                                  |              
+                             |   1097                     excep |              
+                             |   1098                     threa |              
+                             |   1099                     try:  |              
+                             | > 1100                         r |              
+                             |   1101                     excep |              
+                             |   1102                         e |              
+                             |   1103                     final |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\server.py:20 in         |              
+                             | estado_estudiante                |              
+                             |                                  |              
+                             |   17 def estado_estudiante(prome |              
+                             |   18     """Clasifica el estado  |              
+                             |   19     if promedio < 0 or prom |              
+                             | > 20         raise ValueError("P |              
+                             |   21     return "APROBADO" if pr |              
+                             |   22                             |              
+                             |   23                             |              
+                             +----------------------------------+              
+                             ValueError: Promedio fuera de rango               
+                                                                               
+                             The above exception was the direct                
+                             cause of the following exception:                 
+                                                                               
+                             +- Traceback (most recent call las-+              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \mcp\server\mcpserver\server.py: |              
+                             | 442 in _handle_call_tool         |              
+                             |                                  |              
+                             |    439     ) -> CallToolResult | |              
+                             |    440         context = Context |              
+                             |        subscriptions=self._subsc |              
+                             |    441         try:              |              
+                             | >  442             return await  |              
+                             |    443         except MCPError:  |              
+                             |    444             raise         |              
+                             |    445         except Exception  |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \mcp\server\mcpserver\server.py: |              
+                             | 548 in call_tool                 |              
+                             |                                  |              
+                             |    545         """               |              
+                             |    546         if context is Non |              
+                             |    547             context = Con |              
+                             | >  548         return await self |              
+                             |        convert_result=True)      |              
+                             |    549                           |              
+                             |    550     async def list_resour |              
+                             |    551         """List all avail |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \mcp\server\mcpserver\tools\tool |              
+                             | _manager.py:87 in call_tool      |              
+                             |                                  |              
+                             |   84         if not tool:        |              
+                             |   85             raise ToolError |              
+                             |   86                             |              
+                             | > 87         return await tool.r |              
+                             |   88                             |              
+                             |                                  |              
+                             | C:\Cerebrolo\01-Topicos-Especial |              
+                             | es-II\Lab07-servidor-mcp\laborat |              
+                             | orio_mcp\.venv\Lib\site-packages |              
+                             | \mcp\server\mcpserver\tools\base |              
+                             | .py:213 in run                   |              
+                             |                                  |              
+                             |   210             raise ToolErro |              
+                             |   211         except Exception a |              
+                             |   212             # A crash: the |              
+                             | > 213             raise Unexpect |              
+                             |   214                            |              
+                             +----------------------------------+              
+                             UnexpectedToolError: Error executing              
+                             tool estado_estudiante                            

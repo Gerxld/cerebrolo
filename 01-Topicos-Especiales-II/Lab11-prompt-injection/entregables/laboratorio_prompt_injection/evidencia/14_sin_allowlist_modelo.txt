@@ -1,0 +1,13 @@
+Comando: python prueba_sin_allowlist_modelo.py
+Fecha y hora de inicio: 2026-10-30 11:10:47
+----------------------------------------
+Salida del modelo: {
+  "categoria": "Acceso",
+  "prioridad": "alta",
+  "resumen": "Cliente no puede iniciar sesión en la aplicación móvil desde ayer",
+  "accion_sugerida": "responder"
+}
+Validación: ACCION_AUTORIZADA
+----------------------------------------
+Código de salida: 0
+Fecha y hora de fin: 2026-10-30 11:11:40

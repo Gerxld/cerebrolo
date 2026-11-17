@@ -1,0 +1,42 @@
+﻿Fecha y hora: 2026-10-30 11:48:32
+PS> Get-CimInstance Win32_ComputerSystem | RAM total
+CPU: AMD Ryzen 7 5800H with Radeon Graphics         
+RAM total: 15.4 GB
+RAM libre ahora: 8.1 GB
+GPU: AMD Radeon(TM) Graphics
+PS> Get-PSDrive C
+Disco C: usado 508.6 GB, libre 443.9 GB
+PS> Test-Path C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe
+True  (C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe)
+PS> & 'C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe' --version
+ollama version is 0.40.13
+PS> & 'C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe' list
+NAME                       ID              SIZE      MODIFIED          
+qwen2.5:3b                 357c53fb659c    1.9 GB    About an hour ago    
+nomic-embed-text:latest    0a109f422b47    274 MB    25 hours ago         
+qwen3:4b                   359d7dd4bcda    2.5 GB    25 hours ago         
+qwen2.5-coder:3b           f72c60cabf62    1.9 GB    25 hours ago         
+PS> & 'C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe' show qwen2.5-coder:3b
+  Model
+    architecture        qwen2          
+    parameters          3.1B           
+    context length      32768          
+    embedding length    2048           
+    quantization        Q4_K_M         
+    template source     go_template    
+
+  Capabilities
+    completion    
+    tools         
+    insert        
+
+  System
+    You are Qwen, created by Alibaba Cloud. You are a helpful assistant.    
+
+  License
+    Qwen RESEARCH LICENSE AGREEMENT                                     
+    Qwen RESEARCH LICENSE AGREEMENT Release Date: September 19, 2024    
+    ...                                                                 
+
+PS> python --version
+Python 3.13.5

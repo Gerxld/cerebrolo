@@ -1,0 +1,98 @@
+=== PASO 23: tres casos negativos obligatorios ===
+
+--- 1. Fecha inválida (2026-02-30)
+lista antes  : [{'usuario': 'Ana', 'libro': 'Python', 'fecha_prestamo': '2026-09-01', 'fecha_vencimiento': '2026-09-15', 'devuelto': False}]
+resultado    : ValueError('day is out of range for month')
+lista después: [{'usuario': 'Ana', 'libro': 'Python', 'fecha_prestamo': '2026-09-01', 'fecha_vencimiento': '2026-09-15', 'devuelto': False}]
+lista intacta: True
+VEREDICTO    : OK
+
+--- 2. Libro ya prestado (Python, otro usuario)
+lista antes  : [{'usuario': 'Ana', 'libro': 'Python', 'fecha_prestamo': '2026-09-01', 'fecha_vencimiento': '2026-09-15', 'devuelto': False}]
+resultado    : ValueError('el libro ya tiene un préstamo activo')
+lista después: [{'usuario': 'Ana', 'libro': 'Python', 'fecha_prestamo': '2026-09-01', 'fecha_vencimiento': '2026-09-15', 'devuelto': False}]
+lista intacta: True
+VEREDICTO    : OK
+
+--- 3. Préstamo activo número 4 de Ana (límite 3)
+lista antes  : [{'usuario': 'Ana', 'libro': 'A', 'fecha_prestamo': '2026-09-01', 'fecha_vencimiento': '2026-09-15', 'devuelto': False}, {'usuario': 'Ana', 'libro': 'B', 'fecha_prestamo': '2026-09-01', 'fecha_vencimiento': '2026-09-15', 'devuelto': False}, {'usuario': 'Ana', 'libro': 'C', 'fecha_prestamo': '2026-09-01', 'fecha_vencimiento': '2026-09-15', 'devuelto': False}]
+resultado    : ValueError('el usuario ya tiene 3 préstamos activos')
+lista después: [{'usuario': 'Ana', 'libro': 'A', 'fecha_prestamo': '2026-09-01', 'fecha_vencimiento': '2026-09-15', 'devuelto': False}, {'usuario': 'Ana', 'libro': 'B', 'fecha_prestamo': '2026-09-01', 'fecha_vencimiento': '2026-09-15', 'devuelto': False}, {'usuario': 'Ana', 'libro': 'C', 'fecha_prestamo': '2026-09-01', 'fecha_vencimiento': '2026-09-15', 'devuelto': False}]
+lista intacta: True
+VEREDICTO    : OK
+
+=== EXTRA: decisiones de la spec sin prueba automatizada ===
+
+--- D3 formato sin ceros (2026-1-5)
+lista antes  : []
+resultado    : ValueError('formato de fecha inválido, use AAAA-MM-DD')
+lista después: []
+lista intacta: True
+VEREDICTO    : OK
+
+--- D3 formato compacto (20260901)
+lista antes  : []
+resultado    : ValueError('formato de fecha inválido, use AAAA-MM-DD')
+lista después: []
+lista intacta: True
+VEREDICTO    : OK
+
+--- D3 fecha con espacio inicial
+lista antes  : []
+resultado    : ValueError('formato de fecha inválido, use AAAA-MM-DD')
+lista después: []
+lista intacta: True
+VEREDICTO    : OK
+
+--- D3 dígitos de ancho completo
+lista antes  : []
+resultado    : ValueError('formato de fecha inválido, use AAAA-MM-DD')
+lista después: []
+lista intacta: True
+VEREDICTO    : OK
+
+--- D4 desborde (9999-12-31 + 14 días)
+lista antes  : []
+resultado    : ValueError('el vencimiento supera 9999-12-31')
+lista después: []
+lista intacta: True
+VEREDICTO    : OK
+
+--- D4 usuario no es texto (None)
+lista antes  : []
+resultado    : ValueError('el valor debe ser texto')
+lista después: []
+lista intacta: True
+VEREDICTO    : OK
+
+--- D4 fecha no es texto (20260901 como int)
+lista antes  : []
+resultado    : ValueError('la fecha debe ser texto AAAA-MM-DD')
+lista después: []
+lista intacta: True
+VEREDICTO    : OK
+
+--- D11 devolver libro activo de otro usuario
+lista antes  : [{'usuario': 'Ana', 'libro': 'Python', 'fecha_prestamo': '2026-09-01', 'fecha_vencimiento': '2026-09-15', 'devuelto': False}]
+resultado    : ValueError('no existe un préstamo activo de ese libro para el usuario')
+lista después: [{'usuario': 'Ana', 'libro': 'Python', 'fecha_prestamo': '2026-09-01', 'fecha_vencimiento': '2026-09-15', 'devuelto': False}]
+lista intacta: True
+VEREDICTO    : OK
+
+--- R08 devolver en lista vacía
+lista antes  : []
+resultado    : ValueError('no existe un préstamo activo de ese libro para el usuario')
+lista después: []
+lista intacta: True
+VEREDICTO    : OK
+
+=== EXTRA: comportamientos que deben ser aceptados ===
+
+D2 recorte + bisiesto:  {'usuario': 'Ana', 'libro': 'Python', 'fecha_prestamo': '2028-02-29', 'fecha_vencimiento': '2028-03-14', 'devuelto': False} -> OK
+D7 registrar devuelve el mismo dict (is): OK
+D5 devolver recorta y D7 mismo dict: OK
+D9 libro devuelto vuelve a prestarse a otro usuario: OK
+D6 'ana' distinto de 'Ana' (no cuenta en su límite): OK
+Borde 9999-12-17 aceptado: OK
+
+RESUMEN: 18 de 18 verificaciones correctas

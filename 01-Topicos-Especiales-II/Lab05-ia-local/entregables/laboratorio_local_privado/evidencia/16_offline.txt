@@ -1,0 +1,94 @@
+﻿**********************
+Inicio de la transcripción de Windows PowerShell
+Hora de inicio: 20261030125939
+Nombre de usuario: SHZZZZ\HOME
+Usuario RunAs: SHZZZZ\HOME
+Nombre de la configuración: 
+Máquina: SHZZZZ (Microsoft Windows NT 10.0.26300.0)
+Aplicación host: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Cerebrolo\01-Topicos-Especiales-II\Lab05-ia-local\entregables\laboratorio_local_privado\paso16_offline.ps1
+Id. de proceso: 31312
+PSVersion: 5.1.26100.9711
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9711
+BuildVersion: 10.0.26100.9711
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+=== (a) Fecha y hora ===
+Inicio: 2026-10-30 12:59:39
+Equipo: SHZZZZ | Script: C:\Cerebrolo\01-Topicos-Especiales-II\Lab05-ia-local\entregables\laboratorio_local_privado\paso16_offline.ps1
+
+=== (b) Comprobacion de que NO hay Internet ===
+PS> Test-NetConnection 8.8.8.8 -Port 53
+TcpTestSucceeded: False
+PS> Resolve-DnsName ollama.com
+PS>ErrorTerminación(Resolve-DnsName): "Se detuvo el comando en ejecución porque la variable de preferencia "ErrorActionPreference" o un parámetro común se han establecido en Stop: ollama.com : No hay servidores DNS configurados para el sistema local"
+Fallo (esperado sin red): ollama.com : No hay servidores DNS configurados para el sistema local
+Resultado: sin Internet (ni conexion a 8.8.8.8:53 ni resolucion DNS de ollama.com).
+
+=== (c) Adaptadores de red ===
+PS> Get-NetAdapter | Select Name,Status
+
+Name  Status      
+----  ------      
+Wi-Fi Disconnected
+
+=== (d) Consulta al modelo local ===
+Ruta de Ollama: C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe
+PS> & 'C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe' --version
+ollama version is 0.40.13
+PS> & 'C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe' list
+NAME                       ID              SIZE      MODIFIED
+qwen2.5:3b                 357c53fb659c    1.9 GB    3 hours ago
+nomic-embed-text:latest    0a109f422b47    274 MB    26 hours ago
+qwen3:4b                   359d7dd4bcda    2.5 GB    26 hours ago
+qwen2.5-coder:3b           f72c60cabf62    1.9 GB    26 hours ago
+
+Comando: & 'C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe' run qwen2.5-coder:3b   (prompt por entrada estandar)
+PROMPT ENVIADO:
+Responde en espanol y en maximo tres lineas: que hace la funcion mediana en este codigo y que pasa si la lista esta vacia?
+
+def dividir(a, b):
+    if b == 0:
+        raise ValueError("El divisor no puede ser cero.")
+    return a / b
+
+def promedio(valores):
+    if not valores:
+        raise ValueError("La lista de valores no puede estar vacía.")
+    return sum(valores) / len(valores)
+
+def porcentaje(valor, total):
+    if total == 0:
+        raise ValueError("El total no puede ser cero.")
+    return (valor / total) * 100
+
+def mediana(valores):
+    if not valores:
+        raise ValueError("La lista de valores no puede estar vacía.")
+
+    valores_ordenados = sorted(valores)
+    n = len(valores_ordenados)
+
+    if n % 2 == 1:
+        # Cantidad impar de elementos
+        return valores_ordenados[n // 2]
+    else:
+        # Cantidad par de elementos
+        medio1 = valores_ordenados[n // 2 - 1]
+        medio2 = valores_ordenados[n // 2]
+        return (medio1 + medio2) / 2
+------------------------------------------------------------
+Inicio de la consulta: 2026-10-30 12:59:50
+RESPUESTA DEL MODELO:
+La función `mediana` calcula la mediana de una lista de valores. Si la lista está vacía, lanza una excepción indicando que la lista de valores no puede estar vacía.
+------------------------------------------------------------
+Codigo de salida: 0
+Fin de la consulta: 2026-10-30 12:59:59 | Tiempo: 8.1 s
+Internet detectado durante la prueba: False
+**********************
+Fin de la transcripción de Windows PowerShell
+Hora de finalización: 20261030125959
+**********************

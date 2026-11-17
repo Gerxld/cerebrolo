@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Laboratorio 12 — Desarrollo con un agente cloud</title>
+<style>
+  @page { size: Letter; margin: 2.5cm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 12pt; line-height: 1.5; text-align: justify;
+    color: #111; margin: 0;
+  }
+  h1, h2, h3 { font-family: "Times New Roman", Times, serif; text-align: left; page-break-after: avoid; }
+  h1 { font-size: 14pt; margin: 1.4em 0 0.5em; }
+  h2 { font-size: 13pt; margin: 1.2em 0 0.4em; }
+  h3 { font-size: 12pt; margin: 1em 0 0.3em; }
+  h1.nueva-pagina { page-break-before: always; }
+  p { margin: 0 0 0.7em 0; }
+
+  /* ---------- Portada ---------- */
+  .portada {
+    height: 22cm; display: flex; flex-direction: column;
+    align-items: center; text-align: center; page-break-after: always;
+  }
+  .portada .logos { display: flex; justify-content: space-between; width: 100%; margin-bottom: 0.8cm; }
+  .portada .logos img { width: 105px; height: 105px; object-fit: contain; }
+  .portada .titulo-bloque { margin-top: 0.9cm; }
+  .portada .titulo-bloque p { margin: 0.35em 0; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px; }
+  .portada .presentado { margin-top: 1.1cm; }
+  .portada .presentado p, .portada .revisado p, .portada .fecha p { margin: 0.3em 0; font-weight: bold; text-transform: uppercase; }
+  .portada .nombres { font-weight: normal !important; text-transform: none !important; }
+  .portada .revisado { margin-top: 1.2cm; }
+  .portada .fecha { margin-top: 1.1cm; }
+
+  /* ---------- Índice ---------- */
+  .indice { page-break-after: always; }
+  .indice h1 { text-align: center; }
+  .indice ol { list-style: none; padding: 0; margin: 0; }
+  .indice li { display: flex; align-items: baseline; margin: 0.25em 0; }
+  .indice li.n2 { padding-left: 1.2em; }
+  .indice li .t { white-space: nowrap; }
+  .indice li .dots { flex: 1; border-bottom: 1px dotted #444; margin: 0 0.3em; transform: translateY(-0.25em); }
+  .indice li .p { white-space: nowrap; }
+
+  /* ---------- Contenido ---------- */
+  table { width: 100%; border-collapse: collapse; margin: 0.8em 0; font-size: 10.5pt; page-break-inside: avoid; }
+  th, td { border: 1px solid #666; padding: 5px 7px; text-align: left; vertical-align: top; }
+  th { background: #e2e2e2; font-weight: bold; }
+  .tabla-titulo { font-weight: bold; margin: 0.8em 0 0.2em; text-align: left; }
+  .tabla-nota { font-size: 10pt; font-style: italic; margin-top: -0.4em; }
+  figure { margin: 1em 0; text-align: center; page-break-inside: avoid; }
+  figure img { max-width: 100%; max-height: 18cm; }
+  figcaption { font-size: 10.5pt; font-style: italic; margin-top: 0.3em; }
+  ul, ol { margin: 0.3em 0 0.8em 1.3em; padding: 0; }
+  li { margin-bottom: 0.3em; }
+  .referencias p { padding-left: 1.27cm; text-indent: -1.27cm; text-align: left; }
+  blockquote { margin: 0.6em 0 0.8em 1.27cm; text-align: justify; }
+</style>
+</head>
+<body>
+<div class="portada">
+  <div class="logos"><img src="../assets/utp.png" alt="Logo UTP"><img src="../assets/fisc.png" alt="Logo FISC"></div>
+  <div class="titulo-bloque">
+    <p>Universidad Tecnológica de Panamá</p>
+    <p>Facultad de Ingeniería de Sistemas Computacionales</p>
+    <p>Lic. en Desarrollo y Gestión de Software</p>
+    <p style="margin-top:1em;">Tópicos Especiales II</p>
+    <p>Laboratorio 12 — Desarrollo con un agente cloud</p>
+    <p>1GS241</p>
+  </div>
+  <div class="presentado"><p>Presentado por:</p><p class="nombres">Ríos, Gerald (8-987-741)</p></div>
+  <div class="revisado"><p>Revisado por:</p><p class="nombres">Profesor Regis Rivera</p></div>
+  <div class="fecha"><p>Fecha de entrega</p><p class="nombres">30 / 10 / 2026</p></div>
+</div>
+
+<div class="indice">
+  <h1>Índice</h1>
+  <ol>
+    <li class=""><span class="t">Introducción</span><span class="dots"></span><span class="p">3</span></li>
+    <li class=""><span class="t">1. Repositorio y línea base</span><span class="dots"></span><span class="p">3</span></li>
+    <li class="n2"><span class="t">1.1 Repositorio utilizado</span><span class="dots"></span><span class="p">3</span></li>
+    <li class="n2"><span class="t">1.2 Línea base</span><span class="dots"></span><span class="p">3</span></li>
+    <li class=""><span class="t">2. Issue original</span><span class="dots"></span><span class="p">4</span></li>
+    <li class=""><span class="t">3. Delegación y sesión del agente</span><span class="dots"></span><span class="p">6</span></li>
+    <li class=""><span class="t">4. Primer Pull Request</span><span class="dots"></span><span class="p">7</span></li>
+    <li class="n2"><span class="t">4.1 Lo que dice el agente</span><span class="dots"></span><span class="p">7</span></li>
+    <li class="n2"><span class="t">4.2 Diff revisado archivo por archivo</span><span class="dots"></span><span class="p">8</span></li>
+    <li class="n2"><span class="t">4.3 Checks y pruebas del agente</span><span class="dots"></span><span class="p">11</span></li>
+    <li class="n2"><span class="t">4.4 Caso no cubierto</span><span class="dots"></span><span class="p">12</span></li>
+    <li class=""><span class="t">5. Solicitud de corrección y segunda iteración</span><span class="dots"></span><span class="p">13</span></li>
+    <li class="n2"><span class="t">5.1 Comentario enviado</span><span class="dots"></span><span class="p">13</span></li>
+    <li class="n2"><span class="t">5.2 Qué cambió</span><span class="dots"></span><span class="p">14</span></li>
+    <li class="n2"><span class="t">5.3 Validación local de la segunda versión</span><span class="dots"></span><span class="p">14</span></li>
+    <li class=""><span class="t">6. Decisión e integración</span><span class="dots"></span><span class="p">14</span></li>
+    <li class=""><span class="t">7. Trazabilidad</span><span class="dots"></span><span class="p">15</span></li>
+    <li class=""><span class="t">8. Reto: segundo issue</span><span class="dots"></span><span class="p">16</span></li>
+    <li class="n2"><span class="t">8.1 Issue redactado</span><span class="dots"></span><span class="p">16</span></li>
+    <li class="n2"><span class="t">8.2 Pull Request #4</span><span class="dots"></span><span class="p">17</span></li>
+    <li class="n2"><span class="t">8.3 Validación local y caso no cubierto</span><span class="dots"></span><span class="p">19</span></li>
+    <li class="n2"><span class="t">8.4 Revisión e integración</span><span class="dots"></span><span class="p">20</span></li>
+    <li class=""><span class="t">9. Preguntas de reflexión</span><span class="dots"></span><span class="p">22</span></li>
+    <li class=""><span class="t">Conclusiones</span><span class="dots"></span><span class="p">24</span></li>
+  </ol>
+</div>
+
+<h1>Introducción</h1>
+<p>Este laboratorio pide delegar una tarea de ingeniería a un agente que trabaja en un entorno remoto y revisar después lo que entrega, como se haría con la contribución de otro desarrollador. Usamos la ruta principal del enunciado, GitHub Copilot cloud agent, sobre un repositorio privado con un gestor de tareas muy pequeño en Python. La tarea fue agregar categorías y filtrado, y como reto agregamos una función para eliminar tareas por ID.</p>
+<p>El informe sigue el orden del trabajo: la línea base, el issue, la delegación, la revisión del primer Pull Request, la corrección que pedimos y la segunda iteración, la decisión de integrar, el reto y las respuestas de reflexión. Cada afirmación sobre lo que hizo el agente tiene detrás una salida de terminal, un JSON de la API de GitHub o una captura, guardados en la carpeta de evidencia. El repositorio es privado, así que las capturas muestran lo que expone la API y la ejecución local, no las páginas web de GitHub.</p>
+
+<h1>1. Repositorio y línea base</h1>
+<h2>1.1 Repositorio utilizado</h2>
+<p>El repositorio se llama <b>laboratorio-agente-cloud</b>, es privado y está en la cuenta Gerxld: <i>https://github.com/Gerxld/laboratorio-agente-cloud</i>. Se creó el 29/10/2026 con un README, y encima se subieron los tres archivos del enunciado (<i>tasks.py</i>, <i>app.py</i> y <i>tests/test_tasks.py</i>) en un solo commit de línea base. El agente cloud estaba habilitado para la cuenta: al asignarle el issue empezó a trabajar sin ninguna configuración adicional.</p>
+<h2>1.2 Línea base</h2>
+<p>Antes de delegar corrimos <i>python app.py</i> y las pruebas sobre el clon local. Con Python 3.13.5 el programa imprime la única tarea pendiente y las dos pruebas iniciales pasan. Esa salida es el punto de comparación para todo lo que vino después.</p>
+<figure><img src="../screenshots/00_base.png" alt="00_base"><figcaption>Figura 1. Línea base: salida de <i>python app.py</i> y de las pruebas antes de delegar.</figcaption></figure>
+
+<h1>2. Issue original</h1>
+<p>El issue #1, «Agregar categorías y filtrado de tareas», se creó sin asignar y con las cinco partes que pide el enunciado: objetivo, alcance, restricciones, criterios de aceptación y validación. Partimos del texto del enunciado y lo ajustamos al hacernos la pregunta del paso 9, si otro desarrollador sabría cuándo está terminado. Agregamos tres cosas: el mensaje exacto del error para la categoría vacía, qué pasa al filtrar por una categoría que nadie tiene (lista vacía, no error) y que el Pull Request solo toque los tres archivos del alcance.</p>
+<p>Hubo una contradicción que no vimos al escribirlo. El issue exige que <i>agregar_tarea</i> reciba la categoría como parámetro obligatorio y, a la vez, que las dos pruebas actuales sigan pasando «sin cambiarlas». Esas pruebas llaman a <i>agregar_tarea</i> con dos argumentos, así que con una categoría obligatoria no pueden pasar tal cual. El agente resolvió el choque modificando esas dos llamadas, y lo aceptamos porque no había otra salida compatible con el criterio de «categoría no vacía». Lo anotamos como defecto de nuestro issue, no del agente.</p>
+<figure><img src="../screenshots/01_issue1.png" alt="01_issue1"><figcaption>Figura 2. Cuerpo del issue #1 con objetivo, alcance, restricciones, criterios de aceptación y validación.</figcaption></figure>
+
+<h1>3. Delegación y sesión del agente</h1>
+<h2>3.1 Asignación</h2>
+<p>El issue se asignó a Copilot el 29/10/2026 a las 16:03:31 UTC. En ocho segundos el agente creó el Pull Request #2 en borrador, con un primer commit vacío llamado «Initial plan», y quedó conectado al issue. A partir de ahí no tocamos nada del repositorio mientras trabajaba.</p>
+<figure><img src="../screenshots/02_asignacion_issue1.png" alt="02_asignacion_issue1"><figcaption>Figura 3. Línea de tiempo del issue #1: asignación a Copilot y conexión con el Pull Request.</figcaption></figure>
+<h2>3.2 Qué ocurrió en el entorno remoto</h2>
+<p>La API de GitHub no expone el registro paso a paso de la sesión, que solo se ve en la página web del Pull Request, y no pudimos capturarlo porque el repositorio es privado. Lo que sí queda es la línea de tiempo del Pull Request (<i>copilot_work_started</i> a las 16:03:58 y <i>copilot_work_finished</i> a las 16:06:25) y el run de GitHub Actions «Running Copilot cloud agent», que terminó con éxito. Fueron unos dos minutos y medio. En ese tiempo el agente levantó un entorno Linux, editó los tres archivos, hizo el commit y renombró el Pull Request, sin que nuestra computadora participara.</p>
+<figure><img src="../screenshots/03_sesion_timeline_pr2.png" alt="03_sesion_timeline_pr2"><figcaption>Figura 4. Línea de tiempo del Pull Request #2: sesión del agente, primera iteración y segunda.</figcaption></figure>
+
+<h1>4. Primer Pull Request</h1>
+<h2>4.1 Lo que dice el agente</h2>
+<p>Antes de abrir el diff leímos la descripción del Pull Request. El agente afirma que <i>agregar_tarea</i> ahora recibe y limpia la categoría y lanza «La categoría es obligatoria» si queda vacía, que <i>pendientes</i> acepta una categoría opcional sin distinguir mayúsculas, que <i>app.py</i> usa categorías y muestra un filtrado, y que agregó pruebas para categoría válida, vacía y filtrado. No dice que haya ejecutado las pruebas, y eso quedó como lo primero por verificar.</p>
+<figure><img src="../screenshots/04_pr2_explicacion.png" alt="04_pr2_explicacion"><figcaption>Figura 5. Explicación del agente en la primera versión del Pull Request #2.</figcaption></figure>
+<h2>4.2 Diff revisado archivo por archivo</h2>
+<p>El Pull Request toca exactamente los tres archivos del alcance (41 inserciones y 9 eliminaciones en la primera versión). No hay dependencias nuevas, archivos ajenos ni renombrados. En <i>tasks.py</i> la validación de la categoría sigue el mismo patrón que la del título, y <i>pendientes</i> conserva el comportamiento anterior cuando no recibe categoría.</p>
+<figure><img src="../screenshots/05_diff_tasks.png" alt="05_diff_tasks"><figcaption>Figura 6. Diff de <i>tasks.py</i> en el Pull Request #2.</figcaption></figure>
+<p>El cambio de <i>app.py</i> son las categorías en las tareas de ejemplo, la categoría en la salida y un segundo bloque que imprime el filtrado por «trabajo».</p>
+<figure><img src="../screenshots/06_diff_app.png" alt="06_diff_app"><figcaption>Figura 7. Diff de <i>app.py</i> en el Pull Request #2.</figcaption></figure>
+<p>En las pruebas, el agente modificó las dos existentes solo para pasar la categoría, lo que ya mencionamos, y agregó dos pruebas nuevas.</p>
+<figure><img src="../screenshots/07_diff_tests.png" alt="07_diff_tests"><figcaption>Figura 8. Diff de <i>tests/test_tasks.py</i> en la primera versión.</figcaption></figure>
+<h2>4.3 Checks y pruebas del agente</h2>
+<p>El repositorio no tiene un workflow propio, así que el Pull Request no mostró ningún check de pruebas (<i>statusCheckRollup</i> vacío). Lo único que existe es el run del propio agente, que prueba que la sesión terminó bien pero no que las pruebas hayan pasado: el registro con los comandos ejecutados está en la web, que no pudimos ver. Por eso la validación local dejó de ser un trámite y se volvió la única evidencia de pruebas que teníamos.</p>
+<figure><img src="../screenshots/08_checks_agente.png" alt="08_checks_agente"><figcaption>Figura 9. Run del agente y estado de checks del Pull Request #2.</figcaption></figure>
+<p>Corrimos nosotros la rama del agente. Las cuatro pruebas pasan y <i>app.py</i> se ejecuta sin errores.</p>
+<figure><img src="../screenshots/09_local_pr2_v1.png" alt="09_local_pr2_v1"><figcaption>Figura 10. Validación local de la primera versión (4 pruebas).</figcaption></figure>
+<h2>4.4 Caso no cubierto</h2>
+<p>Buscamos a propósito lo que el issue pedía y las pruebas no probaban. La prueba de filtrado solo usa una categoría que existe y la escribe en minúsculas; nunca filtra por una categoría que ninguna tarea tiene, algo que el issue pide de forma explícita, ni con la consulta en mayúsculas. Probamos a mano <i>pendientes(tareas, "zzz")</i> y devolvió <i>[]</i>, así que la implementación estaba bien y lo que faltaba era la prueba. También vimos que <i>pendientes(tareas, "")</i> devuelve lista vacía en lugar de fallar; el issue no lo especifica, así que lo dejamos como comportamiento no definido y no lo pedimos.</p>
+
+<h1>5. Solicitud de corrección y segunda iteración</h1>
+<h2>5.1 Comentario enviado</h2>
+<p>Comentamos en el Pull Request mencionando a Copilot. La petición fue concreta: agregar dos pruebas, una para categoría inexistente con lista vacía y otra para la consulta en mayúsculas, sin tocar la API pública ni agregar dependencias, y sin cambiar <i>tasks.py</i> ni <i>app.py</i> salvo que una prueba revelara un fallo. El agente empezó a trabajar 22 segundos después del comentario y terminó a las 14:10:07 UTC del 30/10/2026.</p>
+<figure><img src="../screenshots/10_comentario_iteracion.png" alt="10_comentario_iteracion"><figcaption>Figura 11. Solicitud de corrección, respuesta del agente y commits del Pull Request.</figcaption></figure>
+<h2>5.2 Qué cambió</h2>
+<p>El agente respondió en el mismo Pull Request con un tercer commit, dd63fb6, que solo toca <i>tests/test_tasks.py</i> y suma las dos pruebas pedidas. No cambió ninguna de las líneas que ya habíamos revisado.</p>
+<h2>5.3 Validación local de la segunda versión</h2>
+<p>Hicimos pull de la rama y repetimos las dos ejecuciones. Pasaron las seis pruebas y <i>app.py</i> produjo la misma salida que antes. La captura incluye el <i>git diff --stat</i> contra main: 56 inserciones y 9 eliminaciones, en los mismos tres archivos.</p>
+<figure><img src="../screenshots/11_local_pr2_v2.png" alt="11_local_pr2_v2"><figcaption>Figura 12. Validación local de la segunda versión (6 pruebas).</figcaption></figure>
+
+<h1>6. Decisión e integración</h1>
+<p>Evaluamos el Pull Request con los criterios que usaríamos para el de una persona: corrección funcional, alcance, claridad, pruebas y mantenibilidad. Cumple los criterios de aceptación del issue, no hay cambios fuera del alcance, el código es corto y legible, y la retroalimentación se atendió sin ruido. La debilidad que encontramos al principio era de cobertura, no de comportamiento, y quedó resuelta. Aprobamos la revisión, sacamos el borrador, lo fusionamos con un commit de merge para que el historial muestre la rama del agente, y el issue #1 se cerró solo gracias al «Fixes #1» del Pull Request.</p>
+<p>Después del merge hicimos pull de <i>main</i> y volvimos a correr todo. Las seis pruebas pasan y la aplicación imprime lo mismo.</p>
+<figure><img src="../screenshots/12_local_main_tras_merge.png" alt="12_local_main_tras_merge"><figcaption>Figura 13. Validación local de <i>main</i> después del merge del Pull Request #2.</figcaption></figure>
+
+<h1>7. Trazabilidad</h1>
+<p>Al terminar el ciclo, GitHub guardó el issue con su asignación, el Pull Request con las confirmaciones del agente, el comentario de la solicitud y la respuesta, la aprobación, el merge y los runs de Actions, todo con hora. Cada commit del agente lleva como coautor a nuestra cuenta, de modo que se distingue quién escribió y quién decidió. En un chat web quedaría una conversación que podemos copiar, pero sin la rama, el diff atado a una versión, la revisión formal ni el registro de quién integró qué.</p>
+<figure><img src="../screenshots/20_trazabilidad.png" alt="20_trazabilidad"><figcaption>Figura 14. Pull Requests, issues y commits que quedaron registrados en el repositorio.</figcaption></figure>
+
+<h1>8. Reto: segundo issue</h1>
+<h2>8.1 Issue redactado</h2>
+<p>El segundo issue es «Agregar función para eliminar una tarea por ID». Lo escribimos con la misma estructura: la función <i>eliminar_tarea(tareas, tarea_id)</i>, que devuelve la tarea eliminada, el mismo mensaje de error que <i>completar_tarea</i>, alcance limitado a <i>tasks.py</i> y las pruebas, y la restricción de no renumerar IDs. Por orden de creación recibió el número 3, porque el #2 ya lo tenía el Pull Request del primer ciclo. Se asignó a Copilot el 30/10/2026 a las 14:11:36 UTC y el agente abrió el Pull Request #4.</p>
+<figure><img src="../screenshots/13_issue2_reto.png" alt="13_issue2_reto"><figcaption>Figura 15. Segundo issue, correspondiente al reto.</figcaption></figure>
+<h2>8.2 Pull Request #4</h2>
+<p>El agente trabajó unos tres minutos (14:11:57 a 14:14:45 UTC) y dejó el Pull Request en borrador con dos archivos tocados, los del alcance.</p>
+<figure><img src="../screenshots/14_timeline_pr4.png" alt="14_timeline_pr4"><figcaption>Figura 16. Línea de tiempo del Pull Request #4.</figcaption></figure>
+<p>La función recorre la lista con <i>enumerate</i>, hace <i>pop</i> en el índice de la coincidencia y devuelve la tarea; si no encuentra nada, lanza <i>ValueError("Tarea no encontrada")</i>.</p>
+<figure><img src="../screenshots/15_diff_pr4_tasks.png" alt="15_diff_pr4_tasks"><figcaption>Figura 17. Diff de <i>tasks.py</i> en el Pull Request #4.</figcaption></figure>
+<p>Las tres pruebas pedidas existen: eliminar una tarea existente, un ID inexistente y una lista vacía. La primera comprueba también que la tarea restante conserva su ID y no solo el largo de la lista.</p>
+<figure><img src="../screenshots/16_diff_pr4_tests.png" alt="16_diff_pr4_tests"><figcaption>Figura 18. Diff de <i>tests/test_tasks.py</i> en el Pull Request #4.</figcaption></figure>
+<h2>8.3 Validación local y caso no cubierto</h2>
+<p>En local pasan las nueve pruebas y <i>app.py</i> corre igual que antes. Además probamos algo que ni el issue ni el agente cubren: el defecto que ya traía el código base, donde <i>agregar_tarea</i> calcula el ID como <i>len(tareas) + 1</i>. Con las tareas 1 y 2, al eliminar la 1 y agregar una nueva, la lista queda con dos tareas de ID 2, y <i>completar_tarea(t, 2)</i> marca la primera que encuentra, que no es la nueva. Eliminar hace más fácil llegar a este error, pero el issue prohibía renumerar y tocar otras funciones.</p>
+<figure><img src="../screenshots/17_local_pr4.png" alt="17_local_pr4"><figcaption>Figura 19. Validación local del Pull Request #4 y caso de IDs repetidos.</figcaption></figure>
+<h2>8.4 Revisión e integración</h2>
+<p>Dejamos aprobada la revisión con la nota del caso no cubierto y fusionamos, porque el Pull Request cumple todo lo que el issue exigía y el defecto de los IDs pertenece a otra tarea que conviene abrir aparte. Esta vez no pedimos segunda iteración, ya que no había nada dentro del alcance que corregir. El issue #3 se cerró con el merge, y al final probamos <i>main</i> actualizado.</p>
+<figure><img src="../screenshots/18_revision_pr4.png" alt="18_revision_pr4"><figcaption>Figura 20. Revisión aprobada del Pull Request #4 antes del merge.</figcaption></figure>
+<figure><img src="../screenshots/19_local_final_main.png" alt="19_local_final_main"><figcaption>Figura 21. Validación local final de <i>main</i> con ambos Pull Requests integrados.</figcaption></figure>
+<p>Un descuido nuestro durante este ciclo: al asignar el issue a Copilot usamos primero el número 2, y el comando asignó a Copilot al Pull Request #2, que ya estaba integrado. No arrancó ninguna sesión, porque no aparece un run nuevo, y quitamos la asignación enseguida, pero fue un error de numeración que conviene anotar.</p>
+
+<h1>9. Preguntas de reflexión</h1>
+<h2>9.1 ¿Qué diferencia fundamental existe entre un CLI Agent y un agente cloud?</h2>
+<p>El CLI Agent corre en nuestra máquina, con nuestros archivos y nuestra terminal, y trabaja mientras lo acompañamos. El agente cloud corre en un entorno remoto que él mismo levanta a partir del repositorio, y lo hace de forma asíncrona: entregamos la tarea y volvemos a una rama y un Pull Request. La diferencia no está en el modelo sino en dónde ejecuta y cuánta supervisión paso a paso necesita.</p>
+<h2>9.2 ¿Qué parte del trabajo pudo continuar aunque no estuviéramos ejecutando nada en la computadora?</h2>
+<p>Todo el ciclo del agente: leer el repositorio, editar los archivos, crear los commits en la rama y abrir y describir el Pull Request. En la segunda iteración también respondió el comentario y empujó el commit sin que tuviéramos nada abierto. Lo único que dependió de nosotros fue redactar el issue, revisar y decidir.</p>
+<h2>9.3 ¿Por qué un Pull Request es una buena frontera de control entre el agente y el desarrollador?</h2>
+<p>Porque el agente nunca escribe en <i>main</i>. Todo lo suyo queda en una rama separada, con un diff comparable contra el estado aprobado, y integrarlo exige un acto deliberado nuestro. Además concentra en un solo lugar la explicación, los commits, los checks y la conversación, y es el mismo mecanismo que usamos con compañeros de equipo, así que no hace falta inventar un proceso especial para el agente.</p>
+<h2>9.4 ¿Qué riesgo existiría si el agente pudiera hacer merge automáticamente sin revisión?</h2>
+<p>Cualquier error entraría directo al código base: una prueba débil que da falsa seguridad, un cambio fuera de alcance o una dependencia no pedida. En este laboratorio lo vimos a escala pequeña. El primer Pull Request pasaba sus propias pruebas y aun así dejaba sin probar un caso que el issue pedía, y el defecto de los IDs repetidos habría quedado sin que nadie lo notara. Un merge automático elimina justo el momento en que una persona se hace esas preguntas.</p>
+<h2>9.5 ¿Qué información debe contener un issue para que una tarea sea realmente delegable?</h2>
+<p>Un objetivo claro, el alcance en archivos, las restricciones, criterios de aceptación que se puedan comprobar (mensajes de error exactos, qué hacer en los casos límite) y el comando de validación. La prueba práctica es que otra persona, o un agente, sepa cuándo terminó sin preguntar. Nuestro propio issue tenía una contradicción entre la categoría obligatoria y «no cambiar las pruebas actuales», y el agente tuvo que decidir solo; un issue delegable no deja esa decisión en manos del agente.</p>
+<h2>9.6 ¿En qué tipo de tareas usaríamos un agente cloud y en cuáles trabajaríamos de forma interactiva?</h2>
+<p>Usaríamos un agente cloud en tareas acotadas, con criterios verificables y poco contexto fuera del repositorio, como las de este laboratorio: agregar una función con sus pruebas, corregir un error reproducible o actualizar documentación. Trabajaríamos de forma interactiva cuando el diseño aún no está claro, cuando hay que explorar varias opciones, depurar algo que depende de nuestro entorno o decidir aspectos de producto, porque ahí la conversación rápida vale más que la revisión posterior.</p>
+
+<h1 class="nueva-pagina">Conclusiones</h1>
+<p>Completamos el ciclo con el agente en dos tareas. El primer Pull Request cumplía el issue y dejó afuera una prueba que sí estaba pedida, algo que solo se vio al comparar el diff con los criterios y probar a mano el caso de la categoría inexistente. Un comentario concreto bastó para que Copilot lo corrigiera en el mismo Pull Request, con un commit que no tocó nada más. El segundo Pull Request llegó completo, y lo revisamos igual de a fondo.</p>
+<p>También hubo cosas que costaron. No pudimos ver el registro interno de la sesión del agente porque el repositorio es privado y la API no lo expone, de modo que las pruebas del agente quedaron sin evidencia propia y dependimos de la ejecución local. Nuestro issue tenía una contradicción que no vimos antes de delegar, y un número mal puesto asignó a Copilot por error a un Pull Request ya cerrado. Además queda abierto un defecto del código base, los IDs repetidos tras eliminar tareas, que ninguno de los dos Pull Requests cubre y que conviene tratar en un tercer issue. El repositorio, con sus issues, ramas y Pull Requests, es la entrega de código; no incluimos un ZIP.</p>
+
+</body>
+</html>

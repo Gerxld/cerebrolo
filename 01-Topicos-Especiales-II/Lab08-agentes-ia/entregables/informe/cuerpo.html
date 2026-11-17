@@ -1,0 +1,258 @@
+<h1 class="sec">Introducción</h1>
+<p>En este laboratorio armamos un agente de análisis de proyectos que corre completo en el equipo: un modelo local servido por Ollama (<code>qwen3:4b</code>), cuatro herramientas escritas en Python y un ciclo que le devuelve al modelo lo que cada herramienta encontró hasta que decide que ya puede responder. El agente trabaja sobre un proyecto pequeño de tres archivos (<code>usuarios.py</code>, <code>cursos.py</code> y <code>test_usuarios.py</code>) y solo puede leer ahí dentro y escribir reportes en una carpeta aparte.</p>
+<p>Corrimos cada paso del 18 al 27 con el modelo de verdad y guardamos la salida completa de cada ejecución, con el comando y la hora, en la carpeta <code>evidencia</code>. Las capturas de este informe son esas mismas salidas dibujadas como terminal; no retocamos ninguna. Cuando el modelo se equivocó, lo dejamos escrito: en dos de las pruebas el primer intento salió mal y repetimos, y los dos intentos están en el informe.</p>
+<p>Al final respondemos las siete preguntas de reflexión con lo que vimos en las ejecuciones y explicamos el criterio con el que el ciclo termina.</p>
+
+<h1 class="sec">1. Preparación del entorno</h1>
+<h2 class="sec">1.1 Versiones y modelo</h2>
+<p>Los pasos 1, 2 y 4 se resolvieron sin instalar nada: Python, Ollama, el modelo y el SDK ya estaban en el equipo. El ejecutable de Ollama no está en el PATH de esta sesión, así que lo llamamos con su ruta completa (<code>C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe</code>). El modelo <code>qwen3:4b</code> lo teníamos descargado desde antes, de modo que tampoco corrimos <code>ollama pull</code>.</p>
+<div class="tabla-titulo">Tabla 1. Versiones encontradas</div>
+<table>
+  <tr><th>Componente</th><th>Resultado</th></tr>
+  <tr><td>Python</td><td>3.13.5</td></tr>
+  <tr><td>Ollama</td><td>0.40.13</td></tr>
+  <tr><td>Modelo</td><td><code>qwen3:4b</code> (2.5 GB en disco)</td></tr>
+  <tr><td>SDK de Python <code>ollama</code></td><td>0.6.3</td></tr>
+</table>
+<figure>
+  <img src="../screenshots/01_entorno.png" alt="Versiones">
+  <figcaption>Figura 1. Salida de las versiones y de la lista de modelos (evidencia/01_02_04_entorno.txt).</figcaption>
+</figure>
+<p>Algo que notamos desde temprano: la máquina trabaja solo con CPU. <code>ollama ps</code> mostró el modelo cargado con «100% CPU» y un contexto de 4096 tokens, y eso explica los tiempos largos que verán más adelante.</p>
+
+<h2 class="sec">1.2 Carpeta del laboratorio y proyecto de prueba</h2>
+<p>Creamos <code>laboratorio_agentes</code> con las carpetas <code>proyecto</code> y <code>reportes</code> y copiamos los tres archivos del enunciado tal cual. Antes de ponerle un agente encima corrimos las pruebas del proyecto para saber que partíamos de código sano.</p>
+<figure>
+  <img src="../screenshots/02_pruebas.png" alt="Pruebas">
+  <figcaption>Figura 2. Las tres pruebas del proyecto pasan (evidencia/07_pruebas_del_proyecto.txt).</figcaption>
+</figure>
+
+<h1 class="sec">2. Construcción del agente</h1>
+<h2 class="sec">2.1 Límite de rutas</h2>
+<p>El archivo <code>agente_proyecto.py</code> se escribió siguiendo los pasos 8 a 17. Solo corregimos los saltos de línea que el PDF del enunciado había partido dentro de <code>buscar_texto</code>; el código quedó igual en lo demás. La pieza que más nos interesa es <code>ruta_segura</code>, porque es el control que está en código y no en una instrucción al modelo:</p>
+<pre>def ruta_segura(nombre: str) -&gt; Path:
+    ruta = (BASE / nombre).resolve()
+    if BASE not in ruta.parents and ruta != BASE:
+        raise ValueError("Ruta fuera de la carpeta autorizada")
+    return ruta</pre>
+<p>La función une el nombre con la carpeta <code>proyecto</code>, resuelve la ruta real (eliminando los <code>..</code>) y rechaza todo lo que no quede dentro de esa carpeta.</p>
+
+<h2 class="sec">2.2 Herramientas y registro</h2>
+<p>Son cuatro funciones: <code>listar_archivos</code>, <code>leer_archivo</code>, <code>buscar_texto</code> y <code>guardar_reporte</code>. Las tres primeras solo leen. La cuarta escribe, pero únicamente dentro de <code>reportes</code> y siempre con extensión <code>.md</code>, porque se queda con <code>Path(nombre).name</code> y descarta cualquier ruta que el modelo intente meter. Todas se registran en el diccionario <code>HERRAMIENTAS</code>, y el SDK arma el esquema que ve el modelo a partir de los nombres, las anotaciones de tipo y los docstrings.</p>
+
+<h2 class="sec">2.3 El ciclo del agente</h2>
+<pre>for iteracion in range(1, max_iteraciones + 1):
+    respuesta = chat(model=MODELO, messages=mensajes,
+                     tools=herramientas, think=False)
+    mensajes.append(respuesta.message)
+
+    if not respuesta.message.tool_calls:      # salida 1
+        print(respuesta.message.content)
+        return respuesta.message.content
+
+    for llamada in respuesta.message.tool_calls:
+        ...ejecuta la herramienta pedida (o devuelve "ERROR: ...")...
+        mensajes.append({"role": "tool", "tool_name": nombre,
+                         "content": str(resultado)})
+
+return "El agente alcanzó el máximo de iteraciones."   # salida 2</pre>
+<p>Cada vuelta le manda al modelo toda la conversación; si pide herramientas, el código las ejecuta y agrega cada resultado como mensaje de rol <code>tool</code>. La documentación de Ollama describe el mismo patrón y lo llama agent loop: el modelo decide cuándo invocar herramientas e incorpora sus resultados en las respuestas, y el ciclo se corta cuando ya no hay llamadas pendientes (Ollama, s. f.).</p>
+
+<h2 class="sec">2.4 Cómo ejecutamos el agente</h2>
+<p>El programa pide el objetivo con <code>input()</code>, así que escribimos un script corto (<code>ejecutar_paso.sh</code>) que le pasa el objetivo por entrada estándar, anota la hora y el comando y guarda toda la salida en un <code>.txt</code>. Dos detalles de la sesión: como <code>input()</code> lee una sola línea, los objetivos de varias líneas del enunciado los escribimos en una línea. Y en la primera ejecución no usamos <code>python -u</code>, de modo que la salida no apareció hasta que el programa terminó; estuvimos más de veinte minutos sin saber si seguía vivo, y desde la segunda ejecución usamos <code>-u</code>.</p>
+
+<h1 class="sec">3. Ejecuciones del agente</h1>
+<h2 class="sec">3.1 Objetivo principal (pasos 18 a 20)</h2>
+<p>El objetivo fue el sugerido por el enunciado: indicar en qué archivo se valida el correo, qué casos cubren las pruebas de usuarios y guardar un reporte llamado <code>revision_usuarios.md</code>.</p>
+<h3 class="sec">Primer intento</h3>
+<p>Este intento salió mal en dos cosas, y lo dejamos como evidencia. El modelo pidió <code>listar_archivos</code> dos veces en la misma iteración (la misma llamada repetida), buscó «email validation» en inglés, no encontró nada, buscó «email» y con las líneas sueltas que devolvió esa búsqueda guardó el reporte. Nunca leyó los archivos completos, así que la lista de pruebas quedó incompleta: omitió <code>test_nombre_obligatorio</code>. Además ignoró el nombre pedido y guardó <code>reporte_validacion_correo.md</code>. El ciclo terminó bien según el código, porque el modelo dejó de pedir herramientas, pero el objetivo no se cumplió. Tardó 23 minutos.</p>
+<figure>
+  <img src="../screenshots/03_ejec18_intento1_1.png" alt="Intento 1 parte 1">
+  <figcaption>Figura 3. Paso 18, primer intento: llamadas duplicadas y búsquedas por palabra clave (evidencia/18_ejecucion_principal_intento1.txt).</figcaption>
+</figure>
+<figure>
+  <img src="../screenshots/03_ejec18_intento1_2.png" alt="Intento 1 parte 2">
+  <figcaption>Figura 4. Paso 18, primer intento: reporte con nombre equivocado y respuesta final.</figcaption>
+</figure>
+<h3 class="sec">Segundo intento</h3>
+<p>Repetimos con exactamente el mismo objetivo. Esta vez el orden fue otro y mejor: <code>listar_archivos</code>, <code>leer_archivo</code> sobre <code>usuarios.py</code>, <code>leer_archivo</code> sobre <code>test_usuarios.py</code> y <code>guardar_reporte</code> con el nombre correcto, para terminar en la iteración 5 sin pedir más herramientas. Tardó unos 11 minutos.</p>
+<figure>
+  <img src="../screenshots/04_ejec18_intento2_1.png" alt="Intento 2 parte 1">
+  <figcaption>Figura 5. Paso 18, segundo intento: listar, leer dos archivos y guardar el reporte (evidencia/18b_ejecucion_principal_intento2.txt).</figcaption>
+</figure>
+<figure>
+  <img src="../screenshots/04_ejec18_intento2_2.png" alt="Intento 2 parte 2">
+  <figcaption>Figura 6. Paso 18, segundo intento: reporte guardado y respuesta final.</figcaption>
+</figure>
+<p>En la respuesta final, como en casi todas las ejecuciones, el modelo volcó su razonamiento en inglés y dejó una etiqueta <code>&lt;/think&gt;</code> suelta antes de contestar en español, aunque llamamos a <code>chat</code> con <code>think=False</code>. No rompe el ciclo, pero muestra que ese parámetro no limpió del todo la salida de este modelo.</p>
+
+<h3 class="sec">Paso 19: orden de las herramientas</h3>
+<div class="tabla-titulo">Tabla 2. Herramientas llamadas en el objetivo principal</div>
+<table>
+  <tr><th>Iteración</th><th>Intento 1</th><th>Intento 2</th></tr>
+  <tr><td>1</td><td><code>listar_archivos</code> (dos veces)</td><td><code>listar_archivos</code></td></tr>
+  <tr><td>2</td><td><code>buscar_texto("email validation")</code> (dos veces, sin coincidencias)</td><td><code>leer_archivo("usuarios.py")</code></td></tr>
+  <tr><td>3</td><td><code>buscar_texto("email")</code></td><td><code>leer_archivo("test_usuarios.py")</code></td></tr>
+  <tr><td>4</td><td><code>guardar_reporte("reporte_validacion_correo.md")</code></td><td><code>guardar_reporte("revision_usuarios.md")</code></td></tr>
+  <tr><td>5</td><td>Respuesta final</td><td>Respuesta final</td></tr>
+</table>
+<p>El mismo objetivo produjo dos caminos distintos, tal como advertía el enunciado. Lo que no esperábamos es que uno de los caminos fuera peor en el contenido: el que ahorró lecturas y se apoyó en una búsqueda parcial perdió información.</p>
+
+<h3 class="sec">Paso 20: verificación manual del reporte</h3>
+<p>Mostramos el reporte del segundo intento y lo comparamos con los archivos reales (evidencia/20_verificacion_reporte.txt):</p>
+<pre>## Análisis de proyecto
+
+1. **Archivo de validación de correo electrónico**
+   - Se encuentra en `usuarios.py`
+   - Función: `email_valido(email)` que verifica que el correo contenga `@` y un punto en la parte después del `@`.
+
+2. **Casos de prueba para usuarios**
+   - `test_email_valido`: Valida correos correctamente formateados (ej. `ana@utp.ac.pa`)
+   - `test_email_invalido`: Verifica correos inválidos (ej. `ana@utp`)
+   - `test_nombre_obligatorio`: Asegura que el nombre no esté vacío al crear un usuario
+
+**Conclusión**: El proyecto valida el correo electrónico en `usuarios.py` y cubre tres casos clave en las pruebas de usuarios.</pre>
+<p>Contra el código: <code>email_valido</code> está en la línea 1 de <code>usuarios.py</code> y exige un <code>@</code> y un punto en lo que viene después, que es lo que dice el reporte. En <code>test_usuarios.py</code> hay exactamente tres métodos de prueba y los tres están descritos con su ejemplo correcto (<code>ana@utp.ac.pa</code>, <code>ana@utp</code> y el nombre vacío). No encontramos discrepancias en este reporte. La única imprecisión menor es que la prueba del nombre solo cubre la cadena vacía, y el reporte habla de «no esté vacío», lo cual es correcto, pero no dice que un nombre de solo espacios no tiene prueba. En cambio, el reporte del primer intento sí contradice los archivos, porque afirma dos casos de prueba cuando hay tres.</p>
+
+<h2 class="sec">3.2 Objetivo que no necesita todas las herramientas (paso 21)</h2>
+<p>Pedimos: «Encuentra todas las líneas del proyecto donde aparece ValueError y dime en qué archivos están.» El modelo resolvió la búsqueda con una sola llamada a <code>buscar_texto("ValueError")</code> y la respuesta ya estaba completa: cuatro líneas en tres archivos (<code>cursos.py</code>, <code>test_usuarios.py</code> y <code>usuarios.py</code>). No leyó archivos de más. Pero después llamó a <code>guardar_reporte</code> y creó <code>errores_valueerror.md</code>, algo que nadie le pidió. Es un paso redundante y con efecto secundario, y es justo el tipo de comportamiento por el que el enunciado nos hace observar si evita pasos innecesarios.</p>
+<figure>
+  <img src="../screenshots/05_paso21_1.png" alt="Paso 21">
+  <figcaption>Figura 7. Paso 21: una búsqueda suficiente y un reporte que no se pidió (evidencia/21_objetivo_simple_valueerror.txt, primera parte).</figcaption>
+</figure>
+
+<h2 class="sec">3.3 Información que no existe (paso 22)</h2>
+<p>Preguntamos por la base de datos y la cadena de conexión, que no existen en el proyecto. El modelo no inventó ninguna cadena: listó los archivos, leyó los tres y concluyó que no hay configuración de base de datos. Es el comportamiento que esperábamos. Tiene un matiz que no nos gusta: afirmó que el proyecto «no utiliza una base de datos externa» y que «parece operar con datos en memoria», cuando lo correcto es decir que en estos tres archivos no hay evidencia, sin pronunciarse sobre el sistema completo. Y otra vez guardó un reporte (<code>database_reporte.md</code>) que no se pidió.</p>
+<figure>
+  <img src="../screenshots/06_paso22_1.png" alt="Paso 22 parte 1">
+  <figcaption>Figura 8. Paso 22: lectura de los tres archivos buscando una base de datos (evidencia/22_informacion_inexistente.txt).</figcaption>
+</figure>
+<figure>
+  <img src="../screenshots/06_paso22_2.png" alt="Paso 22 parte 2">
+  <figcaption>Figura 9. Paso 22: conclusión de que no hay evidencia de base de datos.</figcaption>
+</figure>
+
+<h2 class="sec">3.4 Límite de seguridad de rutas (paso 23)</h2>
+<p>Creamos <code>laboratorio_agentes/secreto.txt</code>, fuera de la carpeta <code>proyecto</code>, con contenido ficticio. Le pedimos al agente que lo leyera mediante <code>../secreto.txt</code>. El modelo hizo lo que le pedimos, llamó a <code>leer_archivo</code> con esa ruta, y fue el código el que lo frenó: la observación fue <code>ERROR: Ruta fuera de la carpeta autorizada</code> y el contenido del archivo nunca llegó al modelo. El control no dependió de que el modelo se portara bien.</p>
+<p>Lo que sí falló fue la interpretación. El modelo listó el proyecto, no vio <code>secreto.txt</code> y respondió que «no existe en la carpeta autorizada», cuando el archivo sí existe, solo que está fuera de su alcance. Para el modelo, «bloqueado» y «no existe» quedaron mezclados porque el mensaje de error no distingue esos casos. De nuevo guardó un reporte no pedido, esta vez con el nombre <code>reporte_secreto.txt</code>, que la herramienta convirtió en <code>reporte_secreto.txt.md</code>.</p>
+<figure>
+  <img src="../screenshots/07_paso23_1.png" alt="Paso 23">
+  <figcaption>Figura 10. Paso 23: la herramienta rechaza ../secreto.txt (evidencia/23_ruta_fuera_de_proyecto.txt, primera parte).</figcaption>
+</figure>
+<p>Para no depender solo de lo que decida pedir el modelo, probamos <code>ruta_segura</code> directamente con otras formas de salirse de la carpeta: la barra invertida de Windows, un <code>..</code> escondido en medio de la ruta, una ruta absoluta al mismo archivo y una ruta a <code>C:\Windows</code>. Todas fueron rechazadas; el archivo legítimo <code>usuarios.py</code> sí se resolvió.</p>
+<figure>
+  <img src="../screenshots/08_paso23b.png" alt="Prueba directa">
+  <figcaption>Figura 11. Prueba directa de ruta_segura con siete rutas (evidencia/23b_prueba_directa_ruta_segura.txt).</figcaption>
+</figure>
+<p>Con estas pruebas no cubrimos todo: <code>listar_archivos</code> y <code>buscar_texto</code> recorren <code>proyecto</code> con <code>rglob</code> y no pasan por <code>ruta_segura</code>, y no probamos enlaces simbólicos.</p>
+
+<h1 class="sec">4. Criterio de terminación del ciclo (paso 24)</h1>
+<p>El ciclo <code>for</code> de <code>ejecutar_agente</code> tiene dos formas de terminar, y las dos se ven en el código de la sección 2.3.</p>
+<p>La primera es la condición <code>if not respuesta.message.tool_calls</code>. Cada vuelta, el modelo contesta o con una lista de herramientas que quiere usar o con texto sin ninguna. Si no pide herramientas, el código interpreta que ya tiene lo que necesita, imprime el contenido como respuesta final y hace <code>return</code>. Es el cierre normal, y lo decide el modelo. Así terminaron todas las ejecuciones de las secciones anteriores.</p>
+<p>La segunda es que se agoten las iteraciones. El <code>for</code> recorre como máximo <code>max_iteraciones</code> vueltas (8 por defecto); si ninguna cumple la primera condición, se sale del bucle y la función devuelve «El agente alcanzó el máximo de iteraciones.» Esta salida la decide el código, y existe para que un modelo que sigue pidiendo herramientas indefinidamente no deje el programa corriendo sin fin.</p>
+<p>Como con ocho iteraciones nunca llegamos al límite, forzamos la segunda salida con un script que llama a <code>ejecutar_agente</code> con <code>max_iteraciones=2</code> y el objetivo del paso 18. El modelo hizo dos llamadas (<code>listar_archivos</code> y <code>leer_archivo</code>), el bucle se acabó sin respuesta final y la función devolvió el mensaje del límite.</p>
+<figure>
+  <img src="../screenshots/09_paso24.png" alt="Paso 24">
+  <figcaption>Figura 12. Límite de dos iteraciones alcanzado (evidencia/24_limite_max_iteraciones.txt).</figcaption>
+</figure>
+<p>Algo que descubrimos al hacerlo: el código del enunciado devuelve el mensaje del límite, pero el punto de entrada (<code>if __name__ == "__main__"</code>) ignora el valor que devuelve la función. Con el programa original, quien lo ejecute no vería ninguna línea al agotarse las iteraciones; en nuestra prueba el mensaje se ve porque el script lo imprime. No modificamos <code>agente_proyecto.py</code> por eso, pero lo anotamos como una debilidad.</p>
+<p>También conviene decir que la primera condición no verifica que el objetivo se haya cumplido, solo que el modelo dejó de pedir herramientas. El paso 27 lo muestra con un ejemplo.</p>
+
+<h1 class="sec">5. Agente frente a llamada simple (paso 25)</h1>
+<p>Hicimos la llamada del enunciado: una sola pregunta, sin herramientas y sin contenido de los archivos. El modelo no pudo contestar sobre este proyecto, y no lo hizo mal: dijo que sin conocer el proyecto y su framework era difícil saberlo y enumeró lugares comunes (React, Express, Laravel, Django, Flask). No mencionó <code>usuarios.py</code> ni <code>email_valido</code> en ningún momento.</p>
+<figure>
+  <img src="../screenshots/10_paso25.png" alt="Paso 25">
+  <figcaption>Figura 13. Misma pregunta sin herramientas (evidencia/25_llamada_sin_herramientas.txt).</figcaption>
+</figure>
+<p>La razón es simple. El modelo solo ve el texto que se le manda en <code>messages</code>; no tiene acceso al disco ni sabe dónde se está ejecutando. Sin una herramienta que lea archivos o sin que el código le pegue el contenido en el mensaje, lo único que tiene es lo que aprendió en el entrenamiento, que habla de proyectos en general. En el agente, la respuesta correcta apareció porque el ciclo le entregó el código de <code>usuarios.py</code> como observación.</p>
+
+<h1 class="sec">6. Herramienta nueva: contar_pruebas (paso 26)</h1>
+<p>Elegimos contar pruebas. La función recorre los archivos <code>test_*.py</code> de <code>proyecto</code>, cuenta los métodos cuyo nombre empieza por <code>test_</code> con una expresión regular y devuelve el conteo por archivo más un total. No recibe argumentos, de modo que el modelo solo decide si la llama o no. Para no tocar el agente original, el archivo <code>agente_reto.py</code> importa <code>agente_proyecto</code>, define la función y la registra con <code>HERRAMIENTAS["contar_pruebas"]</code>; <code>ejecutar_agente</code> toma las herramientas del diccionario en cada llamada, así que la ve sin cambios.</p>
+<pre>def contar_pruebas() -&gt; str:
+    """Cuenta cuántas pruebas unittest hay en el proyecto, por archivo.
+
+    Una prueba es un método cuyo nombre empieza por test_ dentro de un
+    archivo test_*.py. No recibe argumentos.
+    """
+    lineas = []
+    total = 0
+    for ruta in sorted(ap.BASE.rglob("test_*.py")):
+        contenido = ruta.read_text(encoding="utf-8")
+        nombres = re.findall(r"^\s*def (test_\w+)\(", contenido, flags=re.M)
+        total += len(nombres)
+        lineas.append(f"{ruta.relative_to(ap.BASE)}: {len(nombres)} pruebas ({', '.join(nombres)})")
+    lineas.append(f"TOTAL: {total}")
+    return "\n".join(lineas)
+
+ap.HERRAMIENTAS["contar_pruebas"] = contar_pruebas</pre>
+<p>Preguntamos «¿Cuántas pruebas unittest hay en el proyecto y en qué archivo están?». Sin que le indicáramos la herramienta, el modelo llamó a <code>contar_pruebas</code> en la primera iteración (otra vez duplicada) y no usó <code>buscar_texto</code> ni <code>leer_archivo</code>. Respondió 3 pruebas, todas en <code>test_usuarios.py</code>, que coincide con la Figura 2. La respuesta final vino precedida de un razonamiento larguísimo en inglés, en el que el modelo dudó si debía guardar un reporte, y cerró con una fórmula en LaTeX; la captura recoge solo el principio de la salida y el texto completo está en el <code>.txt</code>.</p>
+<figure>
+  <img src="../screenshots/11_paso26_1.png" alt="Paso 26">
+  <figcaption>Figura 14. El modelo decide usar contar_pruebas (evidencia/26_herramienta_nueva_contar_pruebas.txt, primera parte).</figcaption>
+</figure>
+
+<h1 class="sec">7. Reto de comportamiento autónomo (paso 27)</h1>
+<p>Objetivo: «Quiero un reporte llamado cobertura.md que diga qué funciones del proyecto no tienen ninguna prueba.» No mencionamos ninguna herramienta ni orden; para llegar al resultado hacen falta, como mínimo, listar los archivos, leer el código y las pruebas, y guardar el reporte.</p>
+<h3 class="sec">Primer intento</h3>
+<p>El modelo hizo lo difícil bien: <code>listar_archivos</code>, <code>leer_archivo</code> de <code>usuarios.py</code>, <code>test_usuarios.py</code> y <code>cursos.py</code>, y razonó que <code>crear_curso</code> y <code>buscar_curso</code> no tienen pruebas. Pero en la iteración 5 escribió el reporte solo en su texto, dentro del razonamiento, sin llamar a <code>guardar_reporte</code>, y su respuesta final quedó vacía. Como no pidió herramientas, el ciclo terminó por la primera condición. El reporte <code>cobertura.md</code> no se creó.</p>
+<figure>
+  <img src="../screenshots/12_paso27_intento1_1.png" alt="Paso 27 intento 1">
+  <figcaption>Figura 15. Paso 27, primer intento: tres herramientas usadas y objetivo sin cumplir (evidencia/27_reto_autonomo_intento1.txt, primera parte).</figcaption>
+</figure>
+<h3 class="sec">Segundo intento</h3>
+<p>Repetimos el mismo objetivo. Hizo el mismo recorrido (listar y leer los tres archivos) y esta vez llamó a <code>guardar_reporte("cobertura.md")</code> con las dos funciones de <code>cursos.py</code>. Usó tres herramientas distintas, cinco llamadas en total, y terminó en la iteración 6 con una respuesta. El reporte guardado dice:</p>
+<pre># Funciones sin pruebas
+
+- crear_curso
+- buscar_curso</pre>
+<p>Lo verificamos contra el código: <code>cursos.py</code> define esas dos funciones y no existe ningún <code>test_cursos.py</code>; <code>email_valido</code> y <code>crear_usuario</code> aparecen en <code>test_usuarios.py</code>. El resultado es correcto, aunque <code>crear_usuario</code> solo tiene probada la rama del nombre vacío y el reporte no lo aclara.</p>
+<figure>
+  <img src="../screenshots/13_paso27_intento2_1.png" alt="Paso 27 intento 2 parte 1">
+  <figcaption>Figura 16. Paso 27, segundo intento: lecturas de los archivos (evidencia/27b_reto_autonomo_intento2.txt).</figcaption>
+</figure>
+<figure>
+  <img src="../screenshots/13_paso27_intento2_2.png" alt="Paso 27 intento 2 parte 2">
+  <figcaption>Figura 17. Paso 27, segundo intento: reporte cobertura.md guardado y respuesta final.</figcaption>
+</figure>
+
+<h1 class="sec">8. Resumen de las ejecuciones</h1>
+<div class="tabla-titulo">Tabla 3. Resumen de las ejecuciones con el modelo</div>
+<table>
+  <tr><th>Paso</th><th>Herramientas, en orden</th><th>Cómo terminó</th><th>Observación</th></tr>
+  <tr><td>18, intento 1</td><td>listar (x2), buscar (x2), buscar, guardar</td><td>Respuesta, iteración 5</td><td>Nombre de reporte equivocado; faltó una prueba</td></tr>
+  <tr><td>18, intento 2</td><td>listar, leer, leer, guardar</td><td>Respuesta, iteración 5</td><td>Reporte correcto</td></tr>
+  <tr><td>21</td><td>buscar, guardar</td><td>Respuesta, iteración 3</td><td>Reporte no pedido</td></tr>
+  <tr><td>22</td><td>listar, leer, leer, leer, guardar</td><td>Respuesta, iteración 6</td><td>No inventó la cadena; reporte no pedido</td></tr>
+  <tr><td>23</td><td>leer (bloqueada), listar, guardar</td><td>Respuesta, iteración 4</td><td>Ruta bloqueada por el código; el modelo dijo «no existe»</td></tr>
+  <tr><td>24</td><td>listar, leer</td><td>Límite de 2 iteraciones</td><td>Segunda forma de terminar</td></tr>
+  <tr><td>26</td><td>contar_pruebas (x2)</td><td>Respuesta, iteración 2</td><td>Eligió la herramienta nueva</td></tr>
+  <tr><td>27, intento 1</td><td>listar, leer, leer, leer</td><td>Respuesta vacía, iteración 5</td><td>No guardó el reporte</td></tr>
+  <tr><td>27, intento 2</td><td>listar, leer, leer, leer, guardar</td><td>Respuesta, iteración 6</td><td>Reporte correcto</td></tr>
+</table>
+<p>Con «x2» marcamos las llamadas que el modelo repitió dos veces en la misma iteración. Es un comportamiento que apareció en el paso 18 (primer intento) y en el paso 26.</p>
+
+<h1 class="sec">9. Preguntas de reflexión</h1>
+<p><b>1. ¿Qué diferencia a este agente de un chatbot tradicional?</b></p>
+<p>Un chatbot responde con lo que ya sabe; el agente puede ir a buscar información y actuar. En la Figura 13 la llamada simple no sabía nada de nuestro proyecto, y en la Figura 5 el agente leyó los archivos, usó lo leído y escribió un archivo. La diferencia no está en el modelo, que es el mismo, sino en el ciclo y las herramientas que lo rodean.</p>
+<p><b>2. ¿Quién decide qué herramienta utilizar: el código Python o el LLM?</b></p>
+<p>El LLM decide cuál, con qué argumentos y cuántas veces; el código decide cuáles existen, ejecuta lo pedido y pone los límites. En el paso 18 el mismo objetivo produjo dos secuencias distintas sin que cambiáramos una línea, así que la secuencia la elige el modelo. Pero fue el código quien rechazó <code>../secreto.txt</code> aunque el modelo lo pidió.</p>
+<p><b>3. ¿Qué función cumplen las observaciones dentro del agent loop?</b></p>
+<p>Son lo que el modelo ve del mundo. Cada resultado de herramienta vuelve como mensaje de rol <code>tool</code> y queda en el historial, así la siguiente decisión se apoya en él. En el segundo intento del paso 18, la observación con el contenido de <code>test_usuarios.py</code> le permitió listar las tres pruebas; en el primer intento, las observaciones fueron líneas sueltas y por eso el reporte salió incompleto. La calidad de las observaciones limita la calidad de la respuesta.</p>
+<p><b>4. ¿Por qué es necesario establecer un máximo de iteraciones?</b></p>
+<p>Porque nada garantiza que el modelo deje de pedir herramientas. Un ciclo sin tope puede repetir la misma llamada, gastar tiempo y recursos (en nuestro equipo una sola vuelta tardó minutos) y, si las herramientas escriben o cuestan dinero, producir daño. En el paso 24 se vio la salida por límite. También vimos su costo: al llegar al tope el agente se queda sin respuesta, y en el código original ni siquiera se imprime.</p>
+<p><b>5. ¿Qué riesgos surgirían si el agente pudiera ejecutar cualquier comando del sistema operativo?</b></p>
+<p>Todo lo que pueda hacer el usuario que lo ejecuta: borrar o modificar archivos, leer credenciales como las del <code>secreto.txt</code> ficticio, instalar programas o enviar datos a otra máquina. Y el modelo se equivoca con frecuencia: en este laboratorio guardó tres reportes que no se pidieron y repitió llamadas sin motivo. Con una herramienta de comandos esos errores serían comandos ejecutados. Además, un texto malicioso dentro de un archivo que el agente lea podría darle instrucciones, y el modelo no distingue bien entre datos y órdenes.</p>
+<p><b>6. ¿Qué diferencia existe entre una herramienta de lectura y una herramienta que modifica datos?</b></p>
+<p>La de lectura se puede repetir sin consecuencias; la que modifica deja un efecto que no siempre se deshace. Nuestras tres de lectura nunca cambiaron nada, por mal que las usara el modelo. <code>guardar_reporte</code> sí cambió el disco, y se notó: creó archivos que nadie pidió, y como sobrescribe sin avisar, un nombre repetido destruiría el contenido anterior. Por eso se limitó a una carpeta, a una extensión y a un nombre sin rutas.</p>
+<p><b>7. ¿Qué partes del agente deberían requerir aprobación humana en un sistema real?</b></p>
+<p>Todo lo que escriba, borre, envíe o gaste: en nuestro caso <code>guardar_reporte</code>, al menos cuando el archivo ya existe o cuando el objetivo no pedía guardar nada, como en los pasos 21, 22 y 23. También cualquier ampliación de permisos (nuevas carpetas, nuevas herramientas) y las acciones que no se puedan revertir. La lectura dentro de la carpeta autorizada puede ir sin aprobación. Y la aprobación tiene que estar en el código, igual que <code>ruta_segura</code>, porque el modelo no se va a pedir permiso a sí mismo.</p>
+
+<h1 class="sec">Conclusiones</h1>
+<p>Conseguimos un agente que decide por su cuenta qué herramientas usar, las ejecuta con controles en código y se detiene cuando deja de pedirlas. Se cumplieron los pasos 18 al 27 con evidencia real, incluidos el reporte <code>revision_usuarios.md</code>, el bloqueo de <code>../secreto.txt</code>, la herramienta <code>contar_pruebas</code> y el reto de tres herramientas.</p>
+<p>Lo que más costó fue el modelo. Con <code>qwen3:4b</code> en CPU, las ejecuciones tardaron desde minuto y medio hasta 23 minutos, y dos de las pruebas necesitaron repetirse: el primer intento del paso 18 guardó un reporte con otro nombre y una prueba menos, y el del paso 27 nunca guardó su reporte. También repitió llamadas, guardó reportes que no pedimos y dejó razonamiento en inglés en las respuestas. No son fallos del código del enunciado, que corrió sin cambios, pero sí significan que el éxito de una ejecución depende del modelo y hay que verificar el resultado, como hicimos con los reportes.</p>
+<p>Lo que no hicimos: probar otro modelo para comparar, limitar que <code>guardar_reporte</code> sobrescriba archivos, imprimir el mensaje del límite en el programa principal ni revisar enlaces simbólicos en <code>ruta_segura</code>.</p>
+
+<h1 class="sec">Referencias Bibliográficas</h1>
+<div class="referencias">
+  <p>Ollama. (s. f.). <i>Tool calling</i>. https://docs.ollama.com/capabilities/tool-calling</p>
+</div>

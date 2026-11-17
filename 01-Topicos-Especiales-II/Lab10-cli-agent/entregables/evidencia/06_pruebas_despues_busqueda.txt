@@ -1,0 +1,10 @@
+> python app.py
+Tareas pendientes:
+- 2: Preparar exposición (prioridad: media)
+
+> python -m unittest discover -s tests
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 0.001s
+
+OK

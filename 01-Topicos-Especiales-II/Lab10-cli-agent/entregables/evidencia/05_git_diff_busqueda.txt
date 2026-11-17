@@ -1,0 +1,59 @@
+> git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   app.py
+	modified:   tasks.py
+	modified:   tests/test_tasks.py
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   tasks.py
+	modified:   tests/test_tasks.py
+
+
+> git diff
+warning: in the working copy of 'tasks.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_tasks.py', LF will be replaced by CRLF the next time Git touches it
+diff --git a/tasks.py b/tasks.py
+index 94d5a7b..5da2dca 100644
+--- a/tasks.py
++++ b/tasks.py
+@@ -24,3 +24,7 @@ def completar_tarea(tareas, tarea_id):
+ 
+ def pendientes(tareas):
+     return [t for t in tareas if not t["completada"]]
++
++def buscar_tareas(tareas, texto):
++    texto = texto.strip().casefold()
++    return [t for t in tareas if texto in t["titulo"].casefold()]
+diff --git a/tests/test_tasks.py b/tests/test_tasks.py
+index ea6f53e..0fdc171 100644
+--- a/tests/test_tasks.py
++++ b/tests/test_tasks.py
+@@ -1,5 +1,5 @@
+ import unittest
+-from tasks import agregar_tarea, completar_tarea, pendientes
++from tasks import agregar_tarea, completar_tarea, pendientes, buscar_tareas
+ 
+ class TestTasks(unittest.TestCase):
+     def test_agregar_tarea(self):
+@@ -35,5 +35,17 @@ class TestTasks(unittest.TestCase):
+         completar_tarea(tareas, 1)
+         self.assertEqual([t["titulo"] for t in pendientes(tareas)], ["B"])
+ 
++    def test_buscar_tareas_ignora_mayusculas(self):
++        tareas = []
++        agregar_tarea(tareas, "Leer Capítulo", "alta")
++        agregar_tarea(tareas, "Practicar", "baja")
++        self.assertEqual([t["titulo"] for t in buscar_tareas(tareas, "LEER")], ["Leer Capítulo"])
++        self.assertEqual([t["titulo"] for t in buscar_tareas(tareas, "capítulo")], ["Leer Capítulo"])
++
++    def test_buscar_tareas_sin_coincidencias(self):
++        tareas = []
++        agregar_tarea(tareas, "Practicar", "baja")
++        self.assertEqual(buscar_tareas(tareas, "xyz"), [])
++
+ if __name__ == "__main__":
+     unittest.main()

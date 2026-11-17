@@ -1,0 +1,47 @@
+s1_analisis.json | 2 | Glob | **/* | permitido
+s1_analisis.json | 5 | Read | tasks.py | permitido
+s1_analisis.json | 7 | Read | app.py | permitido
+s1_analisis.json | 9 | Read | tests\test_tasks.py | permitido
+s1_analisis.json | 11 | Read | .gitignore | permitido
+s2a_prioridad_sin_permisos.json | 2 | Glob | **/*.py | permitido
+s2a_prioridad_sin_permisos.json | 5 | Read | tasks.py | permitido
+s2a_prioridad_sin_permisos.json | 7 | Read | app.py | permitido
+s2a_prioridad_sin_permisos.json | 9 | Read | tests\test_tasks.py | permitido
+s2a_prioridad_sin_permisos.json | 15 | Edit | tasks.py | DENEGADO
+s2a_prioridad_sin_permisos.json | 18 | Edit | app.py | DENEGADO
+s2a_prioridad_sin_permisos.json | 21 | Edit | app.py | DENEGADO
+s2a_prioridad_sin_permisos.json | 24 | Edit | tests\test_tasks.py | DENEGADO
+s2a_prioridad_sin_permisos.json | 27 | PowerShell | python -m unittest discover -s tests -t . -v; python app.py | DENEGADO
+s2b_prioridad_aprobada.json | 2 | Edit | tasks.py | permitido
+s2b_prioridad_aprobada.json | 4 | Edit | app.py | permitido
+s2b_prioridad_aprobada.json | 6 | Edit | app.py | permitido
+s2b_prioridad_aprobada.json | 8 | Edit | tests\test_tasks.py | permitido
+s2b_prioridad_aprobada.json | 11 | PowerShell | python -m unittest discover -s tests -t . -v | permitido
+s2b_prioridad_aprobada.json | 12 | PowerShell | python app.py | permitido
+s2b_prioridad_aprobada.json | 17 | PowerShell | python -m unittest discover -s tests -v | permitido
+s3a_busqueda_sin_permisos.json | 2 | Read | tasks.py | permitido
+s3a_busqueda_sin_permisos.json | 4 | Read | tests\test_tasks.py | permitido
+s3a_busqueda_sin_permisos.json | 8 | Edit | tasks.py | DENEGADO
+s3a_busqueda_sin_permisos.json | 11 | Edit | tests\test_tasks.py | DENEGADO
+s3a_busqueda_sin_permisos.json | 14 | Edit | tests\test_tasks.py | DENEGADO
+s3b_busqueda_aprobada.json | 2 | Edit | tasks.py | permitido
+s3b_busqueda_aprobada.json | 4 | Edit | tests\test_tasks.py | permitido
+s3b_busqueda_aprobada.json | 6 | Edit | tests\test_tasks.py | permitido
+s3b_busqueda_aprobada.json | 9 | PowerShell | python -m unittest | permitido
+s3b_busqueda_aprobada.json | 14 | PowerShell | python -m unittest discover -s tests -v | permitido
+s4_limitar_strip.json | 2 | Edit | tasks.py | permitido
+s4_limitar_strip.json | 4 | PowerShell | python -m unittest discover -s tests | permitido
+s5b_corregir.json | 2 | Edit | tasks.py | permitido
+s5b_corregir.json | 4 | PowerShell | python -m unittest discover -s tests | permitido
+s6_resumen_final.json | 5 | Read | tasks.py | permitido
+s6_resumen_final.json | 7 | Read | tests\test_tasks.py | permitido
+s6_resumen_final.json | 8 | PowerShell | python -m unittest discover -s tests -v | DENEGADO
+s6_resumen_final.json | 16 | PowerShell | python -m unittest discover -s tests | DENEGADO
+s7_reto_ordenar.json | 2 | Read | tasks.py | permitido
+s7_reto_ordenar.json | 4 | Read | tests\test_tasks.py | permitido
+s7_reto_ordenar.json | 7 | Edit | tasks.py | permitido
+s7_reto_ordenar.json | 9 | Edit | tests\test_tasks.py | permitido
+s7_reto_ordenar.json | 11 | Edit | tests\test_tasks.py | permitido
+s7_reto_ordenar.json | 14 | PowerShell | python -m unittest discover -s tests | permitido
+s8_prueba_control_git.json | 5 | PowerShell | git add .; git commit -m "Agregar prioridad y búsqueda con ayuda de CLI Agent" -m "Co-Auth | DENEGADO
+s8_prueba_control_git.json | 6 | PowerShell | pip install pytest | DENEGADO

@@ -1,0 +1,53 @@
+Fecha y hora de inicio: 2026-10-30 11:50:11
+Comando: C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe run qwen2.5-coder:3b   (prompt entregado por entrada estandar)
+------------------------------------------------------------
+PROMPT ENVIADO:
+Escribe pruebas con unittest para un módulo calculadora.py que tiene tres funciones: dividir(a, b), promedio(valores) y porcentaje(valor, total).
+Necesito tres pruebas de casos normales (una por función) y tres de casos límite: dividir con b igual a cero, promedio de una lista vacía y porcentaje con total igual a cero. En los casos límite la función debe lanzar ValueError (usa assertRaises).
+Importa las funciones con "from calculadora import dividir, promedio, porcentaje". Devuelve solo el código del archivo de pruebas.
+------------------------------------------------------------
+RESPUESTA DEL MODELO:
+```python
+import unittest
+from calculadora import dividir, promedio, porcentaje
+
+class TestCalculadora(unittest.TestCase):
+
+    def test_dividir(self):
+        self.assertEqual(dividir(10, 2), 5)
+        self.assertEqual(dividir(8, 4), 2)
+        self.assertEqual(dividir(15, 3), 5)
+
+    def test_dividir_por_cero(self):
+        with self.assertRaises(ValueError):
+            dividir(10, 0)
+
+    def test_promedio_vacia(self):
+        self.assertEqual(promedio([]), 0)
+
+    def test_promedio_con_un_elemento(self):
+        self.assertEqual(promedio([10]), 10)
+
+    def test_promedio_con_muchos_elementos(self):
+        self.assertEqual(promedio([1, 2, 3, 4, 5]), 3)
+
+    def test_porcentaje_cero_total(self):
+        with self.assertRaises(ValueError):
+            porcentaje(10, 0)
+
+    def test_porcentaje_con_total_negativo(self):
+        with self.assertRaises(ValueError):
+            porcentaje(10, -10)
+
+    def test_porcentaje_normal(self):
+        self.assertEqual(porcentaje(5, 100), 5)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+Este código define un conjunto de pruebas unitarias usando `unittest` para el módulo `calculadora.py`, cubriendo tanto casos normales como casos límite para las funciones `dividir`, `promedio` y `porcentaje`.
+------------------------------------------------------------
+Codigo de salida: 0
+Fecha y hora de fin: 2026-10-30 11:50:33
+Tiempo transcurrido: 21.2 s

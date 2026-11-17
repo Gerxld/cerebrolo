@@ -1,0 +1,27 @@
+Comando: printf '%s\nsalir\n' "Si quiero comer, ¿puedo hacerlo en la sala de estudio y hasta qué hora atiende el comedor?" | python -u rag_universidad.py   
+Hora de inicio: 2026-10-30 12:06:26
+----------------------------------------
+Documentos cargados: 5
+Chunks creados: 10
+Generando índice vectorial...
+
+Pregunta (o 'salir'): 
+--- CHUNKS RECUPERADOS ---
+1. comedor.txt | similitud=0.721
+El comedor estudiantil atiende de lunes a viernes de 11:00 a.m. a 2:00 p.m.
+Para comprar el almuerzo se debe presentar el carné de estudiante.
+Los estudiantes pueden comer en el comedor o en las mesas del patio, pero no
+
+2. sala_estudio.txt | similitud=0.641
+La sala de estudio del edificio 3 abre de lunes a viernes de 9:00 a.m. a 7:00 p.m.
+Cada estudiante puede reservar un cubículo por un máximo de 2 horas al día.
+No se permite consumir alimentos dentro de la sala; solo se p
+
+3. reglamento.txt | similitud=0.629
+deben documentarse según el procedimiento de la facultad.
+
+--- RESPUESTA RAG ---
+No encuentro esa información en los documentos proporcionados.
+
+Pregunta (o 'salir'): ----------------------------------------
+Hora de fin: 2026-10-30 12:06:53

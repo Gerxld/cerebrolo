@@ -1,0 +1,1 @@
+El proyecto no contiene configuración de base de datos en los archivos disponibles. Los archivos analizados (usuarios.py, test_usuarios.py, cursos.py) no incluyen cadenas de conexión ni definiciones de base de datos. El proyecto parece operar en memoria sin conexión a una base de datos externa.

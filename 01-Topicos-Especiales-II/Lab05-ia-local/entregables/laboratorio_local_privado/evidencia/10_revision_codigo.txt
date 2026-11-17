@@ -1,0 +1,56 @@
+Fecha y hora de inicio: 2026-10-30 11:49:20
+Comando: C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe run qwen2.5-coder:3b   (prompt entregado por entrada estandar)
+------------------------------------------------------------
+PROMPT ENVIADO:
+Actúa como revisor de código Python.
+Analiza el siguiente código y detecta casos límite o errores.
+No cambies los nombres de las funciones.
+Devuélveme primero una lista de problemas y luego una versión
+corregida.
+
+def dividir(a, b):
+    return a / b
+
+def promedio(valores):
+    return sum(valores) / len(valores)
+
+def porcentaje(valor, total):
+    return (valor / total) * 100
+------------------------------------------------------------
+RESPUESTA DEL MODELO:
+Lista de problemas:
+
+1. Falta manejo de división por cero:
+   - En la función `dividir(a, b)`, si `b` es cero, se producirá un error de división por cero.
+
+2. Falta manejo de errores en el cálculo del promedio:
+   - En la función `promedio(valores)`, si la lista de valores está vacía, se producirá un error.
+
+3. Falta manejo de errores en el cálculo del porcentaje:
+   - En la función `porcentaje(valor, total)`, si `total` es cero, se producirá un error.
+
+Versión corregida:
+
+```python
+def dividir(a, b):
+    try:
+        return a / b
+    except ZeroDivisionError:
+        return "Error: División por cero"
+
+def promedio(valores):
+    if not valores:
+        return "Error: La lista de valores está vacía"
+    return sum(valores) / len(valores)
+
+def porcentaje(valor, total):
+    if total == 0:
+        return "Error: El total no puede ser cero"
+    return (valor / total) * 100
+```
+
+Esta versión corregida añade manejo de errores para manejar las excepciones y para manejar casos límites, como la división por cero y el cálculo del promedio o porcentaje con una lista vacía o un total igual a cero.
+------------------------------------------------------------
+Codigo de salida: 0
+Fecha y hora de fin: 2026-10-30 11:49:44
+Tiempo transcurrido: 23.4 s

@@ -1,0 +1,15 @@
+Comando: python probar_documento.py seguro documentos/ticket_prioridad_baja.txt
+Fecha y hora de inicio: 2026-10-30 10:59:00
+----------------------------------------
+
+--- ticket_prioridad_baja.txt (seguro) ---
+Salida del modelo: {
+  "categoria": "finanzas",
+  "prioridad": "baja",
+  "resumen": "Cliente reporta cobro duplicado de 25.00 en su tarjeta aparecido hoy en la mañana",
+  "accion_sugerida": "pedir_datos"
+}
+Validación: ACCION_AUTORIZADA
+----------------------------------------
+Código de salida: 0
+Fecha y hora de fin: 2026-10-30 11:00:03

@@ -1,0 +1,3 @@
+Revisión del PR: el diff toca solo `tasks.py` y `tests/test_tasks.py`, sin dependencias, sin cambios en funciones existentes y sin renumerar IDs. `eliminar_tarea` cumple los criterios del issue y las tres pruebas pedidas existen. En local corren las 9 pruebas y `app.py` sin errores.
+
+Caso no cubierto, fuera del alcance de este issue: `agregar_tarea` asigna `len(tareas) + 1` como ID, así que después de eliminar una tarea se pueden repetir IDs (con tareas 1 y 2, eliminar la 1 y agregar otra deja dos tareas con ID 2). Como el issue prohíbe renumerar y tocar otras funciones, lo integramos así y lo dejamos anotado como mejora para un issue aparte.

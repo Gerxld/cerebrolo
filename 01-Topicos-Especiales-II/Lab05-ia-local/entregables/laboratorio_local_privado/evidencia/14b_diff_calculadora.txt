@@ -1,0 +1,9 @@
+1a2,3
+>     if b == 0:
+>         raise ValueError("El divisor no puede ser cero.")
+4a7,8
+>     if not valores:
+>         raise ValueError("La lista de valores no puede estar vacía.")
+7a12,13
+>     if total == 0:
+>         raise ValueError("El total no puede ser cero.")

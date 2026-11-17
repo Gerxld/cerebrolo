@@ -1,0 +1,10 @@
+Comando: cd proyecto && python -m unittest -v
+------------------------------------------------------------
+test_email_invalido (test_usuarios.TestUsuarios.test_email_invalido) ... ok
+test_email_valido (test_usuarios.TestUsuarios.test_email_valido) ... ok
+test_nombre_obligatorio (test_usuarios.TestUsuarios.test_nombre_obligatorio) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+OK

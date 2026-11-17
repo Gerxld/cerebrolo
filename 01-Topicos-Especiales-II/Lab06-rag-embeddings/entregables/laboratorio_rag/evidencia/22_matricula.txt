@@ -1,0 +1,25 @@
+Comando: printf '%s\nsalir\n' "¿Cuál es el costo de la matrícula del próximo semestre?" | python -u rag_universidad.py   
+Hora de inicio: 2026-10-30 11:49:32
+----------------------------------------
+Documentos cargados: 3
+Chunks creados: 6
+Generando índice vectorial...
+
+Pregunta (o 'salir'): 
+--- CHUNKS RECUPERADOS ---
+1. reglamento.txt | similitud=0.553
+La asistencia mínima requerida para aprobar un curso es de 75%.
+Un estudiante con menos de 75% de asistencia puede perder el derecho a evaluación final.
+Las ausencias justificadas deben documentarse según el procedimient
+
+2. reglamento.txt | similitud=0.537
+deben documentarse según el procedimiento de la facultad.
+
+3. servicios.txt | similitud=0.513
+imo de 14 días.
+
+--- RESPUESTA RAG ---
+No encuentro esa información en los documentos proporcionados.
+
+Pregunta (o 'salir'): ----------------------------------------
+Hora de fin: 2026-10-30 11:49:53

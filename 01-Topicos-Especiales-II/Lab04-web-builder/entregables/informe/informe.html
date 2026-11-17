@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Laboratorio 4 - Web Builder</title>
+<style>
+  @page { size: Letter; margin: 2.5cm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; text-align: justify; color: #111; margin: 0; }
+  h1, h2, h3 { font-family: "Times New Roman", Times, serif; text-align: left; page-break-after: avoid; }
+  h1 { font-size: 14pt; margin: 1.4em 0 0.5em; }
+  h2 { font-size: 13pt; margin: 1.2em 0 0.4em; }
+  h3 { font-size: 12pt; margin: 1em 0 0.3em; }
+  h1.nueva-pagina { page-break-before: always; }
+  p { margin: 0 0 0.7em 0; }
+  .portada { height: 22cm; display: flex; flex-direction: column; align-items: center; text-align: center; page-break-after: always; }
+  .portada .logos { display: flex; justify-content: space-between; width: 100%; margin-bottom: 0.8cm; }
+  .portada .logos img { width: 105px; height: 105px; object-fit: contain; }
+  .portada .titulo-bloque { margin-top: 0.9cm; }
+  .portada .titulo-bloque p { margin: 0.35em 0; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px; }
+  .portada .presentado { margin-top: 1.1cm; }
+  .portada .presentado p, .portada .revisado p, .portada .fecha p { margin: 0.3em 0; font-weight: bold; text-transform: uppercase; }
+  .portada .nombres { font-weight: normal !important; text-transform: none !important; }
+  .portada .revisado { margin-top: 1.2cm; }
+  .portada .fecha { margin-top: 1.1cm; }
+  .indice { page-break-after: always; }
+  .indice h1 { text-align: center; }
+  .indice ol { list-style: none; padding: 0; margin: 0; }
+  .indice li { display: flex; align-items: baseline; margin: 0.25em 0; }
+  .indice li.n2 { padding-left: 1.2em; }
+  .indice li .t { white-space: nowrap; }
+  .indice li .dots { flex: 1; border-bottom: 1px dotted #444; margin: 0 0.3em; transform: translateY(-0.25em); }
+  .indice li .p { white-space: nowrap; }
+  table { width: 100%; border-collapse: collapse; margin: 0.8em 0; font-size: 10.5pt; page-break-inside: avoid; }
+  th, td { border: 1px solid #666; padding: 5px 7px; text-align: left; vertical-align: top; }
+  th { background: #e2e2e2; font-weight: bold; }
+  .tabla-titulo { font-weight: bold; margin: 0.8em 0 0.2em; text-align: left; }
+  figure { margin: 1em 0; text-align: center; page-break-inside: avoid; }
+  figure img { max-width: 100%; max-height: 18cm; }
+  figcaption { font-size: 10.5pt; font-style: italic; margin-top: 0.3em; }
+  ul, ol { margin: 0.3em 0 0.8em 1.3em; padding: 0; }
+  li { margin-bottom: 0.3em; }
+  pre { font-family: "Courier New", monospace; font-size: 9.5pt; line-height: 1.3; text-align: left; background: #f4f4f4; border: 1px solid #ccc; padding: 8px 10px; white-space: pre-wrap; page-break-inside: avoid; }
+  code { font-family: "Courier New", monospace; font-size: 10pt; }
+  .pend { background: #fff3b0; }
+</style>
+</head>
+<body>
+
+<div class="portada">
+  <div class="logos">
+    <img src="../assets/utp.png" alt="Logo UTP">
+    <img src="../assets/fisc.png" alt="Logo FISC">
+  </div>
+  <div class="titulo-bloque">
+    <p>Universidad Tecnológica de Panamá</p>
+    <p>Facultad de Ingeniería de Sistemas Computacionales</p>
+    <p>Lic. en Desarrollo y Gestión de Software</p>
+    <p style="margin-top:1em;">Tópicos Especiales II</p>
+    <p>Laboratorio 4 — Generación de software con un Web Builder</p>
+    <p>1GS241</p>
+  </div>
+  <div class="presentado">
+    <p>Presentado por:</p>
+    <p class="nombres">Ríos, Gerald (8-987-741)</p>
+  </div>
+  <div class="revisado">
+    <p>Revisado por:</p>
+    <p class="nombres">Profesor Regis Rivera</p>
+  </div>
+  <div class="fecha">
+    <p>Fecha de entrega</p>
+    <p class="nombres"><span class="pend">[PENDIENTE: fecha]</span></p>
+  </div>
+</div>
+
+<!-- Números de página provisionales: se ajustan contra el PDF real -->
+<div class="indice">
+  <h1>Índice</h1>
+  <ol>
+    <li><span class="t">Introducción</span><span class="dots"></span><span class="p">3</span></li>
+    <li><span class="t">1. Plataforma, proyecto y objetivo funcional</span><span class="dots"></span><span class="p">3</span></li>
+    <li><span class="t">2. Instrucción inicial y primera versión</span><span class="dots"></span><span class="p">4</span></li>
+    <li><span class="t">3. Pruebas como usuario sobre la primera versión</span><span class="dots"></span><span class="p">5</span></li>
+    <li><span class="t">4. Refinamiento 1: contador de tareas</span><span class="dots"></span><span class="p">7</span></li>
+    <li><span class="t">5. Refinamiento 2: presentación y responsive</span><span class="dots"></span><span class="p">8</span></li>
+    <li><span class="t">6. Refinamiento 3: caso límite</span><span class="dots"></span><span class="p">9</span></li>
+    <li><span class="t">7. Revisión del código generado</span><span class="dots"></span><span class="p">10</span></li>
+    <li><span class="t">8. Refinamiento 4: limpiar tareas terminadas</span><span class="dots"></span><span class="p">11</span></li>
+    <li><span class="t">9. Verificación final y comparación de iteraciones</span><span class="dots"></span><span class="p">12</span></li>
+    <li><span class="t">10. Publicación</span><span class="dots"></span><span class="p">13</span></li>
+    <li><span class="t">11. Reto adicional</span><span class="dots"></span><span class="p">13</span></li>
+    <li><span class="t">12. Preguntas de reflexión</span><span class="dots"></span><span class="p">14</span></li>
+    <li><span class="t">Conclusiones</span><span class="dots"></span><span class="p">16</span></li>
+  </ol>
+</div>
+
+<h1>Introducción</h1>
+<p>Un Web Builder cambia el punto de partida del desarrollo: en lugar de abrir un editor y escribir, se describe en lenguaje natural la aplicación que se quiere, la herramienta genera el proyecto completo y se prueba desde una vista previa en el navegador. Este laboratorio propone recorrer ese flujo de punta a punta con una aplicación sencilla, un gestor de tareas de estudio, y pide algo más que obtener la app: probarla como usuario, pedir cambios de uno en uno, repetir las pruebas después de cada cambio y revisar el código que la herramienta produjo.</p>
+<p>La plataforma usada fue <span class="pend">[PENDIENTE: Bolt.new u otra, y por qué si no fue Bolt.new]</span>. No se instaló ningún editor de código y no se recurrió a un chat web externo ni a un agente local; todo el trabajo ocurrió dentro del Web Builder.</p>
+<p>El informe recoge la instrucción inicial y las instrucciones de refinamiento con su texto, las pruebas con el resultado de cada una, los archivos que identificamos en el código generado, la versión final y el reto adicional. Cierra con las respuestas a las preguntas de reflexión y las conclusiones.</p>
+
+<h1>1. Plataforma, proyecto y objetivo funcional</h1>
+<p>Creamos la cuenta y un proyecto nuevo y vacío, sin importar nada. <span class="pend">[PENDIENTE: método de registro, plan gratuito y límites que se vieron en pantalla, cualquier restricción que obligara a cambiar de plataforma]</span></p>
+<figure>
+  <img src="../capturas/paso01_proyecto_nuevo.png" alt="Proyecto nuevo en la plataforma">
+  <figcaption>Figura 1. Proyecto nuevo y vacío en el Web Builder.</figcaption>
+</figure>
+<p>Antes de escribir la primera instrucción fijamos el objetivo funcional en una sola frase:</p>
+<blockquote style="margin-left:1.27cm;">“Necesito una aplicación web que permita a un estudiante organizar sus tareas académicas y saber cuáles están pendientes, en progreso o terminadas”.</blockquote>
+
+<h1>2. Instrucción inicial y primera versión</h1>
+<p>La guía propone estructurar toda instrucción en seis partes: objetivo, usuario, funciones, reglas, presentación y límites. La instrucción inicial que enviamos fue esta:</p>
+<pre>Construye una aplicación web llamada “Gestor de tareas de estudio”.
+
+Usuario: estudiante universitario.
+
+Debe permitir: crear, editar y eliminar tareas; asignar título, descripción, prioridad (Alta/Media/Baja), estado (Pendiente/En progreso/Terminada) y fecha límite; buscar por texto y filtrar por estado y prioridad.
+
+Reglas: no permitir guardar una tarea sin título; mostrar mensajes claros cuando falten datos; conservar las tareas en el navegador mediante almacenamiento local; no usar servicios externos ni autenticación.
+
+Interfaz: sencilla, responsive, con una lista o tablero claro y un formulario fácil de usar.
+
+Genera una primera versión funcional. No agregues funciones distintas a las solicitadas.</pre>
+<p>Dejamos que la herramienta terminara sin interrumpirla y abrimos la vista previa sin pedir cambios, para tener una línea base. <span class="pend">[PENDIENTE: cuánto tardó, qué pasos mostró el panel izquierdo, y si la primera versión salió completa o con faltantes]</span></p>
+<figure>
+  <img src="../capturas/paso05_v1_vista_previa.png" alt="Primera versión en la vista previa">
+  <figcaption>Figura 2. Primera versión generada, vista previa.</figcaption>
+</figure>
+<figure>
+  <img src="../capturas/paso05b_v1_proceso.png" alt="Panel izquierdo con el proceso de la herramienta">
+  <figcaption>Figura 3. Proceso paso a paso que mostró la herramienta al generar la primera versión.</figcaption>
+</figure>
+
+<h1>3. Pruebas como usuario sobre la primera versión</h1>
+<p>Probamos la app como lo haría un usuario, no como programador: tres tareas con distintas prioridades y estados, una edición, una eliminación y los filtros, además de las cuatro pruebas específicas del enunciado.</p>
+<p class="tabla-titulo">Tabla 1. Pruebas sobre la primera versión</p>
+<table>
+  <tr><th>ID</th><th>Prueba</th><th>Resultado obtenido</th><th>¿Pasó?</th></tr>
+  <tr><td>P01</td><td>Crear tres tareas con prioridades y estados distintos</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>P02</td><td>Editar una tarea</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>P03</td><td>Eliminar una tarea</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>P04</td><td>Prueba A: guardar una tarea sin título</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>P05</td><td>Prueba B: crear una tarea y recargar la página</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>P06</td><td>Prueba C: buscar una palabra que exista en una tarea</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>P07</td><td>Prueba D: combinar filtro de estado y de prioridad</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+</table>
+<figure>
+  <img src="../capturas/paso06_tres_tareas.png" alt="Lista con tres tareas">
+  <figcaption>Figura 4. Tareas creadas con prioridades y estados distintos.</figcaption>
+</figure>
+<figure>
+  <img src="../capturas/paso06_pruebaA_sin_titulo.png" alt="Intento de guardar sin título">
+  <figcaption>Figura 5. Prueba A: intento de guardar una tarea sin título.</figcaption>
+</figure>
+<figure>
+  <img src="../capturas/paso06_pruebaB_recarga.png" alt="Tareas después de recargar la página">
+  <figcaption>Figura 6. Prueba B: tareas después de recargar la página.</figcaption>
+</figure>
+<figure>
+  <img src="../capturas/paso06_pruebaC_busqueda.png" alt="Resultado de una búsqueda por texto">
+  <figcaption>Figura 7. Prueba C: búsqueda por texto.</figcaption>
+</figure>
+<figure>
+  <img src="../capturas/paso06_pruebaD_filtros.png" alt="Filtros de estado y prioridad combinados">
+  <figcaption>Figura 8. Prueba D: filtro de estado combinado con filtro de prioridad.</figcaption>
+</figure>
+<p>Antes de pedir cambios anotamos las observaciones, con un máximo de tres: <span class="pend">[PENDIENTE: las observaciones reales; si la primera versión no mostró problemas, decirlo así]</span></p>
+
+<h1>4. Refinamiento 1: contador de tareas</h1>
+<p>Primera mejora funcional, con el alcance limitado. La instrucción enviada fue:</p>
+<pre>Añade un contador visible con el total de tareas y cuántas están Pendientes, En progreso y Terminadas.
+No cambies el modelo de datos, los filtros ni el funcionamiento del formulario actual.
+Después del cambio, verifica que crear, editar y eliminar tareas siga funcionando.</pre>
+<p><span class="pend">[PENDIENTE: qué hizo la herramienta, qué dijo que había verificado, y si el contador mostró números correctos al crear, editar y eliminar]</span></p>
+<figure>
+  <img src="../capturas/paso08_contador.png" alt="Contador de tareas visible">
+  <figcaption>Figura 9. Contador de tareas agregado en el refinamiento 1.</figcaption>
+</figure>
+<p>Que la función nueva apareciera en pantalla no bastaba, así que repetimos crear, editar, eliminar, buscar y filtrar; esto es una prueba de regresión. <span class="pend">[PENDIENTE: resultado de cada una]</span></p>
+<p class="tabla-titulo">Tabla 2. Pruebas del refinamiento 1</p>
+<table>
+  <tr><th>ID</th><th>Prueba</th><th>Resultado obtenido</th><th>¿Pasó?</th></tr>
+  <tr><td>P08</td><td>El contador refleja total y estados tras crear, editar y eliminar</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>P09</td><td>Regresión: crear, editar, eliminar, buscar y filtrar</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+</table>
+<figure>
+  <img src="../capturas/paso09_regresion.png" alt="Regresión después del contador">
+  <figcaption>Figura 10. Prueba de regresión después de agregar el contador.</figcaption>
+</figure>
+
+<h1>5. Refinamiento 2: presentación y responsive</h1>
+<p>La segunda instrucción tocaba solo la presentación y dejaba explícito qué no debía cambiar:</p>
+<pre>Mejora únicamente la presentación y usabilidad.
+Haz que el formulario sea más compacto y que la prioridad se distinga claramente en cada tarea.
+Mantén exactamente las mismas funciones y datos.
+No agregues autenticación, backend, base de datos externa ni nuevas pantallas.</pre>
+<p><span class="pend">[PENDIENTE: qué cambió visualmente, si respetó los límites y si la regresión (crear, editar, eliminar, buscar, filtrar) siguió pasando]</span></p>
+<figure>
+  <img src="../capturas/paso10_ux.png" alt="Aplicación después de la mejora de presentación">
+  <figcaption>Figura 11. Aplicación después de la mejora de presentación.</figcaption>
+</figure>
+<p>Revisamos el comportamiento responsive en un ancho de escritorio y en uno similar a un teléfono, buscando controles superpuestos, fuera de pantalla o demasiado pequeños. <span class="pend">[PENDIENTE: qué se vio en cada ancho y cómo se cambió el ancho (herramienta de la vista previa, F12 o ventana)]</span></p>
+<figure>
+  <img src="../capturas/paso11_responsive_escritorio.png" alt="Vista de escritorio">
+  <figcaption>Figura 12. Vista de escritorio.</figcaption>
+</figure>
+<figure>
+  <img src="../capturas/paso11_responsive_movil.png" alt="Vista de teléfono">
+  <figcaption>Figura 13. Vista con ancho de teléfono.</figcaption>
+</figure>
+<p class="tabla-titulo">Tabla 3. Pruebas del refinamiento 2</p>
+<table>
+  <tr><th>ID</th><th>Prueba</th><th>Resultado obtenido</th><th>¿Pasó?</th></tr>
+  <tr><td>P10</td><td>Formulario compacto y prioridad distinguible</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>P11</td><td>Regresión tras el cambio de presentación</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>P12</td><td>Responsive en escritorio</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>P13</td><td>Responsive en ancho de teléfono</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+</table>
+
+<h1>6. Refinamiento 3: caso límite</h1>
+<p>Para forzar un caso límite creamos una tarea con un título muy largo y después varias tareas con fechas y prioridades distintas. <span class="pend">[PENDIENTE: lo que se observó. Si hubo defecto, describirlo; si no lo hubo, decirlo tal cual y qué otros casos se intentaron]</span></p>
+<figure>
+  <img src="../capturas/paso12_titulo_largo.png" alt="Tarea con título muy largo">
+  <figcaption>Figura 14. Tarea con un título muy largo.</figcaption>
+</figure>
+<p>La descripción del problema se la dimos a la herramienta sin sugerir la solución técnica, con la plantilla del profesor:</p>
+<pre>Encontré este comportamiento al probar la aplicación: <span class="pend">[PENDIENTE: descripción del problema, con las palabras usadas]</span>.
+Reproduce el problema, identifica la causa y corrígelo.
+No modifiques funciones que no estén relacionadas con este error.
+Al finalizar, dime brevemente qué cambiaste y qué debo volver a probar.</pre>
+<p><span class="pend">[PENDIENTE: qué respondió la herramienta que cambió, qué se volvió a probar y el resultado]</span></p>
+<figure>
+  <img src="../capturas/paso12b_corregido.png" alt="Resultado después de la corrección">
+  <figcaption>Figura 15. Comportamiento después de la corrección.</figcaption>
+</figure>
+<p class="tabla-titulo">Tabla 4. Pruebas del caso límite</p>
+<table>
+  <tr><th>ID</th><th>Prueba</th><th>Resultado obtenido</th><th>¿Pasó?</th></tr>
+  <tr><td>P14</td><td>Título muy largo</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>P15</td><td>Varias tareas con fechas y prioridades distintas</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>P16</td><td>Corrección verificada</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+</table>
+
+<h1>7. Revisión del código generado</h1>
+<p>Abrimos la vista de archivos de la plataforma sin modificar nada para identificar el archivo de entrada, los componentes principales, dónde se define la estructura de una tarea y dónde se usa el almacenamiento local.</p>
+<p class="tabla-titulo">Tabla 5. Archivos y componentes identificados</p>
+<table>
+  <tr><th>Elemento buscado</th><th>Archivo o componente</th><th>Qué hace</th></tr>
+  <tr><td>Archivo de entrada</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>Componente principal</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>Componente principal</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>Estructura de una tarea</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>Uso del almacenamiento local</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+</table>
+<figure>
+  <img src="../capturas/paso13_codigo_archivos.png" alt="Lista de archivos del proyecto generado">
+  <figcaption>Figura 16. Archivos del proyecto generado por la plataforma.</figcaption>
+</figure>
+<figure>
+  <img src="../capturas/paso13_localstorage.png" alt="Uso de localStorage en el código">
+  <figcaption>Figura 17. Lugar del código donde se usa el almacenamiento local.</figcaption>
+</figure>
+<p>Para relacionar una función visible con su código elegimos <span class="pend">[PENDIENTE: la función elegida, por ejemplo crear tarea o filtrar por estado]</span>, que implementa <span class="pend">[PENDIENTE: componente o función, y una explicación corta de cómo funciona]</span>.</p>
+<figure>
+  <img src="../capturas/paso14_funcion_codigo.png" alt="Código de la función elegida">
+  <figcaption>Figura 18. Código que implementa la función elegida.</figcaption>
+</figure>
+
+<h1>8. Refinamiento 4: limpiar tareas terminadas</h1>
+<p>Con los archivos ya conocidos, la siguiente instrucción mencionó lo que debía cambiar y lo que debía quedar intacto:</p>
+<pre>Agrega un botón “Limpiar tareas terminadas”.
+Debe eliminar únicamente las tareas cuyo estado sea Terminada y pedir confirmación antes de hacerlo.
+Reutiliza la estructura y componentes actuales del proyecto.
+No cambies los filtros, el formulario ni el almacenamiento local existente.</pre>
+<p><span class="pend">[PENDIENTE: qué archivos tocó la herramienta, si respetó los límites y qué resultó al cancelar y al confirmar]</span></p>
+<figure>
+  <img src="../capturas/paso15_limpiar_confirmacion.png" alt="Confirmación antes de limpiar">
+  <figcaption>Figura 19. Confirmación antes de eliminar las tareas terminadas.</figcaption>
+</figure>
+<figure>
+  <img src="../capturas/paso15b_limpiar_resultado.png" alt="Lista después de limpiar">
+  <figcaption>Figura 20. Lista después de limpiar las tareas terminadas.</figcaption>
+</figure>
+<p class="tabla-titulo">Tabla 6. Pruebas del refinamiento 4</p>
+<table>
+  <tr><th>ID</th><th>Prueba</th><th>Resultado obtenido</th><th>¿Pasó?</th></tr>
+  <tr><td>P17</td><td>Cancelar la confirmación no elimina nada</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>P18</td><td>Confirmar elimina solo las tareas Terminadas y actualiza el contador</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+</table>
+
+<h1>9. Verificación final y comparación de iteraciones</h1>
+<p class="tabla-titulo">Tabla 7. Lista de verificación mínima</p>
+<table>
+  <tr><th>Grupo</th><th>Ítem</th><th>¿Cumple?</th><th>Observación</th></tr>
+  <tr><td>Función</td><td>Crear / editar / eliminar</td><td class="pend">[PENDIENTE]</td><td></td></tr>
+  <tr><td>Función</td><td>Filtrar y buscar</td><td class="pend">[PENDIENTE]</td><td></td></tr>
+  <tr><td>Función</td><td>Persistencia</td><td class="pend">[PENDIENTE]</td><td></td></tr>
+  <tr><td>Calidad</td><td>Validaciones</td><td class="pend">[PENDIENTE]</td><td></td></tr>
+  <tr><td>Calidad</td><td>Mensajes claros</td><td class="pend">[PENDIENTE]</td><td></td></tr>
+  <tr><td>Calidad</td><td>Sin errores visibles</td><td class="pend">[PENDIENTE]</td><td></td></tr>
+  <tr><td>Responsive</td><td>Escritorio</td><td class="pend">[PENDIENTE]</td><td></td></tr>
+  <tr><td>Responsive</td><td>Tableta</td><td class="pend">[PENDIENTE]</td><td></td></tr>
+  <tr><td>Responsive</td><td>Móvil</td><td class="pend">[PENDIENTE]</td><td></td></tr>
+  <tr><td>Código</td><td>Archivos identificables</td><td class="pend">[PENDIENTE]</td><td></td></tr>
+  <tr><td>Código</td><td>Cambios comprensibles</td><td class="pend">[PENDIENTE]</td><td></td></tr>
+  <tr><td>Código</td><td>Sin secretos expuestos</td><td class="pend">[PENDIENTE]</td><td></td></tr>
+</table>
+<figure>
+  <img src="../capturas/paso16_verificacion_final.png" alt="Aplicación durante la verificación final">
+  <figcaption>Figura 21. Aplicación durante la verificación final.</figcaption>
+</figure>
+<p>Al revisar el historial de la plataforma y comparar la primera versión con la final, identificamos:</p>
+<ul>
+  <li>Una mejora que salió bien a la primera: <span class="pend">[PENDIENTE]</span></li>
+  <li>Una mejora que necesitó corrección: <span class="pend">[PENDIENTE]</span></li>
+  <li>Una decisión que tomamos nosotros en lugar de delegarla en la IA: <span class="pend">[PENDIENTE]</span></li>
+</ul>
+<figure>
+  <img src="../capturas/paso17_historial.png" alt="Historial de versiones de la plataforma">
+  <figcaption>Figura 22. Historial de iteraciones en la plataforma.</figcaption>
+</figure>
+
+<h1>10. Publicación</h1>
+<p>La publicación no es obligatoria. <span class="pend">[PENDIENTE: si se publicó, el enlace y la confirmación de que solo había datos ficticios; si no, escribir que no se publicó y por qué]</span></p>
+
+<h1>11. Reto adicional</h1>
+<p>Reto elegido: <span class="pend">[PENDIENTE: ordenar por fecha límite, mostrar tareas vencidas, vista Kanban simple o exportar tareas]</span>.</p>
+<p>Instrucción enviada: <span class="pend">[PENDIENTE: texto exacto, redactado por Gerald]</span></p>
+<p>Cómo se probó y qué resultó: <span class="pend">[PENDIENTE]</span></p>
+<p>Por qué mejora el producto: <span class="pend">[PENDIENTE]</span></p>
+<figure>
+  <img src="../capturas/paso19_reto.png" alt="Reto adicional funcionando">
+  <figcaption>Figura 23. Reto adicional funcionando.</figcaption>
+</figure>
+<figure>
+  <img src="../capturas/paso20_version_final.png" alt="Versión final de la aplicación">
+  <figcaption>Figura 24. Versión final de la aplicación.</figcaption>
+</figure>
+
+<h1>12. Preguntas de reflexión</h1>
+<h3>1. ¿Qué diferencia principal observó entre usar un Web Builder y programar mediante Chat web?</h3>
+<p class="pend">[PENDIENTE]</p>
+<h3>2. ¿Qué parte del proceso siguió necesitando conocimiento de desarrollo de software, aunque la IA generara el código?</h3>
+<p class="pend">[PENDIENTE]</p>
+<h3>3. ¿Qué ocurrió cuando una instrucción fue demasiado general? Explique con un ejemplo del laboratorio.</h3>
+<p class="pend">[PENDIENTE]</p>
+<h3>4. ¿Por qué es importante indicar qué NO debe cambiar la herramienta cuando se solicita una modificación?</h3>
+<p class="pend">[PENDIENTE]</p>
+<h3>5. ¿Qué riesgo existe si se publica una aplicación generada sin revisar el código, las validaciones y los datos utilizados?</h3>
+<p class="pend">[PENDIENTE]</p>
+
+<h1 class="nueva-pagina">Conclusiones</h1>
+<p class="pend">[PENDIENTE: dos o tres párrafos con lo que salió de verdad: qué resolvió la herramienta a la primera, qué hubo que corregir, qué límites o fallos tuvo la plataforma, y qué parte del trabajo siguió dependiendo de nosotros]</p>
+
+</body>
+</html>

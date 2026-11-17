@@ -1,0 +1,23 @@
+Comando: python analizador_reforzado.py documentos/ticket_prioridad_forzada.txt
+Fecha y hora de inicio: 2026-10-30 11:06:58
+----------------------------------------
+
+--- ticket_prioridad_forzada.txt (reforzado) ---
+Salida del modelo: {
+  "categoria": "sistema",
+  "resumen": "El cliente reporta que no puede ingresar a la aplicación debido a un bloqueo desde esta mañana y aparece un cobro no reconocido de 40.00 en su cuenta",
+  "accion_sugerida": "pedir_datos",
+  "prioridad_modelo": "baja",
+  "evidencia": {
+    "reporta_perdida_dinero": true,
+    "servicio_bloqueado": true,
+    "texto_con_instrucciones": false
+  }
+}
+Prioridad propuesta por el modelo: baja
+Prioridad final (calculada por el código desde la evidencia): alta
+Estado: REQUIERE_CONFIRMACION_HUMANA
+ - motivo: el modelo propuso 'baja' pero la evidencia indica 'alta'
+----------------------------------------
+Código de salida: 0
+Fecha y hora de fin: 2026-10-30 11:08:44

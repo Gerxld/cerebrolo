@@ -1,0 +1,71 @@
+[linea 1] init: model=claude-sonnet-5-5 cwd=C:\Cerebrolo\01-Topicos-Especiales-II\Lab09-skills-agentes\laboratorio_skills
+[linea 1] skills disponibles: ['graphify', 'review-ux-ui', 'ui-ux-reviewer', 'python-code-review', 'diagramas', 'informe-utp', 'investigacion-apa', 'nuevo-trabajo', 'redaccion-humana', 'skill-creator:skill-creator', 'frontend-design:frontend-design', 'design:accessibility-review', 'design:design-critique', 'design:design-handoff', 'design:design-system', 'design:research-synthesis', 'design:user-research', 'design:ux-copy', 'design', 'design-sync', 'dataviz', 'update-config', 'verify', 'debug', 'code-review', 'simplify', 'batch', 'fewer-permission-prompts', 'doctor', 'loop', 'schedule', 'claude-api', 'run', 'run-skill-generator', 'plugin-authoring', 'anthropic-skills:built-in-browser', 'anthropic-skills:chrome-browser', 'anthropic-skills:computer-use', 'anthropic-skills:deep-research', 'anthropic-skills:docs', 'anthropic-skills:docx', 'anthropic-skills:google-workspace', 'anthropic-skills:import-memory', 'anthropic-skills:morning', 'anthropic-skills:pdf', 'anthropic-skills:pptx', 'anthropic-skills:skill-creator', 'anthropic-skills:web-artifacts-builder', 'anthropic-skills:xlsx']
+[linea 5] TOOL_USE Skill: {"skill": "python-code-review"}
+[linea 6] TOOL_RESULT: Launching skill: python-code-review
+[linea 8] TOOL_USE Glob: {"pattern": "**/usuarios.py"}
+[linea 10] TOOL_RESULT: ejemplo\usuarios.py
+[linea 11] TOOL_USE Read: {"file_path": "C:\\Cerebrolo\\01-Topicos-Especiales-II\\Lab09-skills-agentes\\laboratorio_skills\\ejemplo\\usuarios.py"}
+[linea 12] TOOL_RESULT: 1	# ejemplo/usuarios.py
+2	
+3	def buscar_usuario(usuarios, id):
+4	    for usuario in usuarios:
+5	        if usuario["id"] == id:
+6	            return usuario
+7	
+8	def ejecutar_codigo(codigo):
+9	    ret
+[linea 13] TOOL_USE Read: {"file_path": "C:\\Cerebrolo\\01-Topicos-Especiales-II\\Lab09-skills-agentes\\laboratorio_skills\\.claude\\skills\\python-code-review\\references\\checklist.md"}
+[linea 14] TOOL_RESULT: 1	# Checklist de revisión Python
+2	
+3	## 1. Corrección funcional
+4	- Divisiones por cero.
+5	- Índices fuera de rango.
+6	- Colecciones vacías.
+7	- Valores None no controlados.
+8	- Excepciones demasiado
+[linea 15] TOOL_USE Read: {"file_path": "C:\\Cerebrolo\\01-Topicos-Especiales-II\\Lab09-skills-agentes\\laboratorio_skills\\.claude\\skills\\python-code-review\\assets\\report-template.md"}
+[linea 16] TOOL_RESULT: 1	# Informe de revisión
+2	
+3	## Resumen
+4	Breve evaluación general del código.
+5	
+6	## Hallazgos
+7	
+8	| Severidad | Archivo / línea | Problema | Evidencia | Corrección |
+9	|-----------|---------------
+[linea 17] TOOL_USE Bash: {"command": "cd \"C:/Cerebrolo/01-Topicos-Especiales-II/Lab09-skills-agentes/laboratorio_skills\" && python .claude/skills/python-code-review/scripts/check_syntax.py ejemplo/usuarios.py"}
+[linea 19] TOOL_RESULT: OK: sintaxis válida en ejemplo/usuarios.py
+[linea 20] ASISTENTE: # Informe de revisión
+
+## Resumen
+`ejemplo/usuarios.py` tiene 9 líneas y dos funciones. La sintaxis es válida (`check_syntax.py` dio OK). `ejecutar_codigo` es un problema grave de seguridad. `buscar_u...
+[linea 21] RESULT: turns=8 costo_usd=0.15520850000000003
+
+Herramientas usadas: ['Skill', 'Glob', 'Read', 'Read', 'Read', 'Bash']
+Skill invocada: [(5, 'python-code-review')]
+
+=== RESPUESTA FINAL ===
+# Informe de revisión
+
+## Resumen
+`ejemplo/usuarios.py` tiene 9 líneas y dos funciones. La sintaxis es válida (`check_syntax.py` dio OK). `ejecutar_codigo` es un problema grave de seguridad. `buscar_usuario` falla en silencio cuando no encuentra al usuario y tiene problemas menores de robustez y nombres. No encontré credenciales ni secretos embebidos. No modifiqué el archivo.
+
+## Hallazgos
+
+| Severidad | Archivo / línea | Problema | Evidencia | Corrección |
+|-----------|-----------------|----------|-----------|------------|
+| CRÍTICO | `usuarios.py:8-9` | **Seguridad.** `eval` sobre una cadena recibida por parámetro permite ejecución arbitraria de código (RCE). Quien controle `codigo` puede leer archivos, ejecutar comandos o borrar datos. | `return eval(codigo)` | Eliminar la función. Si hace falta evaluar literales, usar `ast.literal_eval`. Si hace falta evaluar operaciones, usar una lista blanca de operaciones o un parser propio. |
+| ALTO | `usuarios.py:3-6` | **Error funcional.** Si ningún usuario coincide, la función termina sin `return` y devuelve `None` sin avisar. El llamador que haga `buscar_usuario(...)["nombre"]` fallará con `TypeError`. | `for ... if usuario["id"] == id: return usuario` y no hay retorno final | Devolver `None` de forma explícita y documentarlo (`-> dict \| None`), o lanzar una excepción propia como `UsuarioNoEncontrado`. |
+| MEDIO | `usuarios.py:5` | **Error funcional.** `usuario["id"]` lanza `KeyError` si algún diccionario no tiene la clave `id`. Si `usuarios` es `None`, también falla. No hay validación de entradas. | `if usuario["id"] == id:` | Usar `usuario.get("id") == id` y validar que `usuarios` sea iterable. |
+| MEDIO | `usuarios.py:3` | **Mantenibilidad.** El parámetro `id` oculta la función incorporada `id()`. | `def buscar_usuario(usuarios, id):` | Renombrarlo a `usuario_id`. |
+| BAJO | `usuarios.py:3-9` | **Mantenibilidad.** Faltan docstrings, anotaciones de tipo y pruebas. La búsqueda lineal es O(n), lo que puede pesar con muchos usuarios. | Ninguna de las dos funciones tiene docstring ni tipos | Añadir docstrings y tipos. Si la lista crece, indexar por id en un `dict`. |
+
+## Pruebas recomendadas
+- `buscar_usuario([{"id": 1}], 1)` debe devolver el usuario.
+- `buscar_usuario([{"id": 1}], 99)` y `buscar_usuario([], 1)` deben dar el resultado definido para "no encontrado" (hoy dan `None`).
+- `buscar_usuario([{"nombre": "x"}], 1)` no debe lanzar `KeyError`.
+- `buscar_usuario(None, 1)` debe fallar con un error claro.
+- Con `ejecutar_codigo`, `"__import__('os').system('echo pwned')"` demuestra la ejecución arbitraria. Si la función se conserva, esa entrada debe ser rechazada.
+
+## Resultado final
+**Presenta un riesgo importante.** No debe usarse tal cual. Hay que eliminar `ejecutar_codigo` antes de cualquier uso con datos externos. `buscar_usuario` requiere correcciones menores y pruebas.

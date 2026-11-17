@@ -1,0 +1,11 @@
+Fecha y hora de inicio: 2026-10-30 11:51:12
+Directorio: C:/Cerebrolo/01-Topicos-Especiales-II/Lab05-ia-local/entregables/laboratorio_local_privado
+Comando: python -m unittest test_calculadora.py
+------------------------------------------------------------
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.000s
+
+OK
+------------------------------------------------------------
+Fecha y hora de fin: 2026-10-30 11:51:12

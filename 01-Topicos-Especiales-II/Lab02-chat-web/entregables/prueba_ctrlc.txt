@@ -1,0 +1,9 @@
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Completar tarea
+4. Salir
+Seleccione una opción: 
+Entrada finalizada. Hasta luego.
+[proceso terminó sin traceback]

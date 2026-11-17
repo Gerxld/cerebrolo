@@ -1,0 +1,9 @@
+Agrega una función ordenar_por_prioridad(tareas) que devuelva una lista nueva con las tareas ordenadas de prioridad alta a baja (alta, media, baja).
+
+Condiciones:
+- modifica solo tasks.py y tests/test_tasks.py;
+- no modifiques la lista original ni la estructura de las tareas;
+- las tareas con la misma prioridad conservan su orden de creación;
+- no cambies app.py ni agregues paquetes;
+- agrega pruebas unitarias (orden correcto, estabilidad, lista original intacta, lista vacía);
+- ejecuta python -m unittest discover -s tests al finalizar.

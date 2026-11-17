@@ -1,0 +1,9 @@
+Fecha y hora de inicio: 2026-10-30 11:52:43
+Directorio: C:/Cerebrolo/01-Topicos-Especiales-II/Lab05-ia-local/entregables/laboratorio_local_privado
+Comando: python privado_demo.py
+------------------------------------------------------------
+CLIENTE_DEMO_001 está con saldo: 1500.00
+------------------------------------------------------------
+Código de salida: 0
+Fecha y hora de fin: 2026-10-30 11:52:44
+Tiempo transcurrido: 0.2 s

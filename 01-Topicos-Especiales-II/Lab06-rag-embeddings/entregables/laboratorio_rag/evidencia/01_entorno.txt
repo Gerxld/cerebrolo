@@ -1,0 +1,20 @@
+Comando: python --version
+Python 3.13.5
+
+Comando: C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe --version
+ollama version is 0.40.13
+
+Comando: ollama list
+NAME                       ID              SIZE      MODIFIED          
+qwen2.5:3b                 357c53fb659c    1.9 GB    About an hour ago    
+nomic-embed-text:latest    0a109f422b47    274 MB    25 hours ago         
+qwen3:4b                   359d7dd4bcda    2.5 GB    25 hours ago         
+qwen2.5-coder:3b           f72c60cabf62    1.9 GB    25 hours ago         
+
+Comando: python -m pip show requests numpy
+Name: requests
+Version: 2.33.1
+Name: numpy
+Version: 2.4.4
+
+Hora: 2026-10-30 11:48:21

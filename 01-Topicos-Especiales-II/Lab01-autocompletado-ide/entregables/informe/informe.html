@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Laboratorio 1 - Autocompletado de IA en el IDE</title>
+<style>
+  @page { size: Letter; margin: 2.5cm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; text-align: justify; color: #111; margin: 0; }
+  h1, h2, h3 { font-family: "Times New Roman", Times, serif; text-align: left; page-break-after: avoid; }
+  h1 { font-size: 14pt; margin: 1.4em 0 0.5em; }
+  h2 { font-size: 13pt; margin: 1.2em 0 0.4em; }
+  h3 { font-size: 12pt; margin: 1em 0 0.3em; }
+  h1.nueva-pagina { page-break-before: always; }
+  p { margin: 0 0 0.7em 0; }
+  .portada { height: 22cm; display: flex; flex-direction: column; align-items: center; text-align: center; page-break-after: always; }
+  .portada .logos { display: flex; justify-content: space-between; width: 100%; margin-bottom: 0.8cm; }
+  .portada .logos img { width: 105px; height: 105px; object-fit: contain; }
+  .portada .titulo-bloque { margin-top: 0.9cm; }
+  .portada .titulo-bloque p { margin: 0.35em 0; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px; }
+  .portada .presentado { margin-top: 1.1cm; }
+  .portada .presentado p, .portada .revisado p, .portada .fecha p { margin: 0.3em 0; font-weight: bold; text-transform: uppercase; }
+  .portada .nombres { font-weight: normal !important; text-transform: none !important; }
+  .portada .revisado { margin-top: 1.2cm; }
+  .portada .fecha { margin-top: 1.1cm; }
+  .indice { page-break-after: always; }
+  .indice h1 { text-align: center; }
+  .indice ol { list-style: none; padding: 0; margin: 0; }
+  .indice li { display: flex; align-items: baseline; margin: 0.25em 0; }
+  .indice li.n2 { padding-left: 1.2em; }
+  .indice li .t { white-space: nowrap; }
+  .indice li .dots { flex: 1; border-bottom: 1px dotted #444; margin: 0 0.3em; transform: translateY(-0.25em); }
+  .indice li .p { white-space: nowrap; }
+  table { width: 100%; border-collapse: collapse; margin: 0.8em 0; font-size: 10.5pt; page-break-inside: avoid; }
+  th, td { border: 1px solid #666; padding: 5px 7px; text-align: left; vertical-align: top; }
+  th { background: #e2e2e2; font-weight: bold; }
+  .tabla-titulo { font-weight: bold; margin: 0.8em 0 0.2em; text-align: left; }
+  figure { margin: 1em 0; text-align: center; page-break-inside: avoid; }
+  figure img { max-width: 100%; max-height: 18cm; }
+  figcaption { font-size: 10.5pt; font-style: italic; margin-top: 0.3em; }
+  ul, ol { margin: 0.3em 0 0.8em 1.3em; padding: 0; }
+  li { margin-bottom: 0.3em; }
+  pre { font-family: "Courier New", monospace; font-size: 9.5pt; line-height: 1.3; text-align: left; background: #f4f4f4; border: 1px solid #ccc; padding: 8px 10px; white-space: pre-wrap; page-break-inside: avoid; }
+  code { font-family: "Courier New", monospace; font-size: 10pt; }
+  .pend { background: #fff3b0; }
+</style>
+</head>
+<body>
+
+<div class="portada">
+  <div class="logos">
+    <img src="../assets/utp.png" alt="Logo UTP">
+    <img src="../assets/fisc.png" alt="Logo FISC">
+  </div>
+  <div class="titulo-bloque">
+    <p>Universidad Tecnológica de Panamá</p>
+    <p>Facultad de Ingeniería de Sistemas Computacionales</p>
+    <p>Lic. en Desarrollo y Gestión de Software</p>
+    <p style="margin-top:1em;">Tópicos Especiales II</p>
+    <p>Laboratorio 1 — Desarrollo con autocompletado de IA en el IDE</p>
+    <p>1GS241</p>
+  </div>
+  <div class="presentado">
+    <p>Presentado por:</p>
+    <p class="nombres">Ríos, Gerald (8-987-741)</p>
+  </div>
+  <div class="revisado">
+    <p>Revisado por:</p>
+    <p class="nombres">Profesor Regis Rivera</p>
+  </div>
+  <div class="fecha">
+    <p>Fecha de entrega</p>
+    <p class="nombres"><span class="pend">[PENDIENTE: fecha]</span></p>
+  </div>
+</div>
+
+<!-- Números de página provisionales: se ajustan contra el PDF real -->
+<div class="indice">
+  <h1>Índice</h1>
+  <ol>
+    <li><span class="t">Introducción</span><span class="dots"></span><span class="p">3</span></li>
+    <li><span class="t">1. Preparación del entorno</span><span class="dots"></span><span class="p">3</span></li>
+    <li><span class="t">2. Primera función: es_par</span><span class="dots"></span><span class="p">4</span></li>
+    <li><span class="t">3. Rechazo intencional de una sugerencia</span><span class="dots"></span><span class="p">5</span></li>
+    <li><span class="t">4. aplicar_descuento: el contexto cambia la sugerencia</span><span class="dots"></span><span class="p">5</span></li>
+    <li><span class="t">5. normalizar_nombre y promedio</span><span class="dots"></span><span class="p">7</span></li>
+    <li><span class="t">6. Pruebas unitarias con autocompletado</span><span class="dots"></span><span class="p">8</span></li>
+    <li><span class="t">7. Error provocado y detectado por las pruebas</span><span class="dots"></span><span class="p">9</span></li>
+    <li><span class="t">8. Reto final: validar_usuario</span><span class="dots"></span><span class="p">10</span></li>
+    <li><span class="t">9. Registro de decisiones</span><span class="dots"></span><span class="p">11</span></li>
+    <li><span class="t">10. Preguntas de reflexión</span><span class="dots"></span><span class="p">12</span></li>
+    <li><span class="t">Conclusiones</span><span class="dots"></span><span class="p">14</span></li>
+    <li><span class="t">Anexo. Código final</span><span class="dots"></span><span class="p">15</span></li>
+  </ol>
+</div>
+
+<h1>Introducción</h1>
+<p>Este laboratorio es el primero de los tres que recorren las modalidades de programación asistida por IA, y la más sencilla de todas: el asistente no conversa ni ejecuta tareas, solo propone texto en gris mientras escribimos y nosotros decidimos si lo aceptamos con Tab. El objetivo del profesor es que cada propuesta se lea y se evalúe antes de conservarla, y que lo que quede en el archivo sea algo que podamos explicar línea por línea.</p>
+<p>Trabajamos en Visual Studio Code con Python 3.x y <span class="pend">[PENDIENTE: herramienta usada, GitHub Copilot o CodeGeeX, y plan/cuenta con la que se activó]</span>. Se construyeron cinco funciones pequeñas (es_par, aplicar_descuento, normalizar_nombre, promedio y validar_usuario), más una conversión de Celsius a Fahrenheit que sirvió para practicar el rechazo de una sugerencia. Chat, Agent y Composer quedaron sin usar.</p>
+<p>El informe sigue el orden de la guía. Cada función tiene su captura de la sugerencia, el resultado de la prueba manual y la decisión que tomamos, y al final van las pruebas unitarias con su evidencia de terminal, el registro de decisiones, las respuestas a las preguntas de reflexión y el código final.</p>
+
+<h1>1. Preparación del entorno</h1>
+<p>Antes de escribir código comprobamos desde la terminal integrada que Python responde. <span class="pend">[PENDIENTE: versión que mostró python --version]</span>. La carpeta <code>laboratorio-autocompletar-ia</code> se abrió como raíz del proyecto, con tres archivos: <code>funciones.py</code>, <code>test_funciones.py</code> y <code>decisiones.md</code>.</p>
+<p><span class="pend">[PENDIENTE: cómo se instaló y activó la herramienta, qué pantallas aparecieron, si hubo algún problema con la cuenta o el plan, y cómo se dejó apagado el chat]</span></p>
+<figure>
+  <img src="../capturas/paso01_python_version.png" alt="python --version en la terminal">
+  <figcaption>Figura 1. Versión de Python desde la terminal integrada de VS Code.</figcaption>
+</figure>
+<figure>
+  <img src="../capturas/paso01b_copilot_activo.png" alt="Asistente de autocompletado activo en VS Code">
+  <figcaption>Figura 2. Asistente de autocompletado instalado y con la sesión iniciada.</figcaption>
+</figure>
+<p>Para comprobar que el autocompletado respondía escribimos una línea corta y esperamos. <span class="pend">[PENDIENTE: qué línea se escribió, cuánto tardó y qué propuso]</span></p>
+<figure>
+  <img src="../capturas/paso03_autocompletado_activo.png" alt="Sugerencia inline visible en gris">
+  <figcaption>Figura 3. Primera sugerencia inline visible en el editor.</figcaption>
+</figure>
+
+<h1>2. Primera función: es_par</h1>
+<p>Escribimos únicamente el comentario <code># Devuelve True si un número entero es par y False si es impar</code> y esperamos la propuesta. <span class="pend">[PENDIENTE: qué propuso la IA, qué condición usó, si trajo código innecesario y si se aceptó o no]</span></p>
+<figure>
+  <img src="../capturas/paso04_es_par_sugerencia.png" alt="Sugerencia de es_par antes de aceptar">
+  <figcaption>Figura 4. Sugerencia de es_par antes de presionar Tab.</figcaption>
+</figure>
+<figure>
+  <img src="../capturas/paso04b_es_par_aceptada.png" alt="Función es_par aceptada">
+  <figcaption>Figura 5. Función es_par tal como quedó en funciones.py.</figcaption>
+</figure>
+<p>Prueba manual con <code>print(es_par(8))</code> y <code>print(es_par(7))</code>; se esperaba True y False. <span class="pend">[PENDIENTE: resultado obtenido]</span></p>
+<figure>
+  <img src="../capturas/paso05_prueba_es_par.png" alt="Salida de la prueba manual de es_par">
+  <figcaption>Figura 6. Salida de la prueba manual de es_par.</figcaption>
+</figure>
+
+<h1>3. Rechazo intencional de una sugerencia</h1>
+<p>Con el comentario <code># Convierte grados Celsius a Fahrenheit</code> rechazamos la primera propuesta con Esc aunque pareciera correcta, y después cambiamos el comentario para ver si la sugerencia variaba. <span class="pend">[PENDIENTE: qué decía la primera propuesta, qué cambiamos del comentario y qué cambió entre ambas; es la misma línea que va en decisiones.md]</span></p>
+<figure>
+  <img src="../capturas/paso06_celsius_rechazo1.png" alt="Primera sugerencia de Celsius a Fahrenheit">
+  <figcaption>Figura 7. Primera sugerencia, rechazada a propósito.</figcaption>
+</figure>
+<figure>
+  <img src="../capturas/paso06_celsius_segunda.png" alt="Segunda sugerencia de Celsius a Fahrenheit">
+  <figcaption>Figura 8. Segunda sugerencia, después de ajustar el comentario.</figcaption>
+</figure>
+
+<h1>4. aplicar_descuento: el contexto cambia la sugerencia</h1>
+<p>Escribimos solo la firma <code>def aplicar_descuento(precio, porcentaje):</code> y dejamos que el nombre sirviera de contexto. La comprobación era doble: que el descuento se calculara sobre el precio y que la función devolviera el precio final y no solo el monto descontado. <span class="pend">[PENDIENTE: qué propuso con solo la firma y si cumplió las dos condiciones]</span></p>
+<figure>
+  <img src="../capturas/paso07_descuento_primera.png" alt="Primera sugerencia de aplicar_descuento">
+  <figcaption>Figura 9. Sugerencia de aplicar_descuento con solo la firma como contexto.</figcaption>
+</figure>
+<p>Después agregamos la docstring <code>"""Devuelve el precio final después de aplicar el porcentaje de descuento."""</code> para ver si el nuevo contexto movía la propuesta. <span class="pend">[PENDIENTE: qué cambió, o si no cambió nada, y cuál versión se conservó y por qué se puede defender]</span></p>
+<figure>
+  <img src="../capturas/paso08_descuento_docstring.png" alt="Sugerencia de aplicar_descuento con docstring">
+  <figcaption>Figura 10. Sugerencia de aplicar_descuento después de agregar la docstring.</figcaption>
+</figure>
+<p>Validación con <code>aplicar_descuento(100, 20)</code> y <code>aplicar_descuento(250, 10)</code>; se esperaba 80 y 225. <span class="pend">[PENDIENTE: resultados, incluido si salieron como 80.0 y 225.0]</span></p>
+<figure>
+  <img src="../capturas/paso09_descuento_salida.png" alt="Salida de aplicar_descuento">
+  <figcaption>Figura 11. Resultado de los dos casos de aplicar_descuento.</figcaption>
+</figure>
+<h2>Registro de la decisión (paso 10)</h2>
+<table>
+  <tr><th style="width:42%">Pregunta</th><th>Respuesta</th></tr>
+  <tr><td>¿La primera sugerencia de aplicar_descuento fue correcta?</td><td><span class="pend">[PENDIENTE]</span></td></tr>
+  <tr><td>¿Qué información ayudó más: el nombre de la función o la docstring?</td><td><span class="pend">[PENDIENTE]</span></td></tr>
+  <tr><td>¿Qué parte se aceptó, rechazó o corrigió manualmente?</td><td><span class="pend">[PENDIENTE]</span></td></tr>
+</table>
+
+<h1>5. normalizar_nombre y promedio</h1>
+<h2>5.1 normalizar_nombre</h2>
+<p>El comentario era más preciso: recibir un nombre con espacios externos y devolver cada palabra con inicial mayúscula. Dejamos que el autocompletado propusiera la función normalizar_nombre sin abrir el chat. <span class="pend">[PENDIENTE: qué método usó la IA, si se aceptó a la primera]</span></p>
+<figure>
+  <img src="../capturas/paso11_normalizar_sugerencia.png" alt="Sugerencia de normalizar_nombre">
+  <figcaption>Figura 12. Sugerencia de normalizar_nombre.</figcaption>
+</figure>
+<p>Casos de prueba: <code>"  ana perez  "</code> debía dar <code>Ana Perez</code> y <code>"MARIA LOPEZ"</code> debía dar <code>Maria Lopez</code>. <span class="pend">[PENDIENTE: resultados y, si algún caso falló, qué se modificó]</span></p>
+<figure>
+  <img src="../capturas/paso12_normalizar_salida.png" alt="Salida de normalizar_nombre">
+  <figcaption>Figura 13. Resultado de los dos casos de normalizar_nombre.</figcaption>
+</figure>
+<h2>5.2 promedio y el caso límite</h2>
+<p>Esta vez el contexto incluía el caso límite: firma <code>def promedio(notas):</code> y docstring que indica que una lista vacía devuelve 0. Lo que había que comprobar era que la sugerencia evitara la división entre cero. <span class="pend">[PENDIENTE: qué propuso y cómo trató la lista vacía]</span></p>
+<figure>
+  <img src="../capturas/paso13_promedio_sugerencia.png" alt="Sugerencia de promedio">
+  <figcaption>Figura 14. Sugerencia de promedio con la docstring del caso límite.</figcaption>
+</figure>
+<p>Con <code>promedio([90, 80, 70])</code> se esperaba 80 y con <code>promedio([])</code> se esperaba 0. <span class="pend">[PENDIENTE: resultados]</span></p>
+<figure>
+  <img src="../capturas/paso13_promedio_salida.png" alt="Salida de promedio">
+  <figcaption>Figura 15. Resultado de promedio con lista normal y lista vacía.</figcaption>
+</figure>
+
+<h1>6. Pruebas unitarias con autocompletado</h1>
+<p>En <code>test_funciones.py</code> escribimos las importaciones y la estructura de la clase con un comentario por prueba, y dejamos que el asistente propusiera el cuerpo. Antes de aceptar cada <code>assert</code> verificamos que el valor esperado fuera el correcto y que la prueba pudiera fallar. <span class="pend">[PENDIENTE: qué propuso para cada prueba, si algún assert se rechazó o se corrigió, y si el bloque de unittest al final lo sugirió la IA o se escribió a mano]</span></p>
+<figure>
+  <img src="../capturas/paso14_pruebas_sugeridas.png" alt="Sugerencia de una prueba unitaria">
+  <figcaption>Figura 16. Cuerpo de una prueba propuesto por el autocompletado antes de aceptarlo.</figcaption>
+</figure>
+<figure>
+  <img src="../capturas/paso14b_pruebas_completas.png" alt="test_funciones.py completo">
+  <figcaption>Figura 17. test_funciones.py con las cuatro pruebas iniciales.</figcaption>
+</figure>
+<p>Ejecución con <code>python -m unittest -v</code> desde la terminal integrada. <span class="pend">[PENDIENTE: cuántas pruebas corrieron, si todas terminaron en ok y, si alguna falló, cuál fue la causa antes de generar código nuevo]</span> La salida completa quedó en <code>evidencia/pruebas_inicial.txt</code>.</p>
+<figure>
+  <img src="../capturas/paso15_unittest_ok_inicial.png" alt="Ejecución inicial de unittest">
+  <figcaption>Figura 18. Primera ejecución de la suite con el resultado de cada prueba.</figcaption>
+</figure>
+
+<h1>7. Error provocado y detectado por las pruebas</h1>
+<p>Para comprobar que las pruebas sirven, alteramos <code>promedio</code> de modo que no manejara bien la lista vacía. <span class="pend">[PENDIENTE: qué se cambió exactamente en la función]</span> Al correr de nuevo la suite, <span class="pend">[PENDIENTE: qué prueba falló y con qué mensaje]</span>. La salida está en <code>evidencia/pruebas_fallo.txt</code>.</p>
+<figure>
+  <img src="../capturas/paso16_unittest_fallo.png" alt="unittest con una prueba fallida">
+  <figcaption>Figura 19. La prueba de promedio detecta el error introducido.</figcaption>
+</figure>
+<p>La función se restauró <span class="pend">[PENDIENTE: a mano o con nueva sugerencia inline]</span> y repetimos la ejecución hasta ver OK.</p>
+<figure>
+  <img src="../capturas/paso16b_unittest_restaurado.png" alt="unittest después de restaurar">
+  <figcaption>Figura 20. Suite en verde después de restaurar promedio.</figcaption>
+</figure>
+
+<h1>8. Reto final: validar_usuario</h1>
+<p>La función debía devolver True solo si el nombre, sin espacios externos, no estaba vacío y la edad era 18 o más, y False en cualquier otro caso. Se pedían al menos dos sugerencias distintas antes de aceptar una.</p>
+<p><span class="pend">[PENDIENTE: primera sugerencia y qué tenía, segunda sugerencia y qué la distinguía, cuál se eligió y por qué]</span></p>
+<figure>
+  <img src="../capturas/paso17_validar_sugerencia1.png" alt="Primera sugerencia de validar_usuario">
+  <figcaption>Figura 21. Primera sugerencia de validar_usuario.</figcaption>
+</figure>
+<figure>
+  <img src="../capturas/paso17b_validar_sugerencia2.png" alt="Segunda sugerencia de validar_usuario">
+  <figcaption>Figura 22. Segunda sugerencia de validar_usuario, obtenida al rechazar o cambiar el contexto.</figcaption>
+</figure>
+<p>Se agregaron tres pruebas: nombre válido y edad de 18 o más, nombre válido y menor de edad, y nombre vacío o de solo espacios. <span class="pend">[PENDIENTE: si las propuso la IA y qué se corrigió]</span> Los prints temporales se eliminaron de <code>funciones.py</code> antes de la ejecución final, cuya salida está en <code>evidencia/pruebas_final.txt</code>.</p>
+<figure>
+  <img src="../capturas/paso18_unittest_final.png" alt="Ejecución final de unittest">
+  <figcaption>Figura 23. Ejecución final de la suite completa sin errores.</figcaption>
+</figure>
+
+<h1>9. Registro de decisiones</h1>
+<p>Resumen de las decisiones que anotamos en <code>decisiones.md</code> durante la sesión.</p>
+<p class="tabla-titulo">Tabla 1. Decisiones sobre sugerencias del autocompletado</p>
+<table>
+  <tr><th>#</th><th>Paso</th><th>Sugerencia</th><th>Tipo</th><th>Justificación</th></tr>
+  <tr><td>1</td><td>es_par</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>2</td><td>Celsius a Fahrenheit</td><td class="pend">[PENDIENTE]</td><td>Rechazada (intencional)</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>3</td><td>aplicar_descuento</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>4</td><td>promedio / pruebas</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+  <tr><td>5</td><td>validar_usuario</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td><td class="pend">[PENDIENTE]</td></tr>
+</table>
+
+<h1>10. Preguntas de reflexión</h1>
+<h3>1. ¿En qué ejercicio fue más útil el autocompletado y por qué?</h3>
+<p class="pend">[PENDIENTE]</p>
+<h3>2. ¿Qué sugerencia tuvo que rechazar o corregir?</h3>
+<p class="pend">[PENDIENTE]</p>
+<h3>3. ¿Qué tipo de contexto ayudó más a obtener una buena propuesta?</h3>
+<p class="pend">[PENDIENTE]</p>
+<h3>4. ¿Por qué una sugerencia aceptada con Tab todavía debe ser probada?</h3>
+<p class="pend">[PENDIENTE]</p>
+<h3>5. ¿Cuál es la diferencia entre autocompletar y pedirle a un agente que resuelva una tarea completa?</h3>
+<p class="pend">[PENDIENTE]</p>
+
+<h1 class="nueva-pagina">Conclusiones</h1>
+<p class="pend">[PENDIENTE: dos o tres párrafos con lo que salió de verdad: qué funcionó a la primera, qué hubo que rechazar o corregir, qué costó (instalación, límites del plan, sugerencias que tardaban), y qué se quedó a medias si algo quedó así]</p>
+
+<h1>Anexo. Código final</h1>
+<p class="tabla-titulo">funciones.py</p>
+<pre class="pend">[PENDIENTE: pegar el contenido final de funciones.py]</pre>
+<p class="tabla-titulo">test_funciones.py</p>
+<pre class="pend">[PENDIENTE: pegar el contenido final de test_funciones.py]</pre>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+[linea 1] init: model=claude-sonnet-5-5 cwd=C:\Cerebrolo\01-Topicos-Especiales-II\Lab09-skills-agentes\laboratorio_skills
+[linea 1] skills disponibles: ['graphify', 'review-ux-ui', 'ui-ux-reviewer', 'python-code-review', 'diagramas', 'informe-utp', 'investigacion-apa', 'nuevo-trabajo', 'redaccion-humana', 'skill-creator:skill-creator', 'frontend-design:frontend-design', 'design:accessibility-review', 'design:design-critique', 'design:design-handoff', 'design:design-system', 'design:research-synthesis', 'design:user-research', 'design:ux-copy', 'design', 'design-sync', 'dataviz', 'update-config', 'verify', 'debug', 'code-review', 'simplify', 'batch', 'fewer-permission-prompts', 'doctor', 'loop', 'schedule', 'claude-api', 'run', 'run-skill-generator', 'plugin-authoring', 'anthropic-skills:built-in-browser', 'anthropic-skills:chrome-browser', 'anthropic-skills:computer-use', 'anthropic-skills:deep-research', 'anthropic-skills:docs', 'anthropic-skills:docx', 'anthropic-skills:google-workspace', 'anthropic-skills:import-memory', 'anthropic-skills:morning', 'anthropic-skills:pdf', 'anthropic-skills:pptx', 'anthropic-skills:skill-creator', 'anthropic-skills:web-artifacts-builder', 'anthropic-skills:xlsx']
+[linea 3] TOOL_USE Skill: {"skill": "python-code-review"}
+[linea 4] TOOL_RESULT: Launching skill: python-code-review
+[linea 6] TOOL_USE Glob: {"pattern": "**/calculadora.py"}
+[linea 8] TOOL_RESULT: ejemplo\calculadora.py
+[linea 9] TOOL_USE Read: {"file_path": "C:\\Cerebrolo\\01-Topicos-Especiales-II\\Lab09-skills-agentes\\laboratorio_skills\\.claude\\skills\\python-code-review\\references\\checklist.md"}
+[linea 10] TOOL_RESULT: 1	# Checklist de revisión Python
+2	
+3	## 1. Corrección funcional
+4	- Divisiones por cero.
+5	- Índices fuera de rango.
+6	- Colecciones vacías.
+7	- Valores None no controlados.
+8	- Excepciones demasiado
+[linea 11] TOOL_USE Read: {"file_path": "C:\\Cerebrolo\\01-Topicos-Especiales-II\\Lab09-skills-agentes\\laboratorio_skills\\.claude\\skills\\python-code-review\\assets\\report-template.md"}
+[linea 12] TOOL_RESULT: 1	# Informe de revisión
+2	
+3	## Resumen
+4	Breve evaluación general del código.
+5	
+6	## Hallazgos
+7	
+8	| Archivo / línea | Severidad | Problema | Corrección | Evidencia |
+9	|-----------------|---------
+[linea 13] TOOL_USE Read: {"file_path": "C:\\Cerebrolo\\01-Topicos-Especiales-II\\Lab09-skills-agentes\\laboratorio_skills\\ejemplo\\calculadora.py"}
+[linea 14] TOOL_RESULT: 1	# ejemplo/calculadora.py
+2	
+3	def dividir(a, b):
+4	    return a / b
+5	
+6	def promedio(valores=[]):
+7	    return sum(valores) / len(valores)
+8	
+9	def procesar(numero):
+10	    try:
+11	        return i
+[linea 15] TOOL_USE Bash: {"command": "cd \"C:/Cerebrolo/01-Topicos-Especiales-II/Lab09-skills-agentes/laboratorio_skills\" && python .claude/skills/python-code-review/scripts/check_syntax.py ejemplo/calculadora.py", "description": "Run syntax check script on the file"}
+[linea 16] TOOL_RESULT: OK: sintaxis válida en ejemplo/calculadora.py
+[linea 20] ASISTENTE: # Informe de revisión
+
+## Resumen
+`ejemplo/calculadora.py` tiene sintaxis válida (`check_syntax.py` dijo OK). Son 15 líneas con tres funciones y una llamada suelta al final. Esa llamada hace que el mó...
+[linea 21] RESULT: turns=8 costo_usd=0.0452882
+
+Herramientas usadas: ['Skill', 'Glob', 'Read', 'Read', 'Read', 'Bash']
+Skill invocada: [(3, 'python-code-review')]
+
+=== RESPUESTA FINAL ===
+# Informe de revisión
+
+## Resumen
+`ejemplo/calculadora.py` tiene sintaxis válida (`check_syntax.py` dijo OK). Son 15 líneas con tres funciones y una llamada suelta al final. Esa llamada hace que el módulo falle al importarlo. Las funciones no validan sus entradas y `procesar` oculta los errores. No encontré secretos embebidos, ni `eval`/`exec`, ni construcción de comandos o consultas, así que no hay hallazgos de seguridad críticos. No modifiqué el archivo.
+
+## Hallazgos
+
+| Archivo / línea | Severidad | Problema | Corrección | Evidencia |
+|---|---|---|---|---|
+| calculadora.py:15 | CRÍTICO (error funcional) | Código ejecutado a nivel de módulo: `dividir(10, 0)` lanza `ZeroDivisionError` en cuanto se ejecuta o importa el archivo. Ningún otro módulo puede importar `dividir`, `promedio` o `procesar`. | Borrar la línea o moverla a `if __name__ == "__main__":` con una llamada que no falle, o con el error capturado. | `print(dividir(10, 0))` |
+| calculadora.py:3-4 | ALTO (error funcional) | `dividir` no controla `b == 0`. Tampoco valida los tipos, así que un `None` o un `str` lanzan `TypeError`. | `if b == 0: raise ValueError("El divisor no puede ser cero")`, o capturar `ZeroDivisionError` en quien llama. | `return a / b` |
+| calculadora.py:6-7 | ALTO (error funcional) | `promedio` falla con una colección vacía: `len(valores)` es 0, y por el valor por defecto `[]` la llamada sin argumentos siempre falla. | Comprobar `if not valores: raise ValueError("Se requiere al menos un valor")`. | `return sum(valores) / len(valores)` |
+| calculadora.py:6 | MEDIO (mantenibilidad) | Parámetro mutable por defecto (`valores=[]`). Hoy no se modifica la lista, pero es un patrón frágil: si alguien añade `valores.append(...)`, el estado se comparte entre llamadas. Además, el valor por defecto no tiene sentido, porque nunca produce un resultado válido. | Quitar el valor por defecto, o usar `valores=None` y crear la lista dentro. | `def promedio(valores=[]):` |
+| calculadora.py:12-13 | ALTO (error funcional / riesgo) | `except:` desnudo captura todo, incluso `KeyboardInterrupt` y `SystemExit`. Además devuelve `0` ante cualquier fallo, y `procesar("abc")` y `procesar("0")` dan el mismo resultado. Un dato corrupto se vuelve un cero válido y puede falsear cálculos posteriores. `procesar(3.9)` devuelve `3` sin avisar, porque `int()` trunca. | `except (ValueError, TypeError):` y relanzar o devolver `None`, o registrar el error. Decidir si los decimales se aceptan. | `except:` / `return 0` |
+| calculadora.py:3, 6, 9 | BAJO (calidad) | Sin docstrings, sin anotaciones de tipo y sin pruebas. Los nombres mezclan funciones de cálculo con una de conversión (`procesar`), cuyo nombre no dice qué hace. | Añadir docstrings y tipos (`def dividir(a: float, b: float) -> float`). Renombrar `procesar` a `a_entero`. | Todo el archivo |
+
+## Pruebas recomendadas
+- `dividir(10, 2) == 5.0`. `dividir(10, 0)` debe lanzar un error controlado.
+- `promedio([2, 4, 6]) == 4`. `promedio([])` y `promedio()` deben lanzar un error claro.
+- `procesar("12") == 12`. `procesar("abc")`, `procesar(None)` y `procesar("3.9")` deben comportarse como se decida, sin devolver `0` en silencio.
+- Importar el módulo (`import ejemplo.calculadora`) no debe ejecutar nada ni fallar.
+
+## Resultado final
+**Requiere correcciones antes de usarse.** El archivo no se puede importar por la línea 15, y `dividir` y `promedio` fallan con entradas límite. El `except:` desnudo es el riesgo de mantenimiento más importante, porque oculta los errores en vez de mostrarlos.
+
+Si quieres, aplico las correcciones y agrego las pruebas.

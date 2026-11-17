@@ -1,0 +1,29 @@
+Comando: python -u experimentos.py "¿Cuántos libros puedo retirar de la biblioteca y por cuántos días?" 120 3
+Hora de inicio: 2026-10-30 12:01:40
+----------------------------------------
+Documentos cargados: 3
+Tamano de chunk: 120 | solapamiento: 40 | k: 3
+Chunks creados: 9
+Generando índice vectorial...
+
+Pregunta: ¿Cuántos libros puedo retirar de la biblioteca y por cuántos días?
+
+--- CHUNKS RECUPERADOS ---
+1. servicios.txt | similitud=0.672
+sábados abre de 8:00 a.m. a 4:00 p.m.
+El préstamo regular permite retirar hasta 5 libros por un máximo de 14 días.
+
+2. servicios.txt | similitud=0.663
+5 libros por un máximo de 14 días.
+
+3. servicios.txt | similitud=0.654
+La biblioteca universitaria abre de lunes a viernes de 7:00 a.m. a 9:00 p.m.
+Los sábados abre de 8:00 a.m. a 4:00 p.m.
+E
+
+--- RESPUESTA RAG ---
+De acuerdo a los datos proporcionados, puedo retirar hasta 5 libros por un máximo de 14 días. Esto se deriva directamente de la información en el archivo "servicios.txt" donde se dice "El préstamo regular permite retirar hasta 5 libros por un máximo de 14 días."
+
+Fuente: servicios.txt
+----------------------------------------
+Hora de fin: 2026-10-30 12:02:10

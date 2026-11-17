@@ -1,0 +1,2 @@
+Cliente informa que la aplicación móvil se cierra al intentar consultar movimientos.
+Solicita orientación para continuar usando el servicio.

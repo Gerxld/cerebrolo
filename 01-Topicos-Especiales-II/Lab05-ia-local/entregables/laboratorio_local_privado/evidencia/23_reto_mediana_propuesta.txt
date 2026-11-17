@@ -1,0 +1,92 @@
+Fecha y hora de inicio: 2026-10-30 11:54:26
+Comando: C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe run qwen2.5-coder:3b   (prompt entregado por entrada estandar)
+------------------------------------------------------------
+PROMPT ENVIADO:
+Agrega una función mediana(valores) al siguiente módulo calculadora.py. Debe lanzar ValueError con un mensaje claro si la lista está vacía, y no debe modificar la lista que recibe. Luego escribe pruebas con unittest para mediana (lista de cantidad impar, lista de cantidad par, lista desordenada y lista vacía) y explica brevemente tu solución.
+
+def dividir(a, b):
+    if b == 0:
+        raise ValueError("El divisor no puede ser cero.")
+    return a / b
+
+def promedio(valores):
+    if not valores:
+        raise ValueError("La lista de valores no puede estar vacía.")
+    return sum(valores) / len(valores)
+
+def porcentaje(valor, total):
+    if total == 0:
+        raise ValueError("El total no puede ser cero.")
+    return (valor / total) * 100
+------------------------------------------------------------
+RESPUESTA DEL MODELO:
+Para agregar la función `mediana(valores)` al módulo `calculadora.py`, primero necesitamos definir una función que calcule la mediana de una lista de números. La mediana es el valor que separa a la mitad de los datos ordenados de manera ascendente. Si la cantidad de números es impar, la mediana es el valor del número en el índice central. Si es par, la mediana es el promedio de los dos valores centrales.
+
+Aquí tienes el código para la función `mediana`:
+
+```python
+def mediana(valores):
+    if not valores:
+        raise ValueError("La lista de valores no puede estar vacía.")
+    
+    valores_ordenados = sorted(valores)
+    n = len(valores_ordenados)
+    
+    if n % 2 == 1:
+        # Cantidad impar de elementos
+        return valores_ordenados[n // 2]
+    else:
+        # Cantidad par de elementos
+        medio1 = valores_ordenados[n // 2 - 1]
+        medio2 = valores_ordenados[n // 2]
+        return (medio1 + medio2) / 2
+```
+
+### Pruebas con `unittest`
+
+Para escribir pruebas con `unittest`, primero necesitamos instalar la biblioteca `unittest` si no la tienes. Luego, podemos escribir las pruebas para `mediana`:
+
+```python
+import unittest
+
+class TestCalculadora(unittest.TestCase):
+    def test_mediana_cantidad_impar(self):
+        self.assertEqual(mediana([3, 1, 4, 1, 5]), 3)
+        self.assertEqual(mediana([10, 20, 30, 40, 50]), 30)
+        self.assertEqual(mediana([-5, -2, 0, 2, 5]), 0)
+
+    def test_mediana_cantidad_par(self):
+        self.assertEqual(mediana([1, 3, 5, 7]), 4)
+        self.assertEqual(mediana([10, 20, 30, 40]), 25)
+        self.assertEqual(mediana([-1, -3, -5, -7]), -3)
+
+    def test_mediana_cantidad_par_2(self):
+        self.assertEqual(mediana([1, 2, 3, 4, 5, 6]), 3.5)
+        self.assertEqual(mediana([10, 20, 30, 40, 50, 60]), 35)
+
+    def test_mediana_vacia(self):
+        with self.assertRaises(ValueError):
+            mediana([])
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### Explicación de la solución
+
+1. **Función `mediana`**:
+   - Comprueba si la lista está vacía y lanza `ValueError` si lo está.
+   - Ordena la lista de valores.
+   - Calcula la mediana:
+     - Si el número de elementos es impar, devuelve el elemento en el índice central.
+     - Si es par, devuelve el promedio de los dos elementos centrales.
+
+2. **Pruebas con `unittest`**:
+   - `test_mediana_cantidad_impar`: Prueba con listas de cantidad impar de números.
+   - `test_mediana_cantidad_par`: Prueba con listas de cantidad par de números.
+   - `test_mediana_cantidad_par_2`: Prueba con listas de cantidad par de números.
+   - `test_mediana_vacia`: Prueba que lanza `ValueError` si la lista está vacía.
+------------------------------------------------------------
+Codigo de salida: 0
+Fecha y hora de fin: 2026-10-30 11:55:17
+Tiempo transcurrido: 51.6 s

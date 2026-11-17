@@ -1,0 +1,30 @@
+> python app.py
+Tareas pendientes:
+- 2: Preparar exposición (prioridad: media)
+
+> python -m unittest discover -s tests
+.............
+----------------------------------------------------------------------
+Ran 13 tests in 0.001s
+
+OK
+
+> python -m unittest discover -s tests -v
+test_agregar_tarea (test_tasks.TestTasks.test_agregar_tarea) ... ok
+test_buscar_tareas_ignora_mayusculas (test_tasks.TestTasks.test_buscar_tareas_ignora_mayusculas) ... ok
+test_buscar_tareas_sin_coincidencias (test_tasks.TestTasks.test_buscar_tareas_sin_coincidencias) ... ok
+test_buscar_texto_inexistente_lista_vacia (test_tasks.TestTasks.test_buscar_texto_inexistente_lista_vacia) ... ok
+test_buscar_texto_vacio_lista_vacia (test_tasks.TestTasks.test_buscar_texto_vacio_lista_vacia) ... ok
+test_completar_tarea (test_tasks.TestTasks.test_completar_tarea) ... ok
+test_ordenar_por_prioridad_estable (test_tasks.TestTasks.test_ordenar_por_prioridad_estable) ... ok
+test_ordenar_por_prioridad_lista_vacia (test_tasks.TestTasks.test_ordenar_por_prioridad_lista_vacia) ... ok
+test_ordenar_por_prioridad_no_modifica_original (test_tasks.TestTasks.test_ordenar_por_prioridad_no_modifica_original) ... ok
+test_ordenar_por_prioridad_orden_correcto (test_tasks.TestTasks.test_ordenar_por_prioridad_orden_correcto) ... ok
+test_pendientes_excluye_completadas (test_tasks.TestTasks.test_pendientes_excluye_completadas) ... ok
+test_prioridad_invalida (test_tasks.TestTasks.test_prioridad_invalida) ... ok
+test_prioridades_validas (test_tasks.TestTasks.test_prioridades_validas) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.002s
+
+OK

@@ -1,0 +1,198 @@
+<h1 class="sec">Introducción</h1>
+<p>En este laboratorio trabajamos con la modalidad «Local + Privado»: un modelo abierto, <code>qwen2.5-coder:3b</code>, corre en nuestra propia computadora con Ollama y lo usamos para revisar, probar y corregir un archivo pequeño de Python (<code>calculadora.py</code>) sin mandar el código a ningún servicio de IA en la nube. El equipo es un Ryzen 7 5800H con 15.4 GB de RAM y gráficos integrados de AMD, así que el modelo corre en CPU y la velocidad se nota desde la primera consulta.</p>
+<p>Todas las interacciones con el modelo de este informe se hicieron de verdad, una a la vez, y cada una quedó guardada en la carpeta <code>evidencia</code> con el prompt exacto, la respuesta completa, la hora y el tiempo. Las capturas son esos mismos archivos dibujados como terminal; no se retocó ninguna respuesta del modelo. Donde el modelo se equivocó lo dejamos escrito y explicamos qué hicimos con su sugerencia.</p>
+<p>La consulta con el Wi-Fi apagado (pasos 16 y 17) la hicimos con un script que deja registro de que no había conexión. Al final respondemos las siete preguntas de reflexión y comparamos el modelo local con una herramienta en la nube.</p>
+
+<h1 class="sec">1. Preparación (pasos 1 al 5)</h1>
+<h2 class="sec">1.1 Comprobación del equipo</h2>
+<p>Antes de tocar nada revisamos memoria y disco con PowerShell. El equipo tiene 15.4 GB de RAM (8.1 GB libres en ese momento) y 443.9 GB libres en el disco C:, de sobra para un modelo de 1.9 GB. Con eso no hizo falta bajar al modelo de 1.5B: nos quedamos con el de 3B que recomienda el enunciado.</p>
+<p>Ollama 0.40.13 lo instalamos con <code>winget</code> el 29/10/2026, antes de empezar a documentar; por eso no hay capturas del instalador y no inventamos ninguna. El programa quedó en <code>C:\Users\HOME\AppData\Local\Programs\Ollama\ollama.exe</code> y esa terminal no lo tenía en el PATH, así que en todo el laboratorio lo llamamos con la ruta completa.</p>
+<div class="tabla-titulo">Tabla 1. Equipo y herramientas</div>
+<table>
+  <tr><th>Elemento</th><th>Valor</th></tr>
+  <tr><td>Procesador</td><td>AMD Ryzen 7 5800H with Radeon Graphics</td></tr>
+  <tr><td>Memoria RAM</td><td>15.4 GB (8.1 GB libres al medir)</td></tr>
+  <tr><td>Disco C:</td><td>443.9 GB libres</td></tr>
+  <tr><td>Ollama</td><td>0.40.13, servidor en <code>http://localhost:11434</code></td></tr>
+  <tr><td>Modelo del laboratorio</td><td><code>qwen2.5-coder:3b</code>, 3.1B parámetros, cuantización Q4_K_M, 1.9 GB</td></tr>
+  <tr><td>Python</td><td>3.13.5</td></tr>
+</table>
+<h2 class="sec">1.2 Versión y modelo instalado</h2>
+<p>El paso 3 (<code>ollama --version</code>) devolvió la versión 0.40.13. El modelo ya estaba descargado cuando empezamos, por lo que tampoco hay captura del <code>ollama pull</code>; lo que sí mostramos es <code>ollama list</code> (paso 5) y <code>ollama show</code>. El nombre exacto que usamos en todo el laboratorio es <code>qwen2.5-coder:3b</code>. La lista trae otros tres modelos (<code>qwen2.5:3b</code>, <code>nomic-embed-text</code> y <code>qwen3:4b</code>) que son de otros laboratorios; en este no se usaron.</p>
+{{FIG:c01_entorno|Equipo, versión de Ollama, lista de modelos y detalle de qwen2.5-coder:3b (evidencia/01_05_entorno.txt).}}
+
+<h1 class="sec">2. Primera conversación local (paso 6)</h1>
+<p>Para la primera consulta usamos la pregunta del enunciado: una función que determine si un número es primo, con tres ejemplos. Como <code>ollama run</code> sin argumentos abre una sesión interactiva, enviamos el prompt por entrada estándar y guardamos la respuesta completa. La consulta tardó 34.5 s; fue la primera y es la más lenta de la serie, seguramente porque el modelo tuvo que cargarse en memoria; no lo medimos por separado.</p>
+<p>La función que devolvió es correcta (verifica hasta la raíz cuadrada avanzando de 6 en 6) y los resultados de sus ejemplos coinciden con lo esperado. Pero le pedimos tres ejemplos y escribió cuatro (17, 20, 29 y 1). Es un detalle menor, y fue lo primero que nos mostró que un modelo de 3B sigue las instrucciones de forma aproximada.</p>
+{{FIG:c02_paso06|Paso 6: respuesta del modelo local al problema del número primo (evidencia/06_conversacion_local.txt).}}
+
+<h1 class="sec">3. Proyecto y revisión con el modelo (pasos 7 al 10)</h1>
+<p>Creamos la carpeta <code>laboratorio_local_privado</code> y dentro el archivo <code>calculadora.py</code> con el código del enunciado. Guardamos además una copia sin tocar, <code>calculadora_original.py</code>, para poder comparar el antes y el después.</p>
+<pre>def dividir(a, b):
+    return a / b
+
+def promedio(valores):
+    return sum(valores) / len(valores)
+
+def porcentaje(valor, total):
+    return (valor / total) * 100</pre>
+<p>En el paso 9 copiamos nosotros el contenido del archivo y lo pegamos en el prompt del paso 10; esa es la diferencia con un asistente web o de editor, que leería el repositorio por su cuenta. Usamos el prompt del enunciado tal cual, con el código al final:</p>
+<pre>Actúa como revisor de código Python.
+Analiza el siguiente código y detecta casos límite o errores.
+No cambies los nombres de las funciones.
+Devuélveme primero una lista de problemas y luego una versión
+corregida.
+
+[contenido de calculadora.py]</pre>
+<p>El modelo respondió en 23.4 s. Detectó los tres problemas que buscábamos: dividir con <code>b</code> igual a cero, promedio de una lista vacía y porcentaje con total cero. Hasta ahí bien. El problema está en la versión corregida que propone: en vez de lanzar excepciones, devuelve cadenas como <code>"Error: División por cero"</code>. No reemplazamos el archivo, como pedía el enunciado.</p>
+{{FIG:c03_paso10|Paso 10: prompt de revisión y respuesta del modelo (evidencia/10_revision_codigo.txt).}}
+
+<h1 class="sec">4. Validación, pruebas y corrección (pasos 11 al 15)</h1>
+<h2 class="sec">4.1 Validación manual de los casos límite</h2>
+<p>Antes de aceptar nada ejecutamos los tres casos sobre el código original. Los tres fallan con <code>ZeroDivisionError: division by zero</code>, tal como dijo el modelo; los casos normales (<code>dividir(10, 4)</code> da 2.5, <code>promedio([2, 4, 6])</code> da 4.0 y <code>porcentaje(25, 200)</code> da 12.5) funcionan. Después probamos la versión del modelo en un archivo aparte: <code>dividir(10, 0)</code> devuelve el texto de error y al sumarle 1 aparece <code>TypeError</code>; <code>round(promedio([]), 2)</code> también falla con <code>TypeError</code>. Es decir, cambiaba un error claro por otro más confuso y más lejos del origen, además de que cualquier código que reciba esa cadena podría tratarla como un resultado válido.</p>
+{{FIG:c04_paso11|Paso 11: los tres casos límite sobre el original y la prueba de la propuesta del modelo (evidencia/11_validacion_casos_limite.txt).}}
+
+<h2 class="sec">4.2 Pruebas generadas por el modelo</h2>
+<p>Para el paso 12 le pasamos al modelo solo los nombres y parámetros de las tres funciones, sin el código, y le pedimos tres pruebas normales y tres de casos límite con <code>unittest</code>. En el prompt le indicamos que en los casos límite debía lanzarse <code>ValueError</code> (con <code>assertRaises</code>), porque es lo que pediremos en la corrección del paso 14; la decisión de usar <code>ValueError</code> fue nuestra, no del modelo.</p>
+<p>Devolvió ocho pruebas en 21.2 s y copiamos solo las que entendíamos y tenían sentido. Hay un resumen de lo aceptado y lo rechazado más abajo; aquí lo importante es que la prueba <code>test_promedio_vacia</code> esperaba que <code>promedio([])</code> devolviera 0, lo contrario de lo que pedimos. Un promedio de 0 para una lista sin datos es un valor falso, así que la corregimos a mano para que espere <code>ValueError</code>. No debilitamos ninguna prueba para que pasara: la prueba exige la excepción y la corrección va en la implementación.</p>
+{{FIG:c05_paso12|Paso 12: prompt y pruebas propuestas por el modelo (evidencia/12_generar_pruebas.txt).}}
+<p>El archivo <code>test_calculadora.py</code> quedó con seis pruebas en esta etapa: <code>test_dividir</code>, <code>test_promedio_con_muchos_elementos</code> y <code>test_porcentaje_normal</code> para los casos normales; <code>test_dividir_por_cero</code>, <code>test_promedio_lista_vacia</code> y <code>test_porcentaje_cero_total</code> para los límites.</p>
+
+<h2 class="sec">4.3 Pruebas antes de la corrección</h2>
+<p>Corrimos <code>python -m unittest test_calculadora.py</code> con el <code>calculadora.py</code> original. Pasaron las tres pruebas normales y fallaron las tres de casos límite, las tres con <code>ZeroDivisionError</code> (que no es un <code>ValueError</code>, por eso unittest las cuenta como errores y no como fallos). Seis pruebas, <code>FAILED (errors=3)</code>. Esta salida es la línea base contra la que medimos el cambio.</p>
+{{FIG:c06_paso13|Paso 13: pruebas antes de corregir, 3 de 6 con error (evidencia/13_pruebas_antes.txt).}}
+
+<h2 class="sec">4.4 Corrección mínima</h2>
+<p>En el paso 14 le mandamos al modelo el código original y le pedimos corregir solo esos tres casos, mantener nombres y parámetros, lanzar <code>ValueError</code> con mensaje en español y no devolver textos. Esta vez respondió en 7.9 s y la propuesta era la correcta: tres condiciones de guarda al inicio de cada función. La revisamos línea por línea, no cambia ningún otro comportamiento y la copiamos a <code>calculadora.py</code>. Los dos archivos quedan en la carpeta del laboratorio.</p>
+<p>Antes (<code>calculadora_original.py</code>):</p>
+<pre>def dividir(a, b):
+    return a / b
+
+def promedio(valores):
+    return sum(valores) / len(valores)
+
+def porcentaje(valor, total):
+    return (valor / total) * 100</pre>
+<p>Después (<code>calculadora.py</code> tras el paso 14):</p>
+<pre>def dividir(a, b):
+    if b == 0:
+        raise ValueError("El divisor no puede ser cero.")
+    return a / b
+
+def promedio(valores):
+    if not valores:
+        raise ValueError("La lista de valores no puede estar vacía.")
+    return sum(valores) / len(valores)
+
+def porcentaje(valor, total):
+    if total == 0:
+        raise ValueError("El total no puede ser cero.")
+    return (valor / total) * 100</pre>
+{{FIG:c07_paso14|Paso 14: prompt de corrección mínima y respuesta del modelo (evidencia/14_correccion_minima.txt).}}
+
+<h2 class="sec">4.5 Pruebas después de la corrección</h2>
+<p>Con la corrección aplicada volvimos a correr las pruebas: las seis pasan (<code>Ran 6 tests ... OK</code>). Como ninguna falló, no tuvimos que pedirle al modelo que explicara un error en este paso; esa parte del enunciado (pegar el mensaje de error y pedir la causa antes de otra versión) la aplicamos más adelante, en el reto de la mediana, donde sí apareció una prueba fallida.</p>
+{{FIG:c08_paso15|Paso 15: las seis pruebas pasan con la corrección (evidencia/15_pruebas_despues.txt).}}
+
+<div class="tabla-titulo">Tabla 2. Sugerencias del modelo: aceptadas y rechazadas</div>
+<table>
+  <tr><th>Paso</th><th>Sugerencia</th><th>Decisión</th><th>Motivo</th></tr>
+  <tr><td>10</td><td>Detectar división, promedio vacío y porcentaje con total cero como problemas</td><td>Aceptada</td><td>Los tres se reprodujeron con ejecuciones reales.</td></tr>
+  <tr><td>10</td><td>Devolver cadenas «Error: …» en lugar de lanzar excepciones</td><td>Rechazada</td><td>Mezcla tipos de retorno; <code>dividir(10, 0) + 1</code> y <code>round(promedio([]), 2)</code> dan <code>TypeError</code>, y un texto puede confundirse con un resultado.</td></tr>
+  <tr><td>12</td><td>Pruebas normales de <code>dividir</code>, <code>promedio</code> (lista de cinco) y <code>porcentaje</code>; pruebas de <code>ValueError</code> para <code>dividir</code> y <code>porcentaje</code></td><td>Aceptadas</td><td>Cubren lo pedido y las entendemos.</td></tr>
+  <tr><td>12</td><td><code>promedio([])</code> igual a 0</td><td>Rechazada y corregida a mano</td><td>Un promedio de 0 sin datos es un valor inventado; se exige <code>ValueError</code>.</td></tr>
+  <tr><td>12</td><td>Prueba de <code>porcentaje</code> con total negativo que espera <code>ValueError</code></td><td>Rechazada</td><td>Fuera de los tres casos pedidos; un total negativo se puede dividir y habría que cambiar el comportamiento de la función.</td></tr>
+  <tr><td>12</td><td>Pruebas de <code>promedio</code> con un solo elemento</td><td>Descartada</td><td>Redundante con la de cinco elementos.</td></tr>
+  <tr><td>14</td><td>Tres guardas con <code>ValueError</code> y mensaje claro</td><td>Aceptada</td><td>Es la corrección mínima pedida; las seis pruebas pasan.</td></tr>
+  <tr><td>23</td><td>Función <code>mediana</code> y pruebas de cantidad impar, par y lista vacía</td><td>Aceptadas</td><td>La función es correcta; las pruebas pasan salvo un valor esperado.</td></tr>
+  <tr><td>23</td><td>Valor esperado -3 para la mediana de <code>[-1, -3, -5, -7]</code></td><td>Rechazada y corregida a mano a -4</td><td>La lista ordenada es [-7, -5, -3, -1] y (-5 + -3) / 2 es -4.</td></tr>
+  <tr><td>23</td><td>«Instalar la biblioteca unittest»</td><td>Ignorada</td><td><code>unittest</code> viene con Python; no hay nada que instalar.</td></tr>
+</table>
+
+<h1 class="sec">5. Consulta sin Internet (pasos 16 y 17)</h1>
+<p>Esta comprobación necesita que el equipo esté realmente desconectado, así que no bastaba con decir que lo estaba. Preparamos el script <code>paso16_offline.ps1</code>, que registra la fecha y la hora, intenta conectarse a 8.8.8.8 por el puerto 53 y resolver <code>ollama.com</code> (ambas deben fallar), muestra el estado de los adaptadores con <code>Get-NetAdapter</code>, consulta a <code>qwen2.5-coder:3b</code> con la ruta completa de <code>ollama.exe</code> sobre <code>calculadora.py</code> y guarda todo en <code>evidencia\16_offline.txt</code>. Para el paso 17 el modelo es el mismo, sin variantes con «cloud» en el nombre, y no se abre ningún servicio web.</p>
+<p>Antes de apagar el Wi-Fi probamos el script con la red encendida, solo para confirmar que no tiene errores y que la parte del modelo funciona. Funcionó: el script marcó «ATENCION: hay conexion a Internet» (8.8.8.8 respondió y <code>ollama.com</code> resolvió), el adaptador Wi-Fi aparecía como <code>Up</code> y el modelo contestó en 9.1 s. Esa ejecución es una prueba del script y no demuestra nada sobre el uso sin conexión.</p>
+{{FIG:c09_paso16_prueba|Prueba del script con la red encendida; no es la evidencia offline (evidencia/16_prueba_script_con_red.txt).}}
+{{OFFLINE}}
+
+<h1 class="sec">6. API local de Ollama desde Python (pasos 18 al 20)</h1>
+<p>Ollama expone su API en <code>http://localhost:11434/api</code> y, para las solicitudes locales, no pide autenticación (Ollama, s. f.-a). Guardamos el ejemplo del enunciado como <code>consultar_modelo_basico.py</code>: usa solo <code>json</code> y <code>urllib.request</code> de la biblioteca estándar y envía un POST a <code>/api/generate</code> con <code>"stream": False</code>. Lo ejecutamos (paso 19) y a los 30.6 s devolvió una prueba <code>unittest</code> para <code>dividir</code>. No usamos clave de API en ningún momento. Un detalle de la respuesta: dice que unittest busca funciones «que terminan en <code>test_</code>», cuando en realidad es que empiezan por ese prefijo.</p>
+{{FIG:c11_paso19|Paso 19: consultar_modelo_basico.py contra localhost:11434 (evidencia/19_consultar_modelo_basico.txt).}}
+<p>Para el paso 20 cambiamos <code>consultar_modelo.py</code>: lee <code>calculadora.py</code> con <code>pathlib</code>, arma un prompt de revisión y, antes de enviarlo, imprime los primeros 100 caracteres con <code>print(repr(prompt[:100]))</code>. El resto del código es el del enunciado. Al ejecutarlo se vio que el prompt empezaba con «Actúa como revisor de código Python. Revisa el siguiente código y dime en pocas líneas si todavía le» y que la respuesta tardó 7.8 s. Esa respuesta fue corta, pero no del todo exacta: lista tres «divisiones por cero» cuando el segundo caso es una lista vacía.</p>
+<pre>codigo = Path(__file__).with_name("calculadora.py").read_text(encoding="utf-8")
+prompt = ("Actúa como revisor de código Python. "
+          "Revisa el siguiente código y dime en pocas líneas si todavía le falta "
+          "algún caso límite. No lo reescribas completo.\n\n" + codigo)
+print("Primeros 100 caracteres del prompt:")
+print(repr(prompt[:100]))</pre>
+{{FIG:c12_paso20|Paso 20: consultar_modelo.py muestra los 100 primeros caracteres del prompt y luego la respuesta (evidencia/20_consultar_modelo_archivo.txt).}}
+
+<h1 class="sec">7. Prueba de privacidad consciente (paso 21)</h1>
+<p>Creamos <code>privado_demo.py</code> con datos ficticios: <code>nombre_cliente = "CLIENTE_DEMO_001"</code> y un saldo de 1500.00. Primero pensamos agregar también un número de cuenta de mentira, pero lo quitamos: el enunciado prohíbe cuentas, y aunque fuera falso no aportaba nada a la prueba. Le pedimos al modelo local que explicara el código y respondió en 6.1 s describiendo correctamente la función <code>resumen_cliente</code> y la comparación del saldo.</p>
+<p>La idea del paso es que nosotros decidimos qué sale de la computadora: el prompt se arma a mano y, con el paso anterior, hasta lo vemos antes de enviarlo. Aun así, el nombre aparece dentro del prompt que se procesa en el equipo, por lo que seguimos evitando datos reales; con un modelo local el riesgo baja, pero no desaparece.</p>
+{{FIG:c13_paso21|Paso 21: explicación de privado_demo.py (evidencia/21_privacidad_demo.txt).}}
+
+<h1 class="sec">8. Rendimiento y calidad (paso 22)</h1>
+<p>Medimos con la API local (<code>medir_tiempos.py</code>) una solicitud corta y otra con el contenido de <code>calculadora.py</code>, dos rondas cada una y con el modelo ya cargado. Ollama devuelve el número de tokens, así que además de los segundos calculamos la velocidad de generación. Los tiempos son de nuestro equipo, que no estaba dedicado solo a esta prueba, y pueden variar.</p>
+<div class="tabla-titulo">Tabla 3. Tiempos medidos con qwen2.5-coder:3b (CPU)</div>
+<table>
+  <tr><th>Solicitud</th><th>Tokens del prompt</th><th>Tokens de respuesta</th><th>Tiempo total</th><th>Velocidad</th></tr>
+  <tr><td>Corta, ronda 1</td><td>42</td><td>25</td><td>3.6 s</td><td>18.3 tokens/s</td></tr>
+  <tr><td>Corta, ronda 2</td><td>42</td><td>25</td><td>3.5 s</td><td>17.9 tokens/s</td></tr>
+  <tr><td>Con calculadora.py, ronda 1</td><td>168</td><td>530</td><td>35.1 s</td><td>16.7 tokens/s</td></tr>
+  <tr><td>Con calculadora.py, ronda 2</td><td>168</td><td>576</td><td>38.9 s</td><td>16.2 tokens/s</td></tr>
+</table>
+<p>La solicitud corta tarda unos 3.5 s; la del archivo, entre 35 y 39 s, diez veces más. La velocidad por token casi no cambia (16 a 18 tokens por segundo): lo que alarga la espera es que el modelo escribe una respuesta mucho más larga. En la evidencia de esta medición solo se muestran los primeros 600 caracteres de la respuesta de la primera ronda; los demás pasos sí guardan la respuesta completa.</p>
+<p>En calidad vimos varias cosas. En la medición, el modelo respondió sobre el código ya corregido que era «correcto» y se fue por las ramas con sugerencias de docstrings y constantes, sin que se las pidiéramos. Se equivocó en el conteo de ejemplos (paso 6), propuso cadenas en lugar de excepciones (paso 10), esperó un promedio de 0 (paso 12), confundió dónde estaba la división por cero en <code>promedio</code> (paso 20) y se equivocó en las cuentas del paso 23. No vimos repeticiones de texto. El código que escribe suele ser razonable, pero sus explicaciones y sus valores esperados hay que revisarlos.</p>
+{{FIG:c14_paso22|Paso 22: medición de tiempos con la API local (evidencia/22_medicion_tiempos.txt).}}
+
+<h1 class="sec">9. Reto final: la función mediana (paso 23)</h1>
+<p>Le pedimos al modelo local agregar <code>mediana(valores)</code> a <code>calculadora.py</code>, con <code>ValueError</code> si la lista está vacía y sin modificar la lista recibida, además de pruebas (impar, par, desordenada y vacía) y una explicación. Tardó 51.6 s y no usamos ninguna IA en la nube. La función que propuso ordena una copia con <code>sorted</code>, devuelve el elemento central si la cantidad es impar y el promedio de los dos centrales si es par. La revisamos y es correcta; al usar <code>sorted</code> no altera la lista original, que era el otro requisito.</p>
+{{FIG:c15_paso23a|Paso 23: función, pruebas y explicación propuestas por el modelo (evidencia/23_reto_mediana_propuesta.txt).}}
+<p>Copiamos la función a <code>calculadora.py</code> y las pruebas a <code>test_calculadora.py</code>, sin cambios, en una clase <code>TestMediana</code>. Salieron 10 pruebas y una falló: <code>AssertionError: -4.0 != -3</code> en <code>mediana([-1, -3, -5, -7])</code>.</p>
+{{FIG:c16_paso23b|Paso 23: primer intento, 9 de 10 pruebas pasan (evidencia/23b_mediana_pruebas_primer_intento.txt).}}
+<p>Siguiendo el paso 15 del enunciado, le pasamos al modelo solo el mensaje de error y le pedimos la causa antes de generar otra versión. Respondió en 13.4 s que el error estaba en la prueba y no en la función, lo cual es cierto, aunque al explicarlo hizo mal la cuenta: escribió «(3 + 5) / 2 = 4» y perdió el signo. Nosotros hicimos la cuenta aparte: ordenada, la lista es [-7, -5, -3, -1] y (-5 + -3) / 2 = -4, así que el valor esperado era -4. Corregimos la prueba, no la función, y agregamos una prueba que el modelo no escribió: que <code>mediana</code> no modifique la lista que recibe. Resultado final: 11 pruebas, todas OK.</p>
+{{FIG:c17_paso23c|Paso 23: el modelo explica la causa del fallo (evidencia/23c_explicar_fallo_mediana.txt).}}
+{{FIG:c18_paso23d|Paso 23: las 11 pruebas pasan después de corregir el valor esperado (evidencia/23d_mediana_pruebas_final.txt).}}
+
+<h1 class="sec">10. Comparación con una herramienta en la nube (paso 24)</h1>
+<p>No medimos ninguna herramienta en la nube en este laboratorio, así que no tenemos tiempos propios de ella. Lo que sigue compara lo que medimos del modelo local con lo que cualquiera espera de un servicio en la nube; la columna de la nube es una impresión general, no una medición nuestra.</p>
+<div class="tabla-titulo">Tabla 4. Local + Privado frente a una IA en la nube</div>
+<table>
+  <tr><th>Aspecto</th><th>Modelo local (lo medido)</th><th>IA en la nube (impresión general)</th></tr>
+  <tr><td>Velocidad</td><td>3.5 s para una pregunta corta; 35 a 39 s para revisar un archivo corto de Python; 16 a 18 tokens por segundo en CPU; la primera consulta tarda más por la carga del modelo (34.5 s en el paso 6).</td><td>Suele responder más rápido porque corre en hardware especializado, pero depende de la conexión y del servicio.</td></tr>
+  <tr><td>Calidad</td><td>Detecta los casos límite evidentes y escribe código correcto para tareas pequeñas; falla en cuentas, conteos, valores esperados y a veces propone soluciones de peor diseño (cadenas de error).</td><td>Esperamos menos errores, sobre todo en explicaciones y en tareas largas; igual habría que verificar todo.</td></tr>
+  <tr><td>Privacidad</td><td>El código se procesa en el equipo y la API responde por localhost, sin clave; nosotros elegimos qué se pega en el prompt.</td><td>El contenido del prompt sale de la computadora hacia un tercero, con las políticas de ese servicio.</td></tr>
+  <tr><td>Costo y disponibilidad</td><td>Sin cuota ni clave; ocupa 1.9 GB de disco y bastante procesador mientras responde.</td><td>Normalmente por suscripción o por uso; requiere conexión.</td></tr>
+</table>
+<p>Para un archivo pequeño como este, el modelo local alcanzó: ayudó a ver los casos límite y a escribir pruebas y una función. Pero tuvimos que revisar cada respuesta y rechazar tres o cuatro sugerencias. La privacidad percibida es la ventaja clara; la velocidad es la desventaja que más se siente.</p>
+
+<h1 class="sec">11. Preguntas de reflexión</h1>
+<p><b>1. ¿Qué significa realmente que un modelo sea «local»?</b></p>
+<p>Que los pesos del modelo están en el disco de nuestro equipo y que la inferencia, es decir, el cálculo que produce cada respuesta, la hace nuestro procesador. En este laboratorio fue el Ryzen 7 en CPU, y por eso tarda 35 segundos en revisar un archivo. No significa que el modelo sea nuestro ni que sea mejor: es un modelo publicado por otros (Qwen) que ejecutamos en casa. Tampoco todos los modelos de Ollama son locales: la documentación indica que también ofrece modelos en la nube, que corren sin GPU local (Ollama, s. f.-b), y por eso en el paso 17 el enunciado pide evitar los nombres con «cloud».</p>
+<p><b>2. ¿Por qué descargar el modelo requiere Internet, pero usarlo después puede no requerirlo?</b></p>
+<p>Porque descargar es traer 1.9 GB de pesos desde un registro remoto, y eso solo se puede hacer con conexión. Una vez que los archivos están en el disco, ejecutar el modelo es cálculo local y no necesita pedirle nada a nadie. El servidor de Ollama atiende en <code>localhost</code>, una dirección que no sale de la máquina (Ollama, s. f.-a). Lo comprobamos en el paso 16: con el Wi-Fi desconectado y sin DNS, el mismo modelo respondió en 8.1 s, casi lo mismo que con red (9.1 s).</p>
+<p><b>3. ¿Qué ventaja ofrece localhost desde la perspectiva de integración de software?</b></p>
+<p>Que el modelo se convierte en un servicio HTTP más. En el paso 19 consumimos <code>http://localhost:11434/api/generate</code> con solo <code>json</code> y <code>urllib</code>, sin instalar bibliotecas, sin clave de API y sin cuenta (Ollama, s. f.-a). Cualquier lenguaje que sepa hacer un POST puede usarlo, y el mismo código funciona en el equipo de cualquier compañero que tenga Ollama. Además no hay cuotas ni dependencia de que un tercero esté en línea.</p>
+<p><b>4. ¿Qué limitación observó al utilizar un modelo pequeño en su propio equipo?</b></p>
+<p>Dos que se sintieron mucho. La primera es la velocidad: 16 a 18 tokens por segundo, 35 a 39 s por una revisión de un archivo corto y 51.6 s para el reto de la mediana. La segunda, la precisión: contó mal los ejemplos del paso 6, devolvió cadenas en lugar de excepciones, esperó un promedio de 0 para una lista vacía, hizo mal una suma con negativos (en la prueba y en su propia explicación) y habló de «instalar unittest». Escribe código que casi siempre funciona, pero sus explicaciones y sus datos de prueba no se pueden aceptar sin comprobarlos.</p>
+<p><b>5. ¿Ejecutar un modelo local elimina por sí solo todos los riesgos de privacidad? Explique.</b></p>
+<p>No. Solo elimina el envío del contenido a un tercero; quedan otros riesgos. Los datos siguen en nuestra máquina, que puede tener malware o estar sin cifrar, y el historial de las sesiones y los archivos que pasamos al modelo quedan en el disco. Si el servidor se configura para atender en la red, otros equipos podrían usarlo; LM Studio, por ejemplo, permite servir los modelos en localhost o en toda la red (LM Studio, s. f.-a). Y si por descuido elegimos un modelo en la nube, el contenido sí sale. Por eso en el laboratorio usamos datos ficticios aunque todo fuera local, y por eso imprimimos los primeros 100 caracteres del prompt en el paso 20: la privacidad depende de qué decidimos entregar, no solo de dónde corre el modelo.</p>
+<p><b>6. ¿En qué casos una organización podría preferir Local + Privado sobre un modelo cloud?</b></p>
+<p>Cuando el código o los datos no pueden salir de la organización: un banco, una clínica o una entidad pública con datos de personas, o una empresa con código bajo acuerdo de confidencialidad. También cuando la conexión es mala o inexistente (una sede remota, por ejemplo), cuando se quiere un costo fijo y predecible en vez de pagar por uso, o cuando se necesita integrar el modelo en una herramienta interna por <code>localhost</code>. A cambio, la organización asume el hardware, el mantenimiento y una calidad que, con modelos pequeños, es menor.</p>
+<p><b>7. ¿Cuál es la diferencia más evidente entre Ollama y LM Studio? ¿Y qué tienen en común?</b></p>
+<p>En este laboratorio no usamos LM Studio; esta respuesta sale de su documentación oficial y de lo que hicimos con Ollama. La diferencia más visible es la interfaz. LM Studio es una aplicación con interfaz de chat, que enciende su servidor local desde la pestaña Developer con un interruptor «Start server» (LM Studio, s. f.-a, s. f.-b). Con Ollama trabajamos desde la terminal y la API: <code>ollama run</code>, <code>ollama list</code> y las peticiones a <code>localhost:11434</code>. LM Studio también tiene línea de comandos (<code>lms</code>), así que la diferencia es de enfoque y no de capacidad.</p>
+<p>En común, ambas ejecutan modelos abiertos en el equipo del usuario y exponen una API local compatible con clientes de OpenAI: LM Studio sirve modelos con endpoints «OpenAI-like» (LM Studio, s. f.-b) y la documentación de Ollama habla de API para clientes compatibles con OpenAI y Anthropic (Ollama, s. f.-b). LM Studio indica que puede operar completamente sin conexión una vez descargados los modelos (LM Studio, s. f.-b); en Ollama esto lo verificaremos con el paso 16.</p>
+
+<h1 class="sec">Conclusiones</h1>
+<p>Cumplimos con evidencia real los 24 pasos: instalamos y comprobamos Ollama, hicimos las consultas al modelo local, validamos los casos límite, corregimos <code>calculadora.py</code> (de 3 errores en 6 pruebas a 6 pruebas OK), consumimos la API de <code>localhost</code> desde Python, hicimos la prueba de privacidad con datos ficticios y resolvimos el reto de la <code>mediana</code> (11 pruebas OK). El patrón Local + Privado funcionó para tareas pequeñas.</p>
+<p>Lo que costó: la velocidad (35 a 39 s por una revisión corta) y la confianza en las respuestas. De unas diez sugerencias, rechazamos o corregimos varias, sobre todo las de devolver cadenas en lugar de excepciones, el promedio de 0 y el valor -3 de la mediana, y en la mediana el modelo falló en aritmética básica dos veces, en el valor esperado y en su explicación. Sin las pruebas y sin ejecutar el código, alguno de esos errores se habría quedado.</p>
+<p>La consulta sin conexión de los pasos 16 y 17 también salió: con el Wi-Fi desconectado el modelo explicó la función <code>mediana</code> en 8.1 s, sin ninguna llamada fuera del equipo. No medimos una herramienta en la nube, de modo que esa columna de la comparación es solo una impresión, y no usamos LM Studio, por lo que su descripción viene de la documentación.</p>
+
+<h1 class="sec">Referencias Bibliográficas</h1>
+<div class="referencias">
+  <p>LM Studio. (s. f.-a). <i>LM Studio as a local LLM API server</i>. https://lmstudio.ai/docs/developer/core/server</p>
+  <p>LM Studio. (s. f.-b). <i>Welcome to LM Studio Docs!</i> https://lmstudio.ai/docs/app</p>
+  <p>Ollama. (s. f.-a). <i>Introduction</i>. https://docs.ollama.com/api/introduction</p>
+  <p>Ollama. (s. f.-b). <i>Ollama documentation</i>. https://docs.ollama.com/</p>
+</div>

@@ -1,0 +1,58 @@
+# Plan de pruebas
+
+## Resumen
+Archivo: `ejemplo/usuarios.py`. Funciones cubiertas: `buscar_usuario(usuarios, id)` y `ejecutar_codigo(codigo)`. No modifiqué el archivo ni creé otros. Los casos salen solo de lo que el código hace hoy. El archivo no tiene docstrings ni especificación, así que el resultado esperado de los errores es una propuesta razonable.
+
+## Función: buscar_usuario
+
+| Grupo | Caso | Entrada | Resultado esperado |
+|-------|------|---------|--------------------|
+| Normal | Encuentra un usuario en medio de la lista | `usuarios=[{"id":1,"nombre":"Ana"},{"id":2,"nombre":"Luis"},{"id":3,"nombre":"Eva"}]`, `id=2` | Devuelve `{"id":2,"nombre":"Luis"}` |
+| Normal | Encuentra el primero | Misma lista, `id=1` | Devuelve `{"id":1,"nombre":"Ana"}` |
+| Normal | Encuentra el último | Misma lista, `id=3` | Devuelve `{"id":3,"nombre":"Eva"}` |
+| Normal | Id que no existe | Misma lista, `id=99` | Devuelve `None` |
+| Normal | Devuelve el mismo objeto, no una copia | Lista de arriba, `id=2` | El resultado cumple `is usuarios[1]` |
+| Límite | Lista vacía | `usuarios=[]`, `id=1` | Devuelve `None` |
+| Límite | Lista con un solo elemento que coincide | `usuarios=[{"id":5}]`, `id=5` | Devuelve `{"id":5}` |
+| Límite | Lista con un solo elemento que no coincide | `usuarios=[{"id":5}]`, `id=6` | Devuelve `None` |
+| Límite | Ids repetidos | `usuarios=[{"id":1,"n":"a"},{"id":1,"n":"b"}]`, `id=1` | Devuelve `{"id":1,"n":"a"}` (el primero) |
+| Límite | Id `0` | `usuarios=[{"id":0}]`, `id=0` | Devuelve `{"id":0}` (el cero no se trata como vacío) |
+| Límite | Id negativo | `usuarios=[{"id":-1}]`, `id=-1` | Devuelve `{"id":-1}` |
+| Límite | Buscar `None` | `usuarios=[{"id":1}]`, `id=None` | Devuelve `None` |
+| Límite | Tipo distinto (cadena contra entero) | `usuarios=[{"id":1}]`, `id="1"` | Devuelve `None` (`1 != "1"`) |
+| Límite | `1` contra `True` | `usuarios=[{"id":1}]`, `id=True` | Devuelve `{"id":1}`, porque `1 == True` en Python |
+| Error esperado | Usuario sin la clave `"id"` | `usuarios=[{"nombre":"Ana"}]`, `id=1` | Debe producir un error claro. Hoy lanza `KeyError: 'id'`. |
+| Error esperado | `usuarios` es `None` | `usuarios=None`, `id=1` | Debe producir un error claro. Hoy lanza `TypeError: 'NoneType' object is not iterable`. |
+| Error esperado | Elemento que no es diccionario | `usuarios=[None]`, `id=1` | Debe producir un error claro. Hoy lanza `TypeError: 'NoneType' object is not subscriptable`. |
+| Error esperado | Elemento sin la clave que aparece después del hallazgo | `usuarios=[{"id":1},{"nombre":"x"}]`, `id=1` | Devuelve `{"id":1}` sin error. El recorrido se corta al encontrar el primero y nunca llega al elemento malformado. |
+
+## Función: ejecutar_codigo
+
+| Grupo | Caso | Entrada | Resultado esperado |
+|-------|------|---------|--------------------|
+| Normal | Suma simple | `codigo="1 + 1"` | Devuelve `2` |
+| Normal | Operación con cadenas | `codigo="'a' * 3"` | Devuelve `"aaa"` |
+| Normal | Estructura de datos | `codigo="[1, 2, 3]"` | Devuelve `[1, 2, 3]` |
+| Normal | Expresión con función incorporada | `codigo="len('hola')"` | Devuelve `4` |
+| Límite | Cadena vacía | `codigo=""` | Debe producir un error claro. Hoy lanza `SyntaxError`. |
+| Límite | Solo espacios | `codigo="   "` | Debe producir un error claro. Hoy lanza `SyntaxError`. |
+| Límite | Literal `None` | `codigo="None"` | Devuelve `None` |
+| Límite | Una sentencia en vez de una expresión | `codigo="x = 1"` | Debe producir un error claro. Hoy lanza `SyntaxError`, porque `eval` solo acepta expresiones. |
+| Límite | Expresión con saltos de línea al inicio o al final | `codigo="\n2 * 3\n"` | Devuelve `6` |
+| Error esperado | Sintaxis inválida | `codigo="1 +"` | Debe producir un error claro. Hoy lanza `SyntaxError`. |
+| Error esperado | Nombre no definido | `codigo="variable_inexistente"` | Debe producir un error claro. Hoy lanza `NameError`. |
+| Error esperado | División entre cero | `codigo="1 / 0"` | Debe producir un error claro. Hoy lanza `ZeroDivisionError`. |
+| Error esperado | Entrada que no es cadena | `codigo=123` | Debe producir un error claro. Hoy lanza `TypeError: eval() arg 1 must be a string, bytes or code object`. |
+| Error esperado | Entrada `None` | `codigo=None` | Debe producir un error claro. Hoy lanza `TypeError`. |
+| Error esperado | Código que accede a módulos del sistema | `codigo="__import__('math').pi"` (inofensivo a propósito) | Debe rechazarse. Hoy devuelve `3.141592653589793`, o sea que se ejecuta cualquier código arbitrario. |
+
+## Observaciones
+Casos donde el comportamiento actual difiere del esperado, sin corregir el código:
+
+1. **`buscar_usuario` no devuelve nada de forma explícita al no encontrar.** Devuelve `None` por defecto, sin un `return` explícito. Los casos de "no encontrado" pasan hoy, pero el contrato (`None` frente a una excepción) no está escrito en ninguna parte. Conviene que el equipo lo decida antes de fijar esas pruebas.
+2. **Entradas malformadas dan excepciones genéricas.** Un usuario sin `"id"`, `usuarios=None` o un elemento que no es diccionario producen `KeyError` o `TypeError` sin mensaje útil. Si el equipo prefiere un `ValueError` o un `None`, esas pruebas deben ajustarse a esa decisión.
+3. **`buscar_usuario` depende del orden.** Con ids repetidos devuelve el primero, y un elemento malformado posterior a un hallazgo pasa inadvertido. Es comportamiento actual, no necesariamente deseado.
+4. **`ejecutar_codigo` ejecuta cualquier código.** `eval` sobre texto sin restricciones permite ejecutar cualquier instrucción de Python, incluso llamadas al sistema operativo. El último caso del plan lo demuestra con una expresión inofensiva. La prueba esperada es el rechazo, así que fallará con el código actual. Es un problema de seguridad que corresponde a una revisión de código y no a esta skill. No pongas en las pruebas entradas realmente dañinas.
+5. **Todos los errores de `ejecutar_codigo` son excepciones nativas de `eval`.** No hay validación propia. Las pruebas de error deben usar `pytest.raises` con el tipo concreto que hoy se lanza, o con el tipo nuevo si cambia la implementación.
+
+Si quieres, el siguiente paso es convertir este plan en un `test_usuarios.py` con `pytest`. No lo creé porque pediste no modificar nada.

@@ -1,0 +1,25 @@
+Comando: printf '%s\nsalir\n' "¿Cuántas horas al día puedo reservar un cubículo en la sala de estudio?" | python -u rag_universidad.py   
+Hora de inicio: 2026-10-30 12:04:45
+----------------------------------------
+Documentos cargados: 5
+Chunks creados: 10
+Generando índice vectorial...
+
+Pregunta (o 'salir'): 
+--- CHUNKS RECUPERADOS ---
+1. sala_estudio.txt | similitud=0.789
+La sala de estudio del edificio 3 abre de lunes a viernes de 9:00 a.m. a 7:00 p.m.
+Cada estudiante puede reservar un cubículo por un máximo de 2 horas al día.
+No se permite consumir alimentos dentro de la sala; solo se p
+
+2. reglamento.txt | similitud=0.656
+deben documentarse según el procedimiento de la facultad.
+
+3. laboratorios.txt | similitud=0.646
+al se requiere autorización del responsable del laboratorio.
+
+--- RESPUESTA RAG ---
+Podés reservar un cubículo en la sala de estudio durante una máxima de 2 horas al día. Según los documentos proporcionados, la sala de estudio del edificio 3 está abierta de lunes a viernes de 9:00 a.m. a 7:00 p.m., pero indica que cada estudiante puede reservar un cubículo por un máximo de 2 horas al día. Esto coincide con la información proporcionada.
+
+Pregunta (o 'salir'): ----------------------------------------
+Hora de fin: 2026-10-30 12:05:18

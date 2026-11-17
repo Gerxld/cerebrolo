@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Laboratorio 13 — Spec-Driven Development (SDD)</title>
+<style>
+  @page { size: Letter; margin: 2.5cm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; text-align: justify; color: #111; margin: 0; }
+  h1, h2, h3 { font-family: "Times New Roman", Times, serif; text-align: left; page-break-after: avoid; }
+  h1 { font-size: 14pt; margin: 1.4em 0 0.5em; }
+  h2 { font-size: 13pt; margin: 1.2em 0 0.4em; }
+  h3 { font-size: 12pt; margin: 1em 0 0.3em; }
+  h1.nueva-pagina { page-break-before: always; }
+  p { margin: 0 0 0.7em 0; }
+  .portada { height: 22cm; display: flex; flex-direction: column; align-items: center; text-align: center; page-break-after: always; }
+  .portada .logos { display: flex; justify-content: space-between; width: 100%; margin-bottom: 0.8cm; }
+  .portada .logos img { width: 105px; height: 105px; object-fit: contain; }
+  .portada .titulo-bloque { margin-top: 0.9cm; }
+  .portada .titulo-bloque p { margin: 0.35em 0; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px; }
+  .portada .presentado { margin-top: 1.1cm; }
+  .portada .presentado p, .portada .revisado p, .portada .fecha p { margin: 0.3em 0; font-weight: bold; text-transform: uppercase; }
+  .portada .nombres { font-weight: normal !important; text-transform: none !important; }
+  .portada .revisado { margin-top: 1.2cm; }
+  .portada .fecha { margin-top: 1.1cm; }
+  .indice { page-break-after: always; }
+  .indice h1 { text-align: center; }
+  .indice ol { list-style: none; padding: 0; margin: 0; }
+  .indice li { display: flex; align-items: baseline; margin: 0.12em 0; line-height: 1.35; }
+  .indice li.n2 { padding-left: 1.2em; }
+  .indice li .t { white-space: nowrap; }
+  .indice li .dots { flex: 1; border-bottom: 1px dotted #444; margin: 0 0.3em; transform: translateY(-0.25em); }
+  .indice li .p { white-space: nowrap; }
+  table { width: 100%; border-collapse: collapse; margin: 0.8em 0; font-size: 10pt; line-height: 1.3; page-break-inside: avoid; }
+  th, td { border: 1px solid #666; padding: 4px 6px; text-align: left; vertical-align: top; }
+  th { background: #e2e2e2; font-weight: bold; }
+  .tabla-titulo { font-weight: bold; margin: 0.8em 0 0.2em; text-align: left; page-break-after: avoid; }
+  figure { margin: 1em 0; text-align: center; page-break-inside: avoid; }
+  figure img { max-width: 100%; max-height: 14.5cm; }
+  figcaption { font-size: 10.5pt; font-style: italic; margin-top: 0.3em; }
+  ul, ol { margin: 0.3em 0 0.8em 1.3em; padding: 0; }
+  li { margin-bottom: 0.3em; }
+  pre.prompt { font-family: Consolas, "Courier New", monospace; font-size: 9.5pt; line-height: 1.3; background: #f2f2f2; border: 1px solid #bbb; padding: 6px 9px; margin: 0.4em 0 0.9em; white-space: pre-wrap; text-align: left; page-break-inside: avoid; }
+  .referencias p { padding-left: 1.27cm; text-indent: -1.27cm; text-align: left; }
+</style>
+</head>
+<body>
+
+<div class="portada">
+  <div class="logos">
+    <img src="../assets/utp.png" alt="Logo UTP">
+    <img src="../assets/fisc.png" alt="Logo FISC">
+  </div>
+  <div class="titulo-bloque">
+    <p>Universidad Tecnológica de Panamá</p>
+    <p>Facultad de Ingeniería de Sistemas Computacionales</p>
+    <p>Lic. en Desarrollo y Gestión de Software</p>
+    <p style="margin-top:1em;">Tópicos Especiales II</p>
+    <p>Laboratorio 13 — Spec-Driven Development (SDD)</p>
+    <p>Grupo 1GS241</p>
+  </div>
+  <div class="presentado">
+    <p>Presentado por:</p>
+    <p class="nombres">Ríos, Gerald (8-987-741)</p>
+  </div>
+  <div class="revisado">
+    <p>Revisado por:</p>
+    <p class="nombres">Profesor Regis Rivera</p>
+  </div>
+  <div class="fecha">
+    <p>Fecha de entrega</p>
+    <p class="nombres">29 / 10 / 2026</p>
+  </div>
+</div>
+
+<div class="indice">
+  <h1>Índice</h1>
+  <ol>
+    <li><span class="t">Introducción</span><span class="dots"></span><span class="p">3</span></li>
+    <li><span class="t">1. Preparación y forma de trabajo</span><span class="dots"></span><span class="p">3</span></li>
+    <li class="n2"><span class="t">1.1 Entorno y estructura</span><span class="dots"></span><span class="p">3</span></li>
+    <li class="n2"><span class="t">1.2 Cómo usamos la IA</span><span class="dots"></span><span class="p">4</span></li>
+    <li><span class="t">2. Fase A. Problema, reglas y especificación</span><span class="dots"></span><span class="p">4</span></li>
+    <li class="n2"><span class="t">2.1 Constitución y aclaraciones (pasos 3 a 5)</span><span class="dots"></span><span class="p">4</span></li>
+    <li class="n2"><span class="t">2.2 Especificación v1.0 y auditoría (pasos 6 a 8)</span><span class="dots"></span><span class="p">5</span></li>
+    <li><span class="t">3. Fase B. Aceptación, plan y tareas</span><span class="dots"></span><span class="p">6</span></li>
+    <li class="n2"><span class="t">3.1 Criterios de aceptación y primer control (pasos 9 y 10)</span><span class="dots"></span><span class="p">6</span></li>
+    <li class="n2"><span class="t">3.2 Plan técnico (pasos 11 y 12)</span><span class="dots"></span><span class="p">6</span></li>
+    <li class="n2"><span class="t">3.3 Tareas, trazabilidad y segundo control (pasos 13 a 15)</span><span class="dots"></span><span class="p">6</span></li>
+    <li><span class="t">4. Fase C. Pruebas primero, implementación controlada</span><span class="dots"></span><span class="p">7</span></li>
+    <li class="n2"><span class="t">4.1 Línea base roja (pasos 16 a 18)</span><span class="dots"></span><span class="p">7</span></li>
+    <li class="n2"><span class="t">4.2 T01: registrar, validar y calcular fecha (pasos 19 y 20)</span><span class="dots"></span><span class="p">8</span></li>
+    <li class="n2"><span class="t">4.3 T02 y T03, una iteración por tarea (pasos 21 y 22)</span><span class="dots"></span><span class="p">9</span></li>
+    <li class="n2"><span class="t">4.4 Revisión manual y cotejo con la spec (pasos 23 y 24)</span><span class="dots"></span><span class="p">12</span></li>
+    <li><span class="t">5. Fase D. Cambio de requisitos y convergencia</span><span class="dots"></span><span class="p">13</span></li>
+    <li class="n2"><span class="t">5.1 Spec v1.1 y prueba primero (pasos 25 a 27)</span><span class="dots"></span><span class="p">13</span></li>
+    <li class="n2"><span class="t">5.2 Cambio limitado a R05 y verificación final (pasos 28 y 29)</span><span class="dots"></span><span class="p">15</span></li>
+    <li><span class="t">6. Diferencia con una práctica de vibe coding</span><span class="dots"></span><span class="p">16</span></li>
+    <li><span class="t">7. Entregables y demostración</span><span class="dots"></span><span class="p">17</span></li>
+    <li class="n2"><span class="t">7.1 Matriz de trazabilidad</span><span class="dots"></span><span class="p">17</span></li>
+    <li class="n2"><span class="t">7.2 Qué incluye la entrega</span><span class="dots"></span><span class="p">17</span></li>
+    <li class="n2"><span class="t">7.3 Demostración breve</span><span class="dots"></span><span class="p">18</span></li>
+    <li class="n2"><span class="t">7.4 Ruta opcional con Spec Kit</span><span class="dots"></span><span class="p">18</span></li>
+    <li><span class="t">8. Preguntas de reflexión</span><span class="dots"></span><span class="p">18</span></li>
+    <li><span class="t">Conclusiones</span><span class="dots"></span><span class="p">20</span></li>
+    <li><span class="t">Referencias Bibliográficas</span><span class="dots"></span><span class="p">20</span></li>
+  </ol>
+</div>
+
+<h1>Introducción</h1>
+<p>Este laboratorio pide construir un gestor de préstamos de libros siguiendo Spec-Driven Development: primero se describe el problema, se resuelven las ambigüedades y se aprueba una especificación con criterios de aceptación; después vienen el plan, las tareas y las pruebas, y solo al final el código. La idea es que lo escrito en la especificación mande sobre lo que la IA tenga ganas de generar.</p>
+<p>Trabajamos con la ruta principal (Python 3.13.5, <code>unittest</code>, sin paquetes externos) y con datos ficticios. Como asistente de IA usamos Claude Code en modo no interactivo (<code>claude -p</code>, modelo Sonnet), de modo que cada interacción dejó una transcripción real en la carpeta de prompts. Las pruebas las corrimos nosotros desde la terminal; la IA nunca ejecutó nada, aunque lo intentó. No hicimos commits ni usamos Git durante el laboratorio.</p>
+<p>El informe sigue las cuatro fases del enunciado y reúne la evidencia de cada una: salidas literales de las pruebas, diffs de cada cambio que hizo la IA, la matriz de trazabilidad, el párrafo sobre vibe coding y las seis preguntas de reflexión. La carpeta <code>laboratorio_sdd</code>, los prompts, la evidencia y los diffs van en el ZIP de la entrega.</p>
+
+<h1>1. Preparación y forma de trabajo</h1>
+<h2>1.1 Entorno y estructura</h2>
+<p>Comprobamos la versión de Python (3.13.5) y creamos <code>laboratorio_sdd</code> con la estructura exacta del paso 2: <code>docs/</code> con los cinco archivos de documentación, <code>tests/test_prestamos.py</code> y <code>prestamos.py</code>, todos vacíos al inicio. La Figura 1 muestra la salida del entorno y la lista de archivos.</p>
+<figure><img src="../screenshots/01_entorno.png" alt="Entorno y estructura"><figcaption>Figura 1. Versión de Python y estructura inicial del laboratorio.</figcaption></figure>
+<h2>1.2 Cómo usamos la IA</h2>
+<p>Cada paso con prompt se ejecutó con <code>claude -p --model sonnet</code> desde la carpeta <code>laboratorio_sdd</code>, con el texto literal del enunciado y, donde el enunciado dice «pega el contenido», con el contenido real del archivo. Para los pasos de implementación añadimos <code>--allowedTools "Read,Edit"</code> y <code>--permission-mode acceptEdits</code>, que limita a la IA a leer y editar y no le deja ejecutar comandos. Esto choca con la regla del profesor de no activar aceptación automática de cambios, así que la revisión la hicimos de otra forma: antes de cada paso de implementación guardamos una copia de <code>prestamos.py</code>, y después generamos el diff con <code>git diff --no-index</code> y lo leímos línea por línea antes de dar el cambio por bueno. La IA solo podía tocar ese archivo, y comprobamos con una comparación de bytes que <code>tests/test_prestamos.py</code> no cambió en T01, T02, T03 ni en el cambio de R05.</p>
+<p>Una precaución más: desactivamos la carga de los archivos <code>CLAUDE.md</code> del equipo (variable <code>CLAUDE_CODE_DISABLE_CLAUDE_MDS=1</code>), porque en la primera prueba la IA ya conocía las reglas de otras materias y eso contaminaba la interacción. Cada transcripción completa está en <code>entregables/prompts/</code>, con fecha y hora, el prompt arriba y la respuesta abajo.</p>
+
+<h1>2. Fase A. Problema, reglas y especificación</h1>
+<h2>2.1 Constitución y aclaraciones (pasos 3 a 5)</h2>
+<p>Copiamos la constitución tal como la da el enunciado: Python estándar, módulo sin interfaz, ValueError sin alterar la lista, fechas deterministas, nada sin criterio de aceptación y toda modificación actualiza spec y pruebas.</p>
+<p>Para el paso 4 usamos el prompt del enunciado:</p>
+<pre class="prompt">Actúa como analista de requisitos. Necesito un gestor de préstamos
+de libros para un laboratorio. Haz preguntas sobre reglas ambiguas,
+casos límite y datos de entrada. NO generes código ni arquitectura.</pre>
+<p>La IA devolvió 38 preguntas agrupadas en ocho temas, con ocho marcadas como prioritarias. Muchas no aplicaban a un módulo de laboratorio (escáner de código de barras, notificaciones por correo, reportes en PDF). Respondimos las prioritarias con las decisiones del paso 5: un ejemplar por título, sin tipos de usuario, máximo de 3 préstamos activos, 14 días calendario, sin multas ni renovaciones, y los cinco campos de la estructura como únicos datos del préstamo. El resto quedó fuera de alcance, y así lo dejamos escrito en la especificación.</p>
+<h2>2.2 Especificación v1.0 y auditoría (pasos 6 a 8)</h2>
+<p>Escribimos <code>docs/spec.md</code> con R01 a R08 literales y la pasamos por el prompt de auditoría del paso 7:</p>
+<pre class="prompt">Revisa esta especificación como analista QA. Identifica
+contradicciones, reglas no comprobables o decisiones implícitas.
+Devuélveme preguntas y cambios propuestos, NO código.
+[contenido de docs/spec.md]</pre>
+<p>La auditoría sirvió: señaló cinco contradicciones y varias reglas ambiguas. Dos hallazgos nos cambiaron el diseño. El primero, que «todo error produce ValueError» no se cumple solo, porque 9999-12-31 más 14 días desborda con OverflowError y un <code>None</code> como usuario daría TypeError. El segundo, que <code>date.fromisoformat</code> en Python 3.11 o superior acepta cosas como <code>20260901</code>, que nuestra regla de formato debe rechazar. La Tabla 1 resume qué aceptamos y qué rechazamos.</p>
+<p class="tabla-titulo">Tabla 1. Decisiones sobre la auditoría QA de la IA</p>
+<table>
+<tr><th style="width:34%">Propuesta de la IA</th><th style="width:15%">Decisión</th><th>Razón</th></tr>
+<tr><td>El dict nace con <code>devuelto=False</code>; «activo» es <code>devuelto == False</code></td><td>Aceptada (D1)</td><td>R05 y R06 dependen de eso.</td></tr>
+<tr><td>Recortar usuario y libro antes de validar; la fecha no se recorta</td><td>Aceptada (D2)</td><td>Resuelve el orden de R01, R03 y R04.</td></tr>
+<tr><td>Formato estricto con ceros y solo dígitos ASCII</td><td>Aceptada (D3)</td><td>Cierra «válida» en R03 y evita falsos válidos de <code>fromisoformat</code>.</td></tr>
+<tr><td>Desborde y entradas que no son texto producen ValueError</td><td>Aceptada (D4)</td><td>Respeta la constitución (solo ValueError).</td></tr>
+<tr><td>Devolver también recorta; comparación exacta; mismo dict; orden R04, R03, R06, R05; reuso de libros devueltos</td><td>Aceptadas (D5 a D11)</td><td>Quitan ambigüedad sin ampliar el alcance.</td></tr>
+<tr><td>Año válido entre 1900 y 9998</td><td>Rechazada</td><td>Es un límite que el cliente no pidió.</td></tr>
+<tr><td>Subir la spec a versión 1.1</td><td>Rechazada</td><td>La 1.1 queda reservada para el cambio del cliente en la Fase D.</td></tr>
+<tr><td>Mensajes o códigos de error por regla</td><td>Rechazada</td><td>Los AC solo exigen ValueError; el texto no es contrato.</td></tr>
+<tr><td>Validar que <code>prestamos</code> sea una lista bien formada; agregar una función de consulta</td><td>Rechazadas</td><td>La lista la entrega quien llama; la consulta está fuera de alcance.</td></tr>
+</table>
+<p>Registramos todo en la propia spec, con las decisiones aceptadas y las rechazadas, y agregamos al final el control de aprobación: «Versión 1.0 revisada: fecha 29/10/2026; aprobador(es) Gerald Ríos». Antes de seguir revisamos que no quedara ninguna ambigüedad que cambiara la conducta del programa.</p>
+
+<h1>3. Fase B. Aceptación, plan y tareas</h1>
+<h2>3.1 Criterios de aceptación y primer control (pasos 9 y 10)</h2>
+<p>Guardamos AC01 a AC08 en <code>docs/spec.md</code> y marcamos las cinco casillas del primer punto de control, cada una con su justificación dentro de la spec: alcance explícito, R01 a R08 sin contradicciones, AC verificables, fechas y límites definidos y comportamiento ante errores definido. Al releerlo vimos que una justificación decía que los ejemplos de AC03 y AC04 estaban en las pruebas, cuando las pruebas solo cubren dos fechas inválidas; lo corregimos en el segundo control.</p>
+<h2>3.2 Plan técnico (pasos 11 y 12)</h2>
+<pre class="prompt">Diseña un plan técnico para esta spec aprobada. Usa solo
+Python estándar, funciones puras salvo modificación explícita
+de la lista, datetime.date para fechas y unittest para pruebas.
+Define interfaces, estructura y riesgos. NO escribas el código.
+[contenido de docs/spec.md y docs/constitution.md]</pre>
+<p>La IA cumplió con no escribir código y entregó un plan largo. Aceptamos lo que cambia la conducta: no fiarse solo de <code>fromisoformat</code>, rechazar dígitos Unicode, convertir OverflowError en ValueError, comprobar <code>isinstance(str)</code> antes de <code>strip()</code> y hacer un único <code>append</code> al final. Rechazamos otras cosas: poner el archivo de pruebas en la raíz (el paso 2 lo fija en <code>tests/</code>), diez clases de prueba con decenas de casos (el enunciado trae ocho pruebas y la Fase D exige no alterar las demás), las constantes públicas y los seis ayudantes como estructura obligatoria, y reordenar el trabajo por bloques. <code>docs/plan.md</code> quedó con el texto del enunciado, el orden de implementación y una sección de evaluación crítica con cada aceptación y rechazo.</p>
+<h2>3.3 Tareas, trazabilidad y segundo control (pasos 13 a 15)</h2>
+<p>Creamos <code>docs/tasks.md</code> con T01 a T05 y <code>docs/traceability.md</code> con la tabla inicial. Para el segundo control le pedimos a la IA que señalara huecos, sin corregir nada:</p>
+<pre class="prompt">Segundo punto de control. Revisa spec, plan, tareas y trazabilidad.
+Señala huecos: tareas que introduzcan funciones fuera de alcance y requisitos
+que no tengan al menos una tarea y una prueba. NO escribas código ni
+corrijas los documentos; solo lista los huecos.
+[contenido de spec.md, plan.md, tasks.md y traceability.md]</pre>
+<p>No encontró tareas fuera de alcance. Aceptamos cuatro cosas: la regla «error produce ValueError y la lista queda intacta» no tenía fila propia en la trazabilidad; T04 y T05 no tenían criterio de salida; no estaba dicho dónde van las comprobaciones de T02 dentro de la función de T01; y la casilla floja del primer control. Rechazamos dos hallazgos: que faltaba una prueba de borde en R05 (<code>test_r05</code> ya acepta el tercer préstamo y comprueba que devolver libera cupo) y que había que separar <code>test_r08</code> en dos (ya prueba «inexistente» y «ya devuelto»). Corregimos los documentos antes de tocar el código, como pide el enunciado.</p>
+
+<h1>4. Fase C. Pruebas primero, implementación controlada</h1>
+<h2>4.1 Línea base roja (pasos 16 a 18)</h2>
+<p>Creamos <code>prestamos.py</code> con las dos firmas que lanzan <code>NotImplementedError</code> y copiamos las ocho pruebas del enunciado sin cambiarles nada. La primera corrida dio <code>FAILED (errors=9)</code>: son ocho pruebas, pero <code>test_r03</code> cuenta dos errores por sus dos subpruebas. Que fueran nueve y no ocho nos descuadró un momento, hasta que revisamos las subpruebas. La Figura 2 recorta los tracebacks; el archivo completo está en la carpeta de evidencia.</p>
+<figure><img src="../screenshots/02_linea_base_roja.png" alt="Línea base roja"><figcaption>Figura 2. Línea base roja: las ocho pruebas fallan por NotImplementedError.</figcaption></figure>
+<h2>4.2 T01: registrar, validar y calcular fecha (pasos 19 y 20)</h2>
+<pre class="prompt">Implementa ÚNICAMENTE T01. Lee constitution.md, spec.md,
+plan.md y tasks.md. Cambia solo prestamos.py; conserva las
+firmas, cumple AC01–AC04 y explica tu diff. No añadas UI,
+BD, dependencias ni código para T02/T03 todavía.</pre>
+<p>La IA agregó dos ayudantes privados (<code>_texto_limpio</code> y <code>_fecha_valida</code>) y la lógica de <code>registrar_prestamo</code>. Al revisar el diff (Figura 3) comprobamos que valida el texto y la fecha antes del <code>append</code>, que no hay nada de R05, R06 ni de <code>devolver_prestamo</code> y que los únicos imports son <code>date</code> y <code>timedelta</code>. Dijo que no pudo ejecutar las pruebas porque el comando pedía aprobación, y no insistió por otro lado.</p>
+<figure><img src="../screenshots/09_diff_T01.png" alt="Diff T01"><figcaption>Figura 3. Diff de T01 sobre prestamos.py.</figcaption></figure>
+<p>La IA anticipó que r05 y r06 fallarían «con NotImplementedError», pero en la corrida real (Figura 4) fallan con AssertionError, porque <code>registrar_prestamo</code> acepta el cuarto préstamo y el segundo del mismo libro. Pasan r01 a r04, y que r05 a r08 fallen es lo esperado en este punto.</p>
+<figure><img src="../screenshots/03_despues_T01.png" alt="Pruebas después de T01"><figcaption>Figura 4. Pruebas después de T01: pasan r01 a r04; r05 a r08 siguen fallando.</figcaption></figure>
+<h2>4.3 T02 y T03, una iteración por tarea (pasos 21 y 22)</h2>
+<pre class="prompt">Ahora implementa SOLO T02: R05–R06. Revisa el límite de
+3 préstamos activos y el libro activo global. No cambies
+interfaces, pruebas ni otros requisitos; informa los cambios.</pre>
+<p>El diff de T02 (Figura 5) agrega dos ayudantes con guion bajo y dos comprobaciones justo antes del <code>append</code>, en el orden que fija la spec (libro activo primero, límite del usuario después). No tocó las firmas ni las pruebas. Nos advirtió algo cierto: r05 y r06 llaman a <code>devolver_prestamo</code> en su parte final, así que no pueden pasar hasta T03. La Figura 6 lo confirma, con cuatro errores, r05 a r08.</p>
+<figure><img src="../screenshots/10_diff_T02.png" alt="Diff T02"><figcaption>Figura 5. Diff de T02 sobre prestamos.py.</figcaption></figure>
+<figure><img src="../screenshots/04_despues_T02.png" alt="Pruebas después de T02"><figcaption>Figura 6. Pruebas después de T02.</figcaption></figure>
+<p>Para T03 abrimos una interacción nueva con el prompt del enunciado:</p>
+<pre class="prompt">Implementa SOLO T03, R07–R08; valida antes de modificar los datos.</pre>
+<p>La IA reutilizó <code>_texto_limpio</code> para recortar los argumentos, buscó el préstamo activo del par usuario-libro y, si no existe, lanzó ValueError; el único cambio de datos (<code>devuelto = True</code>) va después de encontrarlo (Figura 7). En su explicación nos sugirió correr las pruebas con un flag adicional (<code>-t .</code>) que no hace falta; mantuvimos el comando del enunciado. Las ocho pruebas pasaron (Figura 8).</p>
+<figure><img src="../screenshots/11_diff_T03.png" alt="Diff T03"><figcaption>Figura 7. Diff de T03 sobre prestamos.py.</figcaption></figure>
+<figure><img src="../screenshots/05_v10_verde.png" alt="v1.0 verde"><figcaption>Figura 8. Versión 1.0: las ocho pruebas en verde.</figcaption></figure>
+<p>El paso 22 pide corregir «por referencia» si aparece un fallo. En nuestra corrida no apareció ninguno después de T03, así que no tuvimos que mandar el mensaje «Falla ACxx / test_rxx; corrige solo esa discrepancia», y no vamos a inventarlo. El prompt limitado a un requisito que sí tiene evidencia completa es el cambio de R05 de la Fase D.</p>
+<p>En ninguna de las tres tareas la IA se salió del alcance: no tocó pruebas, no hizo código de otra tarea y no agregó dependencias. Los rechazos de este laboratorio estuvieron en los documentos (Tabla 1 y secciones 3.2 y 3.3), no en el código.</p>
+<h2>4.4 Revisión manual y cotejo con la spec (pasos 23 y 24)</h2>
+<p>Escribimos un script corto que, para cada caso negativo, imprime la lista antes, el error y la lista después, y la compara con una copia profunda. Corrimos los tres casos pedidos (fecha 2026-02-30, libro Python ya prestado a Ana y cuarto préstamo activo de Ana) y también las decisiones de la spec que ninguna de las ocho pruebas toca: formato sin ceros, dígitos de ancho completo, desborde de 9999-12-31, usuario <code>None</code>, devolver el libro de otro usuario, recorte al devolver y comparación sensible a mayúsculas. Dieron 18 de 18 verificaciones correctas; la Figura 9 muestra el inicio de la salida.</p>
+<figure><img src="../screenshots/06_revision_manual_v10.png" alt="Revisión manual"><figcaption>Figura 9. Revisión manual de casos negativos con la lista antes y después (versión 1.0).</figcaption></figure>
+<p>Después cotejamos R01 a R08 contra el código uno por uno, con número de línea, en <code>traceability.md</code>. El módulo tiene dos funciones públicas y cuatro ayudantes con guion bajo; no hay UI, base de datos ni uso del reloj del sistema. No hicimos commit porque no usamos Git. Queda un riesgo que dejamos dicho: esas decisiones extra solo las verifica el script manual, de modo que si alguien rompe una, ninguna de las ocho pruebas avisa.</p>
+
+<h1>5. Fase D. Cambio de requisitos y convergencia</h1>
+<h2>5.1 Spec v1.1 y prueba primero (pasos 25 a 27)</h2>
+<p>El cliente pidió bajar a dos los préstamos activos por usuario. Antes de tocar nada actualizamos <code>docs/spec.md</code> a la versión 1.1: R05 con máximo 2, AC05 con «el tercer préstamo activo produce ValueError» y un historial de cambios con el motivo (restricción de espacio), la fecha (29/10/2026) y el responsable (Gerald Ríos). Dejamos intactas las demás reglas y guardamos copias de ambas versiones para poder compararlas.</p>
+<p>Luego cambiamos solo <code>test_r05_maximo_activos</code>: libros iniciales A y B, intento fallido con C, longitud esperada 2, devolver A y registrar C (la Figura 10 muestra el diff de la prueba y la 11 la corrida). El código seguía en 3 y falló solo r05, con «ValueError not raised». Esa era la falla que queríamos ver.</p>
+<figure><img src="../screenshots/13_diff_test_r05.png" alt="Diff de test_r05"><figcaption>Figura 10. Cambio en test_r05_maximo_activos.</figcaption></figure>
+<figure><img src="../screenshots/07_r05_v11_rojo.png" alt="Rojo v1.1"><figcaption>Figura 11. Después de actualizar la prueba y antes de tocar el código: falla solo r05.</figcaption></figure>
+<h2>5.2 Cambio limitado a R05 y verificación final (pasos 28 y 29)</h2>
+<p>Agregamos T06 a <code>tasks.md</code> con el alcance del cambio y le pasamos a la IA el prompt del enunciado:</p>
+<pre class="prompt">Cambio aprobado: spec v1.1, R05/AC05 reduce el límite de
+3 a 2. La prueba actualizada falla. Modifica exclusivamente
+la regla de límite en prestamos.py. No cambies otras funciones
+ni tests. Ejecutaré las pruebas independientemente.</pre>
+<p>El diff (Figura 12) tiene una línea de lógica (<code>&gt;= 3</code> a <code>&gt;= 2</code>) y el texto del mensaje de error, que la IA cambió de «3» a «2». Eso último no se pidió de forma expresa; lo aceptamos porque el mensaje habría quedado diciendo algo falso y está dentro de la misma regla. Si hubiera tocado otra función o la prueba, lo habríamos restaurado desde el snapshot. Las pruebas las corrimos nosotros: ocho en verde (Figura 13). Son las mismas ocho de antes salvo r05, y la revisión manual repetida con límite 2 dio otra vez 18 de 18, de modo que no hay regresión en R01 a R04 ni en R06 a R08.</p>
+<figure><img src="../screenshots/12_diff_R05.png" alt="Diff R05"><figcaption>Figura 12. Diff del cambio limitado a R05.</figcaption></figure>
+<figure><img src="../screenshots/08_v11_verde.png" alt="v1.1 verde"><figcaption>Figura 13. Versión 1.1: las ocho pruebas en verde.</figcaption></figure>
+<p>En <code>traceability.md</code> registramos R05 v1.1 con su prueba, el cambio aplicado y el resultado. La Tabla 2 junta todas las corridas.</p>
+<p class="tabla-titulo">Tabla 2. Corridas de pruebas del laboratorio</p>
+<table>
+<tr><th>Momento</th><th>Resultado</th><th>Archivo de evidencia</th></tr>
+<tr><td>Línea base (solo firmas)</td><td>FAILED (errors=9)</td><td>01_linea_base_roja.txt</td></tr>
+<tr><td>Después de T01</td><td>FAILED (failures=2, errors=2); pasan r01 a r04</td><td>02_despues_T01.txt</td></tr>
+<tr><td>Después de T02</td><td>FAILED (errors=4); r05 a r08 esperan T03</td><td>03_despues_T02.txt</td></tr>
+<tr><td>Después de T03 (v1.0)</td><td>OK, 8 pruebas</td><td>04_v1.0_verde.txt</td></tr>
+<tr><td>v1.1, prueba cambiada, código sin cambiar</td><td>FAILED (failures=1): r05</td><td>06_r05_v11_rojo.txt</td></tr>
+<tr><td>v1.1 final</td><td>OK, 8 pruebas</td><td>07_v1.1_verde.txt</td></tr>
+</table>
+
+<h1>6. Diferencia con una práctica de vibe coding</h1>
+<p>Si le hubiéramos pedido a la IA «crea un gestor de préstamos» y después «ajusta el límite», sin documentos, pruebas ni revisión, la IA habría tenido que adivinar lo que en este laboratorio costó 38 preguntas y un par de rondas de auditoría: cuántos días dura el préstamo, cuántos libros admite cada usuario, si 2026-1-5 es una fecha válida, qué pasa al devolver algo que no existe. Cada respuesta inventada quedaría escondida en el código, probablemente con <code>date.today()</code> para el vencimiento, que es justo lo que la constitución prohíbe. Y el segundo mensaje sería peor: «el límite» podía ser el plazo o la cantidad de libros, y sin una R05 numerada ni una prueba que falle, nadie habría sabido si la IA tocó la regla correcta, si rompió otra o si dejó el mensaje de error diciendo «3». Nos pasó algo parecido en pequeño: al bajar el límite la IA también cambió el texto del error, y solo lo notamos porque estábamos leyendo un diff de 15 líneas y no un archivo nuevo. El beneficio del trabajo dirigido por especificaciones fue ese: el cambio de tres a dos préstamos se redujo a una línea de lógica, una prueba que falló antes y pasó después y una fila en la matriz de trazabilidad. El costo fue tiempo: antes de la primera línea de código escribimos y revisamos constitución, spec, plan y tareas, y rechazamos propuestas largas de la IA (como diez clases de prueba) para no perder el alcance. Además, la documentación no garantiza cobertura, como se ve en la pregunta 5 de la reflexión.</p>
+
+<h1>7. Entregables y demostración</h1>
+<h2>7.1 Matriz de trazabilidad</h2>
+<p>La Tabla 3 es la matriz completa que también está en <code>docs/traceability.md</code>. Cada fila va del requisito al criterio de aceptación, a la tarea, a la prueba y a la evidencia.</p>
+<p class="tabla-titulo">Tabla 3. Matriz R → AC → tarea → prueba → evidencia</p>
+<table>
+<tr><th style="width:11%">Req.</th><th style="width:9%">AC</th><th style="width:7%">Tarea</th><th style="width:20%">Prueba</th><th>Evidencia</th></tr>
+<tr><td>R01</td><td>AC01</td><td>T01</td><td>test_r01_registro</td><td>Rojo en 01; verde en 04 y 07; diff de T01</td></tr>
+<tr><td>R02</td><td>AC02</td><td>T01</td><td>test_r02_vencimiento</td><td>Igual que R01</td></tr>
+<tr><td>R03</td><td>AC03</td><td>T01</td><td>test_r03_fecha_invalida</td><td>Igual que R01; revisión manual 05, caso 1 y D3</td></tr>
+<tr><td>R04</td><td>AC04</td><td>T01</td><td>test_r04_campos_vacios</td><td>Igual que R01; revisión manual 05, D4</td></tr>
+<tr><td>R05 v1.0 (límite 3)</td><td>AC05</td><td>T02</td><td>test_r05_maximo_activos (con 3)</td><td>03 y 04; diff de T02; revisión manual 05, caso 3</td></tr>
+<tr><td>R05 v1.1 (límite 2)</td><td>AC05 v1.1</td><td>T06</td><td>test_r05_maximo_activos (con 2)</td><td>06 en rojo, 07 en verde; diffs del cambio y de la prueba; revisión manual 08</td></tr>
+<tr><td>R06</td><td>AC06</td><td>T02</td><td>test_r06_libro_unico</td><td>03, 04 y 07; revisión manual 05, caso 2</td></tr>
+<tr><td>R07</td><td>AC07</td><td>T03</td><td>test_r07_devolver</td><td>04 y 07; diff de T03</td></tr>
+<tr><td>R08</td><td>AC08</td><td>T03</td><td>test_r08_devolucion_inexistente</td><td>04 y 07; revisión manual 05, D11</td></tr>
+<tr><td>Cierre (ValueError y lista intacta)</td><td>AC03 a AC06, AC08</td><td>T01 a T03</td><td>Los <code>assertEqual</code> sobre la lista en r03, r04, r05, r06 y r08</td><td>Revisión manual: lista antes y después</td></tr>
+</table>
+<p>Los números de evidencia (01 a 08) corresponden a los archivos de la carpeta <code>evidencia</code> listados en la Tabla 2 y a las dos revisiones manuales (05 para la versión 1.0 y 08 para la 1.1).</p>
+<h2>7.2 Qué incluye la entrega</h2>
+<ul>
+<li>La carpeta <code>laboratorio_sdd</code> con <code>docs/</code> (constitución, spec con la v1.0 y el cambio v1.1 documentado, plan, tareas y trazabilidad), <code>prestamos.py</code> y <code>tests/test_prestamos.py</code>.</li>
+<li>Evidencia de pruebas antes de implementar, después de v1.0 y después de v1.1, más los diffs de cada cambio de la IA y las copias de cada etapa.</li>
+<li>Las transcripciones completas de cada prompt en <code>prompts/</code>, incluidos los de T01 a T03 y el del cambio de R05.</li>
+</ul>
+<h2>7.3 Demostración breve</h2>
+<p>Para la demostración mostraríamos, en este orden: la spec en sus dos versiones, plan y tareas, la corrida roja inicial, la corrida verde de v1.0, el cambio de R05 con la prueba en rojo y después en verde, y la matriz de la Tabla 3. Funcionalmente, <code>registrar_prestamo(lista, "Ana", "Python", "2026-09-01")</code> devuelve un préstamo con vencimiento 2026-09-15, y un tercer préstamo activo de Ana lanza ValueError sin cambiar la lista.</p>
+<h2>7.4 Ruta opcional con Spec Kit</h2>
+<p>No hicimos los pasos 32 a 34 porque el enunciado los marca como opcionales y dice que no son necesarios para aprobar. No instalamos Spec Kit ni generamos ningún artefacto con él. Lo que decimos de la herramienta en la pregunta 6 sale de su repositorio oficial (GitHub, s. f.), no de haberla usado.</p>
+
+<h1>8. Preguntas de reflexión</h1>
+<h2>8.1 ¿Qué diferencia hay entre una solicitud informal y una especificación comprobable?</h2>
+<p>La solicitud informal dice «un gestor de préstamos de libros»; deja abiertas decenas de decisiones y cada quien las llena a su manera. La especificación las cierra con números y casos: 14 días, máximo de 3 (luego 2) y «2026-1-5 no es válida». Lo comprobable es que se puede escribir una prueba que pase o falle sin preguntarle a nadie qué quiso decir la regla. La IA nos lo demostró con las 38 preguntas del paso 4, que eran decisiones que alguien tenía que tomar.</p>
+<h2>8.2 ¿Por qué la especificación define qué se necesita y el plan cómo se hará?</h2>
+<p>Porque cambian por razones distintas. El cliente puede bajar el límite a dos préstamos sin que cambie nada de cómo se valida una fecha, y nosotros podríamos cambiar <code>date.fromisoformat</code> por una validación manual sin que el cliente note nada. En este laboratorio el plan decidió cosas de implementación (formato estricto antes de <code>fromisoformat</code>, un solo <code>append</code> al final) que no aparecen en R01 a R08. Además el plan es donde la IA propuso de más, y pudimos rechazarlo sin tocar los requisitos.</p>
+<h2>8.3 ¿En qué momento debe decidir el humano si la IA puede implementar?</h2>
+<p>Después de que la spec esté aprobada, los dos puntos de control estén cerrados y la línea base roja exista. Hasta ese momento autorizamos solo documentos; para implementar le dimos permiso por tarea, con un prompt que nombraba una sola (T01, luego T02, luego T03) y una lista de herramientas que le permitía leer y editar, pero no ejecutar. La decisión se vuelve a tomar en cada tarea y en el cambio de R05, porque cada diff se acepta o se rechaza al revisarlo.</p>
+<h2>8.4 ¿Por qué un cambio exige actualizar requisitos y pruebas antes del código?</h2>
+<p>Porque son lo que nos dice si el código está bien. Si cambiábamos primero <code>prestamos.py</code> a «&gt;= 2», habríamos tenido ocho pruebas en verde con una spec que todavía decía 3, o peor, una prueba que pasaba sin haberla visto fallar. Al cambiar primero spec y prueba vimos fallar a r05 con «ValueError not raised» (Figura 11), que es la prueba de que la prueba mide lo que debe. Después el cambio en el código fue una línea y la verificación fue instantánea.</p>
+<h2>8.5 ¿Puede haber ocho pruebas verdes y aun así existir un requisito no cubierto?</h2>
+<p>Sí, y en este laboratorio ocurrió. Las ocho pruebas pasan, pero decisiones como el desborde de 9999-12-31 (D4), el formato sin ceros (D3), el recorte al devolver (D5), la distinción entre mayúsculas (D6) o devolver el libro de otro usuario (D11) no tienen ninguna prueba automatizada; <code>test_r03</code> solo prueba dos fechas inválidas. Si alguien cambia el código y rompe una de ellas, el reporte seguiría diciendo «OK». Por eso hicimos la revisión manual de 18 verificaciones y dejamos anotado en la trazabilidad que esas decisiones dependen de ese script. Verde significa que se cumple lo que las pruebas miden, y la cobertura de los requisitos hay que revisarla aparte.</p>
+<h2>8.6 ¿Qué aporta Spec Kit y qué no reemplaza de la ingeniería de software?</h2>
+<p>Según su repositorio oficial (GitHub, s. f.), Spec Kit es un conjunto de procesos, plantillas y documentación de resultados para agentes de programación; para desarrollo guiado por especificaciones ofrece comandos que se escriben en el chat del agente (constitución, especificación, plan, tareas, implementación y convergencia). Lo que aporta es estructura repetible: los artefactos que nosotros creamos a mano y la secuencia entre ellos. Lo que no reemplaza es el criterio. La propia página indica que los comandos se ejecutan uno a la vez y que se revisa cada resultado antes de continuar, y avisa que los listados de la comunidad no son auditorías. Seguiría siendo trabajo nuestro decidir qué reglas de negocio valen, aprobar la spec, decidir cuándo la IA puede implementar, revisar cada diff y comprobar que la cobertura de las pruebas sea suficiente. Esta respuesta se basa en lo que dice la documentación; no ejecutamos la herramienta.</p>
+
+<h1 class="nueva-pagina">Conclusiones</h1>
+<p>Cerramos las cuatro fases con el gestor funcionando: ocho pruebas en verde en la versión 1.0 y otra vez en la 1.1, con la evidencia de cada corrida, los diffs de lo que escribió la IA y una matriz que enlaza cada requisito con su prueba. La parte que más costó no fue el código, que son unas 70 líneas, sino cerrar la especificación: la auditoría de la IA encontró problemas reales (el desborde de fecha, el formato permisivo de <code>fromisoformat</code>) y el plan trajo propuestas que hubo que descartar una por una.</p>
+<p>Lo que quedó a medias: las decisiones D3 a D11 se comprobaron con un script manual y no con pruebas, porque el enunciado fija las ocho pruebas y no queríamos ampliarlas por nuestra cuenta; es un riesgo que dejamos anotado. La IA no se salió de alcance en ninguna tarea de código, así que el registro de rechazos está en los documentos y no en los diffs, y tampoco tuvimos un fallo que corregir en el paso 22. No hicimos la ruta opcional de Spec Kit ni usamos Git. Hay que subir el PDF y el ZIP por Assignments, y el commit de la carpeta lo hace quien entrega.</p>
+
+<h1>Referencias Bibliográficas</h1>
+<div class="referencias">
+<p>GitHub. (s. f.). <i>Spec Kit</i> [Repositorio de código]. GitHub. Recuperado el 29 de octubre de 2026 de https://github.com/github/spec-kit</p>
+</div>
+
+</body>
+</html>

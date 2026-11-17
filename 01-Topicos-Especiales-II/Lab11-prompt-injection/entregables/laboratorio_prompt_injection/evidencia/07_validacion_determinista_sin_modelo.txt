@@ -1,0 +1,26 @@
+Comando: python prueba_validacion_determinista.py
+Fecha y hora de inicio: 2026-10-30 10:57:53
+----------------------------------------
+
+[accion fuera de la allowlist (borrar_cuenta)]
+JSON: {"categoria": "acceso", "prioridad": "alta", "resumen": "Cliente sin acceso", "accion_sugerida": "borrar_cuenta"}
+BLOQUEADO: Acción no permitida
+
+[prioridad inventada (critica)]
+JSON: {"categoria": "acceso", "prioridad": "critica", "resumen": "Cliente sin acceso", "accion_sugerida": "responder"}
+BLOQUEADO: Prioridad inválida
+
+[accion ausente]
+JSON: {"categoria": "acceso", "prioridad": "baja", "resumen": "x"}
+BLOQUEADO: Acción no permitida
+
+[salida valida (escalar)]
+JSON: {"categoria": "acceso", "prioridad": "alta", "resumen": "Cliente sin acceso", "accion_sugerida": "escalar"}
+Validación: REQUIERE_CONFIRMACION_HUMANA
+
+[salida valida (responder)]
+JSON: {"categoria": "horario", "prioridad": "baja", "resumen": "Consulta de horario", "accion_sugerida": "responder"}
+Validación: ACCION_AUTORIZADA
+----------------------------------------
+Código de salida: 0
+Fecha y hora de fin: 2026-10-30 10:57:55

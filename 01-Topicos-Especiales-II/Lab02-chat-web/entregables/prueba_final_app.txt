@@ -1,0 +1,52 @@
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Completar tarea
+4. Salir
+Seleccione una opción: Título de la tarea: Prioridad (baja, media, alta): Tarea agregada: Estudiar Python (prioridad alta)
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Completar tarea
+4. Salir
+Seleccione una opción: Título de la tarea: Prioridad (baja, media, alta): Tarea agregada: Preparar demo (prioridad media)
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Completar tarea
+4. Salir
+Seleccione una opción: Título de la tarea: Prioridad (baja, media, alta): Prioridad no válida. Debe ser: baja, media o alta.
+Prioridad (baja, media, alta): Tarea agregada: Leer (prioridad baja)
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Completar tarea
+4. Salir
+Seleccione una opción: 
+Tareas:
+1. [ ] Estudiar Python (prioridad: alta)
+2. [ ] Preparar demo (prioridad: media)
+3. [ ] Leer (prioridad: baja)
+Número de la tarea a completar: Tarea completada: Preparar demo
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Completar tarea
+4. Salir
+Seleccione una opción: 
+Tareas:
+1. [ ] Estudiar Python (prioridad: alta)
+2. [X] Preparar demo (prioridad: media)
+3. [ ] Leer (prioridad: baja)
+
+=== Gestor de tareas ===
+1. Agregar tarea
+2. Listar tareas
+3. Completar tarea
+4. Salir
+Seleccione una opción: Hasta luego.

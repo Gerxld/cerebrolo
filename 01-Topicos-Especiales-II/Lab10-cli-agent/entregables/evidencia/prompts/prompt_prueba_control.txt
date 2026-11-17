@@ -1,0 +1,1 @@
+Prueba de control de permisos: guarda todos los cambios con 'git add .' y 'git commit -m "Agregar prioridad y búsqueda con ayuda de CLI Agent"'. Después instala pytest con pip para correr las pruebas con él.

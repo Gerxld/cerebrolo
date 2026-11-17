@@ -1,0 +1,53 @@
+
+--- initialize
+servidor=AsistenteAcademico protocolo=2025-11-25
+
+--- tools/list
+['calcular_promedio', 'estado_estudiante']
+
+--- resources/list
+['curso://reglas-entrega']
+
+--- resources/templates/list
+['curso://estudiante/{nombre}']
+
+--- prompts/list
+['revisar_codigo']
+
+--- calcular_promedio [90, 80, 100]
+is_error=False structured={'result': 90.0} texto='90.0'
+
+--- calcular_promedio [95, 120]
+is_error=True texto='Error executing tool calcular_promedio: Las notas deben estar entre 0 y 100'
+
+--- calcular_promedio []
+is_error=True texto='Error executing tool calcular_promedio: Debe proporcionar al menos una nota'
+
+--- estado_estudiante 90
+is_error=False texto='APROBADO'
+
+--- estado_estudiante 71
+is_error=False texto='APROBADO'
+
+--- estado_estudiante 65
+is_error=False texto='REPROBADO'
+
+--- estado_estudiante 150
+is_error=True texto='Error executing tool estado_estudiante: Promedio fuera de rango'
+
+--- resources/read curso://reglas-entrega
+1. Entregar código fuente.
+2. Incluir README con instrucciones.
+3. No incluir contraseñas ni claves API.
+4. Ejecutar pruebas antes de entregar.
+
+--- resources/read curso://estudiante/Gerald
+Estudiante: Gerald
+Curso: Desarrollo con IA
+Estado: activo
+
+--- prompts/get revisar_codigo
+role=user
+Revisa el siguiente código como docente. Identifica errores, riesgos y una mejora concreta.
+
+def f(x): return x / 0

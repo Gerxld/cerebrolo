@@ -1,0 +1,8 @@
+Agrega una función buscar_tareas(tareas, texto) que busque sin distinguir mayúsculas y minúsculas.
+
+Condiciones:
+- modifica tasks.py y las pruebas necesarias;
+- no cambies la estructura actual de las tareas;
+- no cambies app.py todavía;
+- no agregues paquetes;
+- ejecuta las pruebas al finalizar.
